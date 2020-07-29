@@ -1,9 +1,6 @@
 - `python.bh`
 - Sending e-mail with curl
-- Deleting Elasticsearch indices?
 - `which` vs. `type` vs. `whereis` etc.
-- nesting block structures in Markdown (including differences between GitHub
-  and other implementations)
 - comparison of daemonization tools
 - Python: encodings and interacting with the outside world:
     - Python stdio encodings?
@@ -25,11 +22,8 @@
 - `underpy.md`?
 - apt & dpkg invocations
 - GPG invocations
-- setting up a Debian VirtualBox VM with guest additions?
-- sending HipChat notifications/messages via curl?
 - how to ensure an Upstart service is stopped: `status $SERVICE | grep stop ||
   stop $SERVICE`
-- a consolidated & hyperlinked `sudoers(5)` grammar (including basic examples)
 - using Certbot / my Certbot setup?
 - setting up Postfix?
     - setting up `luser_relay` with each recipient address getting its own
@@ -48,13 +42,16 @@
 - URL templates for downloading Git references (and subtrees of references?)
   from GitHub as zip files
 - raytracing notes
+- "Python for Programmers"?
 
 - Python packaging:
     - `setup.md`?
-    - including non-Python files in Python packages
+    - including & accessing non-Python files in Python packages
     - advice for structuring a Python package?
     - integrating a Python package with Travis and Codecov?
     - including LICENSE files in sdists and wheels?
+    - common packaging mistakes people make (top-level tests, top-level
+      README/LICENSE, strings around values in setup.cfg, etc.)
     - Opinions:
         - Why tests shouldn't be included in built distributions
             - Why top-level `test{,s}/` directories should absolutely not be
