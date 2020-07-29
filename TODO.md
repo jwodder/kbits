@@ -1,6 +1,11 @@
 **Goal**: Create a `jwodder/kbits` repository on GitHub that is published as
 <https://jwodder.github.io/kbits>
 
+- Gists to import into site:
+    - rst-hyperlinks.rst <https://gist.github.com/jwodder/5a9264db8c3c81dad4c01e082515a9f1>
+    - unicode-latex.rst <https://gist.github.com/jwodder/c82599dea8ae3168e39297aede014622>
+    - click-config.rst <https://gist.github.com/jwodder/8ce218892331229c9116ed6c3e16a5bb>
+
 - Use Pelican <https://docs.getpelican.com/en/stable/>
     - Themes gallery: <http://www.pelicanthemes.com>
     - Relevant plugins:
