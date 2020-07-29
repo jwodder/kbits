@@ -34,3 +34,5 @@
         - Click theme
 
 - Set up a tag cloud system
+
+- For deployment to GitHub pages, use pre-commit to update the output directory?
