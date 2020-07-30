@@ -18,31 +18,23 @@
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
-    - The theme should use articles' summaries and show the site title in the
-      `<title>`
+    - The theme should show the site title in the `<title>`
     - Articles' full contents should only be shown on the articles' pages;
       listing of articles should always use summaries
-    - Use tags to set "keywords" meta in HTML output?
-    - Use summary to set "description" meta?
     - Add `<link rel="canonical" href="$THIS_URL"/>` to HTML heads?
     - Don't link to author pages
         - Make author name link to my GitHub page?
-    - Link pages to their source on GitHub
-        - Use `GITHUB_URL` setting
     - Set up a tag cloud system ("`tag_cloud`" plugin?)
     - Possible sources of styles:
         - `github.css` / GitHub
+        - alabaster (Largely prefer over `sphinx_rtd_theme`)
         - `sphinx_rtd_theme`
-        - alabaster
-        - Click theme
-    - Figure out to to get math rendering applied to templated article listings
+        - Click theme?
+    - Figure out how to get math rendering applied to templated article
+      listings
+    - Show "last modified" date in article listings
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
-        - <https://github.com/getpelican/pelican-plugins/tree/master/footer_insert>
-          for its ability to insert the article date as the copyright date?
-            - Alternatively, set the footer as a settings variable that
-              dynamically includes a range from the site start year to the
-              current year
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
           for adding descriptions to category/tag pages?
         - <https://github.com/pelican-plugins/more-categories>?
