@@ -10,6 +10,7 @@ LOCALE = 'en_US.UTF-8'
 PATH = 'src'
 ARTICLE_PATHS = ['posts']
 STATIC_PATHS = ['static']
+IGNORE_FILES = ['.*.swp']
 
 OUTPUT_PATH = 'docs'
 
@@ -18,6 +19,11 @@ PAGE_URL = PAGE_SAVE_AS = '{slug}.html'
 # Disable author pages:
 AUTHOR_SAVE_AS = ''
 AUTHORS_SAVE_AS = ''
+
+THEME = 'theme'
+SHOW_AUTHOR = True
+LINK_AUTHOR = False
+PATH_IN_REPO = 'src'  # PATH relative to root of repository
 
 # TODO: Set these through the templates so the URLs can be properly built from
 # config settings:
@@ -34,10 +40,7 @@ LINKS = [
     ('Site Repository', 'https://github.com/jwodder/kbits'),
 ]
 
-SOCIAL_WIDGET_NAME = 'Social'
-SOCIAL = [
-    #('GitHub', 'https://github.com/jwodder'),
-]
+GITHUB_URL = 'https://github.com/jwodder/kbits'
 
 DEFAULT_PAGINATION = False
 
@@ -50,15 +53,13 @@ DOCUTILS_SETTINGS = {
     "strip_comments": True,
 }
 
-IGNORE_FILES = ['.*.swp']
 STATIC_CHECK_IF_MODIFIED = True
 SLUGIFY_SOURCE = 'basename'
 
 BIND = '127.0.0.1'
 
-DEFAULT_DATE_FORMAT = '%Y-%m-%d'
-
 PAGE_ORDER_BY = 'title'
+DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
 USE_FOLDER_AS_CATEGORY = False
 

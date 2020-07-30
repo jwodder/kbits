@@ -30,6 +30,7 @@
     - Include links to archives, tag list, & category list in main menu or
       somewhere
     - Link pages to their source on GitHub
+        - Use `GITHUB_URL` setting
     - Set up a tag cloud system ("`tag_cloud`" plugin?)
     - Give all output documents a footer that says:
 
@@ -48,6 +49,8 @@
         - alabaster
         - Click theme
     - Use a Pygments stylesheet
+    - Figure out how to get HTML tags to be present in summaries in templates
+    - Figure out to to get math rendering applied to templated article listings
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/footer_insert>
