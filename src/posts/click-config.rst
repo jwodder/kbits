@@ -275,25 +275,25 @@ each command prints out the parameters it receives.
     @click.option('--str', default='foo')
     @click.option('--choice', type=click.Choice(['red', 'green', 'blue']))
     def main(**kwargs):
-        print('# main')
+        print('* main')
         print(json.dumps(kwargs, sort_keys=True, indent=4))
 
     @main.command()
     @click.option('--speed', type=click.Choice(['low', 'medium', 'high', 'ludicrous']), default='medium')
     def foo(**kwargs):
-        print('# foo')
+        print('* foo')
         print(json.dumps(kwargs, sort_keys=True, indent=4))
 
     @main.group(invoke_without_command=True)
     @click.option('--speed', type=click.Choice(['low', 'medium', 'high', 'ludicrous']), default='medium')
     def bar(**kwargs):
-        print('# bar')
+        print('* bar')
         print(json.dumps(kwargs, sort_keys=True, indent=4))
 
     @bar.command()
     @click.option('--time', type=click.Choice(['early', 'late', 'exact']), default='early')
     def baz(**kwargs):
-        print('# baz')
+        print('* baz')
         print(json.dumps(kwargs, sort_keys=True, indent=4))
 
     if __name__ == '__main__':
@@ -323,7 +323,7 @@ Set ``config.ini`` to the following:
 .. code:: console
 
     $ python3 config02.py
-    # main
+    * main
     {
         "choice": "green",
         "flag": true,
@@ -331,54 +331,54 @@ Set ``config.ini`` to the following:
         "str": "bar"
     }
     $ python3 config02.py foo
-    # main
+    * main
     {
         "choice": "green",
         "flag": true,
         "integer": 23,
         "str": "bar"
     }
-    # foo
+    * foo
     {
         "speed": "high"
     }
     $ python3 config02.py bar
-    # main
+    * main
     {
         "choice": "green",
         "flag": true,
         "integer": 23,
         "str": "bar"
     }
-    # bar
+    * bar
     {
         "speed": "low"
     }
     $ python3 config02.py bar baz
-    # main
+    * main
     {
         "choice": "green",
         "flag": true,
         "integer": 23,
         "str": "bar"
     }
-    # bar
+    * bar
     {
         "speed": "low"
     }
-    # baz
+    * baz
     {
         "time": "late"
     }
     $ python3 config02.py --choice red foo --speed medium
-    # main
+    * main
     {
         "choice": "red",
         "flag": true,
         "integer": 23,
         "str": "bar"
     }
-    # foo
+    * foo
     {
         "speed": "medium"
     }
