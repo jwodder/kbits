@@ -20,6 +20,8 @@ PAGE_URL = PAGE_SAVE_AS = '{slug}.html'
 AUTHOR_SAVE_AS = ''
 AUTHORS_SAVE_AS = ''
 
+PLUGINS = ['pelican.plugins.render_math']
+
 THEME = 'theme'
 SHOW_AUTHOR = True
 LINK_AUTHOR = False
