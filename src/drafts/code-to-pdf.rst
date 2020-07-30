@@ -71,3 +71,7 @@ enabling & configuring it is beyond the scope of this document.
 .. TODO: LaTeX with the `listings` Package (kind of sucks)
 
 .. a2ps <https://www.gnu.org/software/a2ps/>: sucks
+
+.. code2html + some converter?
+
+.. <https://gitlab.com/gnomify/u2ps>?

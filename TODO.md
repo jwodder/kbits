@@ -14,19 +14,12 @@
 
 - For deployment to GitHub pages, use pre-commit to update the output
   directory?
-    - Use ghp-import or ghp-import2?
-
-- Set up math rendering using MathJax
-    - This will require changing `DOCUTILS_SETTINGS["math_output"]` in
-      `pelicanconf.py` and also including the proper scripts in the article
-      template.
-    - Use <https://github.com/pelican-plugins/render-math>?
 
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
-    - The theme should use articles' summaries, show the site title in the
-      `<title>`, and enable MathJax in templates
+    - The theme should use articles' summaries and show the site title in the
+      `<title>`
     - Articles' full contents should only be shown on the articles' pages;
       listing of articles should always use summaries
     - Use tags to set "keywords" meta in HTML output?
@@ -48,6 +41,7 @@
 
         (Maybe adjust the intro a little.)
 
+    - Remove archives page in favor of index?
     - Possible sources of styles:
         - `github.css`
         - `sphinx_rtd_theme`
@@ -63,11 +57,9 @@
               current year
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
           for adding descriptions to category/tag pages?
-        - <https://github.com/pelican-plugins/render-math>
         - <https://github.com/pelican-plugins/more-categories>?
         - <https://github.com/davidlesieur/similar_posts>
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
         - <https://github.com/pelican-plugins/sitemap>?
 
-- Do something with `Makefile` and/or `tasks.py`
-    - Replace with Nox?
+- Add license file to repo?

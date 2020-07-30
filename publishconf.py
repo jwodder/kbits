@@ -6,7 +6,6 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-# If your site is available via HTTPS, make sure SITEURL begins with https://
 SITEURL = 'https://jwodder.github.io/kbits'
 RELATIVE_URLS = False
 FEED_DOMAIN = SITEURL

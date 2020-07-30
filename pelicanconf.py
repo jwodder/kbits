@@ -48,7 +48,6 @@ DEFAULT_CATEGORY = 'Miscellanea'
 DOCUTILS_SETTINGS = {
     "smart_quotes": True,
     "strip_comments": True,
-    "math_output": "MathML",
 }
 
 IGNORE_FILES = ['.*.swp']

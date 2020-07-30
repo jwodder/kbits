@@ -1,6 +1,6 @@
 import nox
 
-#nox.options.reuse_existing_virtualenvs = True
+nox.options.reuse_existing_virtualenvs = True
 nox.options.sessions = ['build']  # default session
 nox.options.stop_on_first_error = True
 
