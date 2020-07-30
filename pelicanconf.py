@@ -1,3 +1,5 @@
+from datetime import date
+
 AUTHOR = 'John T. Wodder II'
 SITENAME = 'Knowledge Bits'
 #SITESUBTITLE = 'All about the things I know'
@@ -75,3 +77,16 @@ AUTHOR_FEED_RSS = None
 
 # <https://github.com/getpelican/pelican/pull/2785>
 FORMATTED_FIELDS = ['summary', 'Summary']
+
+site_creation_year = 2020
+this_year = date.today().year
+if this_year == site_creation_year:
+    copyright_years = site_creation_year
+else:
+    copyright_years = f'{site_creation_year}–{this_year}'
+
+FOOTER_HTML = f'''
+Copyright © {copyright_years} {AUTHOR}.  This site's content is licensed under
+a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
+Attribution 4.0 International License</a>.
+'''
