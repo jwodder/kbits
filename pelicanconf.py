@@ -1,33 +1,74 @@
 from datetime import date
 
+# Site metadata
 AUTHOR = 'John T. Wodder II'
 SITENAME = 'Knowledge Bits'
 #SITESUBTITLE = 'All about the things I know'
 #SITESUBTITLE = 'Things I know about stuff'
-
 DEFAULT_LANG = 'en'
 TIMEZONE = 'America/New_York'
 LOCALE = 'en_US.UTF-8'
 
+
+# Site input layout
 PATH = 'src'
 ARTICLE_PATHS = ['posts']
 STATIC_PATHS = ['static']
 IGNORE_FILES = ['.*.swp']
+USE_FOLDER_AS_CATEGORY = False
 
+
+# Site output layout
 OUTPUT_PATH = 'docs'
-
 PAGE_URL = PAGE_SAVE_AS = '{slug}.html'
+AUTHOR_SAVE_AS = AUTHORS_SAVE_AS = ''  # Disable author pages
 
-# Disable author pages:
-AUTHOR_SAVE_AS = ''
-AUTHORS_SAVE_AS = ''
 
+# Building & formatting settings
+CACHE_CONTENT = False
+STATIC_CHECK_IF_MODIFIED = True
+
+DOCUTILS_SETTINGS = {
+    "smart_quotes": True,
+    "strip_comments": True,
+}
+
+DEFAULT_PAGINATION = False
+SLUGIFY_SOURCE = 'basename'
+PAGE_ORDER_BY = 'title'
+DEFAULT_CATEGORY = 'Miscellanea'
+DEFAULT_DATE_FORMAT = '%Y-%m-%d'
+
+# <https://github.com/getpelican/pelican/pull/2785>
+FORMATTED_FIELDS = ['summary', 'Summary']
+
+
+# Plugins
 PLUGINS = ['pelican.plugins.render_math']
 
-THEME = 'theme'
+
+# Themes
+THEME = './theme'
+
+
+# Theme variables
+GITHUB_URL = 'https://github.com/jwodder/kbits'
 SHOW_AUTHOR = True
 LINK_AUTHOR = False
 PATH_IN_REPO = 'src'  # PATH relative to root of repository
+
+site_creation_year = 2020
+this_year = date.today().year
+if this_year == site_creation_year:
+    copyright_years = site_creation_year
+else:
+    copyright_years = f'{site_creation_year}–{this_year}'
+
+FOOTER_HTML = f'''
+Copyright © {copyright_years} {AUTHOR}.  This site's content is licensed under
+a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
+Attribution 4.0 International License</a>.
+'''
 
 # TODO: Set these through the templates so the URLs can be properly built from
 # config settings:
@@ -44,30 +85,8 @@ LINKS = [
     ('Site Repository', 'https://github.com/jwodder/kbits'),
 ]
 
-GITHUB_URL = 'https://github.com/jwodder/kbits'
 
-DEFAULT_PAGINATION = False
-
-CACHE_CONTENT = False
-
-DEFAULT_CATEGORY = 'Miscellanea'
-
-DOCUTILS_SETTINGS = {
-    "smart_quotes": True,
-    "strip_comments": True,
-}
-
-STATIC_CHECK_IF_MODIFIED = True
-SLUGIFY_SOURCE = 'basename'
-
-BIND = '127.0.0.1'
-
-PAGE_ORDER_BY = 'title'
-DEFAULT_DATE_FORMAT = '%Y-%m-%d'
-
-USE_FOLDER_AS_CATEGORY = False
-
-# Unset during development:
+# Variables to leave unset during development:
 SITEURL = ''
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
@@ -75,18 +94,6 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# <https://github.com/getpelican/pelican/pull/2785>
-FORMATTED_FIELDS = ['summary', 'Summary']
 
-site_creation_year = 2020
-this_year = date.today().year
-if this_year == site_creation_year:
-    copyright_years = site_creation_year
-else:
-    copyright_years = f'{site_creation_year}–{this_year}'
-
-FOOTER_HTML = f'''
-Copyright © {copyright_years} {AUTHOR}.  This site's content is licensed under
-a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
-Attribution 4.0 International License</a>.
-'''
+# Other
+BIND = '127.0.0.1'
