@@ -70,14 +70,12 @@ a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
 Attribution 4.0 International License</a>.
 '''
 
-# TODO: Set these through the templates so the URLs can be properly built from
-# config settings:
-MENUITEMS = [
-    ('Main', 'https://jwodder.github.io/kbits/index.html'),
-    ('Archives', 'https://jwodder.github.io/kbits/archives.html'),
+SITE_MENU_ITEMS = [
+    ('Main', 'index.html'),
+    ('Archives', 'archives.html'),
     # TODO: Move the below to `LINKS`?  Move the above to `LINKS`?
-    ('Categories', 'https://jwodder.github.io/kbits/categories.html'),
-    ('Tags', 'https://jwodder.github.io/kbits/tags.html'),
+    ('Categories', 'categories.html'),
+    ('Tags', 'tags.html'),
 ]
 
 LINKS_WIDGET_NAME = 'Links'
