@@ -70,3 +70,6 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
+
+# <https://github.com/getpelican/pelican/pull/2785>
+FORMATTED_FIELDS = ['summary', 'Summary']
