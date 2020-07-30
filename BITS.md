@@ -45,13 +45,12 @@
 - "Python for Programmers"?
 
 - Python packaging:
-    - `setup.md`?
     - including & accessing non-Python files in Python packages
     - advice for structuring a Python package?
     - integrating a Python package with Travis and Codecov?
     - including LICENSE files in sdists and wheels?
-    - common packaging mistakes people make (top-level tests, top-level
-      README/LICENSE, strings around values in setup.cfg, etc.)
+    - common packaging mistakes people make (top-level tests/examples/docs,
+      top-level README/LICENSE, strings around values in setup.cfg, etc.)
     - Opinions:
         - Why tests shouldn't be included in built distributions
             - Why top-level `test{,s}/` directories should absolutely not be

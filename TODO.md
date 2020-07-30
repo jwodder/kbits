@@ -20,6 +20,7 @@
     - This will require changing `DOCUTILS_SETTINGS["math_output"]` in
       `pelicanconf.py` and also including the proper scripts in the article
       template.
+    - Use <https://github.com/pelican-plugins/render-math>?
 
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
@@ -29,11 +30,13 @@
     - Articles' full contents should only be shown on the articles' pages;
       listing of articles should always use summaries
     - Use tags to set "keywords" meta in HTML output?
+    - Use summary to set "description" meta?
+    - Add `<link rel="canonical" href="$THIS_URL"/>` to HTML heads?
     - Don't link to author pages
         - Make author name link to my GitHub page?
     - Include links to archives, tag list, & category list in main menu or
       somewhere
-    - Link pages to their source on GitHub ("Show Source" plugin?)
+    - Link pages to their source on GitHub
     - Set up a tag cloud system ("`tag_cloud`" plugin?)
     - Give all output documents a footer that says:
 
@@ -51,21 +54,20 @@
         - alabaster
         - Click theme
     - Use a Pygments stylesheet
-
-- Plugins to consider using:
-    - `tag_cloud`
-    - Footer Insert
-    - better code line numbers?
-    - auto pages?
-    - render math?
-    - more categories?
-    - multi neighbors / neighbor articles
-    - pelican link class?
-    - pelican page hierarchy?
-    - related posts?
-    - series?
-    - show source?
-    - similar posts?
-    - sitemap?
+    - Plugins to use:
+        - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
+        - <https://github.com/getpelican/pelican-plugins/tree/master/footer_insert>
+          for its ability to insert the article date as the copyright date?
+            - Alternatively, set the footer as a settings variable that
+              dynamically includes a range from the site start year to the
+              current year
+        - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
+          for adding descriptions to category/tag pages?
+        - <https://github.com/pelican-plugins/render-math>
+        - <https://github.com/pelican-plugins/more-categories>?
+        - <https://github.com/davidlesieur/similar_posts>
+        - <https://github.com/pelican-plugins/seo> (Just do what it says)
+        - <https://github.com/pelican-plugins/sitemap>?
 
 - Do something with `Makefile` and/or `tasks.py`
+    - Replace with Nox?

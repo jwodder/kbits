@@ -20,7 +20,7 @@ AUTHOR_SAVE_AS = ''
 AUTHORS_SAVE_AS = ''
 
 # TODO: Set these through the templates so the URLs can be properly built from
-# config settings?
+# config settings:
 MENUITEMS = [
     ('Main', 'https://jwodder.github.io/kbits/index.html'),
     ('Archives', 'https://jwodder.github.io/kbits/archives.html'),
