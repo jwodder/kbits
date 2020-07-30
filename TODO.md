@@ -35,7 +35,6 @@
         - `sphinx_rtd_theme`
         - alabaster
         - Click theme
-    - Use a Pygments stylesheet
     - Figure out to to get math rendering applied to templated article listings
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>

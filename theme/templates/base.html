@@ -3,6 +3,7 @@
 <head>
         {% block head %}
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/{{ CSS_FILE }}" />
         <meta charset="utf-8" />
         <meta name="generator" content="Pelican (https://getpelican.com)" />
         {% if FEED_ALL_ATOM %}
