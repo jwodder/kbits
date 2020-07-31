@@ -50,7 +50,9 @@
     - integrating a Python package with Travis and Codecov?
     - including LICENSE files in sdists and wheels?
     - common packaging mistakes people make (top-level tests/examples/docs,
-      top-level README/LICENSE, strings around values in setup.cfg, etc.)
+      top-level README/LICENSE, strings around values in setup.cfg, leaving
+      `__init__.py` out of package, `packages` vs. `py_modules` confusion, not
+      listing subpackages in `packages`, not even looking at wheel, etc.)
     - Opinions:
         - Why tests shouldn't be included in built distributions
             - Why top-level `test{,s}/` directories should absolutely not be

@@ -2,7 +2,8 @@
 <https://jwodder.github.io/kbits>
 
 - When the site is first published:
-    - Set all the articles' dates to that date
+    - Set all the articles' dates (or just the ones not previously published as
+      Gists?) to that date (with varying times)
     - Update the original Gists (for those posts that originated as Gists) to
       point to the site
 
@@ -18,9 +19,6 @@
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
-    - The theme should show the site title in the `<title>`
-    - Articles' full contents should only be shown on the articles' pages;
-      listing of articles should always use summaries
     - Add `<link rel="canonical" href="$THIS_URL"/>` to HTML heads?
     - Don't link to author pages
         - Make author name link to my GitHub page?
@@ -72,4 +70,13 @@
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
         - <https://github.com/pelican-plugins/sitemap>?
 
-- Add license file to repo?
+
+Content To-Dos
+--------------
+
+- powsum: Rename the variables so that `n` is the exponent
+- click-config:
+    - Drop last example output?
+    - Add section on dealing with `multiple`, `nargs`, & type-tuples?
+- unicode-latex: Add a paragraph at the end of the intro that says "Summary:
+  Just use XeLaTeX/LuaLaTeX"?

@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block title %}
+{{SITENAME}}{% if SITESUBTITLE %}: {{SITESUBTITLE}}{% endif %}
+{% endblock %}
+
 {% block content %}
 <section id="content">
     {% block content_title %}
