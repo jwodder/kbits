@@ -16,6 +16,8 @@
 - For deployment to GitHub pages, use pre-commit to update the output
   directory?
 
+- Set SITESUBTITLE
+
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
@@ -58,9 +60,8 @@
             - Tag page: `/tags/{tag}/`
                 - Subsequent pages: `/tags/{tag}/{n}/`
     - Set pagination to 50 or so?
-    - Unify article listings
-        - Change `archives.html` and `period_archives.html` to be based on
-          `index.html`?
+    - Use `<article>` element?
+    - Improve pagination rendering
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
