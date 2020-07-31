@@ -73,7 +73,6 @@ Attribution 4.0 International License</a>.
 
 # TODO: Should these be shown on the top in the menu or on the side with LINKS?
 SITE_MENU_ITEMS = [
-    ('Main', 'index.html'),
     ('Categories', 'categories.html'),
     ('Tags', 'tags.html'),
 ]
