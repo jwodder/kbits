@@ -2,3 +2,4 @@
 pelican @ git+https://github.com/getpelican/pelican.git
 
 pelican-render-math~=1.0
+BeautifulSoup4~=4.0  # needed for pelican-render-math to fix summaries
