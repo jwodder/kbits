@@ -34,6 +34,32 @@
       listings
     - Show "last modified" date in article listings
     - Show SITESUBTITLE beneath SITENAME
+    - Eliminate the "all categories" and "all tags" pages and instead list all
+      categories & tags on the side of every page?
+    - Possible URL layouts:
+        - System 1:
+            - Index: `index.html`
+                - Subsequent pages: `index2.html`
+            - Article/page: `{slug}.html`
+            - Category list: `categories.html`
+                - Change to `categories/` and pluralize category page basedir?
+            - Category page: `category/{cat}.html`
+                - Subsequent pages: `category/{cat}2.html`
+            - Tag list: `tags.html`
+                - Change to `tags/` and pluralize tag page basedir?
+            - Tag page: `tag/{tag}.html`
+                - Subsequent pages: `tag/{tag}2.html`
+        - System 2:
+            - Index: `/`
+                - Subsequent pages: `/{n}/`?
+            - Article/page: `/{slug}/`
+            - Category list: `/categories/`
+            - Category page: `/categories/{cat}/`
+                - Subsequent pages: `/categories/{cat}/{n}/`
+            - Tag list: `/tags/`
+            - Tag page: `/tags/{tag}/`
+                - Subsequent pages: `/tags/{tag}/{n}/`
+    - Set pagination to 50 or so?
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
