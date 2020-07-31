@@ -63,6 +63,9 @@
             - Tag page: `/tags/{tag}/`
                 - Subsequent pages: `/tags/{tag}/{n}/`
     - Set pagination to 50 or so?
+    - Unify article listings
+        - Change `archives.html` and `period_archives.html` to be based on
+          `index.html`?
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
