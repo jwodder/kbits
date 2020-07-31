@@ -58,6 +58,7 @@ GITHUB_URL = 'https://github.com/jwodder/kbits'
 PATH_IN_REPO = PATH  # PATH relative to root of repository
 SHOW_AUTHOR = True
 LINK_AUTHOR = False
+AUTHOR_LINK = 'https://github.com/jwodder'
 
 site_creation_year = 2020
 this_year = date.today().year
@@ -67,9 +68,15 @@ else:
     copyright_years = f'{site_creation_year}–{this_year}'
 
 FOOTER_HTML = f'''
-Copyright © {copyright_years} {AUTHOR}.  This site's content is licensed under
-a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
-Attribution 4.0 International License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
+</a>
+
+Copyright © {copyright_years} <a xmlns:cc="http://creativecommons.org/ns#"
+href="{AUTHOR_LINK}" property="cc:attributionName"
+rel="cc:attributionURL">{AUTHOR}</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
 '''
 
 # TODO: Should these be shown on the top in the menu or on the side with LINKS?
