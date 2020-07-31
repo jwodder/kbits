@@ -32,6 +32,7 @@ STATIC_CHECK_IF_MODIFIED = True
 DOCUTILS_SETTINGS = {
     "smart_quotes": True,
     "strip_comments": True,
+    "math_output": "mathjax irrelevant.value",
 }
 
 DEFAULT_PAGINATION = False
@@ -45,7 +46,7 @@ FORMATTED_FIELDS = ['summary', 'Summary']
 
 
 # Plugins
-PLUGINS = ['pelican.plugins.render_math']
+PLUGINS = []
 
 
 # Themes
