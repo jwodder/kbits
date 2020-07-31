@@ -33,6 +33,7 @@
     - Figure out how to get math rendering applied to templated article
       listings
     - Show "last modified" date in article listings
+    - Show SITESUBTITLE beneath SITENAME
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>

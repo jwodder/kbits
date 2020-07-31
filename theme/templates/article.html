@@ -1,87 +1,86 @@
 {% extends "base.html" %}
-{% block html_lang %}{{ article.lang }}{% endblock %}
 
-{% block title %}{{ SITENAME }} - {{ article.title|striptags }}{% endblock %}
+{% block html_lang %}{{article.lang}}{% endblock %}
 
-{% block head %}
-  {{ super() }}
+{% block title %}{{SITENAME}} — {{article.title|striptags}}{% endblock %}
 
-  {% import 'translations.html' as translations with context %}
-  {% if translations.entry_hreflang(article) %}
-    {{ translations.entry_hreflang(article) }}
-  {% endif %}
+{% block extra_head %}
+    {% import 'translations.html' as translations with context %}
+    {% if translations.entry_hreflang(article) %}
+        {{translations.entry_hreflang(article)}}
+    {% endif %}
 
-  {% if article.summary %}
-    <meta name="description" content="{{article.summary|striptags|escape}}" />
-  {% elif article.description %}
-    <meta name="description" content="{{article.description|escape}}" />
-  {% endif %}
+    {% if article.summary %}
+        <meta name="description" content="{{article.summary|striptags|escape}}"/>
+    {% elif article.description %}
+        <meta name="description" content="{{article.description|escape}}"/>
+    {% endif %}
 
-  {% for tag in article.tags %}
-    <meta name="tags" content="{{tag|escape}}" />
-  {% endfor %}
+    {% for tag in article.tags %}
+        <meta name="tags" content="{{tag|escape}}"/>
+    {% endfor %}
 
-  {% for author in article.authors %}
-    <meta name="author" content="{{author|escape}}" />
-  {% endfor %}
+    {% for author in article.authors %}
+        <meta name="author" content="{{author|escape}}"/>
+    {% endfor %}
 
-  {% if article.tags %}
-    <meta name="keywords" content="{{article.tags|join(',')|escape}}" />
-  {% endif %}
-
+    {% if article.tags %}
+        <meta name="keywords" content="{{article.tags|join(',')|escape}}"/>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
 <section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
-         title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2>
- {% import 'translations.html' as translations with context %}
- {{ translations.translations_for(article) }}
-  </header>
-  <footer class="post-info">
-    <time class="published" datetime="{{ article.date.isoformat() }}">
-      {{ article.locale_date }}
-    </time>
-    {% if article.modified %}
-    <time class="modified" datetime="{{ article.modified.isoformat() }}">
-      {{ article.locale_modified }}
-    </time>
-    {% endif %}
-    {% if SHOW_AUTHOR and article.authors %}
-    <address class="vcard author">
-        By {% for author in article.authors %}
-            {% if LINK_AUTHOR %}
-                <a class="url fn" href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>
-            {% else %}
-                {{ author }}
-            {% endif %}
-        {% endfor %}
-    </address>
-    {% endif %}
-    {% if article.category %}
-    <div class="category">
-        Category: <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
-    </div>
-    {% endif %}
-    <div class="tags">
-        Tags:
-        {% if article.tags %}
-            {% set sep = joiner(', ') %}
-            {% for tag in article.tags %}{{sep()}}<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% endfor %}
-        {% else %}
-            —
+    <header>
+        <h2 class="entry-title">
+            <a href="{{SITEURL}}/{{article.url}}" rel="bookmark"
+                title="Permalink to {{article.title|striptags}}">{{article.title}}</a>
+        </h2>
+        {% import 'translations.html' as translations with context %}
+        {{translations.translations_for(article)}}
+    </header>
+    <footer class="post-info">
+        <time class="published" datetime="{{article.date.isoformat()}}">
+            {{article.locale_date}}
+        </time>
+        {% if article.modified %}
+        <time class="modified" datetime="{{article.modified.isoformat()}}">
+            {{article.locale_modified}}
+        </time>
         {% endif %}
-    </div>
-    {% if GITHUB_URL %}
+        {% if SHOW_AUTHOR and article.authors %}
+        <address class="vcard author">
+            By {% for author in article.authors %}
+                {% if LINK_AUTHOR %}
+                <a class="url fn" href="{{SITEURL}}/{{author.url}}">{{author}}</a>
+                {% else %}
+                {{author}}
+                {% endif %}
+            {% endfor %}
+        </address>
+        {% endif %}
+        {% if article.category %}
+        <div class="category">
+            Category: <a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a>
+        </div>
+        {% endif %}
+        <div class="tags">
+            Tags:
+            {% if article.tags %}
+                {% set sep = joiner(', ') %}
+                {% for tag in article.tags %}{{sep()}}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{% endfor %}
+            {% else %}
+                —
+            {% endif %}
+        </div>
+        {% if GITHUB_URL %}
         <div class="sourcelink">
             <a href="{{GITHUB_URL}}/blob/master/{{PATH_IN_REPO}}/{{article.relative_source_path}}">Page Source</a>
         </div>
-    {% endif %}
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
-    {{ article.content }}
-  </div><!-- /.entry-content -->
+        {% endif %}
+    </footer><!-- /.post-info -->
+    <div class="entry-content">
+        {{article.content}}
+    </div><!-- /.entry-content -->
 </section>
 {% endblock %}
