@@ -30,11 +30,8 @@
         - alabaster (Largely prefer over `sphinx_rtd_theme`)
         - `sphinx_rtd_theme`
         - Click theme?
-    - Figure out how to get math rendering applied to templated article
-      listings
-        - Bug: <https://github.com/pelican-plugins/render-math/issues/7>
-        - Give up on the render math plugin and hardcode MathJax into every
-          page?
+    - Switch back to using pelican-render-math (Revert 3ecb53f) after
+      <https://github.com/pelican-plugins/render-math/issues/7> is fixed?
     - Show "last modified" date in article listings
     - Show SITESUBTITLE beneath SITENAME
     - Eliminate the "all categories" and "all tags" pages and instead list all
