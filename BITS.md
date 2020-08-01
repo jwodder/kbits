@@ -52,7 +52,8 @@
     - common packaging mistakes people make (top-level tests/examples/docs,
       top-level README/LICENSE, strings around values in setup.cfg, leaving
       `__init__.py` out of package, `packages` vs. `py_modules` confusion, not
-      listing subpackages in `packages`, not even looking at wheel, etc.)
+      listing subpackages in `packages`, not even looking at wheel, not
+      including a long description, etc.)
     - Opinions:
         - Why tests shouldn't be included in built distributions
             - Why top-level `test{,s}/` directories should absolutely not be

@@ -53,6 +53,8 @@
             - Index: `/`
                 - Subsequent pages: `/{n}/`?
             - Article/page: `/{slug}/`
+                - Prepend `/posts`? (Articles only)
+                - Put archives at `/posts/index.html`?
             - Category list: `/categories/`
             - Category page: `/categories/{cat}/`
                 - Subsequent pages: `/categories/{cat}/{n}/`
@@ -62,6 +64,7 @@
     - Set pagination to 50 or so?
     - Use `<article>` element?
     - Improve pagination rendering
+        - cf. <https://github.com/pallets/flask-sqlalchemy/blob/master/src/flask_sqlalchemy/__init__.py#L376>
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>

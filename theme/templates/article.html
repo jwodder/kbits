@@ -40,7 +40,7 @@
         {{translations.translations_for(article)}}
     </header>
     <footer class="post-info">
-        <time class="published" datetime="{{article.date.isoformat()}}">
+        <time class="published" datetime="{{article.date.isoformat()}}" pubdate="1">
             {{article.locale_date}}
         </time>
         {% if article.modified %}
