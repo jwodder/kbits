@@ -65,6 +65,8 @@
     - Use `<article>` element?
     - Improve pagination rendering
         - cf. <https://github.com/pallets/flask-sqlalchemy/blob/master/src/flask_sqlalchemy/__init__.py#L376>
+    - Link to feeds in both the document bodies (use feed system logos?) and
+      via `<meta>`
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
