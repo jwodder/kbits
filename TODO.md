@@ -61,7 +61,6 @@
             - Tag page: `/tags/{tag}/`
                 - Subsequent pages: `/tags/{tag}/{n}/`
     - Set pagination to 50 or so?
-    - Use `<article>` element?
     - Improve pagination rendering
         - cf. <https://github.com/pallets/flask-sqlalchemy/blob/master/src/flask_sqlalchemy/__init__.py#L376>
     - Link to feeds in both the document bodies (use feed system logos?) and
