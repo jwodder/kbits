@@ -58,7 +58,7 @@ GITHUB_URL = 'https://github.com/jwodder/kbits'
 PATH_IN_REPO = PATH  # PATH relative to root of repository
 SHOW_AUTHOR = True
 LINK_AUTHOR = False
-AUTHOR_LINK = 'https://github.com/jwodder'
+SHOW_AUTHOR_IN_LISTINGS = False
 
 site_creation_year = 2020
 this_year = date.today().year
