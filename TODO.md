@@ -23,7 +23,6 @@
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Add `<link rel="canonical" href="$THIS_URL"/>` to HTML heads?
     - Don't link to author pages
-        - Make author name link to my GitHub page?
     - Set up a tag cloud system ("`tag_cloud`" plugin?)
     - Possible sources of styles:
         - `github.css` / GitHub
