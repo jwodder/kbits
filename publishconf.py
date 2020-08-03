@@ -8,7 +8,7 @@ SITEURL = 'https://jwodder.github.io/kbits'
 RELATIVE_URLS = False
 FEED_DOMAIN = SITEURL
 
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
+FEED_ALL_ATOM = 'feeds/posts.atom.xml'
 CATEGORY_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 
