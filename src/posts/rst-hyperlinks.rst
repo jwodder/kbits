@@ -3,8 +3,8 @@ All About reStructuredText Hyperlinks
 =====================================
 
 :Date: 2020-07-28
-:Category: Markup
-:Tags: reStructuredText
+:Category: Software
+:Tags: markup, reStructuredText
 :Summary:
     Writing the various hyperlink syntaxes in reStructuredText, internal
     hyperlinks, and styling link text

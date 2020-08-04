@@ -3,8 +3,8 @@ Unicode and LaTeX
 =================
 
 :Date: 2020-07-27
-:Category: Markup
-:Tags: LaTeX, XeLaTeX, LuaLaTeX, Unicode, UTF-8
+:Category: Software
+:Tags: markup, LaTeX, XeLaTeX, LuaLaTeX, Unicode, UTF-8
 :Summary:
     How to configure LaTeX to accept UTF-8 input (or just use XeLaTeX/LuaLaTeX
     instead)
