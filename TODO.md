@@ -28,17 +28,11 @@
         - alabaster (Largely prefer over `sphinx_rtd_theme`)
         - `sphinx_rtd_theme`
         - Click theme?
-    - Show "last modified" date in article listings
     - Show SITESUBTITLE beneath SITENAME
     - Eliminate the "all categories" and "all tags" pages and instead list all
       categories & tags on the side of every page?
     - Link to feeds in both the document bodies (use feed system logos?) and
       via `<meta>`
-    - Test pagination rendering and pagination URLs
-        - Goals for pagination URLs:
-            - Subsequent index pages: `/{n}/`
-            - Subsequent category article listings: `/categories/{cat}/{n}/`
-            - Subsequent tag article listings: `/tags/{tag}/{n}/`
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
@@ -47,6 +41,13 @@
         - <https://github.com/davidlesieur/similar_posts>
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
         - <https://github.com/pelican-plugins/sitemap>?
+
+- Test pagination rendering and pagination URLs
+    - Goals for pagination URLs:
+        - Subsequent index pages: `/{n}/`
+        - Subsequent category article listings: `/categories/{cat}/{n}/`
+        - Subsequent tag article listings: `/tags/{tag}/{n}/`
+- Test display of "last modified" date
 
 
 Content To-Dos

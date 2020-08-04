@@ -5,6 +5,12 @@
             <header><h2 class="entry-title"><a href="{{SITEURL}}/{{article.url}}" rel="bookmark" title="Permalink to {{article.title|striptags}}">{{article.title}}</a></h2></header>
             <footer class="post-info">
                 <time class="published" datetime="{{article.date.isoformat()}}">{{article.locale_date}}</time>
+                {% if article.modified %}
+                <span class="last-updated">(last updated
+                <time class="modified" datetime="{{article.modified.isoformat()}}">
+                    {{article.locale_modified}}
+                </time>)</span>
+                {% endif %}
                 {% if SHOW_AUTHOR_IN_LISTINGS %}
                 <address class="vcard author">By
                     {% for author in article.authors %}
