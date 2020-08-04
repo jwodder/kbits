@@ -31,8 +31,7 @@
     - Show SITESUBTITLE beneath SITENAME
     - Eliminate the "all categories" and "all tags" pages and instead list all
       categories & tags on the side of every page?
-    - Link to feeds in both the document bodies (use feed system logos?) and
-      via `<meta>`
+    - Link to feeds in the document bodies (use feed system logos?)
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>

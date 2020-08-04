@@ -2,6 +2,15 @@
 
 {% block title %}{{SITENAME}} — {{tag}} Tag{% endblock %}
 
+{% block extra_head %}
+    {% if TAG_FEED_ATOM %}
+    <link href="{{FEED_DOMAIN}}/{% if TAG_FEED_ATOM_URL %}{{TAG_FEED_ATOM_URL.format(slug=tag.slug)}}{% else %}{{TAG_FEED_ATOM.format(slug=tag.slug)}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME}} {{tag}} Tag Atom Feed" />
+    {% endif %}
+    {% if TAG_FEED_RSS %}
+    <link href="{{FEED_DOMAIN}}/{% if TAG_FEED_RSS_URL %}{{TAG_FEED_RSS_URL.format(slug=tag.slug)}}{% else %}{{TAG_FEED_RSS.format(slug=tag.slug)}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME}} {{tag}} Tag RSS Feed" />
+    {% endif %}
+{% endblock %}
+
 {% block content_title %}
 <h2>Articles tagged with {{tag}}</h2>
 {% endblock %}

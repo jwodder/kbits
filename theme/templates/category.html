@@ -2,6 +2,15 @@
 
 {% block title %}{{SITENAME}} — {{category}} Category{% endblock %}
 
+{% block extra_head %}
+    {% if CATEGORY_FEED_ATOM %}
+    <link href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_ATOM_URL %}{{CATEGORY_FEED_ATOM_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_ATOM.format(slug=category.slug)}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME}} {{category}} Category Atom Feed" />
+    {% endif %}
+    {% if CATEGORY_FEED_RSS %}
+    <link href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_RSS_URL %}{{CATEGORY_FEED_RSS_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_RSS.format(slug=category.slug)}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME}} {{category}} Category RSS Feed" />
+    {% endif %}
+{% endblock %}
+
 {% block content_title %}
 <h2>Articles in the {{category}} Category</h2>
 {% endblock %}

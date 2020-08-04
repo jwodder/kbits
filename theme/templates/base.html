@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="{{SITEURL}}/{{THEME_STATIC_DIR}}/css/{{CSS_FILE}}"/>
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-    {% block extra_head %}
-    {% endblock %}
     {% if FEED_ALL_ATOM %}
     <link href="{{FEED_DOMAIN}}/{% if FEED_ALL_ATOM_URL %}{{FEED_ALL_ATOM_URL}}{% else %}{{FEED_ALL_ATOM}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME}} Full Atom Feed" />
     {% endif %}
@@ -21,18 +19,8 @@
     {% if FEED_RSS %}
     <link href="{{FEED_DOMAIN}}/{% if FEED_RSS_URL %}{{FEED_RSS_URL}}{% else %}{{FEED_RSS}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME}} RSS Feed" />
     {% endif %}
-    {% if CATEGORY_FEED_ATOM and category %}
-    <link href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_ATOM_URL %}{{CATEGORY_FEED_ATOM_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_ATOM.format(slug=category.slug)}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME}} Categories Atom Feed" />
-    {% endif %}
-    {% if CATEGORY_FEED_RSS and category %}
-    <link href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_RSS_URL %}{{CATEGORY_FEED_RSS_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_RSS.format(slug=category.slug)}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME}} Categories RSS Feed" />
-    {% endif %}
-    {% if TAG_FEED_ATOM and tag %}
-    <link href="{{FEED_DOMAIN}}/{% if TAG_FEED_ATOM_URL %}{{TAG_FEED_ATOM_URL.format(slug=tag.slug)}}{% else %}{{TAG_FEED_ATOM.format(slug=tag.slug)}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME}} Tags Atom Feed" />
-    {% endif %}
-    {% if TAG_FEED_RSS and tag %}
-    <link href="{{FEED_DOMAIN}}/{% if TAG_FEED_RSS_URL %}{{TAG_FEED_RSS_URL.format(slug=tag.slug)}}{% else %}{{TAG_FEED_RSS.format(slug=tag.slug)}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME}} Tags RSS Feed" />
-    {% endif %}
+    {% block extra_head %}
+    {% endblock %}
 </head>
 
 <body id="index" class="home">
