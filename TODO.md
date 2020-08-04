@@ -22,15 +22,12 @@
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Add `<link rel="canonical" href="$THIS_URL"/>` to HTML heads?
-    - Don't link to author pages
     - Set up a tag cloud system ("`tag_cloud`" plugin?)
     - Possible sources of styles:
         - `github.css` / GitHub
         - alabaster (Largely prefer over `sphinx_rtd_theme`)
         - `sphinx_rtd_theme`
         - Click theme?
-    - Switch back to using pelican-render-math (Revert 3ecb53f) after
-      <https://github.com/pelican-plugins/render-math/issues/7> is fixed?
     - Show "last modified" date in article listings
     - Show SITESUBTITLE beneath SITENAME
     - Eliminate the "all categories" and "all tags" pages and instead list all
@@ -60,11 +57,9 @@
             - Tag list: `/tags/`
             - Tag page: `/tags/{tag}/`
                 - Subsequent pages: `/tags/{tag}/{n}/`
-    - Set pagination to 50 or so?
-    - Improve pagination rendering
-        - cf. <https://github.com/pallets/flask-sqlalchemy/blob/master/src/flask_sqlalchemy/__init__.py#L376>
     - Link to feeds in both the document bodies (use feed system logos?) and
       via `<meta>`
+    - Test pagination rendering
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>

@@ -35,7 +35,7 @@ DOCUTILS_SETTINGS = {
     "math_output": "mathjax irrelevant.value",
 }
 
-DEFAULT_PAGINATION = False
+DEFAULT_PAGINATION = 20
 SLUGIFY_SOURCE = 'basename'
 PAGE_ORDER_BY = 'title'
 DEFAULT_CATEGORY = 'Miscellanea'
@@ -58,6 +58,7 @@ GITHUB_URL = 'https://github.com/jwodder/kbits'
 PATH_IN_REPO = PATH  # PATH relative to root of repository
 SHOW_AUTHOR = True
 LINK_AUTHOR = False
+AUTHOR_LINK = 'https://github.com/jwodder'
 SHOW_AUTHOR_IN_LISTINGS = False
 
 site_creation_year = 2020
@@ -102,3 +103,25 @@ AUTHOR_FEED_RSS = None
 
 # Other
 BIND = '127.0.0.1'
+
+# Based on <https://git.io/JJoUU>
+def iter_pages(current_page, total_pages, left_edge=2, left_current=2,
+               right_current=5, right_edge=2):
+    """
+    Iterates over the page numbers in the pagination.  The four parameters
+    control the thresholds how many numbers should be produced from the sides.
+    Skipped page numbers are represented as `None`.
+    """
+    last = 0
+    for num in range(1, total_pages + 1):
+        if (
+            num <= left_edge
+            or current_page - left_current - 1 < num < current_page + right_current
+            or num > total_pages - right_edge
+        ):
+            if last + 1 != num:
+                yield None
+            yield num
+            last = num
+
+JINJA_FILTERS = {"iter_pages": iter_pages}
