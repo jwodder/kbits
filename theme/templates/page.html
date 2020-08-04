@@ -4,7 +4,7 @@
 {% block title %}{{SITENAME}} — {{page.title|striptags}}{%endblock%}
 
 {% block extra_head %}
-    {% import 'translations.html' as translations with context %}
+    {% import 'translations.j2' as translations with context %}
     {% if translations.entry_hreflang(page) %}
         {{translations.entry_hreflang(page)}}
     {% endif %}
@@ -12,7 +12,7 @@
 
 {% block content %}
     <h1>{{page.title}}</h1>
-    {% import 'translations.html' as translations with context %}
+    {% import 'translations.j2' as translations with context %}
     {{translations.translations_for(page)}}
 
     {{page.content}}

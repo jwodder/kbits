@@ -5,7 +5,7 @@
 {% block title %}{{SITENAME}} — {{article.title|striptags}}{% endblock %}
 
 {% block extra_head %}
-    {% import 'translations.html' as translations with context %}
+    {% import 'translations.j2' as translations with context %}
     {% if translations.entry_hreflang(article) %}
         {{translations.entry_hreflang(article)}}
     {% endif %}
@@ -37,7 +37,7 @@
                 <a href="{{SITEURL}}/{{article.url}}" rel="bookmark"
                     title="Permalink to {{article.title|striptags}}">{{article.title}}</a>
             </h2>
-            {% import 'translations.html' as translations with context %}
+            {% import 'translations.j2' as translations with context %}
             {{translations.translations_for(article)}}
         </header>
         <footer class="post-info">
