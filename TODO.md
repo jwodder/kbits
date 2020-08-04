@@ -32,34 +32,13 @@
     - Show SITESUBTITLE beneath SITENAME
     - Eliminate the "all categories" and "all tags" pages and instead list all
       categories & tags on the side of every page?
-    - Possible URL layouts:
-        - System 1:
-            - Index: `index.html`
-                - Subsequent pages: `index2.html`
-            - Article/page: `{slug}.html`
-            - Category list: `categories.html`
-                - Change to `categories/` and pluralize category page basedir?
-            - Category page: `category/{cat}.html`
-                - Subsequent pages: `category/{cat}2.html`
-            - Tag list: `tags.html`
-                - Change to `tags/` and pluralize tag page basedir?
-            - Tag page: `tag/{tag}.html`
-                - Subsequent pages: `tag/{tag}2.html`
-        - System 2:
-            - Index: `/`
-                - Subsequent pages: `/{n}/`?
-            - Article/page: `/{slug}/`
-                - Prepend `/posts`? (Articles only)
-                - Put archives at `/posts/index.html`?
-            - Category list: `/categories/`
-            - Category page: `/categories/{cat}/`
-                - Subsequent pages: `/categories/{cat}/{n}/`
-            - Tag list: `/tags/`
-            - Tag page: `/tags/{tag}/`
-                - Subsequent pages: `/tags/{tag}/{n}/`
     - Link to feeds in both the document bodies (use feed system logos?) and
       via `<meta>`
-    - Test pagination rendering
+    - Test pagination rendering and pagination URLs
+        - Goals for pagination URLs:
+            - Subsequent index pages: `/{n}/`
+            - Subsequent category article listings: `/categories/{cat}/{n}/`
+            - Subsequent tag article listings: `/tags/{tag}/{n}/`
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>

@@ -20,9 +20,49 @@ USE_FOLDER_AS_CATEGORY = False
 
 # Site output layout
 OUTPUT_PATH = 'docs'
-PAGE_URL = PAGE_SAVE_AS = '{slug}.html'
-AUTHOR_SAVE_AS = AUTHORS_SAVE_AS = ''  # Disable author pages
-ARCHIVES_SAVE_AS = ''  # Disable archive pages (in favor of index)
+
+ARTICLE_URL = 'posts/{slug}/'
+ARTICLE_SAVE_AS = ARTICLE_URL + 'index.html'
+ARTICLE_LANG_URL = '{lang}/posts/{slug}/'
+ARTICLE_LANG_SAVE_AS = ARTICLE_LANG_URL + 'index.html'
+
+ARCHIVES_SAVE_AS = 'posts/index.html'
+
+DRAFT_URL = 'drafts/{slug}/'
+DRAFT_SAVE_AS = DRAFT_URL + 'index.html'
+DRAFT_LANG_URL = '{lang}/drafts/{slug}/'
+DRAFT_LANG_SAVE_AS = DRAFT_LANG_URL + 'index.html'
+
+PAGE_URL = '{slug}/'
+PAGE_SAVE_AS = PAGE_URL + 'index.html'
+PAGE_LANG_URL = '{lang}/{slug}/'
+PAGE_LANG_SAVE_AS = PAGE_LANG_URL + 'index.html'
+
+DRAFT_PAGE_URL = 'drafts/{slug}/'
+DRAFT_PAGE_SAVE_AS = DRAFT_PAGE_URL + 'index.html'
+DRAFT_PAGE_LANG_URL = '{lang}/drafts/{slug}/'
+DRAFT_PAGE_LANG_SAVE_AS = DRAFT_PAGE_LANG_URL + 'index.html'
+
+#AUTHOR_URL = 'authors/{slug}/'
+#AUTHOR_SAVE_AS = AUTHOR_URL + 'index.html'
+AUTHOR_SAVE_AS = ''  # Disable author pages
+#AUTHORS_SAVE_AS = 'authors/index.html'
+AUTHORS_SAVE_AS = ''  # Disable authors listing
+
+CATEGORY_URL = 'categories/{slug}/'
+CATEGORY_SAVE_AS = CATEGORY_URL + 'index.html'
+CATEGORIES_SAVE_AS = 'categories/index.html'
+
+TAG_URL = 'tags/{slug}/'
+TAG_SAVE_AS = TAG_URL + 'index.html'
+TAGS_SAVE_AS = 'tags/index.html'
+
+DEFAULT_PAGINATION = 20
+
+PAGINATION_PATTERNS = [
+    (1, '{url}', '{save_as}'),
+    (2, '{base_name}/{number}/', '{base_name}/{number}/index.html'),
+]
 
 
 # Building & formatting settings
@@ -35,7 +75,6 @@ DOCUTILS_SETTINGS = {
     "math_output": "mathjax irrelevant.value",
 }
 
-DEFAULT_PAGINATION = 20
 SLUGIFY_SOURCE = 'basename'
 PAGE_ORDER_BY = 'title'
 DEFAULT_CATEGORY = 'Miscellanea'
@@ -82,8 +121,8 @@ Commons Attribution 4.0 International License</a>.
 
 # TODO: Should these be shown on the top in the menu or on the side with LINKS?
 SITE_MENU_ITEMS = [
-    ('Categories', 'categories.html'),
-    ('Tags', 'tags.html'),
+    ('Categories', 'categories/'),
+    ('Tags', 'tags/'),
 ]
 
 LINKS_WIDGET_NAME = 'Links'
