@@ -23,7 +23,8 @@ def rebuild(session):
 def serve(session):
     """ Build the site and then serve it locally, watching for changes """
     session.install('-r', 'requirements.txt')
-    session.run('pelican', '-s', BUILD_CFG, *session.posargs)
+    # It appears that -r causes a build implicitly
+    #session.run('pelican', '-s', BUILD_CFG, *session.posargs)
     session.run('pelican', '-lr', '-s', BUILD_CFG)
 
 @nox.session
