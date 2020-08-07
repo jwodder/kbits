@@ -119,6 +119,8 @@ rel="cc:attributionURL">{AUTHOR}</a>.  This site's content is licensed under a
 Commons Attribution 4.0 International License</a>.
 '''
 
+DISPLAY_CATEGORIES_ON_MENU = False
+
 # TODO: Should these be shown on the top in the menu or on the side with LINKS?
 SITE_MENU_ITEMS = [
     ('Categories', 'categories/'),

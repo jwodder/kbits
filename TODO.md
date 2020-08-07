@@ -21,17 +21,15 @@
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
-    - Add `<link rel="canonical" href="$THIS_URL"/>` to HTML heads?
-    - Set up a tag cloud system ("`tag_cloud`" plugin?)
+    - Set up a tag cloud system? ("`tag_cloud`" plugin?)
     - Possible sources of styles:
         - `github.css` / GitHub
         - alabaster (Largely prefer over `sphinx_rtd_theme`)
         - `sphinx_rtd_theme`
         - Click theme?
     - Show SITESUBTITLE beneath SITENAME
-    - Eliminate the "all categories" and "all tags" pages and instead list all
-      categories & tags on the side of every page?
-    - Link to feeds in the document bodies (use feed system logos?)
+    - Link to feeds in the document bodies (use feed logo image)
+    - Add breadcrumbs to the tops of tag listings & category listings pages?
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
