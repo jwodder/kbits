@@ -3,3 +3,31 @@
 .last-updated {
     font-style: italic;
 }
+
+.topbar {
+}
+
+.container {
+    display: block;
+}
+
+.sidebar {
+    float: left;
+    display: block;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 20%;
+}
+
+.content {
+    float: right;
+    display: block;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 76%;
+}
+
+footer#contentinfo {
+    display: block;
+    clear: both;
+}

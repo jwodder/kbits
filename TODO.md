@@ -20,6 +20,8 @@
 
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
+        - Of interest:
+            - <https://github.com/getpelican/pelican-themes/tree/master/dev-random>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Set up a tag cloud system? ("`tag_cloud`" plugin?)
     - Possible sources of styles:
@@ -30,6 +32,12 @@
     - Show SITESUBTITLE beneath SITENAME
     - Link to feeds in the document bodies (use feed logo image)
     - Add breadcrumbs to the tops of tag listings & category listings pages?
+    - Put SITENAME and SITESUBTITLE at the top of the page; put the nav menu
+      vertically on the left of the part of the page below it; put content to
+      the right of the nav menu
+        - Where should breadcrumbs go?
+    - Instead of formatting article listings as a numbered list, put hrules
+      between the entries?
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
