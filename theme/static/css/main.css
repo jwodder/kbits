@@ -30,6 +30,7 @@
 footer#contentinfo {
     display: block;
     clear: both;
+    text-align: center;
 }
 
 hr.listing-break {

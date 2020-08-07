@@ -22,6 +22,7 @@
     - Themes gallery: <http://www.pelicanthemes.com>
         - Of interest:
             - <https://github.com/getpelican/pelican-themes/tree/master/dev-random>
+            - <https://github.com/getpelican/pelican-themes/tree/master/dev-random2>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Set up a tag cloud system? ("`tag_cloud`" plugin?)
     - Possible sources of styles:
