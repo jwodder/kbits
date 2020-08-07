@@ -6,8 +6,8 @@ All About reStructuredText Hyperlinks
 :Category: Software
 :Tags: markup, reStructuredText
 :Summary:
-    Writing the various hyperlink syntaxes in reStructuredText, internal
-    hyperlinks, and styling link text
+    Writing the various hyperlink syntaxes in reStructuredText, along with
+    internal hyperlinks and styling link text
 
 reStructuredText_ offers a number of different ways to write hyperlinks, but
 keeping track of all of them and their gotchas isn't easy, and the information

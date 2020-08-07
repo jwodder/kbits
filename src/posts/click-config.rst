@@ -4,7 +4,7 @@ Setting Default Option Values from Config Files with Click
 
 :Date: 2020-07-17
 :Category: Programming
-:Tags: Python, Click
+:Tags: Python, Click, configuration file
 :Summary:
     How to set up a Click program to read default option values from a config
     file
