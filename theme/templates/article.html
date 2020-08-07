@@ -69,8 +69,7 @@
             <div class="tags">
                 Tags:
                 {% if article.tags %}
-                    {% set sep = joiner(', ') %}
-                    {% for tag in article.tags %}{{sep()}}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{% endfor %}
+                    {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{{', ' if not loop.last}}{% endfor %}
                 {% else %}
                     —
                 {% endif %}

@@ -22,6 +22,14 @@
                     {% endfor %}
                 </address>
                 {% endif %}
+                <div class="cat-and-tags">
+                    <a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a>; 
+                    {% if article.tags %}
+                        {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{{', ' if not loop.last}}{% endfor %}
+                    {% else %}
+                        —
+                    {% endif %}
+                </div>
             </footer><!-- /.post-info -->
             <div class="entry-content">{{article.summary}}</div>
         </article></li>
