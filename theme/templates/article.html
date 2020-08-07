@@ -31,10 +31,10 @@
 <section id="content" class="body">
     <article>
         <header>
-            <h2 class="entry-title">
+            <h1 class="entry-title">
                 <a href="{{SITEURL}}/{{article.url}}" rel="bookmark"
                     title="Permalink to {{article.title|striptags}}">{{article.title}}</a>
-            </h2>
+            </h1>
             {% import 'translations.j2' as translations with context %}
             {{translations.translations_for(article)}}
         </header>
