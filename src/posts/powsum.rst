@@ -4,7 +4,7 @@ Deriving the Formula for the Sum of :math:`n`-th Powers
 
 :Date: 2020-07-30
 :Category: Mathematics
-:Tags: mathematics, summations
+:Tags: summations
 :Summary:
     How to derive the closed-form expression for :math:`\sum_{i=1}^n i^m` from
     the formulas for all lesser :math:`m`'s
