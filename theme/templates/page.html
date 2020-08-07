@@ -5,9 +5,7 @@
 
 {% block extra_head %}
     {% import 'translations.j2' as translations with context %}
-    {% if translations.entry_hreflang(page) %}
-        {{translations.entry_hreflang(page)}}
-    {% endif %}
+    {{translations.entry_hreflang(page)}}
 {% endblock %}
 
 {% block content %}
