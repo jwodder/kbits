@@ -31,3 +31,7 @@ footer#contentinfo {
     display: block;
     clear: both;
 }
+
+hr.listing-break {
+    width: 66%;
+}

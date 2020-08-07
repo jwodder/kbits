@@ -36,8 +36,6 @@
       vertically on the left of the part of the page below it; put content to
       the right of the nav menu
         - Where should breadcrumbs go?
-    - Instead of formatting article listings as a numbered list, put hrules
-      between the entries?
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
