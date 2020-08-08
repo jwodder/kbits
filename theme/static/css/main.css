@@ -1,4 +1,7 @@
 @import url('pygments.css');
+@import url('sidebar.css');
+@import url('kbd.css');
+@import url('admonitions.css');
 
 .last-updated {
     font-style: italic;
@@ -11,7 +14,7 @@
     display: block;
 }
 
-.sidebar {
+.navbar {
     float: left;
     display: block;
     margin-left: 1%;
@@ -39,4 +42,8 @@ hr.listing-break {
 
 a {
     text-decoration: none;
+}
+
+pre {
+    padding: 12px;
 }

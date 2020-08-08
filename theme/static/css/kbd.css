@@ -1,0 +1,19 @@
+/*!
+ * @primer/css/core
+ * http://primer.style/css
+ *
+ * Released under MIT license. Copyright (c) 2019 GitHub Inc.
+ */
+
+kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    line-height: 10px;
+    color: #444d56;
+    vertical-align: middle;
+    background-color: #fafbfc;
+    border: 1px solid #d1d5da;
+    border-radius: 6px;
+    box-shadow:inset 0 -1px 0 #d1d5da
+}
