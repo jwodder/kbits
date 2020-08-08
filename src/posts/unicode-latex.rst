@@ -9,6 +9,9 @@ Unicode and LaTeX
     How to configure LaTeX to accept UTF-8 input (or just use XeLaTeX/LuaLaTeX
     instead)
 
+.. role:: tx(code)
+    :language: tex
+
 LaTeX is a powerful document typesetting system, but (especially if you're
 using a version even a few years old), getting it to accept and display
 non-ASCII characters natively requires knowledge squirreled away in scattered
@@ -29,7 +32,7 @@ simply placing the following commands at the top of your document preamble:
 
 The exact effects of these commands are as follows:
 
-- ``\usepackage[T1]{fontenc}`` sets the output font encoding to T1_.  A font
+- :tx:`\usepackage[T1]{fontenc}` sets the output font encoding to T1_.  A font
   encoding is a mapping between character codes and glyphs in a font; the font
   encodings defined by LaTeX are described in [#encguide]_.
 
@@ -49,13 +52,13 @@ The exact effects of these commands are as follows:
   package, the last encoding in the list becomes the document's default
   encoding, and switching to the other encodings (e.g., in order to enter
   characters only defined by those encodings) requires using the commands
-  ``\fontencoding{INSERT ENCODING NAME HERE} \selectfont``. [#source2e]_
+  :tx:`\fontencoding{INSERT ENCODING NAME HERE} \selectfont`. [#source2e]_
   [#minimal]_ [#latex2e-unoff]_
 
-.. _T1: http://www.micropress-inc.com/fonts/encoding/t1.htm
-.. _OT1: http://www.micropress-inc.com/fonts/encoding/ot1.htm
+  .. _T1: http://www.micropress-inc.com/fonts/encoding/t1.htm
+  .. _OT1: http://www.micropress-inc.com/fonts/encoding/ot1.htm
 
-- ``\usepackage[utf8]{inputenc}`` sets the input encoding for the document
+- :tx:`\usepackage[utf8]{inputenc}` sets the input encoding for the document
   source to UTF-8, allowing UTF-8 characters to appear in the input document.
   Additionally, for each font encoding used in the document, ``inputenc`` loads
   a mapping of UTF-8 characters to commands usable in that font encoding.
@@ -71,8 +74,8 @@ The exact effects of these commands are as follows:
   current font. [#ltnews28]_
   
   Beginning with the 2018-04-01 release, LaTeX uses UTF-8 as the default
-  encoding for source files, making ``\usepackage[utf8]{inputenc}`` redundant.
-  [#ltnews28]_
+  encoding for source files, making :tx:`\usepackage[utf8]{inputenc}`
+  redundant. [#ltnews28]_
 
 Once the above commands are added to your document preamble, you will be able
 to enter a number of UTF-8 characters directly into your document and have them
@@ -102,7 +105,7 @@ typesetting will stop with an error message of the form::
     (inputenc)                not set up for use with LaTeX.
 
 If you want to use a certain character in your document that LaTeX doesn't
-recognize, you can use the ``\DeclareUnicodeCharacter{hexcode}{cmd}`` command
+recognize, you can use the :tx:`\DeclareUnicodeCharacter{hexcode}{cmd}` command
 provided by ``inputenc``.  Its first argument is the hexadecimal code point of
 the Unicode character to define, and the second argument is the LaTeX command
 to execute when the character is encountered. [#inputenc]_  For example:
@@ -114,7 +117,7 @@ to execute when the character is encountered. [#inputenc]_  For example:
     % Now you can put ☃ in your document!
 
 If you don't want to have to enter characters as codepoints, the
-``\newunicodechar`` command provided by `the newunicodechar package
+:tx:`\newunicodechar` command provided by `the newunicodechar package
 <https://ctan.org/pkg/newunicodechar>`_ lets you use the character itself
 instead, [#newunicodechar-docs]_ allowing us to rewrite the example above as:
 
@@ -127,7 +130,7 @@ instead, [#newunicodechar-docs]_ allowing us to rewrite the example above as:
 
 As a special case, using the ``textcomp`` package enables all of the Unicode
 characters that can be represented with the package's commands; e.g.,
-``textcomp`` defines a ``\textmusicalnote`` command that produces ♪ (U+266A,
+``textcomp`` defines a :tx:`\textmusicalnote` command that produces ♪ (U+266A,
 EIGHTH NOTE), and so including ``textcomp`` in your preamble allows you to
 write "♪" in your document.
 
@@ -163,8 +166,8 @@ A purely-Cyrillic document can be written with the X2 font encoding as follows:
 If you want to use both Cyrillic and Latin characters in your document, you
 need to pass both T1 and X2 to ``fontenc``.  Whichever one is listed last in
 the ``fontenc`` command becomes the default font encoding for the document; the
-other font encoding can be switched to by writing ``\fontencoding{INSERT
-ENCODING NAME HERE} \selectfont``. [#source2e]_ [#minimal]_ [#latex2e-unoff]_
+other font encoding can be switched to by writing :tx:`\fontencoding{INSERT
+ENCODING NAME HERE} \selectfont`. [#source2e]_ [#minimal]_ [#latex2e-unoff]_
 For example:
 
 .. code:: latex
@@ -179,13 +182,14 @@ For example:
 
 Managing encodings this way can get annoying; fortunately, `the babel package
 <https://ctan.org/pkg/babel>`_ provides a better way.  Add a
-``\usepackage[LANGUAGES]{babel}`` command to your preamble, where ``LANGUAGES``
-is replaced by a comma-separated list of the languages that will be used in
-your document; the last language in the list will become the document's default
-language.  Within the document, the language can be changed with
-``\selectlanguage{LANGUAGE}`` (though, for short passages, it's better to use
-``\foreignlanguage{LANGUAGE}{TEXT}``), and when it's set to a Cyrillic-using
-language, you can write in Cyrillic. [#babel]_ [#cyrguide]_  For example:
+:tx:`\usepackage[LANGUAGES]{babel}` command to your preamble, where
+``LANGUAGES`` is replaced by a comma-separated list of the languages that will
+be used in your document; the last language in the list will become the
+document's default language.  Within the document, the language can be changed
+with :tx:`\selectlanguage{LANGUAGE}` (though, for short passages, it's better
+to use :tx:`\foreignlanguage{LANGUAGE}{TEXT}`), and when it's set to a
+Cyrillic-using language, you can write in Cyrillic. [#babel]_ [#cyrguide]_  For
+example:
 
 .. code:: latex
 
@@ -310,7 +314,7 @@ pdfLaTeX and XeLaTeX/LuaLaTeX are:
   font, the character will be omitted in the resulting PDF.  No warning will be
   emitted or logged.
 
-- ``\DeclareUnicodeCharacter`` is not a valid command in XeLaTeX or LuaLaTeX;
+- :tx:`\DeclareUnicodeCharacter` is not a valid command in XeLaTeX or LuaLaTeX;
   one must instead write something like:
 
   .. code:: latex
@@ -319,7 +323,7 @@ pdfLaTeX and XeLaTeX/LuaLaTeX are:
       \catcode`☃=\active
       \protected\def ☃{\Snowman}
 
-  ``\newunicodechar`` can still be used in place of this method, though.
+  :tx:`\newunicodechar` can still be used in place of this method, though.
   [#newunicodechar-docs]_
 
 - Being able to write in another alphabet is largely a matter of switching to a
