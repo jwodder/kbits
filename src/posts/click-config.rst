@@ -9,6 +9,9 @@ Setting Default Option Values from Config Files with Click
     How to set up a Click program to read default option values from a config
     file
 
+.. role:: py(code)
+    :language: python
+
 When developing a command-line application in Python with Click_, you may find
 yourself wanting to use a configuration file to set the parameters' default
 values at runtime and to be able to specify such a file with a ``--config``
@@ -28,26 +31,26 @@ All code in this document has been tested against Click version 7.1.2.
 
 The key feature of Click that will allow us to set parameter values from a
 configuration file is the ``default_map`` attribute of ``click.Context``,
-documented at `[1]
-<https://click.palletsprojects.com/en/7.x/commands/#overriding-defaults>`_.
-Any values set in this ``dict`` before parameters are processed will become the
-parameters' new default values.  Any extra keys that do not correspond to
-defined parameters are ignored.
+documented at `[1]`__.  Any values set in this :py:`dict` before parameters are
+processed will become the parameters' new default values.  Any extra keys that
+do not correspond to defined parameters are ignored.
+
+__ https://click.palletsprojects.com/en/7.x/commands/#overriding-defaults
 
 Moreover, Click will map values in ``default_map`` through the parameters'
 normal type conversion & validation routines.  This means that, if you have an
-option ``--foo`` defined with ``type=int``, you can set
-``ctx.default_map["foo"] = "5"``, and the value will be converted to an ``int``
-by the time it's passed to the command callback.  This even works for boolean
-flags: a value set for a boolean flag option will be processed by the
-|click_BOOL|_ type, which maps boolean-like strings to ``bool`` values.  This
+option ``--foo`` defined with :py:`type=int`, you can set
+:py:`ctx.default_map["foo"] = "5"`, and the value will be converted to an
+:py:`int` by the time it's passed to the command callback.  This even works for
+boolean flags: a value set for a boolean flag option will be processed by the
+|click_BOOL|_ type, which maps boolean-like strings to :py:`bool` values.  This
 eases your workload when reading from a configuration file type like INI where
 values don't come with type information; just pass the values straight to
 Click, and it'll do the conversion for you the same as it does for values on
 the command line.
 
-Areas to be careful in include parameters defined with ``multiple=True``.
-The default value for such parameters (whether declared with ``default=`` in
+Areas to be careful in include parameters defined with :py:`multiple=True`.
+The default value for such parameters (whether declared with :py:`default=` in
 the parameter's decorator or set in ``default_map``) must be a list or tuple;
 setting such a default to a string will cause the string to be interpreted as a
 list of single-character strings.  Also requiring special attention are options
@@ -67,7 +70,8 @@ that it can modify ``ctx.default_map`` before the other options read it, and it
 needs to be defined with a callback that does the actual work.  Everything else
 after that is straightforward.
 
-.. _eager: https://click.palletsprojects.com/en/7.x/options/#callbacks-and-eager-options
+.. _eager: https://click.palletsprojects.com/en/7.x/options/
+           #callbacks-and-eager-options
 
 Here is a sample Python script with a ``--config`` option that reads from a
 given config file (or from ``config.ini`` in the current directory if no config
@@ -192,8 +196,8 @@ command callback.  For example, the ``--integer`` option must be written
 file with an invalid spelling will be ignored.  For options with medial hyphens
 on the command line, like ``--log-level``, the hyphens must become underscores
 in the configuration file, like ``log_level``.  If you want to support the
-spelling ``log-level`` as well, insert the following line after ``cfg =
-ConfigParser()`` to make the ``ConfigParser`` object convert hyphens in option
+spelling ``log-level`` as well, insert the following line after :py:`cfg =
+ConfigParser()` to make the ``ConfigParser`` object convert hyphens in option
 names to underscores:
 
 .. code:: python
@@ -206,8 +210,8 @@ Configuring command groups
 
 ``default_map`` supports passing values to subcommands in command groups in a
 very simple way: if the main command has a subcommand named "``foo``", then
-``ctx.default_map["foo"]`` can be set to a ``dict`` of parameter names & values
-for ``foo``.  For example, the following assignment:
+:py:`ctx.default_map["foo"]` can be set to a :py:`dict` of parameter names &
+values for ``foo``.  For example, the following assignment:
 
 .. code:: python
 
