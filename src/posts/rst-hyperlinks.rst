@@ -536,9 +536,11 @@ renders as:
 
     Try this recipe for `pie *à la mode* <https://www.example.com>`_.
 
-and the "à la mode" is not emphasized.
+The asterisks are rendered as-is instead of causing the "à la mode" to be
+emphasized.
 
-Fortunately, there's a trick to use inline markup in link text: Define the link using a substitution:
+Fortunately, there's a trick to use inline markup in link text: Define the link
+using a substitution:
 
 .. code:: rst
 
