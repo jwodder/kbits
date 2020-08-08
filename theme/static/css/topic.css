@@ -1,0 +1,50 @@
+/*
+ * Sphinx stylesheet -- basic theme.
+ *
+ * :copyright: Copyright 2007-2020 by the Sphinx team, see AUTHORS.
+ * :license: BSD, see LICENSE for details.
+ *
+ */
+
+div.topic:not(.dedication):not(.abstract) {
+    background-color: #EEE;
+    clear: left;
+    border: 1px solid #ccc;
+    padding: 7px;
+    margin: 10px 0 10px 0;
+}
+
+p.topic-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+div.topic > :last-child {
+    margin-bottom: 0;
+}
+
+div.topic::after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+div.abstract {
+    margin: 2em 5em;
+}
+
+/* Taken from Docutils' html4css1.css: */
+
+div.dedication {
+    margin: 2em 5em;
+    text-align: center;
+    font-style: italic;
+}
+
+div.abstract p.topic-title,
+div.dedication p.topic-title {
+    font-weight: bold;
+    text-align: center;
+    font-style: normal;
+}

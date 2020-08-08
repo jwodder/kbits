@@ -1,7 +1,10 @@
+@import url('admonitions.css');
+@import url('kbd.css');
+@import url('lists.css');
 @import url('pygments.css');
 @import url('sidebar.css');
-@import url('kbd.css');
-@import url('admonitions.css');
+@import url('table.css');
+@import url('topic.css');
 
 .last-updated {
     font-style: italic;
@@ -36,7 +39,7 @@ footer#contentinfo {
     text-align: center;
 }
 
-hr.listing-break {
+hr {
     width: 66%;
 }
 
@@ -46,4 +49,25 @@ a {
 
 pre {
     padding: 12px;
+}
+
+div.line-block {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+div.line-block div.line-block {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 1.5em;
+}
+
+.rubric {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.sidebar p.rubric {
+    font-size: medium;
 }

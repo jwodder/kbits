@@ -44,58 +44,58 @@
 .admonition-title {
     font-style: normal;
     font-variant: normal;
-    font-weight: 700;
+    font-weight: bold;
     font-size: 14px;
     font-height: 1;
     text-rendering: auto;
     display: block;
     color: #fff;
     background: #6ab0de;
-    padding:6px 12px;
-    margin:-12px -12px 12px
+    padding: 6px 12px;
+    margin: -12px -12px 12px;
 }
 
 .danger,
 .error {
-    background:#fdf3f2
+    background: #fdf3f2;
 }
 
 .danger .admonition-title,
 .error .admonition-title {
-    background:#f29f97
+    background: #f29f97;
 }
 
 .attention,
 .caution,
 .warning {
-    background:#ffedcc
+    background: #ffedcc;
 }
 
 .attention .admonition-title,
 .caution .admonition-title,
 .warning .admonition-title
 {
-    background:#f0b37e
+    background: #f0b37e;
 }
 
 .note {
-    background:#e7f2fa
+    background: #e7f2fa;
 }
 
 .note .admonition-title {
-    background:#6ab0de
+    background: #6ab0de;
 }
 
 .hint,
 .important,
 .tip {
-    background:#dbfaf4
+    background: #dbfaf4;
 }
 
 .hint .admonition-title,
 .important .admonition-title,
 .tip .admonition-title {
-    background:#1abc9c
+    background: #1abc9c;
 }
 
 .admonition .last, .admonition>:last-child, .admonition p:last-child,
@@ -108,5 +108,5 @@
 .note .last, .note>:last-child, .note p:last-child,
 .tip .last, .tip>:last-child, .tip p:last-child,
 .warning .last, .warning>:last-child, .warning p:last-child {
-    margin-bottom:0
+    margin-bottom: 0;
 }

@@ -37,6 +37,8 @@
       vertically on the left of the part of the page below it; put content to
       the right of the nav menu
         - Where should breadcrumbs go?
+    - Add a favicon?
+    - Improve display of article metadata in article pages
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
@@ -45,6 +47,16 @@
         - <https://github.com/davidlesieur/similar_posts>
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
         - <https://github.com/pelican-plugins/sitemap>?
+
+- Adjust CSS:
+    - Get multi-paragraph footnotes to have the same vertical top as the
+      footnote label, as in sphinx-rtd-theme and not Docutils
+        - This may require an HTML5 writer
+    - Remove border & background from TOCs?
+    - Get post titles to be larger
+    - Include Docutils' table styles (borderless, booktabs,
+      align-{left,center,right})
+    - Use html4css1.css as the base stylesheet?
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:

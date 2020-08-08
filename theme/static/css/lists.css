@@ -1,0 +1,45 @@
+/* From David Goodger's html4css1.css, part of Docutils, placed into the public
+ * domain */
+
+dl.docutils dd {
+    margin-bottom: 0.5em;
+}
+
+span.classifier {
+    font-family: sans-serif;
+    font-style: oblique;
+}
+
+span.classifier-delimiter {
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+ol.simple,
+ul.simple {
+    margin-bottom: 1em;
+}
+
+ol.arabic {
+    list-style: decimal;
+}
+
+ol.loweralpha {
+    list-style: lower-alpha;
+}
+
+ol.upperalpha {
+    list-style: upper-alpha;
+}
+
+ol.lowerroman {
+    list-style: lower-roman;
+}
+
+ol.upperroman {
+    list-style: upper-roman;
+}
+
+ul.auto-toc {
+    list-style-type: none;
+}

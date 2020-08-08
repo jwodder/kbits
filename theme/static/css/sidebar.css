@@ -30,23 +30,30 @@
     display: block;
     margin: 0 0 24px 24px;
     padding: 24px;
-    background: #f3f6f6;
+    background: /*#f3f6f6*/ #FEF49C;
     border: 1px solid #e1e4e5;
 }
 
-.sidebar dl, .sidebar p,.sidebar ul {
+.sidebar dl,
+.sidebar p,
+.sidebar ul {
     font-size: 90%;
 }
-.sidebar .last, .sidebar>:last-child {
+.sidebar .last,
+.sidebar>:last-child {
     margin-bottom: 0;
 }
 
 .sidebar .sidebar-title {
     display: block;
     font-family: Roboto Slab,ff-tisa-web-pro,Georgia,Arial,sans-serif;
-    font-weight: 700;
-    background: #e1e4e5;
+    font-weight: bold;
+    background: /*#e1e4e5*/ #FEEA3D;
     padding: 6px 12px;
     margin: -24px -24px 24px;
     font-size: 100%;
+}
+
+.sidebar .sidebar-subtitle {
+    font-weight: bold;
 }
