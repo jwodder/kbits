@@ -56,7 +56,6 @@
     - Tweak the coloration of visited links
     - Prevent `.align-*` on a table from affecting the alignment of text within
     - Add vertical space above copyright footer
-    - Use GitHub styles for blockquotes?
     - Make visited page titles (and visited site title?) not change color
 
 - Test pagination rendering and pagination URLs

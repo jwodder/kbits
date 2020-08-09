@@ -27,9 +27,11 @@ a.toc-backref {
     color: black;
 }
 
+/*
 blockquote.epigraph {
     margin: 2em 5em;
 }
+*/
 
 div.compound .compound-first,
 div.compound .compound-middle {
