@@ -11,6 +11,7 @@
         - Write a README for the theme describing its features & configuration
         - This will require rewriting the custom Jinja filters in pure Jinja
         - Set up a kbits-theme-demo site
+        - At some point, improve how translations are shown
 
 - Necessary settings for GitHub repository:
     - Settings > GitHub Pages > Source: gh-pages branch
@@ -52,7 +53,6 @@
 
 - Adjust CSS:
     - Tweak the coloration of visited links
-    - Add vertical space above copyright footer
     - Improve styling of SITESUBTITLE
 
 - Test pagination rendering and pagination URLs

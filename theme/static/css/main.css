@@ -61,6 +61,7 @@ footer#contentinfo {
     clear: both;
     text-align: center;
     font-size: smaller;
+    padding-top: 1em;
 }
 
 hr {
