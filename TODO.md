@@ -39,6 +39,9 @@
         - Where should breadcrumbs go?
     - Add a favicon?
     - Improve display of article metadata in article pages
+    - Use a large CC license image in the footer and have the footer text as a
+      paragraph to the right of it?
+    - Give the page structure `<div>`'s IDs which the CSS then refers to
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
@@ -54,9 +57,6 @@
         - This may require an HTML5 writer
     - Remove border & background from TOCs?
     - Get post titles to be larger
-    - Include Docutils' table styles (borderless, booktabs,
-      align-{left,center,right})
-    - Use html4css1.css as the base stylesheet?
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:

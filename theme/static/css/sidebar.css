@@ -46,7 +46,7 @@
 
 .sidebar .sidebar-title {
     display: block;
-    font-family: Roboto Slab,ff-tisa-web-pro,Georgia,Arial,sans-serif;
+    /*font-family: Roboto Slab,ff-tisa-web-pro,Georgia,Arial,sans-serif;*/
     font-weight: bold;
     background: /*#e1e4e5*/ #FEEA3D;
     padding: 6px 12px;

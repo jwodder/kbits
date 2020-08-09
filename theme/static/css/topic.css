@@ -29,22 +29,3 @@ div.topic::after {
     content: '';
     clear: both;
 }
-
-div.abstract {
-    margin: 2em 5em;
-}
-
-/* Taken from Docutils' html4css1.css: */
-
-div.dedication {
-    margin: 2em 5em;
-    text-align: center;
-    font-style: italic;
-}
-
-div.abstract p.topic-title,
-div.dedication p.topic-title {
-    font-weight: bold;
-    text-align: center;
-    font-style: normal;
-}
