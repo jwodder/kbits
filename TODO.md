@@ -25,13 +25,11 @@
             - <https://github.com/getpelican/pelican-themes/tree/master/dev-random2>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Set up a tag cloud system? ("`tag_cloud`" plugin?)
-    - Show SITESUBTITLE beneath SITENAME
+    - Show SITESUBTITLE beneath/beside SITENAME
     - Link to feeds in the document bodies (Use feed logo image)
     - Add breadcrumbs to the tops of tag listings & category listings pages?
     - Add a favicon?
     - Improve display of article metadata in article pages
-    - Use a large CC license image in the footer and have the footer text as a
-      paragraph to the right of it?
     - Give the page structure `<div>`'s IDs which the CSS then refers to
     - Don't use `<h1>` for site title
     - Get rid of unused styles & IDs from templates
@@ -39,7 +37,6 @@
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
           for adding descriptions to category/tag pages?
-        - <https://github.com/pelican-plugins/more-categories>?
         - <https://github.com/davidlesieur/similar_posts>
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
         - <https://github.com/pelican-plugins/sitemap>?
@@ -63,3 +60,4 @@ Content To-Dos
     - Add section on dealing with `multiple`, `nargs`, & type-tuples?
 - unicode-latex: Add a paragraph at the end of the intro that says "Summary:
   Just use XeLaTeX/LuaLaTeX"?
+- rst-hyperlinks.rst: Show outputs for more examples

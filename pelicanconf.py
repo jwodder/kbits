@@ -5,6 +5,8 @@ AUTHOR = 'John T. Wodder II'
 SITENAME = 'Knowledge Bits'
 #SITESUBTITLE = 'All about the things I know'
 #SITESUBTITLE = 'Things I know about stuff'
+#SITESUBTITLE = 'Bits of knowledge I possess'
+#SITESUBTITLE = 'On the things I know'
 DEFAULT_LANG = 'en'
 TIMEZONE = 'America/New_York'
 LOCALE = 'en_US.UTF-8'
@@ -109,7 +111,7 @@ else:
 
 FOOTER_HTML = f'''
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-    <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
 Copyright © {copyright_years} <a xmlns:cc="http://creativecommons.org/ns#"
