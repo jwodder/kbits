@@ -1,5 +1,6 @@
 @import url('docutils.css');
 @import url('admonitions.css');
+@import url('headers.css');
 @import url('kbd.css');
 @import url('pygments.css');
 @import url('sidebar.css');
@@ -42,6 +43,8 @@ footer#contentinfo {
 
 hr {
     width: 66%;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 a {
@@ -60,4 +63,17 @@ pre {
 .footnote td>p:first-of-type,
 .citation td>p:first-of-type {
     display: inline;
+}
+
+h1 tt, h1 code,
+h2 tt, h2 code,
+h3 tt, h3 code,
+h4 tt, h4 code,
+h5 tt, h5 code,
+h6 tt, h6 code {
+    font-size: inherit;
+}
+
+h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+    background-color: transparent;
 }

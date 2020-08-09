@@ -72,15 +72,6 @@ h6.section-subtitle {
     margin-top: 0.4em;
 }
 
-h1 tt.docutils,
-h2 tt.docutils,
-h3 tt.docutils,
-h4 tt.docutils,
-h5 tt.docutils,
-h6 tt.docutils {
-    font-size: 100%;
-}
-
 span.section-subtitle {
     /* font-size relative to parent (h1..h6 element) */
     font-size: 80%;

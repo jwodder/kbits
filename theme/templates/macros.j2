@@ -1,7 +1,7 @@
 {% macro list_articles(article_list) %}
     {% for article in article_list %}
     <article class="hentry">
-        <header><h2 class="entry-title"><a href="{{SITEURL}}/{{article.url}}" rel="bookmark" title="Permalink to {{article.title|striptags}}">{{article.title}}</a></h2></header>
+        <header><h2 class="listing"><a href="{{SITEURL}}/{{article.url}}" rel="bookmark" title="Permalink to {{article.title|striptags}}">{{article.title}}</a></h2></header>
         <footer class="post-info">
             <time class="published" datetime="{{article.date.isoformat()}}">{{article.locale_date}}</time>
             {% if article.modified %}

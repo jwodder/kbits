@@ -25,23 +25,16 @@
             - <https://github.com/getpelican/pelican-themes/tree/master/dev-random2>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Set up a tag cloud system? ("`tag_cloud`" plugin?)
-    - Possible sources of styles:
-        - `github.css` / GitHub
-        - alabaster (Largely prefer over `sphinx_rtd_theme`)
-        - `sphinx_rtd_theme`
-        - Click theme?
     - Show SITESUBTITLE beneath SITENAME
-    - Link to feeds in the document bodies (use feed logo image)
+    - Link to feeds in the document bodies (Use feed logo image)
     - Add breadcrumbs to the tops of tag listings & category listings pages?
-    - Put SITENAME and SITESUBTITLE at the top of the page; put the nav menu
-      vertically on the left of the part of the page below it; put content to
-      the right of the nav menu
-        - Where should breadcrumbs go?
     - Add a favicon?
     - Improve display of article metadata in article pages
     - Use a large CC license image in the footer and have the footer text as a
       paragraph to the right of it?
     - Give the page structure `<div>`'s IDs which the CSS then refers to
+    - Don't use `<h1>` for site title
+    - Get rid of unused styles & IDs from templates
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
@@ -52,9 +45,7 @@
         - <https://github.com/pelican-plugins/sitemap>?
 
 - Adjust CSS:
-    - Remove border & background from TOCs?
-    - Get post titles to be larger
-    - Tweak the coloration of visited links?
+    - Tweak the coloration of visited links
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:
@@ -66,7 +57,6 @@
 
 Content To-Dos
 --------------
-
 - powsum: Rename the variables so that `n` is the exponent
 - click-config:
     - Drop last example output?
