@@ -57,8 +57,6 @@
     - Prevent `.align-*` on a table from affecting the alignment of text within
     - Add vertical space above copyright footer
     - Use GitHub styles for blockquotes?
-    - Style topics like
-      <https://github.com/pallets/pallets-sphinx-themes/blob/master/src/pallets_sphinx_themes/themes/pocoo/static/pocoo.css#L253>?
     - Make visited page titles (and visited site title?) not change color
 
 - Test pagination rendering and pagination URLs

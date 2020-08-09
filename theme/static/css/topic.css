@@ -1,3 +1,24 @@
+/* From <https://github.com/pallets/pallets-sphinx-themes/blob/b0c6c41849b4e15cbf62cc1d95c05ef2b3e155c8/src/pallets_sphinx_themes/themes/pocoo/static/pocoo.css> */
+
+div.topic:not(.dedication):not(.abstract) {
+    background-color: #fafafa;
+    margin: 10px -10px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    border-left: none;
+}
+
+div.topic:not(.dedication):not(.abstract) p.topic-title {
+    font-weight: normal;
+    font-size: /*24px*/ 1.5em;
+    margin: 0 0 10px 0;
+    padding: 0;
+    line-height: 1;
+    display: inline;
+}
+
 /*
  * Sphinx stylesheet -- basic theme.
  *
@@ -6,26 +27,19 @@
  *
  */
 
-div.topic:not(.dedication):not(.abstract) {
-    background-color: #EEE;
-    clear: left;
-    border: 1px solid #ccc;
-    padding: 7px;
-    margin: 10px 0 10px 0;
-}
-
-p.topic-title {
+div.dedication p.topic-title,
+div.abstract p.topic-title {
     font-size: 1.1em;
     font-weight: bold;
     margin-top: 10px;
-}
-
-div.topic > :last-child {
-    margin-bottom: 0;
 }
 
 div.topic::after {
     display: block;
     content: '';
     clear: both;
+}
+
+div.topic > :last-child {
+    margin-bottom: 0;
 }
