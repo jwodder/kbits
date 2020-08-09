@@ -75,6 +75,7 @@ DOCUTILS_SETTINGS = {
     "smart_quotes": True,
     "strip_comments": True,
     "math_output": "mathjax irrelevant.value",
+    "toc_backlinks": "top",
 }
 
 SLUGIFY_SOURCE = 'basename'
