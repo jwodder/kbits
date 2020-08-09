@@ -50,7 +50,6 @@
                     <td><time class="modified" datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time></td>
                 </tr>
                 {% endif %}
-
                 {% if SHOW_AUTHOR and article.authors %}
                 <tr>
                     <th>Author{% if article.authors|length > 1 %}s{% endif %}:</th>
@@ -82,10 +81,10 @@
                         {% endif %}
                     </td>
                 </tr>
-                {% if GITHUB_URL %}
+                {% if GITHUB_SOURCE_URL %}
                 <tr>
                     <th>Page Source:</th>
-                    <td><a href="{{GITHUB_URL}}/blob/master/{{PATH_IN_REPO}}/{{article.relative_source_path}}">[link]</a></td>
+                    <td><a href="{{GITHUB_SOURCE_URL}}/blob/master/{{PATH_IN_REPO}}/{{article.relative_source_path}}">[link]</a></td>
                 </tr>
                 {% endif %}
             </table>

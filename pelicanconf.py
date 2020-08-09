@@ -96,7 +96,7 @@ THEME = './theme'
 
 
 # Theme variables
-GITHUB_URL = 'https://github.com/jwodder/kbits'
+GITHUB_SOURCE_URL = 'https://github.com/jwodder/kbits'
 PATH_IN_REPO = PATH  # PATH relative to root of repository
 SHOW_AUTHOR = True
 LINK_AUTHOR = False
