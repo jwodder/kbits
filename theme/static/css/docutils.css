@@ -22,7 +22,7 @@
     display: none;
 }
 
-a.toc-backref {
+h1 a, a.toc-backref {
     text-decoration: none;
     color: black;
 }

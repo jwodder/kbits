@@ -10,6 +10,7 @@
       imported as a Git submodule
         - Write a README for the theme describing its features & configuration
         - This will require rewriting the custom Jinja filters in pure Jinja
+        - Set up a kbits-theme-demo site
 
 - Necessary settings for GitHub repository:
     - Settings > GitHub Pages > Source: gh-pages branch
@@ -33,8 +34,8 @@
     - Add a favicon?
     - Improve display of article metadata in article listings
     - Give the page structure `<div>`'s IDs which the CSS then refers to
-    - Don't use `<h1>` for site title
-    - Get rid of unused styles & IDs from templates
+    - Don't use `<h1>` for SITENAME
+    - Get rid of unused classes & IDs from templates
     - Merge CSS files together by origin
     - Add an author page at either `/author/` or `/jwodder/` and have the
       default author name in posts link there
@@ -48,14 +49,12 @@
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
           for adding descriptions to category/tag pages?
-        - <https://github.com/davidlesieur/similar_posts>
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
         - <https://github.com/pelican-plugins/sitemap>?
 
 - Adjust CSS:
     - Tweak the coloration of visited links
     - Add vertical space above copyright footer
-    - Make visited page titles (and visited site title?) not change color
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:
