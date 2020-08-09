@@ -29,7 +29,7 @@
     - Link to feeds in the document bodies (Use feed logo image)
     - Add breadcrumbs to the tops of tag listings & category listings pages?
     - Add a favicon?
-    - Improve display of article metadata in article pages
+    - Improve display of article metadata in article listings
     - Give the page structure `<div>`'s IDs which the CSS then refers to
     - Don't use `<h1>` for site title
     - Get rid of unused styles & IDs from templates
@@ -44,6 +44,7 @@
 
 - Adjust CSS:
     - Tweak the coloration of visited links
+    - Prevent `.align-*` on a table from affecting the alignment of text within
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:

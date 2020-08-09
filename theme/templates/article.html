@@ -39,43 +39,56 @@
             {{translations.translations_for(article)}}
         </header>
         <footer class="post-info">
-            <time class="published" datetime="{{article.date.isoformat()}}" pubdate="1">
-                {{article.locale_date}}
-            </time>
-            {% if article.modified %}
-            <span class="last-updated">(last updated
-                <time class="modified" datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time>)
-            </span>
-            {% endif %}
-            {% if SHOW_AUTHOR and article.authors %}
-            <address class="vcard author">
-                By {% for author in article.authors %}
-                    {% if LINK_AUTHOR %}
-                    <a class="url fn" href="{{SITEURL}}/{{author.url}}">{{author}}</a>
-                    {% else %}
-                    <span class="fn">{{author}}</span>
-                    {% endif %}
-                {% endfor %}
-            </address>
-            {% endif %}
-            {% if article.category %}
-            <div class="category">
-                Category: <a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a>
-            </div>
-            {% endif %}
-            <div class="tags">
-                Tags:
-                {% if article.tags %}
-                    {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{{', ' if not loop.last}}{% endfor %}
-                {% else %}
-                    —
+            <table border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time class="published" datetime="{{article.date.isoformat()}}" pubdate="1">{{article.locale_date}}</time></td>
+                </tr>
+                {% if article.modified %}
+                <tr>
+                    <th>Last Updated:</th>
+                    <td><time class="modified" datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time></td>
+                </tr>
                 {% endif %}
-            </div>
-            {% if GITHUB_URL %}
-            <div class="sourcelink">
-                <a href="{{GITHUB_URL}}/blob/master/{{PATH_IN_REPO}}/{{article.relative_source_path}}">Page Source</a>
-            </div>
-            {% endif %}
+
+                {% if SHOW_AUTHOR and article.authors %}
+                <tr>
+                    <th>Author{% if article.authors|length > 1 %}s{% endif %}:</th>
+                    <td>
+                        {% for author in article.authors %}
+                            {%- if LINK_AUTHOR -%}
+                            <a class="url fn" href="{{SITEURL}}/{{author.url}}">{{author}}</a>
+                            {%- else -%}
+                            <span class="fn">{{author}}</span>
+                            {%- endif -%}
+                            {% if not loop.last %}; {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% if article.category %}
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+                        {% if article.tags %}
+                            {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{{', ' if not loop.last}}{% endfor %}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                </tr>
+                {% if GITHUB_URL %}
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="{{GITHUB_URL}}/blob/master/{{PATH_IN_REPO}}/{{article.relative_source_path}}">[link]</a></td>
+                </tr>
+                {% endif %}
+            </table>
         </footer><!-- /.post-info -->
         <div class="entry-content">
             {{article.content}}

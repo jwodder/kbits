@@ -93,8 +93,8 @@ p.label {
 p.rubric {
     font-weight: bold;
     font-size: larger;
-    /*color: maroon; */
-    /*text-align:center; */
+    /*color: maroon;*/
+    /*text-align:center;*/
 }
 
 pre.literal-block, pre.doctest-block, pre.math, pre.code {
