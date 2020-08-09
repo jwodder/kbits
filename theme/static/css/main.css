@@ -52,3 +52,12 @@ pre {
     padding: 0.5em;
     overflow: auto;
 }
+
+/* If a multiparagraph footnote or citation is referenced multiple times in the
+ * document, Docutils formats it as "<em>(1, 2, …)</em> <p>Text</p> …".
+ * These styles force the `<em>` and first `<p>` to be right after each other
+ * on the same line: */
+.footnote td>p:first-of-type,
+.citation td>p:first-of-type {
+    display: inline;
+}

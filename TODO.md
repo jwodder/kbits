@@ -52,11 +52,9 @@
         - <https://github.com/pelican-plugins/sitemap>?
 
 - Adjust CSS:
-    - Get multi-paragraph footnotes to have the same vertical top as the
-      footnote label, as in sphinx-rtd-theme and not Docutils
-        - This may require an HTML5 writer
     - Remove border & background from TOCs?
     - Get post titles to be larger
+    - Tweak the coloration of visited links?
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:
