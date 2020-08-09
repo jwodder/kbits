@@ -36,3 +36,11 @@
     {% endif %}
     {% endfor %}
 {% endmacro %}
+
+{% macro resolve_url(url) %}
+    {%- if url[:7] == "http://" or url[:8] == "https://" -%}
+    {{url}}
+    {%- else -%}
+    {{SITEURL}}/{{url}}
+    {%- endif -%}
+{% endmacro %}

@@ -9,6 +9,7 @@
     - Move theme directory to its own repository (kbits-theme), afterwards
       imported as a Git submodule
         - Write a README for the theme describing its features & configuration
+        - This will require rewriting the custom Jinja filters in pure Jinja
 
 - Necessary settings for GitHub repository:
     - Settings > GitHub Pages > Source: gh-pages branch
@@ -42,9 +43,6 @@
               Optional[str]]` setting?
             - Allow URL to be either relative (in which case it's prefixed with
               SITEURL) or absolute
-                - Use a macro for this, and then use the same macro to merge
-                  SITE_MENU_ITEMS into MENUITEMS
-    - Either make the theme show LINKS or else merge it into MENUITEMS
     - Use either "|escape" or "|safe" for every interpolation in the templates
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>

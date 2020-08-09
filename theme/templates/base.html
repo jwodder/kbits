@@ -24,7 +24,6 @@
 </head>
 
 <body id="index" class="home">
-
     <div class="topbar">
         <header id="banner" class="body">
             <h1><a href="{{SITEURL}}/">{{SITENAME}}{% if SITESUBTITLE %} <strong>{{SITESUBTITLE}}</strong>{% endif %}</a></h1>
@@ -35,11 +34,9 @@
         <div class="navbar">
             <nav id="menu">
                 <ul>
+                {% from 'macros.j2' import resolve_url with context %}
                 {% for title, link in MENUITEMS %}
-                    <li><a href="{{link}}">{{title}}</a></li>
-                {% endfor %}
-                {% for title, path in SITE_MENU_ITEMS %}
-                    <li><a href="{{SITEURL}}/{{path}}">{{title}}</a></li>
+                    <li><a href="{{resolve_url(link)}}">{{title}}</a></li>
                 {% endfor %}
                 {% if DISPLAY_PAGES_ON_MENU %}
                     {% for p in pages %}

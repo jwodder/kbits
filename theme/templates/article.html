@@ -7,21 +7,17 @@
 {% block extra_head %}
     {% import 'translations.j2' as translations with context %}
     {{translations.entry_hreflang(article)}}
-
     {% if article.summary %}
         <meta name="description" content="{{article.summary|striptags|escape}}"/>
     {% elif article.description %}
         <meta name="description" content="{{article.description|escape}}"/>
     {% endif %}
-
     {% for tag in article.tags %}
         <meta name="tags" content="{{tag|escape}}"/>
     {% endfor %}
-
     {% for author in article.authors %}
         <meta name="author" content="{{author|escape}}"/>
     {% endfor %}
-
     {% if article.tags %}
         <meta name="keywords" content="{{article.tags|join(',')|escape}}"/>
     {% endif %}
