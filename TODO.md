@@ -28,13 +28,11 @@
             - <https://github.com/getpelican/pelican-themes/tree/master/dev-random2>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Set up a tag cloud system? ("`tag_cloud`" plugin?)
-    - Show SITESUBTITLE beneath/beside SITENAME
     - Link to feeds in the document bodies (Use feed logo image)
     - Add breadcrumbs to the tops of tag listings & category listings pages?
     - Add a favicon?
     - Improve display of article metadata in article listings
     - Give the page structure `<div>`'s IDs which the CSS then refers to
-    - Don't use `<h1>` for SITENAME
     - Get rid of unused classes & IDs from templates
     - Merge CSS files together by origin
     - Add an author page at either `/author/` or `/jwodder/` and have the
@@ -55,6 +53,7 @@
 - Adjust CSS:
     - Tweak the coloration of visited links
     - Add vertical space above copyright footer
+    - Improve styling of SITESUBTITLE
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:

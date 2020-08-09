@@ -13,6 +13,27 @@
 }
 
 .topbar {
+    border-bottom: 1px solid #eaecef;
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: .3em;
+}
+
+.sitename {
+    font-weight: bold;
+    line-height: 1.25;
+    font-size: 2em;
+}
+
+.sitename a {
+    text-decoration: none;
+    color: black;
+}
+
+.sitesubtitle {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1.25em;
 }
 
 .container {

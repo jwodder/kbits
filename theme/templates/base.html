@@ -26,7 +26,12 @@
 <body id="index" class="home">
     <div class="topbar">
         <header id="banner" class="body">
-            <h1><a href="{{SITEURL}}/">{{SITENAME}}{% if SITESUBTITLE %} <strong>{{SITESUBTITLE}}</strong>{% endif %}</a></h1>
+            <span class="sitename">
+                <a href="{{SITEURL}}/">{{SITENAME}}</a>
+            </span>
+            {% if SITESUBTITLE %}
+            <span class="sitesubtitle">{{SITESUBTITLE}}</span>
+            {% endif %}
         </header><!-- /#banner -->
     </div>
 
