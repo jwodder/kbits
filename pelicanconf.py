@@ -21,7 +21,7 @@ USE_FOLDER_AS_CATEGORY = False
 
 
 # Site output layout
-OUTPUT_PATH = 'docs'
+OUTPUT_PATH = 'build'
 
 ARTICLE_URL = 'posts/{slug}/'
 ARTICLE_SAVE_AS = ARTICLE_URL + 'index.html'

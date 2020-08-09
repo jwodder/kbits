@@ -6,15 +6,16 @@
       Gists?) to that date (with varying times)
     - Update the original Gists (for those posts that originated as Gists) to
       point to the site
+    - Move theme directory to its own repository (kbits-theme), afterwards
+      imported as a Git submodule
+        - Write a README for the theme describing its features & configuration
 
 - Necessary settings for GitHub repository:
-    - Settings > GitHub Pages > Source: master branch /docs folder
+    - Settings > GitHub Pages > Source: gh-pages branch
         - See <https://git.io/JJzXD>
+    - Set up a GitHub Action to build & deploy the site
     - Create a `404.html` page in the root of the output dir
         - Set `:Status: hidden` in the source
-
-- For deployment to GitHub pages, use pre-commit to update the output
-  directory?
 
 - Set SITESUBTITLE
 
@@ -34,6 +35,17 @@
     - Don't use `<h1>` for site title
     - Get rid of unused styles & IDs from templates
     - Merge CSS files together by origin
+    - Add an author page at either `/author/` or `/jwodder/` and have the
+      default author name in posts link there
+        - Add an `AUTHOR_LINK` setting for setting the link for `AUTHOR`?
+            - Alternatively, support an `AUTHOR_LINKS: Dict[str,
+              Optional[str]]` setting?
+            - Allow URL to be either relative (in which case it's prefixed with
+              SITEURL) or absolute
+                - Use a macro for this, and then use the same macro to merge
+                  SITE_MENU_ITEMS into MENUITEMS
+    - Either make the theme show LINKS or else merge it into MENUITEMS
+    - Use either "|escape" or "|safe" for every interpolation in the templates
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
@@ -46,6 +58,10 @@
     - Tweak the coloration of visited links
     - Prevent `.align-*` on a table from affecting the alignment of text within
     - Add vertical space above copyright footer
+    - Use GitHub styles for blockquotes?
+    - Style topics like
+      <https://github.com/pallets/pallets-sphinx-themes/blob/master/src/pallets_sphinx_themes/themes/pocoo/static/pocoo.css#L253>?
+    - Make visited page titles (and visited site title?) not change color
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:
