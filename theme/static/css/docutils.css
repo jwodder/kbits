@@ -145,6 +145,8 @@ table.align-center {
     margin-right: auto;
 }
 
+/* We don't want table alignment to influence text alignment, hence these are
+ * commented out.  -- jwodder
 .align-left {
     text-align: left;
 }
@@ -157,6 +159,7 @@ table.align-center {
 .align-right {
     text-align: right;
 }
+*/
 
 /* reset inner alignment in figures */
 div.align-right {

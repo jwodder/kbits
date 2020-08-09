@@ -54,7 +54,6 @@
 
 - Adjust CSS:
     - Tweak the coloration of visited links
-    - Prevent `.align-*` on a table from affecting the alignment of text within
     - Add vertical space above copyright footer
     - Make visited page titles (and visited site title?) not change color
 
