@@ -44,9 +44,8 @@
             </time>
             {% if article.modified %}
             <span class="last-updated">(last updated
-            <time class="modified" datetime="{{article.modified.isoformat()}}">
-                {{article.locale_modified}}
-            </time>)</span>
+                <time class="modified" datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time>)
+            </span>
             {% endif %}
             {% if SHOW_AUTHOR and article.authors %}
             <address class="vcard author">

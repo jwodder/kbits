@@ -33,6 +33,7 @@
     - Give the page structure `<div>`'s IDs which the CSS then refers to
     - Don't use `<h1>` for site title
     - Get rid of unused styles & IDs from templates
+    - Merge CSS files together by origin
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
