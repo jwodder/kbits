@@ -100,9 +100,9 @@ GITHUB_URL = 'https://github.com/jwodder/kbits'
 PATH_IN_REPO = PATH  # PATH relative to root of repository
 SHOW_AUTHOR = True
 LINK_AUTHOR = False
-AUTHOR_LINK = 'https://github.com/jwodder'
 SHOW_AUTHOR_IN_LISTINGS = False
 
+author_footer_link = 'https://github.com/jwodder'
 site_creation_year = 2020
 this_year = date.today().year
 if this_year == site_creation_year:
@@ -116,7 +116,7 @@ FOOTER_HTML = f'''
 </a>
 
 Copyright © {copyright_years} <a xmlns:cc="http://creativecommons.org/ns#"
-href="{AUTHOR_LINK}" property="cc:attributionName"
+href="{author_footer_link}" property="cc:attributionName"
 rel="cc:attributionURL">{AUTHOR}</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
 Commons Attribution 4.0 International License</a>.
