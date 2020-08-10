@@ -2,7 +2,7 @@
     {% if article.translations %}
         Translations:
         {% for translation in article.translations %}
-        <a href="{{SITEURL}}/{{translation.url}}" hreflang="{{translation.lang}}">{{translation.lang}}</a>
+        <a href="{{SITEURL|escape}}/{{translation.url|escape}}" hreflang="{{translation.lang|escape}}">{{translation.lang|escape}}</a>
         {% endfor %}
     {% endif %}
 {% endmacro %}
@@ -10,7 +10,7 @@
 {% macro entry_hreflang(entry) %}
     {% if entry.translations %}
         {% for translation in entry.translations %}
-            <link rel="alternate" hreflang="{{translation.lang}}" href="{{SITEURL}}/{{translation.url}}">
+            <link rel="alternate" hreflang="{{translation.lang|escape}}" href="{{SITEURL|escape}}/{{translation.url|escape}}">
         {% endfor %}
     {% endif %}
 {% endmacro %}

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% block html_lang %}{{article.lang}}{% endblock %}
+{% block html_lang %}{{article.lang|escape}}{% endblock %}
 
-{% block title %}{{SITENAME}} — {{article.title|striptags}}{% endblock %}
+{% block title %}{{SITENAME|escape}} — {{article.title|striptags|escape}}{% endblock %}
 
 {% block extra_head %}
     {% import 'translations.j2' as translations with context %}
@@ -28,8 +28,8 @@
     <article>
         <header>
             <h1>
-                <a href="{{SITEURL}}/{{article.url}}" rel="bookmark"
-                    title="Permalink to {{article.title|striptags}}">{{article.title}}</a>
+                <a href="{{SITEURL|escape}}/{{article.url|escape}}" rel="bookmark"
+                    title="Permalink to {{article.title|striptags|escape}}">{{article.title|safe}}</a>
             </h1>
             {% import 'translations.j2' as translations with context %}
             {{translations.translations_for(article)}}
@@ -38,12 +38,12 @@
             <table border="1">
                 <tr>
                     <th>Posted:</th>
-                    <td><time datetime="{{article.date.isoformat()}}" pubdate="1">{{article.locale_date}}</time></td>
+                    <td><time datetime="{{article.date.isoformat()}}" pubdate="1">{{article.locale_date|escape}}</time></td>
                 </tr>
                 {% if article.modified %}
                 <tr>
                     <th>Last Updated:</th>
-                    <td><time datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time></td>
+                    <td><time datetime="{{article.modified.isoformat()}}">{{article.locale_modified|escape}}</time></td>
                 </tr>
                 {% endif %}
                 {% if SHOW_AUTHOR and article.authors %}
@@ -52,9 +52,9 @@
                     <td>
                         {% for author in article.authors %}
                             {%- if LINK_AUTHOR -%}
-                            <a class="url fn" href="{{SITEURL}}/{{author.url}}">{{author}}</a>
+                            <a class="url fn" href="{{SITEURL|escape}}/{{author.url|escape}}">{{author|escape}}</a>
                             {%- else -%}
-                            <span class="fn">{{author}}</span>
+                            <span class="fn">{{author|escape}}</span>
                             {%- endif -%}
                             {% if not loop.last %}; {% endif %}
                         {% endfor %}
@@ -64,14 +64,14 @@
                 {% if article.category %}
                 <tr>
                     <th>Category:</th>
-                    <td><a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a></td>
+                    <td><a href="{{SITEURL|escape}}/{{article.category.url|escape}}">{{article.category|escape}}</a></td>
                 </tr>
                 {% endif %}
                 <tr>
                     <th>Tags:</th>
                     <td>
                         {% if article.tags %}
-                            {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{{', ' if not loop.last}}{% endfor %}
+                            {% for tag in article.tags %}<a href="{{SITEURL|escape}}/{{tag.url|escape}}">{{tag|escape}}</a>{{', ' if not loop.last}}{% endfor %}
                         {% else %}
                             —
                         {% endif %}
@@ -80,12 +80,12 @@
                 {% if GITHUB_SOURCE_URL %}
                 <tr>
                     <th>Page Source:</th>
-                    <td><a href="{{GITHUB_SOURCE_URL}}/blob/master/{{PATH_IN_REPO}}/{{article.relative_source_path}}">[link]</a></td>
+                    <td><a href="{{GITHUB_SOURCE_URL|escape}}/blob/master/{{PATH_IN_REPO|escape}}/{{article.relative_source_path|escape}}">[link]</a></td>
                 </tr>
                 {% endif %}
             </table>
         </footer>
-        <div>{{article.content}}</div>
+        <div>{{article.content|safe}}</div>
     </article>
 </section>
 {% endblock %}

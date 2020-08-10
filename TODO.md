@@ -41,7 +41,6 @@
               Optional[str]]` setting?
             - Allow URL to be either relative (in which case it's prefixed with
               SITEURL) or absolute
-    - Use either "|escape" or "|safe" for every interpolation in the templates
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block html_lang %}{{page.lang}}{% endblock %}
+{% block html_lang %}{{page.lang|escape}}{% endblock %}
 
-{% block title %}{{SITENAME}} — {{page.title|striptags}}{%endblock%}
+{% block title %}{{SITENAME|escape}} — {{page.title|striptags|escape}}{%endblock%}
 
 {% block extra_head %}
     {% import 'translations.j2' as translations with context %}
@@ -9,13 +9,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{page.title}}</h1>
+    <h1>{{page.title|safe}}</h1>
     {% import 'translations.j2' as translations with context %}
     {{translations.translations_for(page)}}
 
-    {{page.content}}
+    {{page.content|safe}}
 
     {% if page.modified %}
-        <p>Last updated: {{page.locale_modified}}</p>
+        <p>Last updated: {{page.locale_modified|escape}}</p>
     {% endif %}
 {% endblock %}

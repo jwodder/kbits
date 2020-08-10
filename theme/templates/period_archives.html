@@ -1,9 +1,9 @@
 {% extends "index.html" %}
 
-{% block title %}{{SITENAME}} — {{period|join(' ')}} Archives{% endblock %}
+{% block title %}{{SITENAME|escape}} — {{period|join(' ')|escape}} Archives{% endblock %}
 
 {% block content_title %}
-<h1>Archives for {{period|join(' ')}}</h1>
+<h1>Archives for {{period|join(' ')|escape}}</h1>
 {% endblock %}
 
 {% block article_list %}

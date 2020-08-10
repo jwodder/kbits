@@ -1,9 +1,9 @@
 {% extends "index.html" %}
 
-{% block title %}{{SITENAME}} — Archives{% endblock %}
+{% block title %}{{SITENAME|escape}} — Archives{% endblock %}
 
 {% block content_title %}
-<h1>{{SITENAME}} Archives</h1>
+<h1>{{SITENAME|escape}} Archives</h1>
 {% endblock %}
 
 {% block article_list %}

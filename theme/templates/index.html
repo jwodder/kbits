@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{SITENAME}}{% if SITESUBTITLE %}: {{SITESUBTITLE}}{% endif %}
+{{SITENAME|escape}}{% if SITESUBTITLE %}: {{SITESUBTITLE|escape}}{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -18,12 +18,12 @@
     {% if articles_page.has_other_pages() %}
         <div id="pagination">
             {% if articles_page.has_previous() %}
-                <a href="{{SITEURL}}/{{articles_previous_page.url}}">&#x25C0;</a>
+                <a href="{{SITEURL|escape}}/{{articles_previous_page.url|escape}}">&#x25C0;</a>
             {% endif %}
             {%- for num in articles_page.number|iter_pages(articles_paginator.num_pages) %}
                 {% if num %}
                     {% if num != pagination.page %}
-                        <a href="{{SITEURL}}/{{articles_paginator.page(num).url}}">{{num}}</a>
+                        <a href="{{SITEURL|escape}}/{{articles_paginator.page(num).url|escape}}">{{num}}</a>
                     {% else %}
                         <strong>{{num}}</strong>
                     {% endif %}
@@ -32,7 +32,7 @@
                 {% endif %}
             {%- endfor %}
             {% if articles_page.has_next() %}
-                <a href="{{SITEURL}}/{{articles_next_page.url}}">&#x25B6;</a>
+                <a href="{{SITEURL|escape}}/{{articles_next_page.url|escape}}">&#x25B6;</a>
             {% endif %}
         </div>
     {% endif %}

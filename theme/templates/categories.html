@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}{{SITENAME}} — Categories{% endblock %}
+{% block title %}{{SITENAME|escape}} — Categories{% endblock %}
 
 {% block content %}
     <h1>Article Categories</h1>
     <ul>
     {% for category, articles in categories|sort %}
-        <li><a href="{{SITEURL}}/{{category.url}}">{{category}}</a> ({{articles|count}})</li>
+        <li><a href="{{SITEURL|escape}}/{{category.url|escape}}">{{category|escape}}</a> ({{articles|count}})</li>
     {% endfor %}
     </ul>
 {% endblock %}

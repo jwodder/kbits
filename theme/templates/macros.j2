@@ -1,35 +1,35 @@
 {% macro list_articles(article_list) %}
     {% for article in article_list %}
     <article class="hentry">
-        <header><h2 class="listing"><a href="{{SITEURL}}/{{article.url}}" rel="bookmark" title="Permalink to {{article.title|striptags}}">{{article.title}}</a></h2></header>
+        <header><h2 class="listing"><a href="{{SITEURL|escape}}/{{article.url|escape}}" rel="bookmark" title="Permalink to {{article.title|striptags|escape}}">{{article.title|safe}}</a></h2></header>
         <footer>
-            <time datetime="{{article.date.isoformat()}}">{{article.locale_date}}</time>
+            <time datetime="{{article.date.isoformat()}}">{{article.locale_date|escape}}</time>
             {% if article.modified %}
             <span class="last-updated">(last updated
-                <time datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time>)
+                <time datetime="{{article.modified.isoformat()}}">{{article.locale_modified|escape}}</time>)
             </span>
             {% endif %}
             {% if SHOW_AUTHOR_IN_LISTINGS %}
             <address class="vcard author">By
                 {% for author in article.authors %}
                     {% if LINK_AUTHOR %}
-                    <a class="url fn" href="{{SITEURL}}/{{author.url}}">{{author}}</a>
+                    <a class="url fn" href="{{SITEURL|escape}}/{{author.url|escape}}">{{author|escape}}</a>
                     {% else %}
-                    <span class="fn">{{author}}</span>
+                    <span class="fn">{{author|escape}}</span>
                     {% endif %}
                 {% endfor %}
             </address>
             {% endif %}
             <div>
-                <a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a>; 
+                <a href="{{SITEURL|escape}}/{{article.category.url|escape}}">{{article.category|escape}}</a>; 
                 {% if article.tags %}
-                    {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{{', ' if not loop.last}}{% endfor %}
+                    {% for tag in article.tags %}<a href="{{SITEURL|escape}}/{{tag.url|escape}}">{{tag|escape}}</a>{{', ' if not loop.last}}{% endfor %}
                 {% else %}
                     —
                 {% endif %}
             </div>
         </footer>
-        <div>{{article.summary}}</div>
+        <div>{{article.summary|safe}}</div>
     </article>
     {% if not loop.last %}
     <hr class="listing-break"/>
@@ -39,8 +39,8 @@
 
 {% macro resolve_url(url) %}
     {%- if url.startswith(("http://", "https://")) -%}
-    {{url}}
+    {{url|escape}}
     {%- else -%}
-    {{SITEURL}}/{{url}}
+    {{SITEURL|escape}}/{{url|escape}}
     {%- endif -%}
 {% endmacro %}

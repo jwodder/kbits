@@ -1,32 +1,32 @@
 {% extends "index.html" %}
 
-{% block title %}{{SITENAME}} — {{category}} Category{% endblock %}
+{% block title %}{{SITENAME|escape}} — {{category|escape}} Category{% endblock %}
 
 {% block extra_head %}
     {% if CATEGORY_FEED_ATOM %}
-    <link href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_ATOM_URL %}{{CATEGORY_FEED_ATOM_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_ATOM.format(slug=category.slug)}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME}} {{category}} Category Atom Feed" />
+    <link href="{{FEED_DOMAIN|escape}}/{% if CATEGORY_FEED_ATOM_URL %}{{CATEGORY_FEED_ATOM_URL.format(slug=category.slug)|escape}}{% else %}{{CATEGORY_FEED_ATOM.format(slug=category.slug)|escape}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME|escape}} {{category|escape}} Category Atom Feed" />
     {% endif %}
     {% if CATEGORY_FEED_RSS %}
-    <link href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_RSS_URL %}{{CATEGORY_FEED_RSS_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_RSS.format(slug=category.slug)}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME}} {{category}} Category RSS Feed" />
+    <link href="{{FEED_DOMAIN|escape}}/{% if CATEGORY_FEED_RSS_URL %}{{CATEGORY_FEED_RSS_URL.format(slug=category.slug)|escape}}{% else %}{{CATEGORY_FEED_RSS.format(slug=category.slug)|escape}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME|escape}} {{category|escape}} Category RSS Feed" />
     {% endif %}
 {% endblock %}
 
 {% block content_title %}
-<h1>Articles in the {{category}} Category</h1>
+<h1>Articles in the {{category|escape}} Category</h1>
 {% endblock %}
 
 {% block feeds %}
 {% if CATEGORY_FEED_ATOM or CATEGORY_FEED_RSS %}
 <div class="subfeeds">
-    <img src="{{SITEURL}}/{{THEME_STATIC_DIR}}/images/rss.svg" width="16" height="16"/>
+    <img src="{{SITEURL|escape}}/{{THEME_STATIC_DIR|escape}}/images/rss.svg" width="16" height="16"/>
     {% if CATEGORY_FEED_ATOM %}
-    <a href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_ATOM_URL %}{{CATEGORY_FEED_ATOM_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_ATOM.format(slug=category.slug)}}{% endif %}">Atom</a>
+    <a href="{{FEED_DOMAIN|escape}}/{% if CATEGORY_FEED_ATOM_URL %}{{CATEGORY_FEED_ATOM_URL.format(slug=category.slug)|escape}}{% else %}{{CATEGORY_FEED_ATOM.format(slug=category.slug)|escape}}{% endif %}">Atom</a>
     {% endif %}
     {% if CATEGORY_FEED_ATOM and CATEGORY_FEED_RSS %}
     ·
     {% endif %}
     {% if CATEGORY_FEED_RSS %}
-    <a href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_RSS_URL %}{{CATEGORY_FEED_RSS_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_RSS.format(slug=category.slug)}}{% endif %}">RSS</a>
+    <a href="{{FEED_DOMAIN|escape}}/{% if CATEGORY_FEED_RSS_URL %}{{CATEGORY_FEED_RSS_URL.format(slug=category.slug)|escape}}{% else %}{{CATEGORY_FEED_RSS.format(slug=category.slug)|escape}}{% endif %}">RSS</a>
     {% endif %}
 </div>
 {% endif %}
