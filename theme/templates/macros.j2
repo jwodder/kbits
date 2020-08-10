@@ -38,7 +38,7 @@
 {% endmacro %}
 
 {% macro resolve_url(url) %}
-    {%- if url[:7] == "http://" or url[:8] == "https://" -%}
+    {%- if url.startswith(("http://", "https://")) -%}
     {{url}}
     {%- else -%}
     {{SITEURL}}/{{url}}
