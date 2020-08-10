@@ -8,10 +8,6 @@
 @import url('table.css');
 @import url('topic.css');
 
-.last-updated {
-    font-style: italic;
-}
-
 #topbar {
     border-bottom: 1px solid #eaecef;
     margin-top: 0;

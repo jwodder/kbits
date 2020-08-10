@@ -9,23 +9,29 @@
             </h2>
         </header>
         <footer>
-            <time datetime="{{article.date.isoformat()}}">{{article.locale_date|escape}}</time>
+            <strong>Posted:</strong> <time datetime="{{article.date.isoformat()}}">{{article.locale_date|escape}}</time>
             {% if article.modified %}
-            <span class="last-updated">(last updated
-                <time datetime="{{article.modified.isoformat()}}">{{article.locale_modified|escape}}</time>)
-            </span>
+            <div>
+                <strong>Updated:</strong>
+                <time datetime="{{article.modified.isoformat()}}">{{article.locale_modified|escape}}</time>
+            </div>
             {% endif %}
-            {% if SHOW_AUTHOR_IN_LISTINGS %}
+            {% if SHOW_AUTHOR_IN_LISTINGS and article.authors %}
+            <div>
+                <strong>By:</strong>
                 {% for author in article.authors %}
-                    {% if LINK_AUTHOR %}
+                    {%- if LINK_AUTHOR -%}
                     <a class="url fn" href="{{SITEURL|escape}}/{{author.url|escape}}">{{author|escape}}</a>
-                    {% else %}
+                    {%- else -%}
                     <span class="fn">{{author|escape}}</span>
-                    {% endif %}
+                    {%- endif -%}
+                    {% if not loop.last %}; {% endif %}
                 {% endfor %}
+            </div>
             {% endif %}
             <div>
-                <a href="{{SITEURL|escape}}/{{article.category.url|escape}}">{{article.category|escape}}</a>; 
+                <a href="{{SITEURL|escape}}/{{article.category.url|escape}}">{{article.category|escape}}</a>
+                ·
                 {% if article.tags %}
                     {% for tag in article.tags %}<a href="{{SITEURL|escape}}/{{tag.url|escape}}">{{tag|escape}}</a>{{', ' if not loop.last}}{% endfor %}
                 {% else %}

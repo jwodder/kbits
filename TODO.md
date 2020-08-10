@@ -24,15 +24,12 @@
 
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
-        - Of interest:
-            - <https://github.com/getpelican/pelican-themes/tree/master/dev-random>
-            - <https://github.com/getpelican/pelican-themes/tree/master/dev-random2>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Set up a tag cloud system? ("`tag_cloud`" plugin?)
     - Add breadcrumbs to the tops of tag listings & category listings pages?
+        - Will require `{CATEGORIES,TAGS}_URL` settings
     - Add breadcrumbs to the tops of period archives?
     - Add a favicon?
-    - Improve display of article metadata in article listings
     - Merge CSS files together by origin
     - Add an author page at either `/author/` or `/jwodder/` and have the
       default author name in posts link there
@@ -51,7 +48,6 @@
 - Adjust CSS:
     - Tweak the coloration of visited links
     - Improve styling of SITESUBTITLE
-    - Add small caps style? (`font-variant: small-caps;`)
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:
