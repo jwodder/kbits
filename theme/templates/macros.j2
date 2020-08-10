@@ -2,11 +2,11 @@
     {% for article in article_list %}
     <article class="hentry">
         <header><h2 class="listing"><a href="{{SITEURL}}/{{article.url}}" rel="bookmark" title="Permalink to {{article.title|striptags}}">{{article.title}}</a></h2></header>
-        <footer class="post-info">
-            <time class="published" datetime="{{article.date.isoformat()}}">{{article.locale_date}}</time>
+        <footer>
+            <time datetime="{{article.date.isoformat()}}">{{article.locale_date}}</time>
             {% if article.modified %}
             <span class="last-updated">(last updated
-                <time class="modified" datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time>)
+                <time datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time>)
             </span>
             {% endif %}
             {% if SHOW_AUTHOR_IN_LISTINGS %}
@@ -20,7 +20,7 @@
                 {% endfor %}
             </address>
             {% endif %}
-            <div class="cat-and-tags">
+            <div>
                 <a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a>; 
                 {% if article.tags %}
                     {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{{', ' if not loop.last}}{% endfor %}
@@ -28,8 +28,8 @@
                     —
                 {% endif %}
             </div>
-        </footer><!-- /.post-info -->
-        <div class="entry-content">{{article.summary}}</div>
+        </footer>
+        <div>{{article.summary}}</div>
     </article>
     {% if not loop.last %}
     <hr class="listing-break"/>

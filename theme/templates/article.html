@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block content %}
-<section id="content" class="body">
+<section>
     <article>
         <header>
             <h1>
@@ -34,16 +34,16 @@
             {% import 'translations.j2' as translations with context %}
             {{translations.translations_for(article)}}
         </header>
-        <footer class="post-info">
+        <footer>
             <table border="1">
                 <tr>
                     <th>Posted:</th>
-                    <td><time class="published" datetime="{{article.date.isoformat()}}" pubdate="1">{{article.locale_date}}</time></td>
+                    <td><time datetime="{{article.date.isoformat()}}" pubdate="1">{{article.locale_date}}</time></td>
                 </tr>
                 {% if article.modified %}
                 <tr>
                     <th>Last Updated:</th>
-                    <td><time class="modified" datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time></td>
+                    <td><time datetime="{{article.modified.isoformat()}}">{{article.locale_modified}}</time></td>
                 </tr>
                 {% endif %}
                 {% if SHOW_AUTHOR and article.authors %}
@@ -84,10 +84,8 @@
                 </tr>
                 {% endif %}
             </table>
-        </footer><!-- /.post-info -->
-        <div class="entry-content">
-            {{article.content}}
-        </div><!-- /.entry-content -->
+        </footer>
+        <div>{{article.content}}</div>
     </article>
 </section>
 {% endblock %}

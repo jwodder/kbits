@@ -23,9 +23,9 @@
     {% endblock %}
 </head>
 
-<body id="index" class="home">
-    <div class="topbar">
-        <header id="banner" class="body">
+<body>
+    <div id="topbar">
+        <header>
             <span class="sitename">
                 <a href="{{SITEURL}}/">{{SITENAME}}</a>
             </span>
@@ -35,9 +35,9 @@
         </header><!-- /#banner -->
     </div>
 
-    <div class="container">
-        <div class="navbar">
-            <nav id="menu">
+    <div class="mainrow">
+        <div id="navbar">
+            <nav>
                 <ul>
                 {% from 'macros.j2' import resolve_url with context %}
                 {% for title, link in MENUITEMS %}
@@ -45,16 +45,12 @@
                 {% endfor %}
                 {% if DISPLAY_PAGES_ON_MENU %}
                     {% for p in pages %}
-                        <li{% if p == page %} class="active"{% endif %}>
-                            <a href="{{SITEURL}}/{{p.url}}">{{p.title}}</a>
-                        </li>
+                        <li><a href="{{SITEURL}}/{{p.url}}">{{p.title}}</a></li>
                     {% endfor %}
                 {% endif %}
                 {% if DISPLAY_CATEGORIES_ON_MENU %}
                     {% for cat, null in categories %}
-                    <li{% if cat == category %} class="active"{% endif %}>
-                        <a href="{{SITEURL}}/{{cat.url}}">{{cat}}</a>
-                    </li>
+                    <li><a href="{{SITEURL}}/{{cat.url}}">{{cat}}</a></li>
                     {% endfor %}
                 {% endif %}
                 </ul>
@@ -87,16 +83,14 @@
                 </div>
             {% endif %}
         </div>
-        <div class="content">
+        <div id="content">
             {% block content %}
             {% endblock %}
         </div>
     </div>
 
     {% if FOOTER_HTML %}
-        <footer id="contentinfo" class="body">
-            {{FOOTER_HTML}}
-        </footer><!-- /#contentinfo -->
+        <footer id="footer">{{FOOTER_HTML}}</footer>
     {% endif %}
 </body>
 </html>

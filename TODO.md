@@ -33,8 +33,6 @@
     - Add breadcrumbs to the tops of period archives?
     - Add a favicon?
     - Improve display of article metadata in article listings
-    - Give the page structure `<div>`'s IDs which the CSS then refers to
-    - Get rid of unused classes & IDs from templates
     - Merge CSS files together by origin
     - Add an author page at either `/author/` or `/jwodder/` and have the
       default author name in posts link there
