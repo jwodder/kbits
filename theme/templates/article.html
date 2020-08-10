@@ -48,7 +48,7 @@
                 {% endif %}
                 {% if SHOW_AUTHOR and article.authors %}
                 <tr>
-                    <th>Author{% if article.authors|length > 1 %}s{% endif %}:</th>
+                    <th>Author{{'s' if article.authors|length > 1}}:</th>
                     <td>
                         {% for author in article.authors %}
                             {%- if LINK_AUTHOR -%}

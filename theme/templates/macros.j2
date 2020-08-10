@@ -1,7 +1,13 @@
 {% macro list_articles(article_list) %}
     {% for article in article_list %}
     <article class="hentry">
-        <header><h2 class="listing"><a href="{{SITEURL|escape}}/{{article.url|escape}}" rel="bookmark" title="Permalink to {{article.title|striptags|escape}}">{{article.title|safe}}</a></h2></header>
+        <header>
+            <h2 class="listing">
+                <a href="{{SITEURL|escape}}/{{article.url|escape}}" rel="bookmark" title="Permalink to {{article.title|striptags|escape}}">
+                    {{article.title|safe}}
+                </a>
+            </h2>
+        </header>
         <footer>
             <time datetime="{{article.date.isoformat()}}">{{article.locale_date|escape}}</time>
             {% if article.modified %}
@@ -10,7 +16,6 @@
             </span>
             {% endif %}
             {% if SHOW_AUTHOR_IN_LISTINGS %}
-            <address class="vcard author">By
                 {% for author in article.authors %}
                     {% if LINK_AUTHOR %}
                     <a class="url fn" href="{{SITEURL|escape}}/{{author.url|escape}}">{{author|escape}}</a>
@@ -18,7 +23,6 @@
                     <span class="fn">{{author|escape}}</span>
                     {% endif %}
                 {% endfor %}
-            </address>
             {% endif %}
             <div>
                 <a href="{{SITEURL|escape}}/{{article.category.url|escape}}">{{article.category|escape}}</a>; 
@@ -38,7 +42,7 @@
 {% endmacro %}
 
 {% macro resolve_url(url) %}
-    {%- if url.startswith(("http://", "https://")) -%}
+    {%- if url.lower().startswith(("http://", "https://")) -%}
     {{url|escape}}
     {%- else -%}
     {{SITEURL|escape}}/{{url|escape}}
