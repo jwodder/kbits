@@ -9,6 +9,9 @@
     {% block content_title %}
     {% endblock %}
 
+    {% block feeds %}
+    {% endblock %}
+
     {% block article_list %}
     {% from 'macros.j2' import list_articles with context %}
     {{list_articles(articles_page.object_list)}}

@@ -14,3 +14,20 @@
 {% block content_title %}
 <h1>Articles in the {{category}} Category</h1>
 {% endblock %}
+
+{% block feeds %}
+{% if CATEGORY_FEED_ATOM or CATEGORY_FEED_RSS %}
+<div class="subfeeds">
+    <img src="{{SITEURL}}/{{THEME_STATIC_DIR}}/images/rss.svg" width="16" height="16"/>
+    {% if CATEGORY_FEED_ATOM %}
+    <a href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_ATOM_URL %}{{CATEGORY_FEED_ATOM_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_ATOM.format(slug=category.slug)}}{% endif %}">Atom</a>
+    {% endif %}
+    {% if CATEGORY_FEED_ATOM and CATEGORY_FEED_RSS %}
+    ·
+    {% endif %}
+    {% if CATEGORY_FEED_RSS %}
+    <a href="{{FEED_DOMAIN}}/{% if CATEGORY_FEED_RSS_URL %}{{CATEGORY_FEED_RSS_URL.format(slug=category.slug)}}{% else %}{{CATEGORY_FEED_RSS.format(slug=category.slug)}}{% endif %}">RSS</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

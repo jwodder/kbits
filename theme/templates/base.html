@@ -59,6 +59,33 @@
                 {% endif %}
                 </ul>
             </nav><!-- /#menu -->
+            {% if FEED_ALL_ATOM or FEED_ALL_RSS %}
+                <div class="postfeeds">
+                    <img src="{{SITEURL}}/{{THEME_STATIC_DIR}}/images/rss.svg" width="16" height="16"/>
+                    {% if FEED_ALL_ATOM %}
+                    <a href="{{FEED_DOMAIN}}/{% if FEED_ALL_ATOM_URL %}{{FEED_ALL_ATOM_URL}}{% else %}{{FEED_ALL_ATOM}}{% endif %}">Atom</a>
+                    {% endif %}
+                    {% if FEED_ALL_ATOM and FEED_ALL_RSS %}
+                    ·
+                    {% endif %}
+                    {% if FEED_ALL_RSS %}
+                    <a href="{{FEED_DOMAIN}}/{% if FEED_ALL_RSS_URL %}{{FEED_ALL_RSS_URL}}{% else %}{{FEED_ALL_RSS}}{% endif %}">RSS</a>
+                    {% endif %}
+                </div>
+            {% elif FEED_ATOM or FEED_RSS %}
+                <div class="postfeeds">
+                    <img src="{{SITEURL}}/{{THEME_STATIC_DIR}}/images/rss.svg" width="16" height="16"/>
+                    {% if FEED_ALL_ATOM %}
+                    <a href="{{FEED_DOMAIN}}/{% if FEED_ATOM_URL %}{{FEED_ATOM_URL}}{% else %}{{FEED_ATOM}}{% endif %}">Atom</a>
+                    {% endif %}
+                    {% if FEED_ATOM and FEED_RSS %}
+                    ·
+                    {% endif %}
+                    {% if FEED_RSS %}
+                    <a href="{{FEED_DOMAIN}}/{% if FEED_RSS_URL %}{{FEED_RSS_URL}}{% else %}{{FEED_RSS}}{% endif %}">RSS</a>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
         <div class="content">
             {% block content %}

@@ -2,6 +2,32 @@
 
 {% block title %}{{SITENAME}} — Articles by {{author}}{% endblock %}
 
+{% block extra_head %}
+    {% if AUTHOR_FEED_ATOM %}
+    <link href="{{FEED_DOMAIN}}/{% if AUTHOR_FEED_ATOM_URL %}{{AUTHOR_FEED_ATOM_URL.format(slug=author.slug)}}{% else %}{{AUTHOR_FEED_ATOM.format(slug=author.slug)}}{% endif %}" type="application/atom+xml" rel="alternate" title="{{SITENAME}} {{author}}'s Posts Atom Feed" />
+    {% endif %}
+    {% if AUTHOR_FEED_RSS %}
+    <link href="{{FEED_DOMAIN}}/{% if AUTHOR_FEED_RSS_URL %}{{AUTHOR_FEED_RSS_URL.format(slug=author.slug)}}{% else %}{{AUTHOR_FEED_RSS.format(slug=author.slug)}}{% endif %}" type="application/rss+xml" rel="alternate" title="{{SITENAME}} {{author}}'s Posts RSS Feed" />
+    {% endif %}
+{% endblock %}
+
 {% block content_title %}
 <h1>Articles by {{author}}</h1>
+{% endblock %}
+
+{% block feeds %}
+{% if AUTHOR_FEED_ATOM or AUTHOR_FEED_RSS %}
+<div class="subfeeds">
+    <img src="{{SITEURL}}/{{THEME_STATIC_DIR}}/images/rss.svg" width="16" height="16"/>
+    {% if AUTHOR_FEED_ATOM %}
+    <a href="{{FEED_DOMAIN}}/{% if AUTHOR_FEED_ATOM_URL %}{{AUTHOR_FEED_ATOM_URL.format(slug=author.slug)}}{% else %}{{AUTHOR_FEED_ATOM.format(slug=author.slug)}}{% endif %}">Atom</a>
+    {% endif %}
+    {% if AUTHOR_FEED_ATOM and AUTHOR_FEED_RSS %}
+    ·
+    {% endif %}
+    {% if AUTHOR_FEED_RSS %}
+    <a href="{{FEED_DOMAIN}}/{% if AUTHOR_FEED_RSS_URL %}{{AUTHOR_FEED_RSS_URL.format(slug=author.slug)}}{% else %}{{AUTHOR_FEED_RSS.format(slug=author.slug)}}{% endif %}">RSS</a>
+    {% endif %}
+</div>
+{% endif %}
 {% endblock %}

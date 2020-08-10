@@ -14,3 +14,20 @@
 {% block content_title %}
 <h1>Articles Tagged with “{{tag}}”</h1>
 {% endblock %}
+
+{% block feeds %}
+{% if TAG_FEED_ATOM or TAG_FEED_RSS %}
+<div class="subfeeds">
+    <img src="{{SITEURL}}/{{THEME_STATIC_DIR}}/images/rss.svg" width="16" height="16"/>
+    {% if TAG_FEED_ATOM %}
+    <a href="{{FEED_DOMAIN}}/{% if TAG_FEED_ATOM_URL %}{{TAG_FEED_ATOM_URL.format(slug=tag.slug)}}{% else %}{{TAG_FEED_ATOM.format(slug=tag.slug)}}{% endif %}">Atom</a>
+    {% endif %}
+    {% if TAG_FEED_ATOM and TAG_FEED_RSS %}
+    ·
+    {% endif %}
+    {% if TAG_FEED_RSS %}
+    <a href="{{FEED_DOMAIN}}/{% if TAG_FEED_RSS_URL %}{{TAG_FEED_RSS_URL.format(slug=tag.slug)}}{% else %}{{TAG_FEED_RSS.format(slug=tag.slug)}}{% endif %}">RSS</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

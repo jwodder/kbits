@@ -48,6 +48,14 @@
     width: 20%;
 }
 
+div.postfeeds {
+    text-align: center;
+}
+
+div.subfeeds {
+    margin: 1em 0;
+}
+
 .content {
     float: right;
     display: block;

@@ -29,8 +29,8 @@
             - <https://github.com/getpelican/pelican-themes/tree/master/dev-random2>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Set up a tag cloud system? ("`tag_cloud`" plugin?)
-    - Link to feeds in the document bodies (Use feed logo image)
     - Add breadcrumbs to the tops of tag listings & category listings pages?
+    - Add breadcrumbs to the tops of period archives?
     - Add a favicon?
     - Improve display of article metadata in article listings
     - Give the page structure `<div>`'s IDs which the CSS then refers to
@@ -54,6 +54,7 @@
 - Adjust CSS:
     - Tweak the coloration of visited links
     - Improve styling of SITESUBTITLE
+    - Add small caps style? (`font-variant: small-caps;`)
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:
