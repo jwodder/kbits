@@ -1,10 +1,14 @@
+{% from 'macros.j2' import resolve_url with context %}
 <!DOCTYPE html>
 <html lang="{% block html_lang %}{{DEFAULT_LANG|escape}}{% endblock html_lang %}">
 <head>
     <title>{% block title %}{{SITENAME|escape}}{% endblock title %}</title>
     <meta charset="utf-8"/>
     <meta name="generator" content="Pelican (https://getpelican.com)"/>
-    <link rel="stylesheet" href="{{SITEURL|escape}}/{{THEME_STATIC_DIR|escape}}/css/{{CSS_FILE|escape}}"/>
+    <link rel="stylesheet" href="{{SITEURL|escape}}/{{THEME_STATIC_DIR|escape}}/css/{{CSS_FILE|escape}}" type="text/css"/>
+    {% if FAVICON_URL %}
+    <link rel="icon" href="{{resolve_url(FAVICON_URL)}}"{% if FAVICON_TYPE %} type="{{FAVICON_TYPE|escape}}"{% endif %}/>
+    {% endif %}
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     {% if FEED_ALL_ATOM %}
@@ -39,7 +43,6 @@
         <div id="navbar">
             <nav>
                 <ul>
-                {% from 'macros.j2' import resolve_url with context %}
                 {% for title, link in MENUITEMS %}
                     <li><a href="{{resolve_url(link)}}">{{title|escape}}</a></li>
                 {% endfor %}
