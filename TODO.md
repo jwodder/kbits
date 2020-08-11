@@ -17,8 +17,6 @@
     - Settings > GitHub Pages > Source: gh-pages branch
         - See <https://git.io/JJzXD>
     - Set up a GitHub Action to build & deploy the site
-    - Create a `404.html` page in the root of the output dir
-        - Set `:Status: hidden` in the source
 
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
