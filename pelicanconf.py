@@ -1,15 +1,9 @@
 from datetime import date
 
 # Site metadata
-AUTHOR = 'John T. Wodder II'
 SITENAME = 'Knowledge Bits'
-#SITESUBTITLE = 'All about the things I know'
-#SITESUBTITLE = 'Things I know about stuff'
-#SITESUBTITLE = 'Bits of knowledge I possess'
-#SITESUBTITLE = 'On the things I know'
-#SITESUBTITLE = 'Hopefully useful write-ups'
-#SITESUBTITLE = 'A knowledge blog'
-#SITESUBTITLE = 'A reference blog'
+SITESUBTITLE = "References I wish I'd read"
+AUTHOR = 'John T. Wodder II'
 DEFAULT_LANG = 'en'
 TIMEZONE = 'America/New_York'
 LOCALE = 'en_US.UTF-8'

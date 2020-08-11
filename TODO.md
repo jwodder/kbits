@@ -20,8 +20,6 @@
     - Create a `404.html` page in the root of the output dir
         - Set `:Status: hidden` in the source
 
-- Set SITESUBTITLE
-
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
@@ -43,7 +41,6 @@
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
           for adding descriptions to category/tag pages?
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
-        - <https://github.com/pelican-plugins/sitemap>?
 
 - Adjust CSS:
     - Tweak the coloration of visited links
