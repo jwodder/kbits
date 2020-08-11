@@ -42,7 +42,6 @@
 
 - Adjust CSS:
     - Tweak the coloration of visited links
-    - Improve styling of SITESUBTITLE
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:
