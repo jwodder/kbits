@@ -13,7 +13,7 @@
     {% endblock %}
 
     {% block article_list %}
-    {% from 'macros.j2' import list_articles with context %}
+    {% from 'macros.j2' import iter_pages, list_articles with context %}
     {{list_articles(articles_page.object_list)}}
     {% if articles_page.has_other_pages() %}
         <div id="pagination">
@@ -21,17 +21,7 @@
                 <a href="{{SITEURL|escape}}/{{articles_paginator.page(1).url|escape}}" title="First Page" class="paging-icon">&#x23EA;</a>
                 <a href="{{SITEURL|escape}}/{{articles_previous_page.url|escape}}" title="Previous Page" class="paging-icon">&#x23F4;</a>
             {% endif %}
-            {%- for num in articles_page.number|iter_pages(articles_paginator.num_pages) %}
-                {% if num %}
-                    {% if num != articles_page.number %}
-                        <a href="{{SITEURL|escape}}/{{articles_paginator.page(num).url|escape}}">{{num}}</a>
-                    {% else %}
-                        <strong>{{num}}</strong>
-                    {% endif %}
-                {% else %}
-                    …
-                {% endif %}
-            {%- endfor %}
+            {{iter_pages(articles_page)}}
             {% if articles_page.has_next() %}
                 <a href="{{SITEURL|escape}}/{{articles_next_page.url|escape}}" title="Next Page" class="paging-icon">&#x23F5;</a>
                 <a href="{{SITEURL|escape}}/{{articles_paginator.page(articles_paginator.num_pages).url|escape}}" title="Last Page" class="paging-icon">&#x23E9;</a>

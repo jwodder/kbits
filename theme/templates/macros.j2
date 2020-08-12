@@ -54,3 +54,24 @@
     {{SITEURL|escape}}/{{url|escape}}
     {%- endif -%}
 {% endmacro %}
+
+{# Based on <https://git.io/JJoUU> #}
+{% macro iter_pages(current_page, left_edge=2, left_current=2, right_current=5,
+                                  right_edge=2) %}
+    {% set current_page_num = current_page.number %}
+    {% set paginator = current_page.paginator %}
+    {% for num in paginator.page_range %}
+    {% if num <= left_edge
+        or (current_page_num - left_current - 1 < num
+            and num < current_page_num + right_current)
+        or num > paginator.num_pages - right_edge
+    %}
+        {{'…' if loop.previtem|default(0) != num - 1 }}
+        {% if num != current_page_num %}
+            <a href="{{SITEURL|escape}}/{{paginator.page(num).url|escape}}">{{num}}</a>
+        {% else %}
+            <strong>{{num}}</strong>
+        {% endif %}
+    {% endif %}
+    {% endfor %}
+{% endmacro %}

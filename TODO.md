@@ -9,7 +9,6 @@
     - Move theme directory to its own repository (kbits-theme), afterwards
       imported as a Git submodule
         - Write a README for the theme describing its features & configuration
-        - This will require rewriting the custom Jinja filters in pure Jinja
         - Set up a kbits-theme-demo site
         - At some point, improve how translations are shown
 
@@ -21,10 +20,6 @@
 - Configure theme/style sheet
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
-    - Set up a tag cloud system? ("`tag_cloud`" plugin?)
-    - Add breadcrumbs to the tops of tag listings & category listings pages?
-        - Will require `{CATEGORIES,TAGS}_URL` settings
-    - Add breadcrumbs to the tops of period archives?
     - Add a favicon?
     - Merge CSS files together by origin
     - Add an author page at either `/author/` or `/jwodder/` and have the
@@ -35,7 +30,6 @@
             - Allow URL to be either relative (in which case it's prefixed with
               SITEURL) or absolute
     - Plugins to use:
-        - <https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud>
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
           for adding descriptions to category/tag pages?
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
@@ -48,7 +42,6 @@
         - Subsequent index pages: `/{n}/`
         - Subsequent category article listings: `/categories/{cat}/{n}/`
         - Subsequent tag article listings: `/tags/{tag}/{n}/`
-- Test display of "last modified" date
 
 
 Content To-Dos
