@@ -27,6 +27,10 @@ body {
     font-size: 16px;
 }
 
+tt, code, pre {
+    font-size: 80%;
+}
+
 a {
     text-decoration: none;
     color: #0000EE;
