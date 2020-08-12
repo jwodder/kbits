@@ -50,28 +50,3 @@ div.topic:not(.dedication):not(.abstract) p.topic-title {
     line-height: 1;
     display: inline;
 }
-
-/*
- * Sphinx stylesheet -- basic theme.
- *
- * :copyright: Copyright 2007-2020 by the Sphinx team, see AUTHORS.
- * :license: BSD, see LICENSE for details.
- *
- */
-
-div.dedication p.topic-title,
-div.abstract p.topic-title {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-div.topic::after {
-    display: block;
-    content: '';
-    clear: both;
-}
-
-div.topic > :last-child {
-    margin-bottom: 0;
-}

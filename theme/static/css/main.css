@@ -1,6 +1,7 @@
-@import url('docutils.css');
 @import url('admonitions.css');
 @import url('blockquote.css');
+@import url('docinfo-topics.css');
+@import url('docutils.css');
 @import url('headers.css');
 @import url('kbd.css');
 @import url('pygments.css');
