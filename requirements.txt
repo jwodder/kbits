@@ -1,2 +1,2 @@
 ### TODO: Replace URL with `~=4.3` after Pelican 4.3 releases
-pelican @ git+https://github.com/getpelican/pelican.git
+pelican @ git+https://github.com/getpelican/pelican.git@d2bbfd967e70351d014ab11ec3e8dc8dbcf58867
