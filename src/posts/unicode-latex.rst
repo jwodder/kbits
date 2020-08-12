@@ -4,7 +4,7 @@ Unicode and LaTeX
 
 :Date: 2020-07-27
 :Category: Software
-:Tags: markup, LaTeX, XeLaTeX, LuaLaTeX, Unicode, UTF-8
+:Tags: markup, LaTeX, XeLaTeX, LuaLaTeX, Unicode, UTF-8, encoding
 :Summary:
     How to configure LaTeX to accept UTF-8 input (or just use XeLaTeX/LuaLaTeX
     instead)
