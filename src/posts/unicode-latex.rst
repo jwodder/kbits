@@ -18,6 +18,9 @@ non-ASCII characters natively requires knowledge squirreled away in scattered
 documents.  Here we cover how to get LaTeX to work with UTF-8 input characters
 in hopes of thwarting the squirrels of obscurity.
 
+Or you could just `skip all that <xetex and luatex_>`_ and use XeLaTeX or
+LuaLaTeX instead.
+
 
 pdfTeX Engine (pdfLaTeX)
 ========================
@@ -271,6 +274,8 @@ Enabling input in other alphabets is a separate topic for each alphabet with no
 easy one-size-fits-all answer.
 
 
+.. _xetex and luatex:
+
 XeTeX Engine (XeLaTeX) and LuaTeX Engine (LuaLaTeX)
 ===================================================
 
@@ -295,7 +300,9 @@ pdfLaTeX and XeLaTeX/LuaLaTeX are:
 - The ``fontenc`` and ``inputenc`` commands used in pdfLaTeX should be omitted
   when working with XeLaTeX/LuaLaTeX; the Unicode engines ignore (and give a
   warning about) ``inputenc``, while setting ``fontenc`` can actually cause
-  some characters (like smart quotes) to not be recognized.
+  some characters (like smart quotes) to not be recognized.  Instead, you can
+  just start entering Unicode characters directly into your document without
+  having to include any packages.
 
 - The set of available Unicode characters in XeLaTeX/LuaLaTeX is determined by
   what characters are defined in the current font. [#minimal]_  The default

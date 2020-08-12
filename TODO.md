@@ -21,14 +21,7 @@
     - Themes gallery: <http://www.pelicanthemes.com>
     - Read <https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/>?
     - Add a favicon?
-    - Merge CSS files together by origin
-    - Add an author page at either `/author/` or `/jwodder/` and have the
-      default author name in posts link there
-        - Add an `AUTHOR_LINK` setting for setting the link for `AUTHOR`?
-            - Alternatively, support an `AUTHOR_LINKS: Dict[str,
-              Optional[str]]` setting?
-            - Allow URL to be either relative (in which case it's prefixed with
-              SITEURL) or absolute
+    - Add an author autopage
     - Plugins to use:
         - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
           for adding descriptions to category/tag pages?
@@ -46,10 +39,7 @@
 
 Content To-Dos
 --------------
-- powsum: Rename the variables so that `n` is the exponent
 - click-config:
     - Drop last example output?
     - Add section on dealing with `multiple`, `nargs`, & type-tuples?
-- unicode-latex: Add a paragraph at the end of the intro that says "Summary:
-  Just use XeLaTeX/LuaLaTeX"?
 - rst-hyperlinks.rst: Show outputs for more examples
