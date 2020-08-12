@@ -8,6 +8,19 @@
 @import url('table.css');
 @import url('topic.css');
 
+/* BabelStone Shapes v. 13.0.1 by BabelStone
+ * <https://babelstone.co.uk/Fonts/Shapes.html>
+ * Available under the SIL Open Font License 1.1
+ */
+@font-face {
+    font-family: "BabelStone Shapes";
+    src: local("BabelStone Shapes"),
+         local("BabelStone-Shapes"),
+         url(../fonts/BabelStoneShapes.woff2) format("woff2"),
+         url(../fonts/BabelStoneShapes.woff) format("woff"),
+         url(../fonts/BabelStoneShapes.ttf) format("ttf");
+}
+
 #topbar {
     border-bottom: 1px solid #eaecef;
     margin-top: 0;
@@ -63,6 +76,11 @@ div.subfeeds {
 
 #pagination {
     text-align: center;
+    margin-top: 1em;
+}
+
+.paging-icon {
+    font-family: BabelStone Shapes;
 }
 
 #footer {
