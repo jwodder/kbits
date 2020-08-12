@@ -21,6 +21,20 @@
          url(../fonts/BabelStoneShapes.ttf) format("ttf");
 }
 
+body {
+    font-family: serif;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #0000EE;
+}
+
+a:visited {
+    color: #551A8B;
+}
+
 #topbar {
     border-bottom: 1px solid #eaecef;
     margin-top: 0;
@@ -96,10 +110,6 @@ hr {
     margin-top: 1em;
     margin-bottom: 1em;
     border-width: 1px 0 0 0;
-}
-
-a {
-    text-decoration: none;
 }
 
 pre {

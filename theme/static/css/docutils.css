@@ -24,7 +24,7 @@
 
 h1 a, a.toc-backref {
     text-decoration: none;
-    color: black;
+    color: black ! important;
 }
 
 /*
