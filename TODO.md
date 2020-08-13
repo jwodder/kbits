@@ -2,8 +2,6 @@
 <https://jwodder.github.io/kbits>
 
 - When the site is first published:
-    - Set all the articles' dates (or just the ones not previously published as
-      Gists?) to that date (with varying times)
     - Update the original Gists (for those posts that originated as Gists) to
       point to the site
 

@@ -2,7 +2,7 @@
 The Sum of Raising the First :math:`n` Integers to a Given Power
 ================================================================
 
-:Date: 2020-07-30
+:Date: 2020-08-13
 :Category: Mathematics
 :Tags: summations
 :Summary:
