@@ -29,16 +29,8 @@
     - Tweak the coloration of visited links
     - Convert all(?) px lengths to ems? (1 em = font-size = 16px)
 
-- Test pagination rendering and pagination URLs
-    - Goals for pagination URLs:
-        - Subsequent index pages: `/{n}/`
-        - Subsequent category article listings: `/categories/{cat}/{n}/`
-        - Subsequent tag article listings: `/tags/{tag}/{n}/`
-
 
 Content To-Dos
 --------------
 - click-config:
     - Drop last example output?
-    - Add section on dealing with `multiple`, `nargs`, & type-tuples?
-- rst-hyperlinks.rst: Show outputs for more examples

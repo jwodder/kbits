@@ -128,9 +128,15 @@ target*) what URI the reference name points to.  For example:
 
     .. _link_target: http://www.example.com
 
+Rendered:
+
+    Here is `a link <link_target_>`_ to somewhere.
+
+    .. _link_target: http://www.example.com
+
 This syntax consists of two parts:
 
-- At the location in the prose where you want the link to appear, write a
+- At the location in the text where you want the link to appear, write a
   backtick, the link text (with embedded backticks escaped), whitespace, a
   reference name followed by an underscore and encased in angle brackets,
   another backtick, and another underscore.
@@ -260,7 +266,14 @@ the link text is too long to use as an efficient reference name?  The solution:
 
     .. __: https://www.example.com
     __ https://www.example.net
+
+Rendered:
  
+    `This link`__ goes to a dot-com.  `This other link`__ goes to a dot-net.
+
+    .. __: https://www.example.com
+    __ https://www.example.net
+
 Write the link text as a `named hyperlink reference`_, but instead of ending it
 with one underscore, use two.  (As with named hyperlink references, the
 backticks can be omitted for a `simple reference name`_.) Then, for the
@@ -374,7 +387,7 @@ Internal Hyperlink Targets
 --------------------------
 
 A hyperlink target without a URI creates an *internal hyperlink target* that
-points to the next element in the document.
+points to the next element in the document after the target.
 
 .. code:: rst
 
@@ -384,7 +397,18 @@ points to the next element in the document.
 
     .. _After Lorem:
 
-    This paragraph can be linked to with the reference name ``After Lorem``.
+    This paragraph can be linked to with the reference name "``After Lorem``."
+    Aren't you glad you didn't skip the previous paragraph now?
+
+Rendered:
+
+    Click `here <After Lorem_>`_ to skip the next paragraph.
+
+    Lorem ipsum dolor sit amet …
+
+    .. _After Lorem:
+
+    This paragraph can be linked to with the reference name "``After Lorem``."
     Aren't you glad you didn't skip the previous paragraph now?
 
 The target points to the next element even if the target is indented so as to
@@ -414,6 +438,19 @@ using that name, equivalent to preceding the directive with an internal
 hyperlink target.
 
 .. code:: rst
+
+    .. danger::
+        :name: dont-or-whatever
+
+        Don't stick your finger in the— You know what?  Forget it.  I'm not
+        your mother.
+
+    … Text passes …
+
+    Hey, remember `that admonition from earlier <dont-or-whatever_>`_?  I was
+    serious.
+
+Rendered:
 
     .. danger::
         :name: dont-or-whatever
@@ -549,9 +586,16 @@ using a substitution:
     .. |pie à la mode| replace:: pie *à la mode*
     .. _pie à la mode: https://www.example.com
 
-This works as follows:
+Rendered:
 
-- In our prose, we insert a *substitution reference* where we want the link to
+    Try this recipe for |pie à la mode|_.
+
+    .. |pie à la mode| replace:: pie *à la mode*
+    .. _pie à la mode: https://www.example.com
+
+The steps to do this are as follows:
+
+- In our text, we insert a *substitution reference* where we want the link to
   be.  A substitution reference consists of a vertical bar, some arbitrary
   substitution text, and another vertical bar.  Because we also want this to be
   a hyperlink, an underscore is added after the closing vertical bar, causing
