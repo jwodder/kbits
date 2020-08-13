@@ -27,7 +27,7 @@
 
 - Adjust CSS:
     - Tweak the coloration of visited links
-    - Convert all(?) px lengths to ems (1 em = font-size = 16px)
+    - Convert all(?) px lengths to ems? (1 em = font-size = 16px)
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:

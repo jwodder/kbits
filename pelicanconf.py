@@ -44,6 +44,7 @@ DRAFT_PAGE_LANG_SAVE_AS = DRAFT_PAGE_LANG_URL + 'index.html'
 
 #AUTHOR_URL = 'authors/{slug}/'
 #AUTHOR_SAVE_AS = AUTHOR_URL + 'index.html'
+AUTHOR_URL = ''  # Disable author pages
 AUTHOR_SAVE_AS = ''  # Disable author pages
 #AUTHORS_SAVE_AS = 'authors/index.html'
 AUTHORS_SAVE_AS = ''  # Disable authors listing
@@ -101,7 +102,6 @@ THEME = './theme'
 GITHUB_SOURCE_URL = 'https://github.com/jwodder/kbits'
 PATH_IN_REPO = PATH  # PATH relative to root of repository
 SHOW_AUTHOR = True
-LINK_AUTHOR = False
 SHOW_AUTHOR_IN_LISTINGS = False
 
 author_footer_link = 'https://github.com/jwodder'

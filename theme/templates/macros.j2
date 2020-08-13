@@ -20,7 +20,7 @@
             <div>
                 <strong>By:</strong>
                 {% for author in article.authors %}
-                    {%- if LINK_AUTHOR -%}
+                    {%- if author.url -%}
                     <a class="url fn" href="{{SITEURL|escape}}/{{author.url|escape}}">{{author|escape}}</a>
                     {%- else -%}
                     <span class="fn">{{author|escape}}</span>
