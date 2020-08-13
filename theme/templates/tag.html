@@ -11,6 +11,14 @@
     {% endif %}
 {% endblock %}
 
+{% block preamble %}
+{% if tag.page %}
+    <h1>{{tag.page.title|safe}}</h1>
+
+    <div id="preamble-content">{{tag.page.content|safe}}</div>
+{% endif %}
+{% endblock %}
+
 {% block content_title %}
 <h1>Articles Tagged with “{{tag|escape}}”</h1>
 {% endblock %}

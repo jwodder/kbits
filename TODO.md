@@ -23,12 +23,11 @@
     - Add a favicon?
     - Add an author autopage
     - Plugins to use:
-        - <https://github.com/getpelican/pelican-plugins/tree/master/autopages>
-          for adding descriptions to category/tag pages?
         - <https://github.com/pelican-plugins/seo> (Just do what it says)
 
 - Adjust CSS:
     - Tweak the coloration of visited links
+    - Convert all(?) px lengths to ems (1 em = font-size = 16px)
 
 - Test pagination rendering and pagination URLs
     - Goals for pagination URLs:

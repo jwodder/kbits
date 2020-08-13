@@ -85,7 +85,12 @@ FORMATTED_FIELDS = ['summary', 'Summary']
 
 
 # Plugins
-PLUGINS = []
+PLUGINS = ['plugins.autopages']
+
+# autopages
+AUTHOR_PAGE_PATH = f'{PATH}/authors'
+CATEGORY_PAGE_PATH = f'{PATH}/categories'
+TAG_PAGE_PATH = f'{PATH}/tags'
 
 
 # Themes

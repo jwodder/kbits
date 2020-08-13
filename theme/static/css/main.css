@@ -110,6 +110,10 @@ div.subfeeds {
     padding-top: 1em;
 }
 
+#preamble-content {
+    margin-bottom: 1.5em;
+}
+
 hr {
     width: 66%;
     margin-top: 1em;
