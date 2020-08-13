@@ -1,13 +1,13 @@
-=======================================================
-Deriving the Formula for the Sum of :math:`n`-th Powers
-=======================================================
+================================================================
+The Sum of Raising the First :math:`n` Integers to a Given Power
+================================================================
 
 :Date: 2020-07-30
 :Category: Mathematics
 :Tags: summations
 :Summary:
-    How to derive the closed-form expression for :math:`\sum_{i=1}^n i^m` from
-    the formulas for all lesser :math:`m`'s
+    How to derive the closed-form expression for :math:`\sum_{i=1}^n i^m` for a
+    given :math:`m` using the formulas for all lesser :math:`m`'s
 
 The closed-form expression for :math:`\sum_{i=1}^n i^m` for a given
 :math:`m\in\mathbb{Z}^+` can be derived — once we know the formulas for all
@@ -37,7 +37,7 @@ lesser :math:`m`'s — as follows:
 - Substitute the closed-form expressions for the remaining :math:`\sum_{i=1}^n
   i^k` terms.
 
-For example, once we know that :math:`\sum_{i=1}^n i = \frac{n^2+n}{2}` and
+For example, once we know that :math:`\sum_{i=1}^n i = \frac{n(n+1)}{2}` and
 :math:`\sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}`, we can derive
 :math:`\sum_{i=1}^n i^3` as follows:
 
@@ -48,5 +48,5 @@ For example, once we know that :math:`\sum_{i=1}^n i = \frac{n^2+n}{2}` and
         & = 4\sum_{i=1}^n i^3 - 6\sum_{i=1}^n i^2 + 4\sum_{i=1}^n i - n \\
     \sum_{i=1}^n i^3
         & = \frac{1}{4} (n^4 + 6\sum_{i=1}^n i^2 - 4\sum_{i=1}^n i + n) \\
-        & = \frac{1}{4} (n^4 + 6\frac{n(n+1)(2n+1)}{6} - 4\frac{n(n+1)}{2} + n)\\
+        & = \frac{1}{4} (n^4 + 6\times\frac{n(n+1)(2n+1)}{6} - 4\times\frac{n(n+1)}{2} + n)\\
         & = \frac{1}{4} (n^4 + 2n^3 + n^2)
