@@ -2,7 +2,7 @@ from datetime import date
 
 # Site metadata
 SITENAME = 'Knowledge Bits'
-SITESUBTITLE = "References I wish I'd read"
+SITESUBTITLE = "References I wish I'd already found"
 AUTHOR = 'John T. Wodder II'
 DEFAULT_LANG = 'en'
 TIMEZONE = 'America/New_York'
