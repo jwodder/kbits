@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Knowledge Bits - Python</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd read</description><lastBuildDate>Fri, 17 Jul 2020 00:00:00 -0400</lastBuildDate><item><title>Setting Default Option Values from Config Files with Click</title><link>https://jwodder.github.io/kbits/posts/click-config/</link><description>&lt;p class="first last"&gt;How to set up a Click program to read default option values from a config
+file&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Fri, 17 Jul 2020 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2020-07-17:/kbits/posts/click-config/</guid><category>Programming</category><category>Python</category><category>Click</category><category>configuration file</category></item></channel></rss>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Click</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.click.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-07-17T00:00:00-04:00</updated><subtitle>References I wish I'd read</subtitle><entry><title>Setting Default Option Values from Config Files with Click</title><link href="https://jwodder.github.io/kbits/posts/click-config/" rel="alternate"></link><published>2020-07-17T00:00:00-04:00</published><updated>2020-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-07-17:/kbits/posts/click-config/</id><summary type="html">&lt;p class="first last"&gt;How to set up a Click program to read default option values from a config
+file&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;When developing a command-line application in Python with &lt;a class="reference external" href="https://palletsprojects.com/p/click/"&gt;Click&lt;/a&gt;, you may find
+yourself wanting to use a configuration file to set the parameters’ default
+values at runtime and to be able to specify such a file with a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt;&lt;/tt&gt;
+option.  There are various libraries of varying quality that provide such
+functionality in different ways; however, implementing such functionality on
+one’s own is simple enough (as this document will show), and knowing the
+basics will help you develop more advanced implementations when the libraries
+out there don’t meet your needs.&lt;/p&gt;
+&lt;p&gt;All code in this document has been tested against Click version 7.1.2.&lt;/p&gt;
+&lt;div class="section" id="default-map"&gt;
+&lt;h2&gt;&lt;tt class="docutils literal"&gt;default_map&lt;/tt&gt;&lt;/h2&gt;
+&lt;p&gt;The key feature of Click that will allow us to set parameter values from a
+configuration file is the &lt;tt class="docutils literal"&gt;default_map&lt;/tt&gt; attribute of &lt;tt class="docutils literal"&gt;click.Context&lt;/tt&gt;,
+documented at &lt;a class="reference external" href="https://click.palletsprojects.com/en/7.x/commands/#overriding-defaults"&gt;[1]&lt;/a&gt;.  Any values set in this &lt;code class="py python"&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;/code&gt; before parameters are
+processed will become the parameters’ new default values.  Any extra keys that
+do not correspond to defined parameters are ignored.&lt;/p&gt;
+&lt;p&gt;Moreover, Click will map values in &lt;tt class="docutils literal"&gt;default_map&lt;/tt&gt; through the parameters’
+normal type conversion &amp;amp; validation routines.  This means that, if you have an
+option &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; defined with &lt;code class="py python"&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;/code&gt;, you can set
+&lt;code class="py python"&gt;&lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;5&amp;quot;&lt;/span&gt;&lt;/code&gt;, and the value will be converted to an
+&lt;code class="py python"&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;/code&gt; by the time it’s passed to the command callback.  This even works for
+boolean flags: a value set for a boolean flag option will be processed by the
+&lt;a class="reference external" href="https://click.palletsprojects.com/en/7.x/parameters/#parameter-types"&gt;&lt;tt class="docutils literal"&gt;click.BOOL&lt;/tt&gt;&lt;/a&gt; type, which maps boolean-like strings to &lt;code class="py python"&gt;&lt;span class="nb"&gt;bool&lt;/span&gt;&lt;/code&gt; values.  This
+eases your workload when reading from a configuration file type like INI where
+values don’t come with type information; just pass the values straight to
+Click, and it’ll do the conversion for you the same as it does for values on
+the command line.&lt;/p&gt;
+&lt;p&gt;Areas to be careful in include parameters defined with &lt;code class="py python"&gt;&lt;span class="n"&gt;multiple&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;/code&gt;.
+The default value for such parameters (whether declared with &lt;code class="py python"&gt;&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;/code&gt; in
+the parameter’s decorator or set in &lt;tt class="docutils literal"&gt;default_map&lt;/tt&gt;) must be a list or tuple;
+setting such a default to a string will cause the string to be interpreted as a
+list of single-character strings.  Also requiring special attention are options
+defined with &lt;tt class="docutils literal"&gt;nargs&lt;/tt&gt; or with a tuple of types; correct handling for all of
+these is left as an exercise for the reader.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="implementing-a-config-option"&gt;
+&lt;h2&gt;Implementing a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt;&lt;/tt&gt; option&lt;/h2&gt;
+&lt;p&gt;In order to define a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt; FILE&lt;/tt&gt; option that reads from &lt;tt class="docutils literal"&gt;FILE&lt;/tt&gt; and sets
+other parameters’ default values, the option first of all needs to be &lt;a class="reference external" href="https://click.palletsprojects.com/en/7.x/options/#callbacks-and-eager-options"&gt;eager&lt;/a&gt; so
+that it can modify &lt;tt class="docutils literal"&gt;ctx.default_map&lt;/tt&gt; before the other options read it, and it
+needs to be defined with a callback that does the actual work.  Everything else
+after that is straightforward.&lt;/p&gt;
+&lt;p&gt;Here is a sample Python script with a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt;&lt;/tt&gt; option that reads from a
+given config file (or from &lt;tt class="docutils literal"&gt;config.ini&lt;/tt&gt; in the current directory if no config
+file is given).  The config file must be an INI file, and the values for the
+options are read from the &lt;tt class="docutils literal"&gt;[options]&lt;/tt&gt; section.  The command callback simply
+dumps out its arguments so you can see what’s being passed to it.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;   &lt;span class="nn"&gt;configparser&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ConfigParser&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;click&lt;/span&gt;
+
+&lt;span class="n"&gt;DEFAULT_CFG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'config.ini'&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;configure&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;cfg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ConfigParser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;cfg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;options&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;options&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+    &lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default_map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;options&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s1"&gt;'-c'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'--config'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nb"&gt;type&lt;/span&gt;         &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dir_okay&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;default&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DEFAULT_CFG&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;callback&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;configure&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;is_eager&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;expose_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;help&lt;/span&gt;         &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Read option defaults from the specified INI file'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;show_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--integer'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--flag/--no-flag'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--str'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--choice'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Choice&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;'red'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'blue'&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sort_keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If we run this script with no options when &lt;tt class="docutils literal"&gt;config.ini&lt;/tt&gt; does not exist or is
+empty, we get the parameters’ built-in default values:&lt;/p&gt;
+&lt;pre class="code console literal-block"&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py
+&lt;span class="go"&gt;{
+    &amp;quot;choice&amp;quot;: null,
+    &amp;quot;flag&amp;quot;: false,
+    &amp;quot;integer&amp;quot;: 42,
+    &amp;quot;str&amp;quot;: &amp;quot;foo&amp;quot;
+}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;That’s boring!  Try populating &lt;tt class="docutils literal"&gt;example.ini&lt;/tt&gt; with the below text:&lt;/p&gt;
+&lt;pre class="code ini literal-block"&gt;
+&lt;span class="k"&gt;[options]&lt;/span&gt;
+&lt;span class="na"&gt;integer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;23&lt;/span&gt;
+&lt;span class="na"&gt;flag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
+&lt;span class="na"&gt;choice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;green&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;… and then run with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt; example.ini&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="code console literal-block"&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py --config example.ini
+&lt;span class="go"&gt;{
+    &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
+    &amp;quot;flag&amp;quot;: true,
+    &amp;quot;integer&amp;quot;: 23,
+    &amp;quot;str&amp;quot;: &amp;quot;bar&amp;quot;
+}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Note that the values set for the &lt;tt class="docutils literal"&gt;flag&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;integer&lt;/tt&gt; options have been
+converted to their appropriate types.&lt;/p&gt;
+&lt;p&gt;Of course, options set in the config file are overridden by command-line
+options, no matter where the options occur in relation to &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="code console literal-block"&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py --integer &lt;span class="m"&gt;17&lt;/span&gt; --config example.ini --str glarch
+&lt;span class="go"&gt;{
+    &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
+    &amp;quot;flag&amp;quot;: true,
+    &amp;quot;integer&amp;quot;: 17,
+    &amp;quot;str&amp;quot;: &amp;quot;glarch&amp;quot;
+}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;What if a value in the config file is invalid?  Try saving the following text
+to &lt;tt class="docutils literal"&gt;bad.ini&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="code ini literal-block"&gt;
+&lt;span class="k"&gt;[options]&lt;/span&gt;
+&lt;span class="na"&gt;choice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;mauve&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The script will then error when passed this config file:&lt;/p&gt;
+&lt;pre class="code console literal-block"&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py --config bad.ini
+&lt;span class="go"&gt;Usage: config01.py [OPTIONS]
+Try 'config01.py --help' for help.
+
+Error: Invalid value for '--choice': invalid choice: mauve. (choose from red, green, blue)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Not the best possible error message (It doesn’t tell us the bad value was in
+the config file), but it’s better than a stack trace.&lt;/p&gt;
+&lt;p&gt;Note that, with this code, parameters in the config file must be named using
+the same name &amp;amp; spelling as the parameter’s corresponding argument to the
+command callback.  For example, the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--integer&lt;/span&gt;&lt;/tt&gt; option must be written
+&lt;tt class="docutils literal"&gt;integer&lt;/tt&gt;, not &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--integer&lt;/span&gt;&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-i&lt;/span&gt;&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;i&lt;/tt&gt;; any entries in the config
+file with an invalid spelling will be ignored.  For options with medial hyphens
+on the command line, like &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--log-level&lt;/span&gt;&lt;/tt&gt;, the hyphens must become underscores
+in the configuration file, like &lt;tt class="docutils literal"&gt;log_level&lt;/tt&gt;.  If you want to support the
+spelling &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;log-level&lt;/span&gt;&lt;/tt&gt; as well, insert the following line after &lt;code class="py python"&gt;&lt;span class="n"&gt;cfg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="n"&gt;ConfigParser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;/code&gt; to make the &lt;tt class="docutils literal"&gt;ConfigParser&lt;/tt&gt; object convert hyphens in option
+names to underscores:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;cfg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;optionxform&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'-'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'_'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuring-command-groups"&gt;
+&lt;h2&gt;Configuring command groups&lt;/h2&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;default_map&lt;/tt&gt; supports passing values to subcommands in command groups in a
+very simple way: if the main command has a subcommand named “&lt;tt class="docutils literal"&gt;foo&lt;/tt&gt;”, then
+&lt;code class="py python"&gt;&lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;/code&gt; can be set to a &lt;code class="py python"&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;/code&gt; of parameter names &amp;amp;
+values for &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt;.  For example, the following assignment:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default_map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;color&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;red&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;speed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;high&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;bar&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;speed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;low&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;baz&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;time&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;late&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;sets the default value for the main command’s &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--color&lt;/span&gt;&lt;/tt&gt; option to &lt;tt class="docutils literal"&gt;red&lt;/tt&gt;,
+the default value of the &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; subcommand’s &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--speed&lt;/span&gt;&lt;/tt&gt;  option to &lt;tt class="docutils literal"&gt;high&lt;/tt&gt;,
+the default value of the &lt;tt class="docutils literal"&gt;bar&lt;/tt&gt; subcommand’s &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--speed&lt;/span&gt;&lt;/tt&gt; option to &lt;tt class="docutils literal"&gt;low&lt;/tt&gt;,
+and the default value of the &lt;tt class="docutils literal"&gt;bar baz&lt;/tt&gt; sub-subcommand’s &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--time&lt;/span&gt;&lt;/tt&gt; option to
+&lt;tt class="docutils literal"&gt;late&lt;/tt&gt;.  As you can see, this comes with one major drawback: a command can’t
+have a subcommand with the same name as one of its parameters.&lt;/p&gt;
+&lt;p&gt;Here is a sample Python script with command groups that reads configuration
+from an INI file.  Settings in the &lt;tt class="docutils literal"&gt;[options]&lt;/tt&gt; section are applied to the
+top-level command, settings in the &lt;tt class="docutils literal"&gt;[options.CMD]&lt;/tt&gt; section are applied to the
+subcommand &lt;tt class="docutils literal"&gt;CMD&lt;/tt&gt;, settings in &lt;tt class="docutils literal"&gt;[options.CMD1.CMD2]&lt;/tt&gt; are applied to the
+&lt;tt class="docutils literal"&gt;CMD2&lt;/tt&gt; sub-subcommand of the &lt;tt class="docutils literal"&gt;CMD1&lt;/tt&gt; subcommand, and so forth.  As above,
+each command prints out the parameters it receives.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;   &lt;span class="nn"&gt;configparser&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ConfigParser&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;click&lt;/span&gt;
+
+&lt;span class="n"&gt;DEFAULT_CFG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'config.ini'&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;configure&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;cfg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ConfigParser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;cfg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default_map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;sect&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;cfg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sections&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="n"&gt;command_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sect&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'.'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;command_path&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s1"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;continue&lt;/span&gt;
+        &lt;span class="n"&gt;defaults&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default_map&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;cmdname&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;command_path&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]:&lt;/span&gt;
+            &lt;span class="n"&gt;defaults&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;defaults&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setdefault&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cmdname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{})&lt;/span&gt;
+        &lt;span class="n"&gt;defaults&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sect&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;group&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;invoke_without_command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s1"&gt;'-c'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'--config'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nb"&gt;type&lt;/span&gt;         &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dir_okay&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;default&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DEFAULT_CFG&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;callback&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;configure&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;is_eager&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;expose_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;help&lt;/span&gt;         &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Read option defaults from the specified INI file'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;show_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--integer'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--flag/--no-flag'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--str'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--choice'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Choice&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;'red'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'blue'&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'* main'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sort_keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;main&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--speed'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Choice&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;'low'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'medium'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'high'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ludicrous'&lt;/span&gt;&lt;span class="p"&gt;]),&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'medium'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'* foo'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sort_keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;main&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;group&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;invoke_without_command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--speed'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Choice&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;'low'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'medium'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'high'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ludicrous'&lt;/span&gt;&lt;span class="p"&gt;]),&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'medium'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'* bar'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sort_keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;bar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'--time'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Choice&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;'early'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'late'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'exact'&lt;/span&gt;&lt;span class="p"&gt;]),&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'early'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;baz&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'* baz'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sort_keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Set &lt;tt class="docutils literal"&gt;config.ini&lt;/tt&gt; to the following:&lt;/p&gt;
+&lt;pre class="code ini literal-block"&gt;
+&lt;span class="k"&gt;[options]&lt;/span&gt;
+&lt;span class="na"&gt;integer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;23&lt;/span&gt;
+&lt;span class="na"&gt;flag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
+&lt;span class="na"&gt;choice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;green&lt;/span&gt;
+
+&lt;span class="k"&gt;[options.foo]&lt;/span&gt;
+&lt;span class="na"&gt;speed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;high&lt;/span&gt;
+
+&lt;span class="k"&gt;[options.bar]&lt;/span&gt;
+&lt;span class="na"&gt;speed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;low&lt;/span&gt;
+
+&lt;span class="k"&gt;[options.bar.baz]&lt;/span&gt;
+&lt;span class="na"&gt;time&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;late&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;… and then invoke some commands to see the results:&lt;/p&gt;
+&lt;pre class="code console literal-block"&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py
+&lt;span class="go"&gt;* main
+{
+    &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
+    &amp;quot;flag&amp;quot;: true,
+    &amp;quot;integer&amp;quot;: 23,
+    &amp;quot;str&amp;quot;: &amp;quot;bar&amp;quot;
+}
+&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py foo
+&lt;span class="go"&gt;* main
+{
+    &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
+    &amp;quot;flag&amp;quot;: true,
+    &amp;quot;integer&amp;quot;: 23,
+    &amp;quot;str&amp;quot;: &amp;quot;bar&amp;quot;
+}
+* foo
+{
+    &amp;quot;speed&amp;quot;: &amp;quot;high&amp;quot;
+}
+&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py bar
+&lt;span class="go"&gt;* main
+{
+    &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
+    &amp;quot;flag&amp;quot;: true,
+    &amp;quot;integer&amp;quot;: 23,
+    &amp;quot;str&amp;quot;: &amp;quot;bar&amp;quot;
+}
+* bar
+{
+    &amp;quot;speed&amp;quot;: &amp;quot;low&amp;quot;
+}
+&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py bar baz
+&lt;span class="go"&gt;* main
+{
+    &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
+    &amp;quot;flag&amp;quot;: true,
+    &amp;quot;integer&amp;quot;: 23,
+    &amp;quot;str&amp;quot;: &amp;quot;bar&amp;quot;
+}
+* bar
+{
+    &amp;quot;speed&amp;quot;: &amp;quot;low&amp;quot;
+}
+* baz
+{
+    &amp;quot;time&amp;quot;: &amp;quot;late&amp;quot;
+}
+&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py --choice red foo --speed medium
+&lt;span class="go"&gt;* main
+{
+    &amp;quot;choice&amp;quot;: &amp;quot;red&amp;quot;,
+    &amp;quot;flag&amp;quot;: true,
+    &amp;quot;integer&amp;quot;: 23,
+    &amp;quot;str&amp;quot;: &amp;quot;bar&amp;quot;
+}
+* foo
+{
+    &amp;quot;speed&amp;quot;: &amp;quot;medium&amp;quot;
+}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="Python"></category><category term="Click"></category><category term="configuration file"></category></entry></feed>

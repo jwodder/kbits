@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — All About reStructuredText Hyperlinks</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="Writing the various hyperlink syntaxes in reStructuredText, along with internal hyperlinks and styling link text"/>
+        <meta name="tags" content="markup"/>
+        <meta name="tags" content="reStructuredText"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="markup,reStructuredText"/>
+</head>
+
+<body>
+    <div id="topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d read</span>
+        </header><!-- /#banner -->
+    </div>
+
+    <div class="mainrow">
+        <div id="navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav><!-- /#menu -->
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/rst-hyperlinks/" rel="bookmark"
+                    title="Permalink to All About reStructuredText Hyperlinks">All About reStructuredText Hyperlinks</a>
+            </h1>
+            
+        </header>
+        <footer>
+            <table border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2020-07-28T00:00:00-04:00" pubdate="1">2020-07-28</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<span class="fn">John T. Wodder II</span>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/software/">Software</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/markup/">markup</a>, <a href="https://jwodder.github.io/kbits/tags/restructuredtext/">reStructuredText</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/rst-hyperlinks.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p><a class="reference external" href="https://docutils.sourceforge.io/rst.html">reStructuredText</a> offers a number of different ways to write hyperlinks, but
+keeping track of all of them and their gotchas isn’t easy, and the information
+is scattered around the spec.  This document aims to summarize all of the
+hyperlink-related information from the <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html">reStructuredText Markup Specification</a>
+in one (hopefully) well-organized place.</p>
+<p>This document describes reStructuredText hyperlinks as of <a class="reference external" href="https://docutils.sourceforge.io">Docutils</a> version
+0.16, the latest version at time of writing.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#standalone-hyperlinks" id="id4">Standalone Hyperlinks</a></li>
+<li><a class="reference internal" href="#embedded-uri-hyperlinks" id="id5">Embedded URI Hyperlinks</a></li>
+<li><a class="reference internal" href="#embedded-alias-hyperlinks-and-hyperlink-targets" id="id6">Embedded Alias Hyperlinks and Hyperlink Targets</a></li>
+<li><a class="reference internal" href="#named-hyperlink-references" id="id7">Named Hyperlink References</a></li>
+<li><a class="reference internal" href="#anonymous-hyperlinks" id="id8">Anonymous Hyperlinks</a></li>
+<li><a class="reference internal" href="#embedded-uri-hyperlinks-and-automatic-reference-names" id="id9">Embedded URI Hyperlinks and Automatic Reference Names</a><ul>
+<li><a class="reference internal" href="#gotcha-duplicate-link-text" id="id10">Gotcha: Duplicate Link Text</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#embedded-alias-hyperlinks-and-automatic-reference-names" id="id11">Embedded Alias Hyperlinks and Automatic Reference Names</a></li>
+<li><a class="reference internal" href="#intra-document-links" id="id12">Intra-Document Links</a><ul>
+<li><a class="reference internal" href="#internal-hyperlink-targets" id="id13">Internal Hyperlink Targets</a></li>
+<li><a class="reference internal" href="#named-directives" id="id14">Named Directives</a></li>
+<li><a class="reference internal" href="#inline-internal-targets" id="id15">Inline Internal Targets</a></li>
+<li><a class="reference internal" href="#implicit-hyperlink-targets-for-section-titles" id="id16">Implicit Hyperlink Targets for Section Titles</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chaining-hyperlink-targets" id="id17">Chaining Hyperlink Targets</a></li>
+<li><a class="reference internal" href="#styling-link-text" id="id18">Styling Link Text</a></li>
+<li><a class="reference internal" href="#link-text-within-a-word" id="id19">Link Text within a Word</a></li>
+</ul>
+</div>
+<div class="section" id="standalone-hyperlinks">
+<h2><a class="toc-backref" href="#contents">Standalone Hyperlinks</a></h2>
+<p>Firstly, reStructuredText supports <em>standalone hyperlinks</em> — just a bare URI
+(including a scheme) or e-mail address without any link text:</p>
+<pre class="code rst literal-block">
+Go to http://www.example.com to see something neat!
+
+E-mail me at me&#64;example.com.
+</pre>
+<p>The above renders as:</p>
+<blockquote>
+<p>Go to <a class="reference external" href="http://www.example.com">http://www.example.com</a> to see something neat!</p>
+<p>E-mail me at <a class="reference external" href="mailto:me&#64;example.com">me&#64;example.com</a>.</p>
+</blockquote>
+<p>Note that, unlike Markdown, angle brackets are not required around standalone
+hyperlinks, and if you do include angle brackets, the brackets will be present
+in the rendered output.</p>
+<p>Also note that the scheme is required in order for a URI to be recognized as a
+standalone hyperlink.  The domains names in the following will <em>not</em> be
+converted to hyperlinks:</p>
+<pre class="code rst literal-block">
+Go to www.example.com — or to &lt;www.example.org&gt;!
+</pre>
+<p>If you want a hyperlink that links to <tt class="docutils literal">www.example.com</tt> without a scheme and
+uses the address as the link text, you can either write out the link the long
+way as an <a class="reference internal" href="#embedded-uri-hyperlinks">embedded URI hyperlink with link text</a>,
+or you can use embedded URI syntax without any link text, in which case the URI
+becomes the link text.  For example:</p>
+<pre class="code rst literal-block">
+Go to <span class="s">`&lt;www.example.com&gt;`_</span>.
+</pre>
+<p>renders as:</p>
+<blockquote>
+Go to <a class="reference external" href="www.example.com">www.example.com</a>.</blockquote>
+<p>This isn’t very useful for linking to domains, but it can be useful when you
+want a link to a page in the same directory with the page filename used as the
+link text:</p>
+<pre class="code rst literal-block">
+See <span class="s">`&lt;other_page.html&gt;`_</span> for other stuff.
+</pre>
+<p>Rendered:</p>
+<blockquote>
+See <a class="reference external" href="other_page.html">other_page.html</a> for other stuff.</blockquote>
+</div>
+<div class="section" id="embedded-uri-hyperlinks">
+<h2><a class="toc-backref" href="#contents">Embedded URI Hyperlinks</a></h2>
+<p>If you want to create a hyperlink with link text, the most straightforward way
+to do so is with the <em>embedded URI</em> syntax:</p>
+<pre class="code rst literal-block">
+Here is <span class="s">`a link </span><span class="si">&lt;http://www.example.com&gt;</span><span class="s">`_</span> to somewhere.
+</pre>
+<p>This renders as:</p>
+<blockquote>
+Here is <a class="reference external" href="http://www.example.com">a link</a> to somewhere.</blockquote>
+<p>The syntax consists of a backtick, the link text (with any embedded backticks
+escaped with backslashes), whitespace, the target URI or e-mail address inside
+angle brackets, another backtick, and a single underscore.  If the URI ends
+with an underscore, the underscore must be preceded by a backslash in order to
+not be parsed as an <a class="reference internal" href="#embedded-alias">embedded alias</a>.</p>
+<p>Note that link text is treated literally rather than processed for any inline
+markup.  See “<a class="reference internal" href="#styling-link-text">Styling Link Text</a>” below for a way around this.</p>
+<p>There is a gotcha you may run into when defining two embedded URI hyperlinks
+with the same link text but different URIs; <a class="reference internal" href="#gotcha">see below for more information</a>.</p>
+</div>
+<div class="section" id="embedded-alias-hyperlinks-and-hyperlink-targets">
+<span id="embedded-alias"></span><h2><a class="toc-backref" href="#contents">Embedded Alias Hyperlinks and Hyperlink Targets</a></h2>
+<p>If the URI is lengthy, or if you want to link to the same location more than
+once, you may want to use an <em>embedded alias</em>.  In this form, instead of
+specifying the URI next to the link text, you specify a <em>hyperlink reference</em>
+containing a <em>reference name</em>, and then you specify elsewhere (in a <em>hyperlink
+target</em>) what URI the reference name points to.  For example:</p>
+<pre class="code rst literal-block">
+Here is <span class="s">`a link </span><span class="si">&lt;link_target_&gt;</span><span class="s">`_</span> to somewhere.
+
+<span class="p">..</span> <span class="nt">_link_target:</span> http://www.example.com
+</pre>
+<p>Rendered:</p>
+<blockquote>
+Here is <a class="reference external" href="http://www.example.com">a link</a> to somewhere.</blockquote>
+<p>This syntax consists of two parts:</p>
+<ul>
+<li><p class="first">At the location in the text where you want the link to appear, write a
+backtick, the link text (with embedded backticks escaped), whitespace, a
+reference name followed by an underscore and encased in angle brackets,
+another backtick, and another underscore.</p>
+<ul>
+<li><p class="first">The reference name can be any sequence of characters, though if it contains
+any backticks or angle brackets, or begins or ends with space characters,
+the characters in question will need to be escaped with backslashes when
+using the name in an embedded alias link.</p>
+<p>When comparing two reference names for equality, runs of whitespace are
+normalized to a single space, and alphabetic characters are converted to
+lowercase.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul id="target">
+<li><p class="first">Elsewhere in the reStructuredText document (either before or after the
+hyperlink reference), write a <em>(external) hyperlink target</em> on a line of its
+own: optional whitespace, two periods, a space, an underscore, the same
+reference name as before (<em>without</em> the trailing underscore from before), a
+colon, whitespace, and then the URI or e-mail address that the link should
+point to.</p>
+<ul>
+<li><p class="first">If the reference name contains any colons or is just a single underscore,
+you must either escape the characters in question or else enclose the
+reference name in backticks (in which case any backticks in the reference
+name need to be escaped).  Either way, any leading or trailing space
+characters or backticks in the reference name need to be escaped as well.</p>
+</li>
+<li><p class="first">If the URI contains any space characters or ends with an underscore, the
+characters in question will need to be escaped with backslashes.</p>
+</li>
+<li id="multiline"><p class="first">The reference name and the URI may be on the same line, or you can put them
+on separate lines, in which case the URI must be indented relative to the
+two periods and there must be no intervening blank lines.  The URI may even
+span multiple lines, in which case the lines are concatenated and any
+whitespace in the URI that isn’t escaped is discarded.  For example, the
+following hyperlink targets all map to the same URI:</p>
+<pre class="code rst literal-block">
+<span class="p">..</span> <span class="nt">_one-liner:</span> http://docutils.sourceforge.net/rst.html
+
+<span class="p">..</span> <span class="nt">_starts-on-this-line:</span> http://
+   docutils.sourceforge.net/rst.html
+
+<span class="p">..</span> <span class="nt">_entirely-below:</span>
+   http://docutils.
+   sourceforge.net/rst.html
+</pre>
+</li>
+<li><p class="first">If the same reference name is used for two or more hyperlink targets with
+different URIs, a warning is produced, and the reference name will be
+unusable.</p>
+</li>
+<li><p class="first">Hyperlink reference names, footnote labels, and citation labels share the
+same namespace.  This means you can link to a footnote or citation by its
+label, but it also means that you can’t define a reference name that is the
+same as a footnote or citation label.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Once a reference name is defined in a hyperlink target, the same reference name
+can be used in any number of embedded alias links to create multiple hyperlinks
+to the same destination.</p>
+<p>As with embedded URI hyperlinks, link text is treated literally rather than
+processed for any inline markup.  See “<a class="reference internal" href="#styling-link-text">Styling Link Text</a>” below for a way
+around this.</p>
+</div>
+<div class="section" id="named-hyperlink-references">
+<span id="named-hyperlink-reference"></span><h2><a class="toc-backref" href="#contents">Named Hyperlink References</a></h2>
+<p>We can simplify embedded aliases one step further and use the link text as the
+reference name.  Simply omit the part in angle brackets:</p>
+<pre class="code rst literal-block">
+Here is <span class="s">`a link`_</span> to somewhere.
+
+<span class="p">..</span> <span class="nt">_a link:</span> http://www.example.com
+</pre>
+<p>If the link text ends with text inside angle brackets, at least one of the
+angle brackets needs to be escaped — or an escaped space character should be
+added to the end of the link text — in order to prevent the link from being
+parsed as an embedded URI or alias hyperlink.</p>
+<p id="simple-reference-name">This gets even simpler if the link text is a <em>simple reference name</em> — a single
+word (no whitespace) consisting only of letters, numbers, hyphens, underscores,
+periods, colons, and/or plus signs, with no punctuation at the beginning or
+end, and with no occurrences of two or more punctuation characters in a row.  A
+simple reference name can be written with just the trailing underscore, no
+backticks:</p>
+<pre class="code rst literal-block">
+This following word_ is a hyperlink.
+
+<span class="p">..</span> <span class="nt">_word:</span> https://www.example.com
+</pre>
+<p>The same reference name may be used both as a named hyperlink reference and in
+an embedded alias link:</p>
+<pre class="code rst literal-block">
+<span class="s">`This site`_ links to the same location as `these words </span><span class="si">&lt;This site_&gt;</span><span class="s">`_</span>.
+
+<span class="p">..</span> <span class="nt">_This site:</span> https://www.example.com
+</pre>
+</div>
+<div class="section" id="anonymous-hyperlinks">
+<span id="anon"></span><h2><a class="toc-backref" href="#contents">Anonymous Hyperlinks</a></h2>
+<p>What if you want to use the hyperlink reference syntax, but it’s for a URI that
+will only be linked once, you don’t feel like giving it a reference name, and
+the link text is too long to use as an efficient reference name?  The solution:
+<em>anonymous hyperlinks</em>.</p>
+<pre class="code rst literal-block">
+<span class="s">`This link`__</span> goes to a dot-com.  <span class="s">`This other link`__</span> goes to a dot-net.
+
+<span class="p">..</span> <span class="nt">__:</span> https://www.example.com
+__ https://www.example.net
+</pre>
+<p>Rendered:</p>
+<blockquote>
+<a class="reference external" href="https://www.example.com">This link</a> goes to a dot-com.  <a class="reference external" href="https://www.example.net">This other link</a> goes to a dot-net.</blockquote>
+<p>Write the link text as a <a class="reference internal" href="#named-hyperlink-reference">named hyperlink reference</a>, but instead of ending it
+with one underscore, use two.  (As with named hyperlink references, the
+backticks can be omitted for a <a class="reference internal" href="#simple-reference-name">simple reference name</a>.) Then, for the
+<a class="reference internal" href="#target">hyperlink target</a>, use an underscore in place of the reference name
+(so that you have two underscores in a row); alternatively, the entire
+hyperlink target can be written as just two underscores, whitespace, and the
+URI or e-mail address.</p>
+<p>The first anonymous hyperlink in a document will link to the URI given by the
+first anonymous hyperlink target, the second anonymous hyperlink will link to
+the second anonymous target, etc.</p>
+</div>
+<div class="section" id="embedded-uri-hyperlinks-and-automatic-reference-names">
+<h2><a class="toc-backref" href="#contents">Embedded URI Hyperlinks and Automatic Reference Names</a></h2>
+<p>Here’s an interesting fact about <a class="reference internal" href="#embedded-uri-hyperlinks">embedded URI hyperlinks</a>: they’re equivalent
+to a <a class="reference internal" href="#named-hyperlink-reference">named hyperlink reference</a> using the link text as the reference name.
+That means this:</p>
+<pre class="code rst literal-block">
+<span class="s">`This website </span><span class="si">&lt;https://www.example.com&gt;</span><span class="s">`_</span> is awesome!
+</pre>
+<p>is exactly equivalent to:</p>
+<pre class="code rst literal-block">
+<span class="s">`This website`_</span> is awesome!
+
+<span class="p">..</span> <span class="nt">_This website:</span> https://www.example.com
+</pre>
+<p>As a consequence of this, you can link to the same location as an embedded URI
+link by using its link text as the reference name:</p>
+<pre class="code rst literal-block">
+I changed my mind; <span class="s">`this website </span><span class="si">&lt;https://www.example.com&gt;</span><span class="s">`_</span> sucks.  Let me
+reiterate: The website at <span class="s">`this link </span><span class="si">&lt;this website_&gt;</span><span class="s">`_</span> is nothing special.
+</pre>
+<div class="section" id="gotcha-duplicate-link-text">
+<span id="gotcha"></span><h3><a class="toc-backref" href="#contents">Gotcha: Duplicate Link Text</a></h3>
+<p>As stated above, if a reference name is associated with two different URIs,
+rendering the document will produce a warning, and the reference name will be
+unusable in hyperlinks.  So what happens if we define two embedded URI
+hyperlinks with the same link text but different URIs, like so?</p>
+<pre class="code rst literal-block">
+See <span class="s">`here </span><span class="si">&lt;https://www.example.com&gt;</span><span class="s">`_</span> and <span class="s">`here </span><span class="si">&lt;https://www.example.net&gt;</span><span class="s">`_</span>
+for more information.
+</pre>
+<p>With the above input, a warning will be produced, but the hyperlinks will still
+point where you want them to, and the reference name <tt class="docutils literal">here</tt> will refer to the
+first URI.  This normally isn’t all that bad, but if you’re using a renderer
+that fails on warnings — e.g., if you’re uploading a project with a
+reStructuredText README to the <a class="reference external" href="https://pypi.org">Python Package Index</a> — the
+rendering will fail, and your upload to PyPI will either be rejected or end up
+with an unrendered project description.</p>
+<p>So how do we cleanly write embedded URI links with the same link text but
+different URIs?  Answer: We add an extra underscore to the end of the link,
+turning it into an <a class="reference internal" href="#anon">anonymous hyperlink</a>.</p>
+<pre class="code rst literal-block">
+See <span class="s">`here </span><span class="si">&lt;https://www.example.com&gt;</span><span class="s">`__</span> and `here
+<span class="nt">&lt;https://www.example.net&gt;</span>`__ for more information.
+</pre>
+<p>With two underscores, no hyperlink target is created, and so there is no
+conflict.</p>
+</div>
+</div>
+<div class="section" id="embedded-alias-hyperlinks-and-automatic-reference-names">
+<h2><a class="toc-backref" href="#contents">Embedded Alias Hyperlinks and Automatic Reference Names</a></h2>
+<p>Similarly to embedded URI hyperlinks, using an <a class="reference internal" href="#embedded-alias">embedded alias hyperlink</a> turns the link text into a reference name pointing at the
+same location as the hyperlink reference.  The following markup defines four
+hyperlinks that all point to &lt;<a class="reference external" href="https://www.example.com">https://www.example.com</a>&gt;:</p>
+<pre class="code rst literal-block">
+See <span class="s">`this site </span><span class="si">&lt;site_&gt;</span><span class="s">`_</span> for more information.
+
+<span class="p">..</span> <span class="nt">_site:</span> https://www.example.com
+
+Now that I've written that link, I can write these links: `Click me! &lt;this
+site_&gt;<span class="s">`_  I link to `this site`_</span>!  <span class="s">`Click me!`_</span>
+</pre>
+<p>If you define multiple embedded alias hyperlinks with the same link text but
+different hyperlink references, the document will render without any warnings,
+and the link text will be usable as a reference name pointing to the same
+location as the first hyperlink reference.</p>
+</div>
+<div class="section" id="intra-document-links">
+<h2><a class="toc-backref" href="#contents">Intra-Document Links</a></h2>
+<p>Linking to different parts of the same document is accomplished using <a class="reference internal" href="#embedded-alias">embedded
+alias hyperlinks</a> and <a class="reference internal" href="#named-hyperlink-references">named hyperlink references</a>, just
+like external links; the difference is in how the <a class="reference internal" href="#target">hyperlink target</a>
+is defined.</p>
+<div class="section" id="internal-hyperlink-targets">
+<h3><a class="toc-backref" href="#contents">Internal Hyperlink Targets</a></h3>
+<p>A hyperlink target without a URI creates an <em>internal hyperlink target</em> that
+points to the next element in the document after the target.</p>
+<pre class="code rst literal-block">
+Click <span class="s">`here </span><span class="si">&lt;After Lorem_&gt;</span><span class="s">`_</span> to skip the next paragraph.
+
+Lorem ipsum dolor sit amet …
+
+<span class="p">..</span> <span class="nt">_After Lorem:</span>
+
+This paragraph can be linked to with the reference name &quot;<span class="s">``After Lorem``</span>.&quot;
+Aren't you glad you didn't skip the previous paragraph now?
+</pre>
+<p>Rendered:</p>
+<blockquote>
+<p>Click <a class="reference internal" href="#after-lorem">here</a> to skip the next paragraph.</p>
+<p>Lorem ipsum dolor sit amet …</p>
+<p id="after-lorem">This paragraph can be linked to with the reference name “<tt class="docutils literal">After Lorem</tt>.”
+Aren’t you glad you didn’t skip the previous paragraph now?</p>
+</blockquote>
+<p>The target points to the next element even if the target is indented so as to
+be “nested” at the end of an indented block.  This allows us to attach targets
+to individual elements of a list:</p>
+<pre class="code rst literal-block">
+<span class="m">1.</span> Any following lines that line up with &quot;Any&quot; belong to this list item.
+
+<span class="p">   ..</span> <span class="nt">_item2:</span>
+
+<span class="m">2.</span> This list item can be linked to with the reference name <span class="s">``item2``</span>.
+</pre>
+<p>If the <tt class="docutils literal">.. _item2:</tt> line above wasn’t indented, it would split the list into
+two lists, and the target would point to the second list.  (A target before a
+list always points to the list as a whole; a target pointing to just the first
+item is not possible.)</p>
+</div>
+<div class="section" id="named-directives">
+<h3><a class="toc-backref" href="#contents">Named Directives</a></h3>
+<p>Most reStructuredText directives support a <tt class="docutils literal">:name:</tt> option that takes a
+string as an argument.  Setting this option allows you to link to the directive
+using that name, equivalent to preceding the directive with an internal
+hyperlink target.</p>
+<pre class="code rst literal-block">
+<span class="p">..</span> <span class="ow">danger</span><span class="p">::</span>
+    <span class="nc">:name:</span> dont-or-whatever
+
+    Don't stick your finger in the— You know what?  Forget it.  I'm not
+    your mother.
+
+… Text passes …
+
+Hey, remember <span class="s">`that admonition from earlier </span><span class="si">&lt;dont-or-whatever_&gt;</span><span class="s">`_</span>?  I was
+serious.
+</pre>
+<p>Rendered:</p>
+<blockquote>
+<div class="admonition danger" id="dont-or-whatever">
+<p class="first admonition-title">!DANGER!</p>
+<p class="last">Don’t stick your finger in the— You know what?  Forget it.  I’m not
+your mother.</p>
+</div>
+<p>… Text passes …</p>
+<p>Hey, remember <a class="reference internal" href="#dont-or-whatever">that admonition from earlier</a>?  I was
+serious.</p>
+</blockquote>
+<p>As this is the same as using an internal hyperlink target, a warning will be
+generated if two directives have the same name or if the name of a directive is
+the same as a reference name of another hyperlink target.</p>
+</div>
+<div class="section" id="inline-internal-targets">
+<h3><a class="toc-backref" href="#contents">Inline Internal Targets</a></h3>
+<p>A phrase within a paragraph of text can be made into a target by preceding the
+phrase with an underscore and a backtick, escaping any backticks inside the
+phrase, and appending a backtick to the end of the phrase.  (The backticks
+cannot be omitted, no matter how simple the phrase is.)  This defines the
+phrase itself as a reference name that points to the phrase’s location in the
+document.</p>
+<pre class="code rst literal-block">
+They're called &quot;paragraphs,&quot; but I've never seen them _<span class="nv">`para`</span>!  Know what I
+mean?
+
+(I don't know what I was saying <span class="s">`here </span><span class="si">&lt;para_&gt;</span><span class="s">`_</span>.)
+</pre>
+</div>
+<div class="section" id="implicit-hyperlink-targets-for-section-titles">
+<h3><a class="toc-backref" href="#contents">Implicit Hyperlink Targets for Section Titles</a></h3>
+<p>A section title in a reStructuredText document implicitly defines a hyperlink
+target pointing to that section with the same reference name as the section
+title.</p>
+<pre class="code rst literal-block">
+Go read &quot;<span class="s">`All About Eels`_</span>&quot; to learn about our wriggly friends!
+
+Didn't you hear me?  Who wouldn't want to click `this link &lt;All About
+Eels_&gt;`_?
+
+<span class="gh">All About Eels</span>
+<span class="gh">==============</span>
+Did you know?  When you're bit in the heel by a big giant eel, that's a
+moray.
+</pre>
+<p>If a section has the same name as a hyperlink target or a directive, the
+hyperlink target or directive takes precedence, and the section cannot be
+linked to by name.  If two or more sections have the same name, none of them
+can be linked to by name.  In order to link to a section that cannot be linked
+by name, you must precede the section title with an internal hyperlink target
+and link to that.</p>
+</div>
+</div>
+<div class="section" id="chaining-hyperlink-targets">
+<h2><a class="toc-backref" href="#contents">Chaining Hyperlink Targets</a></h2>
+<p>It’s possible to define multiple hyperlink targets all pointing to the same
+location by “chaining” the targets together, one after the other:</p>
+<pre class="code rst literal-block">
+<span class="p">..</span> <span class="nt">_foo:</span>
+<span class="p">..</span> <span class="nt">_bar:</span>
+<span class="p">..</span> <span class="nt">_baz:</span> https://www.example.com
+
+Now the reference names foo_, bar_, and baz_ all link to the same place.
+</pre>
+<p>Chained hyperlink targets all point to the same location as the last target in
+the chain.  If the last target is an internal hyperlink target, the chained
+targets will all point to the same document element as that last target:</p>
+<pre class="code rst literal-block">
+<span class="p">..</span> <span class="nt">_foo:</span>
+<span class="p">..</span> <span class="nt">_bar:</span>
+<span class="p">..</span> <span class="nt">_baz:</span>
+
+Now the reference names foo_, bar_, and baz_ all link to this paragraph.
+</pre>
+<p id="indirect-hyperlink-target">Alternatively, a hyperlink target <tt class="docutils literal">A</tt> can be defined to point to the same
+location as another target <tt class="docutils literal">B</tt> by defining the hyperlink target with <tt class="docutils literal">B</tt>
+(as a named hyperlink reference) in place of the URI:</p>
+<pre class="code rst literal-block">
+<span class="p">..</span> <span class="nt">_some link:</span> https://www.example.com
+<span class="p">..</span> <span class="nt">_foo:</span> <span class="s">`some link`_</span>
+
+Now <span class="s">`some link`_</span> and foo_ go to the same website.
+</pre>
+<p>The <tt class="docutils literal">.. _foo:</tt> definition is called an <em>indirect hyperlink target</em>.  As with
+named hyperlink references, the backticks can be dropped when the hyperlink
+reference is a <a class="reference internal" href="#simple-reference-name">simple reference name</a>.  <a class="reference internal" href="#multiline">As with external hyperlink targets</a>, the hyperlink reference may begin on the same or next line as
+the target, and it may span multiple lines.</p>
+</div>
+<div class="section" id="styling-link-text">
+<h2><a class="toc-backref" href="#contents">Styling Link Text</a></h2>
+<p>As you may have noticed, inline markup in link text is treated literally rather
+than being processed into emphasis etc.  For example, this:</p>
+<pre class="code rst literal-block">
+Try this recipe for <span class="s">`pie *à la mode* </span><span class="si">&lt;https://www.example.com&gt;</span><span class="s">`_</span>.
+</pre>
+<p>renders as:</p>
+<blockquote>
+Try this recipe for <a class="reference external" href="https://www.example.com">pie *à la mode*</a>.</blockquote>
+<p>The asterisks are rendered as-is instead of causing the “à la mode” to be
+emphasized.</p>
+<p>Fortunately, there’s a trick to use inline markup in link text: Define the link
+using a substitution:</p>
+<pre class="code rst literal-block">
+Try this recipe for |pie à la mode|_.
+
+<span class="p">..</span> <span class="nt">|pie à la mode|</span> <span class="ow">replace</span><span class="p">::</span> pie <span class="ge">*à la mode*</span>
+<span class="p">..</span> <span class="nt">_pie à la mode:</span> https://www.example.com
+</pre>
+<p>Rendered:</p>
+<blockquote>
+Try this recipe for <a class="reference external" href="https://www.example.com">pie <em>à la mode</em></a>.</blockquote>
+<p>The steps to do this are as follows:</p>
+<ul>
+<li><p class="first">In our text, we insert a <em>substitution reference</em> where we want the link to
+be.  A substitution reference consists of a vertical bar, some arbitrary
+substitution text, and another vertical bar.  Because we also want this to be
+a hyperlink, an underscore is added after the closing vertical bar, causing
+the substitution reference to also be a <a class="reference internal" href="#named-hyperlink-reference">named hyperlink reference</a> with the
+substitution text as the reference name.</p>
+<ul class="simple">
+<li>The substitution text can be any text that does not begin or end with
+whitespace.  Substitution text is matched case-sensitively, but if that
+fails, a case-insensitive match is tried.</li>
+</ul>
+</li>
+<li><p class="first">Elsewhere in the document, a <em>substitution definition</em> is given for the
+substitution reference: two periods, a space, a vertical bar, the same
+substitution text as in the substitution reference, another vertical bar,
+whitespace, a <tt class="docutils literal">replace::</tt> directive (without leading <tt class="docutils literal">..</tt>), whitespace,
+and then finally the inline markup to display in place of the substiution
+reference in the rendered document.</p>
+</li>
+<li><p class="first">Elsewhere in the document, a <a class="reference internal" href="#target">hyperlink target</a> is created that
+maps the substitution text to the URI or e-mail address that the substituted
+text should link to.  To link to a location in the document rather than to an
+external URI, either use an <a class="reference internal" href="#indirect-hyperlink-target">indirect hyperlink target</a>:</p>
+<pre class="code rst literal-block">
+Try this recipe for |pie à la mode|_.
+
+<span class="p">..</span> <span class="nt">|pie à la mode|</span> <span class="ow">replace</span><span class="p">::</span> pie <span class="ge">*à la mode*</span>
+<span class="p">..</span> <span class="nt">_pie à la mode:</span> <span class="s">`pie recipe`_</span>
+
+Some intervening text
+
+<span class="p">..</span> <span class="nt">_pie recipe:</span>
+
+So here's how you make pie <span class="ge">*à la mode*</span>: …
+</pre>
+<p>or else make the substitution text the same as the reference name of the
+internal target:</p>
+<pre class="code rst literal-block">
+Try this recipe for |pie recipe|_.
+
+<span class="p">..</span> <span class="nt">|pie recipe|</span> <span class="ow">replace</span><span class="p">::</span> pie <span class="ge">*à la mode*</span>
+
+Some intervening text
+
+<span class="p">..</span> <span class="nt">_pie recipe:</span>
+
+So here's how you make pie <span class="ge">*à la mode*</span>: …
+</pre>
+</li>
+</ul>
+<p>If desired, the substitution reference can be made into an <a class="reference internal" href="#anon">anonymous
+hyperlink</a> instead by placing two underscores instead of one after the closing
+vertical bar, in which case the hyperlink target must follow the anonymous
+hyperlink target syntax.</p>
+</div>
+<div class="section" id="link-text-within-a-word">
+<h2><a class="toc-backref" href="#contents">Link Text within a Word</a></h2>
+<p>Normally, a hyperlink spans one or more full words, but what if we want to only
+link part of a word?  To do so, we must insert a backslash (optionally followed
+by a whitespace character) between the link and the rest of the word:</p>
+<pre class="code rst literal-block">
+These <span class="s">`link </span><span class="si">&lt;https://www.example.com&gt;</span><span class="s">`_</span>\s are getting out of control!  Now
+they're in the in\ test_\ ines of our words.
+
+<span class="p">..</span> <span class="nt">_test:</span> https://www.example.net
+</pre>
+<p>This renders as:</p>
+<blockquote>
+These <a class="reference external" href="https://www.example.com">link</a>s are getting out of control!  Now
+they’re in the in<a class="reference external" href="https://www.example.net">test</a>ines of our words.</blockquote>
+</div>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>

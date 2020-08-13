@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Software</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.software.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-07-28T00:00:00-04:00</updated><subtitle>References I wish I'd read</subtitle><entry><title>All About reStructuredText Hyperlinks</title><link href="https://jwodder.github.io/kbits/posts/rst-hyperlinks/" rel="alternate"></link><published>2020-07-28T00:00:00-04:00</published><updated>2020-07-28T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-07-28:/kbits/posts/rst-hyperlinks/</id><summary type="html">&lt;p class="first last"&gt;Writing the various hyperlink syntaxes in reStructuredText, along with
+internal hyperlinks and styling link text&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;a class="reference external" href="https://docutils.sourceforge.io/rst.html"&gt;reStructuredText&lt;/a&gt; offers a number of different ways to write hyperlinks, but
+keeping track of all of them and their gotchas isn’t easy, and the information
+is scattered around the spec.  This document aims to summarize all of the
+hyperlink-related information from the &lt;a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html"&gt;reStructuredText Markup Specification&lt;/a&gt;
+in one (hopefully) well-organized place.&lt;/p&gt;
+&lt;p&gt;This document describes reStructuredText hyperlinks as of &lt;a class="reference external" href="https://docutils.sourceforge.io"&gt;Docutils&lt;/a&gt; version
+0.16, the latest version at time of writing.&lt;/p&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title"&gt;Contents&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#standalone-hyperlinks" id="id4"&gt;Standalone Hyperlinks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#embedded-uri-hyperlinks" id="id5"&gt;Embedded URI Hyperlinks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#embedded-alias-hyperlinks-and-hyperlink-targets" id="id6"&gt;Embedded Alias Hyperlinks and Hyperlink Targets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#named-hyperlink-references" id="id7"&gt;Named Hyperlink References&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#anonymous-hyperlinks" id="id8"&gt;Anonymous Hyperlinks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#embedded-uri-hyperlinks-and-automatic-reference-names" id="id9"&gt;Embedded URI Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#gotcha-duplicate-link-text" id="id10"&gt;Gotcha: Duplicate Link Text&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#embedded-alias-hyperlinks-and-automatic-reference-names" id="id11"&gt;Embedded Alias Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#intra-document-links" id="id12"&gt;Intra-Document Links&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#internal-hyperlink-targets" id="id13"&gt;Internal Hyperlink Targets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#named-directives" id="id14"&gt;Named Directives&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#inline-internal-targets" id="id15"&gt;Inline Internal Targets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#implicit-hyperlink-targets-for-section-titles" id="id16"&gt;Implicit Hyperlink Targets for Section Titles&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#chaining-hyperlink-targets" id="id17"&gt;Chaining Hyperlink Targets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#styling-link-text" id="id18"&gt;Styling Link Text&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#link-text-within-a-word" id="id19"&gt;Link Text within a Word&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="standalone-hyperlinks"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Standalone Hyperlinks&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Firstly, reStructuredText supports &lt;em&gt;standalone hyperlinks&lt;/em&gt; — just a bare URI
+(including a scheme) or e-mail address without any link text:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Go to http://www.example.com to see something neat!
+
+E-mail me at me&amp;#64;example.com.
+&lt;/pre&gt;
+&lt;p&gt;The above renders as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Go to &lt;a class="reference external" href="http://www.example.com"&gt;http://www.example.com&lt;/a&gt; to see something neat!&lt;/p&gt;
+&lt;p&gt;E-mail me at &lt;a class="reference external" href="mailto:me&amp;#64;example.com"&gt;me&amp;#64;example.com&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Note that, unlike Markdown, angle brackets are not required around standalone
+hyperlinks, and if you do include angle brackets, the brackets will be present
+in the rendered output.&lt;/p&gt;
+&lt;p&gt;Also note that the scheme is required in order for a URI to be recognized as a
+standalone hyperlink.  The domains names in the following will &lt;em&gt;not&lt;/em&gt; be
+converted to hyperlinks:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Go to www.example.com — or to &amp;lt;www.example.org&amp;gt;!
+&lt;/pre&gt;
+&lt;p&gt;If you want a hyperlink that links to &lt;tt class="docutils literal"&gt;www.example.com&lt;/tt&gt; without a scheme and
+uses the address as the link text, you can either write out the link the long
+way as an &lt;a class="reference internal" href="#embedded-uri-hyperlinks"&gt;embedded URI hyperlink with link text&lt;/a&gt;,
+or you can use embedded URI syntax without any link text, in which case the URI
+becomes the link text.  For example:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Go to &lt;span class="s"&gt;`&amp;lt;www.example.com&amp;gt;`_&lt;/span&gt;.
+&lt;/pre&gt;
+&lt;p&gt;renders as:&lt;/p&gt;
+&lt;blockquote&gt;
+Go to &lt;a class="reference external" href="www.example.com"&gt;www.example.com&lt;/a&gt;.&lt;/blockquote&gt;
+&lt;p&gt;This isn’t very useful for linking to domains, but it can be useful when you
+want a link to a page in the same directory with the page filename used as the
+link text:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+See &lt;span class="s"&gt;`&amp;lt;other_page.html&amp;gt;`_&lt;/span&gt; for other stuff.
+&lt;/pre&gt;
+&lt;p&gt;Rendered:&lt;/p&gt;
+&lt;blockquote&gt;
+See &lt;a class="reference external" href="other_page.html"&gt;other_page.html&lt;/a&gt; for other stuff.&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="embedded-uri-hyperlinks"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Embedded URI Hyperlinks&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If you want to create a hyperlink with link text, the most straightforward way
+to do so is with the &lt;em&gt;embedded URI&lt;/em&gt; syntax:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Here is &lt;span class="s"&gt;`a link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;http://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; to somewhere.
+&lt;/pre&gt;
+&lt;p&gt;This renders as:&lt;/p&gt;
+&lt;blockquote&gt;
+Here is &lt;a class="reference external" href="http://www.example.com"&gt;a link&lt;/a&gt; to somewhere.&lt;/blockquote&gt;
+&lt;p&gt;The syntax consists of a backtick, the link text (with any embedded backticks
+escaped with backslashes), whitespace, the target URI or e-mail address inside
+angle brackets, another backtick, and a single underscore.  If the URI ends
+with an underscore, the underscore must be preceded by a backslash in order to
+not be parsed as an &lt;a class="reference internal" href="#embedded-alias"&gt;embedded alias&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Note that link text is treated literally rather than processed for any inline
+markup.  See “&lt;a class="reference internal" href="#styling-link-text"&gt;Styling Link Text&lt;/a&gt;” below for a way around this.&lt;/p&gt;
+&lt;p&gt;There is a gotcha you may run into when defining two embedded URI hyperlinks
+with the same link text but different URIs; &lt;a class="reference internal" href="#gotcha"&gt;see below for more information&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="embedded-alias-hyperlinks-and-hyperlink-targets"&gt;
+&lt;span id="embedded-alias"&gt;&lt;/span&gt;&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Embedded Alias Hyperlinks and Hyperlink Targets&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If the URI is lengthy, or if you want to link to the same location more than
+once, you may want to use an &lt;em&gt;embedded alias&lt;/em&gt;.  In this form, instead of
+specifying the URI next to the link text, you specify a &lt;em&gt;hyperlink reference&lt;/em&gt;
+containing a &lt;em&gt;reference name&lt;/em&gt;, and then you specify elsewhere (in a &lt;em&gt;hyperlink
+target&lt;/em&gt;) what URI the reference name points to.  For example:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Here is &lt;span class="s"&gt;`a link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;link_target_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; to somewhere.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_link_target:&lt;/span&gt; http://www.example.com
+&lt;/pre&gt;
+&lt;p&gt;Rendered:&lt;/p&gt;
+&lt;blockquote&gt;
+Here is &lt;a class="reference external" href="http://www.example.com"&gt;a link&lt;/a&gt; to somewhere.&lt;/blockquote&gt;
+&lt;p&gt;This syntax consists of two parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;At the location in the text where you want the link to appear, write a
+backtick, the link text (with embedded backticks escaped), whitespace, a
+reference name followed by an underscore and encased in angle brackets,
+another backtick, and another underscore.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The reference name can be any sequence of characters, though if it contains
+any backticks or angle brackets, or begins or ends with space characters,
+the characters in question will need to be escaped with backslashes when
+using the name in an embedded alias link.&lt;/p&gt;
+&lt;p&gt;When comparing two reference names for equality, runs of whitespace are
+normalized to a single space, and alphabetic characters are converted to
+lowercase.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul id="target"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Elsewhere in the reStructuredText document (either before or after the
+hyperlink reference), write a &lt;em&gt;(external) hyperlink target&lt;/em&gt; on a line of its
+own: optional whitespace, two periods, a space, an underscore, the same
+reference name as before (&lt;em&gt;without&lt;/em&gt; the trailing underscore from before), a
+colon, whitespace, and then the URI or e-mail address that the link should
+point to.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;If the reference name contains any colons or is just a single underscore,
+you must either escape the characters in question or else enclose the
+reference name in backticks (in which case any backticks in the reference
+name need to be escaped).  Either way, any leading or trailing space
+characters or backticks in the reference name need to be escaped as well.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If the URI contains any space characters or ends with an underscore, the
+characters in question will need to be escaped with backslashes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="multiline"&gt;&lt;p class="first"&gt;The reference name and the URI may be on the same line, or you can put them
+on separate lines, in which case the URI must be indented relative to the
+two periods and there must be no intervening blank lines.  The URI may even
+span multiple lines, in which case the lines are concatenated and any
+whitespace in the URI that isn’t escaped is discarded.  For example, the
+following hyperlink targets all map to the same URI:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_one-liner:&lt;/span&gt; http://docutils.sourceforge.net/rst.html
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_starts-on-this-line:&lt;/span&gt; http://
+   docutils.sourceforge.net/rst.html
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_entirely-below:&lt;/span&gt;
+   http://docutils.
+   sourceforge.net/rst.html
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If the same reference name is used for two or more hyperlink targets with
+different URIs, a warning is produced, and the reference name will be
+unusable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Hyperlink reference names, footnote labels, and citation labels share the
+same namespace.  This means you can link to a footnote or citation by its
+label, but it also means that you can’t define a reference name that is the
+same as a footnote or citation label.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once a reference name is defined in a hyperlink target, the same reference name
+can be used in any number of embedded alias links to create multiple hyperlinks
+to the same destination.&lt;/p&gt;
+&lt;p&gt;As with embedded URI hyperlinks, link text is treated literally rather than
+processed for any inline markup.  See “&lt;a class="reference internal" href="#styling-link-text"&gt;Styling Link Text&lt;/a&gt;” below for a way
+around this.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="named-hyperlink-references"&gt;
+&lt;span id="named-hyperlink-reference"&gt;&lt;/span&gt;&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Named Hyperlink References&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;We can simplify embedded aliases one step further and use the link text as the
+reference name.  Simply omit the part in angle brackets:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Here is &lt;span class="s"&gt;`a link`_&lt;/span&gt; to somewhere.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_a link:&lt;/span&gt; http://www.example.com
+&lt;/pre&gt;
+&lt;p&gt;If the link text ends with text inside angle brackets, at least one of the
+angle brackets needs to be escaped — or an escaped space character should be
+added to the end of the link text — in order to prevent the link from being
+parsed as an embedded URI or alias hyperlink.&lt;/p&gt;
+&lt;p id="simple-reference-name"&gt;This gets even simpler if the link text is a &lt;em&gt;simple reference name&lt;/em&gt; — a single
+word (no whitespace) consisting only of letters, numbers, hyphens, underscores,
+periods, colons, and/or plus signs, with no punctuation at the beginning or
+end, and with no occurrences of two or more punctuation characters in a row.  A
+simple reference name can be written with just the trailing underscore, no
+backticks:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+This following word_ is a hyperlink.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_word:&lt;/span&gt; https://www.example.com
+&lt;/pre&gt;
+&lt;p&gt;The same reference name may be used both as a named hyperlink reference and in
+an embedded alias link:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="s"&gt;`This site`_ links to the same location as `these words &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;This site_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_This site:&lt;/span&gt; https://www.example.com
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="anonymous-hyperlinks"&gt;
+&lt;span id="anon"&gt;&lt;/span&gt;&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Anonymous Hyperlinks&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;What if you want to use the hyperlink reference syntax, but it’s for a URI that
+will only be linked once, you don’t feel like giving it a reference name, and
+the link text is too long to use as an efficient reference name?  The solution:
+&lt;em&gt;anonymous hyperlinks&lt;/em&gt;.&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="s"&gt;`This link`__&lt;/span&gt; goes to a dot-com.  &lt;span class="s"&gt;`This other link`__&lt;/span&gt; goes to a dot-net.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;__:&lt;/span&gt; https://www.example.com
+__ https://www.example.net
+&lt;/pre&gt;
+&lt;p&gt;Rendered:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;a class="reference external" href="https://www.example.com"&gt;This link&lt;/a&gt; goes to a dot-com.  &lt;a class="reference external" href="https://www.example.net"&gt;This other link&lt;/a&gt; goes to a dot-net.&lt;/blockquote&gt;
+&lt;p&gt;Write the link text as a &lt;a class="reference internal" href="#named-hyperlink-reference"&gt;named hyperlink reference&lt;/a&gt;, but instead of ending it
+with one underscore, use two.  (As with named hyperlink references, the
+backticks can be omitted for a &lt;a class="reference internal" href="#simple-reference-name"&gt;simple reference name&lt;/a&gt;.) Then, for the
+&lt;a class="reference internal" href="#target"&gt;hyperlink target&lt;/a&gt;, use an underscore in place of the reference name
+(so that you have two underscores in a row); alternatively, the entire
+hyperlink target can be written as just two underscores, whitespace, and the
+URI or e-mail address.&lt;/p&gt;
+&lt;p&gt;The first anonymous hyperlink in a document will link to the URI given by the
+first anonymous hyperlink target, the second anonymous hyperlink will link to
+the second anonymous target, etc.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="embedded-uri-hyperlinks-and-automatic-reference-names"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Embedded URI Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Here’s an interesting fact about &lt;a class="reference internal" href="#embedded-uri-hyperlinks"&gt;embedded URI hyperlinks&lt;/a&gt;: they’re equivalent
+to a &lt;a class="reference internal" href="#named-hyperlink-reference"&gt;named hyperlink reference&lt;/a&gt; using the link text as the reference name.
+That means this:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="s"&gt;`This website &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; is awesome!
+&lt;/pre&gt;
+&lt;p&gt;is exactly equivalent to:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="s"&gt;`This website`_&lt;/span&gt; is awesome!
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_This website:&lt;/span&gt; https://www.example.com
+&lt;/pre&gt;
+&lt;p&gt;As a consequence of this, you can link to the same location as an embedded URI
+link by using its link text as the reference name:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+I changed my mind; &lt;span class="s"&gt;`this website &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; sucks.  Let me
+reiterate: The website at &lt;span class="s"&gt;`this link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;this website_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; is nothing special.
+&lt;/pre&gt;
+&lt;div class="section" id="gotcha-duplicate-link-text"&gt;
+&lt;span id="gotcha"&gt;&lt;/span&gt;&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Gotcha: Duplicate Link Text&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;As stated above, if a reference name is associated with two different URIs,
+rendering the document will produce a warning, and the reference name will be
+unusable in hyperlinks.  So what happens if we define two embedded URI
+hyperlinks with the same link text but different URIs, like so?&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+See &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; and &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.net&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;
+for more information.
+&lt;/pre&gt;
+&lt;p&gt;With the above input, a warning will be produced, but the hyperlinks will still
+point where you want them to, and the reference name &lt;tt class="docutils literal"&gt;here&lt;/tt&gt; will refer to the
+first URI.  This normally isn’t all that bad, but if you’re using a renderer
+that fails on warnings — e.g., if you’re uploading a project with a
+reStructuredText README to the &lt;a class="reference external" href="https://pypi.org"&gt;Python Package Index&lt;/a&gt; — the
+rendering will fail, and your upload to PyPI will either be rejected or end up
+with an unrendered project description.&lt;/p&gt;
+&lt;p&gt;So how do we cleanly write embedded URI links with the same link text but
+different URIs?  Answer: We add an extra underscore to the end of the link,
+turning it into an &lt;a class="reference internal" href="#anon"&gt;anonymous hyperlink&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+See &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`__&lt;/span&gt; and `here
+&lt;span class="nt"&gt;&amp;lt;https://www.example.net&amp;gt;&lt;/span&gt;`__ for more information.
+&lt;/pre&gt;
+&lt;p&gt;With two underscores, no hyperlink target is created, and so there is no
+conflict.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="embedded-alias-hyperlinks-and-automatic-reference-names"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Embedded Alias Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Similarly to embedded URI hyperlinks, using an &lt;a class="reference internal" href="#embedded-alias"&gt;embedded alias hyperlink&lt;/a&gt; turns the link text into a reference name pointing at the
+same location as the hyperlink reference.  The following markup defines four
+hyperlinks that all point to &amp;lt;&lt;a class="reference external" href="https://www.example.com"&gt;https://www.example.com&lt;/a&gt;&amp;gt;:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+See &lt;span class="s"&gt;`this site &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;site_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; for more information.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_site:&lt;/span&gt; https://www.example.com
+
+Now that I've written that link, I can write these links: `Click me! &amp;lt;this
+site_&amp;gt;&lt;span class="s"&gt;`_  I link to `this site`_&lt;/span&gt;!  &lt;span class="s"&gt;`Click me!`_&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you define multiple embedded alias hyperlinks with the same link text but
+different hyperlink references, the document will render without any warnings,
+and the link text will be usable as a reference name pointing to the same
+location as the first hyperlink reference.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="intra-document-links"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Intra-Document Links&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Linking to different parts of the same document is accomplished using &lt;a class="reference internal" href="#embedded-alias"&gt;embedded
+alias hyperlinks&lt;/a&gt; and &lt;a class="reference internal" href="#named-hyperlink-references"&gt;named hyperlink references&lt;/a&gt;, just
+like external links; the difference is in how the &lt;a class="reference internal" href="#target"&gt;hyperlink target&lt;/a&gt;
+is defined.&lt;/p&gt;
+&lt;div class="section" id="internal-hyperlink-targets"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Internal Hyperlink Targets&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;A hyperlink target without a URI creates an &lt;em&gt;internal hyperlink target&lt;/em&gt; that
+points to the next element in the document after the target.&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Click &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;After Lorem_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; to skip the next paragraph.
+
+Lorem ipsum dolor sit amet …
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_After Lorem:&lt;/span&gt;
+
+This paragraph can be linked to with the reference name &amp;quot;&lt;span class="s"&gt;``After Lorem``&lt;/span&gt;.&amp;quot;
+Aren't you glad you didn't skip the previous paragraph now?
+&lt;/pre&gt;
+&lt;p&gt;Rendered:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Click &lt;a class="reference internal" href="#after-lorem"&gt;here&lt;/a&gt; to skip the next paragraph.&lt;/p&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet …&lt;/p&gt;
+&lt;p id="after-lorem"&gt;This paragraph can be linked to with the reference name “&lt;tt class="docutils literal"&gt;After Lorem&lt;/tt&gt;.”
+Aren’t you glad you didn’t skip the previous paragraph now?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The target points to the next element even if the target is indented so as to
+be “nested” at the end of an indented block.  This allows us to attach targets
+to individual elements of a list:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="m"&gt;1.&lt;/span&gt; Any following lines that line up with &amp;quot;Any&amp;quot; belong to this list item.
+
+&lt;span class="p"&gt;   ..&lt;/span&gt; &lt;span class="nt"&gt;_item2:&lt;/span&gt;
+
+&lt;span class="m"&gt;2.&lt;/span&gt; This list item can be linked to with the reference name &lt;span class="s"&gt;``item2``&lt;/span&gt;.
+&lt;/pre&gt;
+&lt;p&gt;If the &lt;tt class="docutils literal"&gt;.. _item2:&lt;/tt&gt; line above wasn’t indented, it would split the list into
+two lists, and the target would point to the second list.  (A target before a
+list always points to the list as a whole; a target pointing to just the first
+item is not possible.)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="named-directives"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Named Directives&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Most reStructuredText directives support a &lt;tt class="docutils literal"&gt;:name:&lt;/tt&gt; option that takes a
+string as an argument.  Setting this option allows you to link to the directive
+using that name, equivalent to preceding the directive with an internal
+hyperlink target.&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="ow"&gt;danger&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;
+    &lt;span class="nc"&gt;:name:&lt;/span&gt; dont-or-whatever
+
+    Don't stick your finger in the— You know what?  Forget it.  I'm not
+    your mother.
+
+… Text passes …
+
+Hey, remember &lt;span class="s"&gt;`that admonition from earlier &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;dont-or-whatever_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;?  I was
+serious.
+&lt;/pre&gt;
+&lt;p&gt;Rendered:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class="admonition danger" id="dont-or-whatever"&gt;
+&lt;p class="first admonition-title"&gt;!DANGER!&lt;/p&gt;
+&lt;p class="last"&gt;Don’t stick your finger in the— You know what?  Forget it.  I’m not
+your mother.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;… Text passes …&lt;/p&gt;
+&lt;p&gt;Hey, remember &lt;a class="reference internal" href="#dont-or-whatever"&gt;that admonition from earlier&lt;/a&gt;?  I was
+serious.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;As this is the same as using an internal hyperlink target, a warning will be
+generated if two directives have the same name or if the name of a directive is
+the same as a reference name of another hyperlink target.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="inline-internal-targets"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Inline Internal Targets&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;A phrase within a paragraph of text can be made into a target by preceding the
+phrase with an underscore and a backtick, escaping any backticks inside the
+phrase, and appending a backtick to the end of the phrase.  (The backticks
+cannot be omitted, no matter how simple the phrase is.)  This defines the
+phrase itself as a reference name that points to the phrase’s location in the
+document.&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+They're called &amp;quot;paragraphs,&amp;quot; but I've never seen them _&lt;span class="nv"&gt;`para`&lt;/span&gt;!  Know what I
+mean?
+
+(I don't know what I was saying &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;para_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;.)
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="implicit-hyperlink-targets-for-section-titles"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Implicit Hyperlink Targets for Section Titles&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;A section title in a reStructuredText document implicitly defines a hyperlink
+target pointing to that section with the same reference name as the section
+title.&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Go read &amp;quot;&lt;span class="s"&gt;`All About Eels`_&lt;/span&gt;&amp;quot; to learn about our wriggly friends!
+
+Didn't you hear me?  Who wouldn't want to click `this link &amp;lt;All About
+Eels_&amp;gt;`_?
+
+&lt;span class="gh"&gt;All About Eels&lt;/span&gt;
+&lt;span class="gh"&gt;==============&lt;/span&gt;
+Did you know?  When you're bit in the heel by a big giant eel, that's a
+moray.
+&lt;/pre&gt;
+&lt;p&gt;If a section has the same name as a hyperlink target or a directive, the
+hyperlink target or directive takes precedence, and the section cannot be
+linked to by name.  If two or more sections have the same name, none of them
+can be linked to by name.  In order to link to a section that cannot be linked
+by name, you must precede the section title with an internal hyperlink target
+and link to that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="chaining-hyperlink-targets"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Chaining Hyperlink Targets&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;It’s possible to define multiple hyperlink targets all pointing to the same
+location by “chaining” the targets together, one after the other:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_bar:&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_baz:&lt;/span&gt; https://www.example.com
+
+Now the reference names foo_, bar_, and baz_ all link to the same place.
+&lt;/pre&gt;
+&lt;p&gt;Chained hyperlink targets all point to the same location as the last target in
+the chain.  If the last target is an internal hyperlink target, the chained
+targets will all point to the same document element as that last target:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_bar:&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_baz:&lt;/span&gt;
+
+Now the reference names foo_, bar_, and baz_ all link to this paragraph.
+&lt;/pre&gt;
+&lt;p id="indirect-hyperlink-target"&gt;Alternatively, a hyperlink target &lt;tt class="docutils literal"&gt;A&lt;/tt&gt; can be defined to point to the same
+location as another target &lt;tt class="docutils literal"&gt;B&lt;/tt&gt; by defining the hyperlink target with &lt;tt class="docutils literal"&gt;B&lt;/tt&gt;
+(as a named hyperlink reference) in place of the URI:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_some link:&lt;/span&gt; https://www.example.com
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt; &lt;span class="s"&gt;`some link`_&lt;/span&gt;
+
+Now &lt;span class="s"&gt;`some link`_&lt;/span&gt; and foo_ go to the same website.
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;.. _foo:&lt;/tt&gt; definition is called an &lt;em&gt;indirect hyperlink target&lt;/em&gt;.  As with
+named hyperlink references, the backticks can be dropped when the hyperlink
+reference is a &lt;a class="reference internal" href="#simple-reference-name"&gt;simple reference name&lt;/a&gt;.  &lt;a class="reference internal" href="#multiline"&gt;As with external hyperlink targets&lt;/a&gt;, the hyperlink reference may begin on the same or next line as
+the target, and it may span multiple lines.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="styling-link-text"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Styling Link Text&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As you may have noticed, inline markup in link text is treated literally rather
+than being processed into emphasis etc.  For example, this:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Try this recipe for &lt;span class="s"&gt;`pie *à la mode* &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;.
+&lt;/pre&gt;
+&lt;p&gt;renders as:&lt;/p&gt;
+&lt;blockquote&gt;
+Try this recipe for &lt;a class="reference external" href="https://www.example.com"&gt;pie *à la mode*&lt;/a&gt;.&lt;/blockquote&gt;
+&lt;p&gt;The asterisks are rendered as-is instead of causing the “à la mode” to be
+emphasized.&lt;/p&gt;
+&lt;p&gt;Fortunately, there’s a trick to use inline markup in link text: Define the link
+using a substitution:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Try this recipe for |pie à la mode|_.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie à la mode|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie à la mode:&lt;/span&gt; https://www.example.com
+&lt;/pre&gt;
+&lt;p&gt;Rendered:&lt;/p&gt;
+&lt;blockquote&gt;
+Try this recipe for &lt;a class="reference external" href="https://www.example.com"&gt;pie &lt;em&gt;à la mode&lt;/em&gt;&lt;/a&gt;.&lt;/blockquote&gt;
+&lt;p&gt;The steps to do this are as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;In our text, we insert a &lt;em&gt;substitution reference&lt;/em&gt; where we want the link to
+be.  A substitution reference consists of a vertical bar, some arbitrary
+substitution text, and another vertical bar.  Because we also want this to be
+a hyperlink, an underscore is added after the closing vertical bar, causing
+the substitution reference to also be a &lt;a class="reference internal" href="#named-hyperlink-reference"&gt;named hyperlink reference&lt;/a&gt; with the
+substitution text as the reference name.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The substitution text can be any text that does not begin or end with
+whitespace.  Substitution text is matched case-sensitively, but if that
+fails, a case-insensitive match is tried.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Elsewhere in the document, a &lt;em&gt;substitution definition&lt;/em&gt; is given for the
+substitution reference: two periods, a space, a vertical bar, the same
+substitution text as in the substitution reference, another vertical bar,
+whitespace, a &lt;tt class="docutils literal"&gt;replace::&lt;/tt&gt; directive (without leading &lt;tt class="docutils literal"&gt;..&lt;/tt&gt;), whitespace,
+and then finally the inline markup to display in place of the substiution
+reference in the rendered document.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Elsewhere in the document, a &lt;a class="reference internal" href="#target"&gt;hyperlink target&lt;/a&gt; is created that
+maps the substitution text to the URI or e-mail address that the substituted
+text should link to.  To link to a location in the document rather than to an
+external URI, either use an &lt;a class="reference internal" href="#indirect-hyperlink-target"&gt;indirect hyperlink target&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Try this recipe for |pie à la mode|_.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie à la mode|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie à la mode:&lt;/span&gt; &lt;span class="s"&gt;`pie recipe`_&lt;/span&gt;
+
+Some intervening text
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie recipe:&lt;/span&gt;
+
+So here's how you make pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;: …
+&lt;/pre&gt;
+&lt;p&gt;or else make the substitution text the same as the reference name of the
+internal target:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+Try this recipe for |pie recipe|_.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie recipe|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;
+
+Some intervening text
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie recipe:&lt;/span&gt;
+
+So here's how you make pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;: …
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If desired, the substitution reference can be made into an &lt;a class="reference internal" href="#anon"&gt;anonymous
+hyperlink&lt;/a&gt; instead by placing two underscores instead of one after the closing
+vertical bar, in which case the hyperlink target must follow the anonymous
+hyperlink target syntax.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="link-text-within-a-word"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Link Text within a Word&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Normally, a hyperlink spans one or more full words, but what if we want to only
+link part of a word?  To do so, we must insert a backslash (optionally followed
+by a whitespace character) between the link and the rest of the word:&lt;/p&gt;
+&lt;pre class="code rst literal-block"&gt;
+These &lt;span class="s"&gt;`link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;\s are getting out of control!  Now
+they're in the in\ test_\ ines of our words.
+
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_test:&lt;/span&gt; https://www.example.net
+&lt;/pre&gt;
+&lt;p&gt;This renders as:&lt;/p&gt;
+&lt;blockquote&gt;
+These &lt;a class="reference external" href="https://www.example.com"&gt;link&lt;/a&gt;s are getting out of control!  Now
+they’re in the in&lt;a class="reference external" href="https://www.example.net"&gt;test&lt;/a&gt;ines of our words.&lt;/blockquote&gt;
+&lt;/div&gt;
+</content><category term="Software"></category><category term="markup"></category><category term="reStructuredText"></category></entry><entry><title>Unicode and LaTeX</title><link href="https://jwodder.github.io/kbits/posts/unicode-latex/" rel="alternate"></link><published>2020-07-27T00:00:00-04:00</published><updated>2020-07-27T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-07-27:/kbits/posts/unicode-latex/</id><summary type="html">&lt;p class="first last"&gt;How to configure LaTeX to accept UTF-8 input (or just use XeLaTeX/LuaLaTeX
+instead)&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;LaTeX is a powerful document typesetting system, but (especially if you’re
+using a version even a few years old), getting it to accept and display
+non-ASCII characters natively requires knowledge squirreled away in scattered
+documents.  Here we cover how to get LaTeX to work with UTF-8 input characters
+in hopes of thwarting the squirrels of obscurity.&lt;/p&gt;
+&lt;p&gt;Or you could just &lt;a class="reference internal" href="#xetex-and-luatex"&gt;skip all that&lt;/a&gt; and use XeLaTeX or
+LuaLaTeX instead.&lt;/p&gt;
+&lt;div class="section" id="pdftex-engine-pdflatex"&gt;
+&lt;h2&gt;pdfTeX Engine (pdfLaTeX)&lt;/h2&gt;
+&lt;p&gt;When using “basic” LaTeX with the pdfTeX engine, enabling UTF-8 input requires
+simply placing the following commands at the top of your document preamble:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The exact effects of these commands are as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; sets the output font encoding to &lt;a class="reference external" href="http://www.micropress-inc.com/fonts/encoding/t1.htm"&gt;T1&lt;/a&gt;.  A font
+encoding is a mapping between character codes and glyphs in a font; the font
+encodings defined by LaTeX are described in &lt;a class="footnote-reference" href="#encguide" id="id1"&gt;[4]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;By default, LaTeX uses the &lt;a class="reference external" href="http://www.micropress-inc.com/fonts/encoding/ot1.htm"&gt;OT1&lt;/a&gt; font encoding, a 7-bit encoding in which
+accented characters like “ö” are formed by adding an accent glyph to the base
+letter.  T1, by contrast, is an 8-bit encoding supporting widespread European
+languages in which many letter+accent combinations exist as single glyphs.
+&lt;a class="footnote-reference" href="#fontenc-vs-inputenc" id="id2"&gt;[3]&lt;/a&gt; &lt;a class="footnote-reference" href="#use-fontenc" id="id3"&gt;[14]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Without this command, characters will be represented using what’s available
+in OT1, and, as a result, words containing accented characters won’t be
+correctly hyphenated, copying-and-pasting accented characters from a built
+PDF won’t work correctly, and inputting a &lt;tt class="docutils literal"&gt;|&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;lt;&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;&amp;gt;&lt;/tt&gt; will produce
+a completely different character in the resulting PDF. &lt;a class="footnote-reference" href="#use-fontenc" id="id4"&gt;[14]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If one passes a comma-separated list of font encodings to the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt;
+package, the last encoding in the list becomes the document’s default
+encoding, and switching to the other encodings (e.g., in order to enter
+characters only defined by those encodings) requires using the commands
+&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;INSERT ENCODING NAME HERE&lt;span class="nb"&gt;}&lt;/span&gt; &lt;span class="k"&gt;\selectfont&lt;/span&gt;&lt;/code&gt;. &lt;a class="footnote-reference" href="#source2e" id="id5"&gt;[6]&lt;/a&gt;
+&lt;a class="footnote-reference" href="#minimal" id="id6"&gt;[13]&lt;/a&gt; &lt;a class="footnote-reference" href="#latex2e-unoff" id="id7"&gt;[9]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; sets the input encoding for the document
+source to UTF-8, allowing UTF-8 characters to appear in the input document.
+Additionally, for each font encoding used in the document, &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt; loads
+a mapping of UTF-8 characters to commands usable in that font encoding.
+&lt;a class="footnote-reference" href="#inputenc" id="id8"&gt;[1]&lt;/a&gt;  When paired with the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; command above, on recent LaTeX
+versions, &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt; loads mappings from the files &lt;tt class="docutils literal"&gt;omsenc.dfu&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;ot1enc.dfu&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;t1enc.dfu&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;ts1enc.dfu&lt;/tt&gt; &lt;a class="footnote-reference" href="#minimal" id="id9"&gt;[13]&lt;/a&gt;, located in
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;$TEXDIR/texmf-dist/tex/latex/base&lt;/span&gt;&lt;/tt&gt; in an installed TeX Live distribution;
+this in turn allows the user to input any of the characters mapped by those
+files into a document and have the characters be typeset appropriately.&lt;/p&gt;
+&lt;p&gt;Without this command, older versions of LaTeX will use a “raw” input encoding
+in which each input byte is typeset as the glyph in the same position in the
+current font. &lt;a class="footnote-reference" href="#ltnews28" id="id10"&gt;[8]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Beginning with the 2018-04-01 release, LaTeX uses UTF-8 as the default
+encoding for source files, making &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt;
+redundant. &lt;a class="footnote-reference" href="#ltnews28" id="id11"&gt;[8]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once the above commands are added to your document preamble, you will be able
+to enter a number of UTF-8 characters directly into your document and have them
+show up in the built PDF without having to type out their commands.  You’ll
+even be able to write smart quotes (&lt;tt class="docutils literal"&gt;“&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;”&lt;/tt&gt;) directly instead of typing
+quotes out as &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;\`\`&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;''&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;So instead of writing this:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+``My na&lt;span class="k"&gt;\&amp;quot;\i&lt;/span&gt;&lt;span class="nb"&gt;{}&lt;/span&gt;ve r&lt;span class="k"&gt;\'&lt;/span&gt;esum&lt;span class="k"&gt;\'&lt;/span&gt;e is attached.''  --- Se&lt;span class="k"&gt;\~&lt;/span&gt;nor &lt;span class="k"&gt;\TH&lt;/span&gt;&lt;span class="nb"&gt;{}&lt;/span&gt;or
+&lt;/pre&gt;
+&lt;p&gt;you can write this:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+“My naïve résumé is attached.”  — Señor Þor
+&lt;/pre&gt;
+&lt;p&gt;Note that LaTeX does not support combining characters; input must be in a
+composed form.&lt;/p&gt;
+&lt;p&gt;If LaTeX encounters a Unicode character that it doesn’t have a definition for,
+typesetting will stop with an error message of the form:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+! Package inputenc Error: Unicode char ☃ (U+2603)
+(inputenc)                not set up for use with LaTeX.
+&lt;/pre&gt;
+&lt;p&gt;If you want to use a certain character in your document that LaTeX doesn’t
+recognize, you can use the &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\DeclareUnicodeCharacter&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;hexcode&lt;span class="nb"&gt;}{&lt;/span&gt;cmd&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; command
+provided by &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt;.  Its first argument is the hexadecimal code point of
+the Unicode character to define, and the second argument is the LaTeX command
+to execute when the character is encountered. &lt;a class="footnote-reference" href="#inputenc" id="id12"&gt;[1]&lt;/a&gt;  For example:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;tikzsymbols&lt;span class="nb"&gt;}&lt;/span&gt;  &lt;span class="c"&gt;% provides \Snowman
+&lt;/span&gt;&lt;span class="k"&gt;\DeclareUnicodeCharacter&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;2603&lt;span class="nb"&gt;}{&lt;/span&gt;&lt;span class="k"&gt;\Snowman&lt;/span&gt;&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% Now you can put ☃ in your document!&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you don’t want to have to enter characters as codepoints, the
+&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\newunicodechar&lt;/span&gt;&lt;/code&gt; command provided by &lt;a class="reference external" href="https://ctan.org/pkg/newunicodechar"&gt;the newunicodechar package&lt;/a&gt; lets you use the character itself
+instead, &lt;a class="footnote-reference" href="#newunicodechar-docs" id="id13"&gt;[2]&lt;/a&gt; allowing us to rewrite the example above as:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;newunicodechar&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;tikzsymbols&lt;span class="nb"&gt;}&lt;/span&gt;  &lt;span class="c"&gt;% provides \Snowman
+&lt;/span&gt;&lt;span class="k"&gt;\newunicodechar&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;☃&lt;span class="nb"&gt;}{&lt;/span&gt;&lt;span class="k"&gt;\Snowman&lt;/span&gt;&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% Now you can put ☃ in your document!&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As a special case, using the &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; package enables all of the Unicode
+characters that can be represented with the package’s commands; e.g.,
+&lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; defines a &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\textmusicalnote&lt;/span&gt;&lt;/code&gt; command that produces ♪ (U+266A,
+EIGHTH NOTE), and so including &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; in your preamble allows you to
+write “♪” in your document.&lt;/p&gt;
+&lt;div class="section" id="non-latin-alphabets"&gt;
+&lt;h3&gt;Non-Latin Alphabets&lt;/h3&gt;
+&lt;p&gt;The commands described so far only provide meaningful support for text in
+Latin-derived alphabets.  In order to enter text in other alphabets, more
+elaborate steps are required.&lt;/p&gt;
+&lt;div class="section" id="cyrillic-alphabet"&gt;
+&lt;h4&gt;Cyrillic Alphabet&lt;/h4&gt;
+&lt;p&gt;The most direct way to enable Cyrillic input is to specify a Cyrillic font
+encoding in the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; command.  Due to the large number of Cyrillic
+characters in existence, the script is split up into three font encodings (T2A,
+T2B, and T2C) that match up with the T1 encoding in the lower 7-bit range, plus
+another encoding, X2, that contains all of the Cyrillic characters but is not
+compatible with T1. &lt;a class="footnote-reference" href="#encguide" id="id14"&gt;[4]&lt;/a&gt; &lt;a class="footnote-reference" href="#cyrguide" id="id15"&gt;[11]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A purely-Cyrillic document can be written with the X2 font encoding as follows:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[X2]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+Пролетарии всех стран, соединяйтесь!
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you want to use both Cyrillic and Latin characters in your document, you
+need to pass both T1 and X2 to &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt;.  Whichever one is listed last in
+the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; command becomes the default font encoding for the document; the
+other font encoding can be switched to by writing &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;INSERT
+ENCODING NAME HERE&lt;span class="nb"&gt;}&lt;/span&gt; &lt;span class="k"&gt;\selectfont&lt;/span&gt;&lt;/code&gt;. &lt;a class="footnote-reference" href="#source2e" id="id16"&gt;[6]&lt;/a&gt; &lt;a class="footnote-reference" href="#minimal" id="id17"&gt;[13]&lt;/a&gt; &lt;a class="footnote-reference" href="#latex2e-unoff" id="id18"&gt;[9]&lt;/a&gt;
+For example:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[X2,T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="nb"&gt;{&lt;/span&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;X2&lt;span class="nb"&gt;}&lt;/span&gt;&lt;span class="k"&gt;\selectfont&lt;/span&gt; Пролетарии всех стран, соединяйтесь!&lt;span class="nb"&gt;}&lt;/span&gt;” said
+Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Managing encodings this way can get annoying; fortunately, &lt;a class="reference external" href="https://ctan.org/pkg/babel"&gt;the babel package&lt;/a&gt; provides a better way.  Add a
+&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[LANGUAGES]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;babel&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; command to your preamble, where
+&lt;tt class="docutils literal"&gt;LANGUAGES&lt;/tt&gt; is replaced by a comma-separated list of the languages that will
+be used in your document; the last language in the list will become the
+document’s default language.  Within the document, the language can be changed
+with &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\selectlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;LANGUAGE&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; (though, for short passages, it’s better
+to use &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\foreignlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;LANGUAGE&lt;span class="nb"&gt;}{&lt;/span&gt;TEXT&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt;), and when it’s set to a
+Cyrillic-using language, you can write in Cyrillic. &lt;a class="footnote-reference" href="#babel" id="id19"&gt;[7]&lt;/a&gt; &lt;a class="footnote-reference" href="#cyrguide" id="id20"&gt;[11]&lt;/a&gt;  For
+example:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% If we don't explicitly load a Cyrillic font encoding, babel emits a
+% warning and defaults to loading T2A.
+&lt;/span&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T2A,T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[russian,english]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;babel&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="k"&gt;\foreignlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;russian&lt;span class="nb"&gt;}{&lt;/span&gt;Пролетарии всех стран, соединяйтесь!&lt;span class="nb"&gt;}&lt;/span&gt;” said
+Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="greek-alphabet"&gt;
+&lt;h4&gt;Greek Alphabet&lt;/h4&gt;
+&lt;p&gt;As with Cyrillic, entering Greek in LaTeX requires setting the font encoding,
+in this case to LGR: &lt;a class="footnote-reference" href="#encguide" id="id21"&gt;[4]&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[LGR,T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="nb"&gt;{&lt;/span&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;LGR&lt;span class="nb"&gt;}&lt;/span&gt;&lt;span class="k"&gt;\selectfont&lt;/span&gt; Ἄνδρα μοι ἔννεπε, Μοῦσα, πολύτροπον, ὃς
+μάλα πολλὰ&lt;span class="nb"&gt;}&lt;/span&gt;” said Homer.
+
+“Is he talking about me?” wondered Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As before, we can let also choose to let babel take care of the encodings for
+us:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% No need to explicitly load LGR!
+&lt;/span&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[greek,english]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;babel&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="k"&gt;\foreignlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;greek&lt;span class="nb"&gt;}{&lt;/span&gt;Ἄνδρα μοι ἔννεπε, Μοῦσα, πολύτροπον, ὃς μάλα
+πολλὰ&lt;span class="nb"&gt;}&lt;/span&gt;” said Homer.
+
+“Is he talking about me?” wondered Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As another alternative, &lt;a class="reference external" href="https://ctan.org/pkg/greek-fontenc"&gt;the greek-fontenc package&lt;/a&gt; provides a &lt;tt class="docutils literal"&gt;textalpha&lt;/tt&gt; package that
+allows one to write Greek directly without the need for babel or
+language-switching: &lt;a class="footnote-reference" href="#greek-utf8" id="id22"&gt;[5]&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;textalpha&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“Ἄνδρα μοι ἔννεπε, Μοῦσα, πολύτροπον, ὃς μάλα πολλὰ” said Homer.
+
+“Is he talking about me?” wondered Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;greek-fontenc also provides an &lt;tt class="docutils literal"&gt;alphabeta&lt;/tt&gt; package that lets one use Greek
+characters directly in math mode. &lt;a class="footnote-reference" href="#greek-utf8" id="id23"&gt;[5]&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="other-alphabets"&gt;
+&lt;h4&gt;Other Alphabets&lt;/h4&gt;
+&lt;p&gt;LaTeX’s built-in font encodings only cover Latin, Cyrillic, and Greek.
+Enabling input in other alphabets is a separate topic for each alphabet with no
+easy one-size-fits-all answer.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="xetex-engine-xelatex-and-luatex-engine-lualatex"&gt;
+&lt;span id="xetex-and-luatex"&gt;&lt;/span&gt;&lt;h2&gt;XeTeX Engine (XeLaTeX) and LuaTeX Engine (LuaLaTeX)&lt;/h2&gt;
+&lt;p&gt;Besides pdfTeX, LaTeX can also run on two major alternative engines:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://xetex.sourceforge.net"&gt;The XeTeX engine&lt;/a&gt;, on which LaTeX runs as
+XeLaTeX&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.luatex.org"&gt;The LuaTeX engine&lt;/a&gt;, on which LaTeX runs as
+LuaLaTeX.  This is a TeX engine with an embedded interpreter for &lt;a class="reference external" href="http://www.lua.org"&gt;the Lua
+programming language&lt;/a&gt; that allows developers to extend
+the engine by coding in Lua. &lt;a class="footnote-reference" href="#faq-xelua" id="id24"&gt;[12]&lt;/a&gt; &lt;a class="footnote-reference" href="#wiki-luatex" id="id25"&gt;[15]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both engines fully support Unicode input and support modern font technologies,
+including being able to use fonts from the operating system.  &lt;a class="footnote-reference" href="#xetex" id="id26"&gt;[16]&lt;/a&gt;
+&lt;a class="footnote-reference" href="#faq-xelua" id="id27"&gt;[12]&lt;/a&gt;  When it comes to Unicode support, the major differences between
+pdfLaTeX and XeLaTeX/LuaLaTeX are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;XeLaTeX and LuaLaTeX documents must always be written in UTF-8, while
+pdfLaTeX accepts document in various input encodings. &lt;a class="footnote-reference" href="#lshort" id="id28"&gt;[10]&lt;/a&gt; &lt;a class="footnote-reference" href="#minimal" id="id29"&gt;[13]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt; commands used in pdfLaTeX should be omitted
+when working with XeLaTeX/LuaLaTeX; the Unicode engines ignore (and give a
+warning about) &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt;, while setting &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; can actually cause
+some characters (like smart quotes) to not be recognized.  Instead, you can
+just start entering Unicode characters directly into your document without
+having to include any packages.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The set of available Unicode characters in XeLaTeX/LuaLaTeX is determined by
+what characters are defined in the current font. &lt;a class="footnote-reference" href="#minimal" id="id30"&gt;[13]&lt;/a&gt;  The default
+font in both XeLaTeX and LuaLaTeX is &lt;a class="reference external" href="http://www.gust.org.pl/projects/e-foundry/latin-modern"&gt;Latin Modern&lt;/a&gt;, a derivative of
+TeX’s Computer Modern default font that adds many more characters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If XeLaTeX encounters a Unicode character that does not exist in the current
+font, the resulting PDF will show the font’s placeholder character if it has
+one; if the font has no placeholder character, nothing will be shown.  Either
+way, the &lt;tt class="docutils literal"&gt;.log&lt;/tt&gt; file will contain a line of the form:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Missing character: There is no ☃ in font [lmroman10-regular]:mapping=tex-text;!
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If LuaLaTeX encounters a Unicode character that does not exist in the current
+font, the character will be omitted in the resulting PDF.  No warning will be
+emitted or logged.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\DeclareUnicodeCharacter&lt;/span&gt;&lt;/code&gt; is not a valid command in XeLaTeX or LuaLaTeX;
+one must instead write something like:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;tikzsymbols&lt;span class="nb"&gt;}&lt;/span&gt;  &lt;span class="c"&gt;% provides \Snowman
+&lt;/span&gt;&lt;span class="k"&gt;\catcode&lt;/span&gt;`☃=&lt;span class="k"&gt;\active&lt;/span&gt;
+&lt;span class="k"&gt;\protected\def&lt;/span&gt; ☃&lt;span class="nb"&gt;{&lt;/span&gt;&lt;span class="k"&gt;\Snowman&lt;/span&gt;&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\newunicodechar&lt;/span&gt;&lt;/code&gt; can still be used in place of this method, though.
+&lt;a class="footnote-reference" href="#newunicodechar-docs" id="id31"&gt;[2]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Being able to write in another alphabet is largely a matter of switching to a
+font that supports that alphabet.  See &lt;a class="reference external" href="https://ctan.org/pkg/fontspec"&gt;the fontspec package&lt;/a&gt; for how to change fonts in XeLaTeX and
+LuaLaTeX.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;While neither XeLaTeX nor LuaLaTeX natively supports combining characters,
+the Lua scripting capabilities in the latter can be used to give combining
+characters in your source code the desired effect; see
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/a/149197"&gt;https://tex.stackexchange.com/a/149197&lt;/a&gt;&amp;gt; for an example.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="references"&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="inputenc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[1]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id8"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id12"&gt;2&lt;/a&gt;)&lt;/em&gt; Alan Jeffrey and Frank Mittelbach,
+&lt;cite&gt;inputenc.sty&lt;/cite&gt;.
+Version 1.3c.
+Last modified 2018 August 11,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/macros/latex/base/inputenc.pdf"&gt;http://mirrors.ctan.org/macros/latex/base/inputenc.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="newunicodechar-docs" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[2]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id13"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id31"&gt;2&lt;/a&gt;)&lt;/em&gt; Enrico Gregorio,
+&lt;cite&gt;The newunicodechar package&lt;/cite&gt;.
+Last modified 2018 April 8,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/macros/latex/contrib/newunicodechar/newunicodechar.pdf"&gt;http://mirrors.ctan.org/macros/latex/contrib/newunicodechar/newunicodechar.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="fontenc-vs-inputenc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;“fontenc vs inputenc”,
+&lt;cite&gt;TeX - LaTeX Stack Exchange&lt;/cite&gt;.
+Last modified 2018 April 3,
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/q/44694"&gt;https://tex.stackexchange.com/q/44694&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="encguide" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[4]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id1"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id14"&gt;2&lt;/a&gt;, &lt;a class="fn-backref" href="#id21"&gt;3&lt;/a&gt;)&lt;/em&gt; Frank Mittelbach, Robin Fairbairns, Werner Lemberg, and LaTeX3 Project Team,
+&lt;cite&gt;LaTeX font encodings&lt;/cite&gt;.
+Last modified 2016 February 18,
+&amp;lt;&lt;a class="reference external" href="https://www.latex-project.org/help/documentation/encguide.pdf"&gt;https://www.latex-project.org/help/documentation/encguide.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="greek-utf8" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[5]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id22"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id23"&gt;2&lt;/a&gt;)&lt;/em&gt; Günter Milde,
+&lt;cite&gt;Greek Unicode with 8-bit TeX and inputenc&lt;/cite&gt;.
+Last modified 2019 July 11,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/language/greek/greek-inputenc/greek-utf8.pdf"&gt;http://mirrors.ctan.org/language/greek/greek-inputenc/greek-utf8.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="source2e" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[6]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id5"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id16"&gt;2&lt;/a&gt;)&lt;/em&gt; Johannes Braams, David Carlisle, Alan Jeffrey, Leslie Lamport, Frank
+Mittelbach, Chris Rowley, and Rainer Schöpf,
+&lt;cite&gt;The LaTeX2e Sources&lt;/cite&gt;.
+Last modified 2020 February 2,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ibiblio.org/CTAN/macros/latex/base/source2e.pdf"&gt;http://mirrors.ibiblio.org/CTAN/macros/latex/base/source2e.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="babel" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id19"&gt;[7]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Johannes L. Braams and Javier Bezos,
+&lt;cite&gt;Babel: Localization and internationalization&lt;/cite&gt;.
+Version 3.47.
+Last modified 2020 July 13,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/macros/latex/required/babel/base/babel.pdf"&gt;http://mirrors.ctan.org/macros/latex/required/babel/base/babel.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="ltnews28" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[8]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id10"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id11"&gt;2&lt;/a&gt;)&lt;/em&gt; &lt;cite&gt;LaTeX News&lt;/cite&gt;, issue 28, 2018 April.
+&amp;lt;&lt;a class="reference external" href="https://www.latex-project.org/news/latex2e-news/ltnews28.pdf"&gt;https://www.latex-project.org/news/latex2e-news/ltnews28.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="latex2e-unoff" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[9]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id7"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id18"&gt;2&lt;/a&gt;)&lt;/em&gt; &lt;cite&gt;LaTeX2e unofficial reference manual&lt;/cite&gt;.
+Last modified 2018 October,
+&amp;lt;&lt;a class="reference external" href="http://tug.org/texinfohtml/latex2e.html"&gt;http://tug.org/texinfohtml/latex2e.html&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="lshort" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id28"&gt;[10]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Tobias Oetiker, Hubert Partl, Irene Hyna, and Elisabeth Schlegl,
+&lt;cite&gt;The Not So Short Introduction to LaTeX2ε&lt;/cite&gt;.
+Version 6.2.
+Last modified 2018 February 28,
+&amp;lt;&lt;a class="reference external" href="http://tug.ctan.org/info/lshort/english/lshort.pdf"&gt;http://tug.ctan.org/info/lshort/english/lshort.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="cyrguide" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[11]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id15"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id20"&gt;2&lt;/a&gt;)&lt;/em&gt; Vladimir Volovich, Werner Lemberg, and LaTeX3 Project Team,
+&lt;cite&gt;Cyrillic languages support in LaTeX&lt;/cite&gt;.
+Last modified 1999 March 12,
+&amp;lt;&lt;a class="reference external" href="https://www.latex-project.org/help/documentation/cyrguide.pdf"&gt;https://www.latex-project.org/help/documentation/cyrguide.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="faq-xelua" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[12]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id24"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id27"&gt;2&lt;/a&gt;)&lt;/em&gt; “What are XeTeX and LuaTeX?”,
+&lt;cite&gt;The TeX Frequently Asked Question List&lt;/cite&gt;.
+&amp;lt;&lt;a class="reference external" href="https://www.texfaq.org/FAQ-xetex-luatex"&gt;https://www.texfaq.org/FAQ-xetex-luatex&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="minimal" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[13]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id6"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id9"&gt;2&lt;/a&gt;, &lt;a class="fn-backref" href="#id17"&gt;3&lt;/a&gt;, &lt;a class="fn-backref" href="#id29"&gt;4&lt;/a&gt;, &lt;a class="fn-backref" href="#id30"&gt;5&lt;/a&gt;)&lt;/em&gt; “What Unicode characters does pdfLaTeX support with a minimal preamble?”,
+&lt;cite&gt;TeX - LaTeX Stack Exchange&lt;/cite&gt;.
+Last modified 2020 July 27,
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/q/555199"&gt;https://tex.stackexchange.com/q/555199&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="use-fontenc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[14]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id3"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id4"&gt;2&lt;/a&gt;)&lt;/em&gt; “Why should I use \usepackage[T1]{fontenc}?”,
+&lt;cite&gt;TeX - LaTeX Stack Exchange&lt;/cite&gt;.
+Last modified 2017 April 13,
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/a/677"&gt;https://tex.stackexchange.com/a/677&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="wiki-luatex" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id25"&gt;[15]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Wikipedia contributors,
+“LuaTeX,”
+&lt;cite&gt;Wikipedia, The Free Encyclopedia&lt;/cite&gt;.
+&amp;lt;&lt;a class="reference external" href="https://en.wikipedia.org/w/index.php?title=LuaTeX&amp;amp;oldid=965669811"&gt;https://en.wikipedia.org/w/index.php?title=LuaTeX&amp;amp;oldid=965669811&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="xetex" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id26"&gt;[16]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;cite&gt;XeTeX - Unicode-based TeX&lt;/cite&gt;.
+&amp;lt;&lt;a class="reference external" href="http://xetex.sourceforge.net"&gt;http://xetex.sourceforge.net&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</content><category term="Software"></category><category term="markup"></category><category term="LaTeX"></category><category term="XeLaTeX"></category><category term="LuaLaTeX"></category><category term="Unicode"></category><category term="UTF-8"></category><category term="encoding"></category></entry></feed>

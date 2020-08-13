@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Mathematics</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.mathematics.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-08-13T00:00:00-04:00</updated><subtitle>References I wish I'd read</subtitle><entry><title>The Sum of Raising the First \(n\) Integers to a Given Power</title><link href="https://jwodder.github.io/kbits/posts/powsum/" rel="alternate"></link><published>2020-08-13T00:00:00-04:00</published><updated>2020-08-13T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-13:/kbits/posts/powsum/</id><summary type="html">&lt;p class="first last"&gt;How to derive the closed-form expression for &lt;span class="math"&gt;\(\sum_{i=1}^n i^m\)&lt;/span&gt; for a
+given &lt;span class="math"&gt;\(m\)&lt;/span&gt; using the formulas for all lesser &lt;span class="math"&gt;\(m\)&lt;/span&gt;’s&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The closed-form expression for &lt;span class="math"&gt;\(\sum_{i=1}^n i^m\)&lt;/span&gt; for a given
+&lt;span class="math"&gt;\(m\in\mathbb{Z}^+\)&lt;/span&gt; can be derived — once we know the formulas for all
+lesser &lt;span class="math"&gt;\(m\)&lt;/span&gt;’s — as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;First, observe that:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{align*}
+n^{m+1} &amp;amp; = n^{m+1} - (n-1)^{m+1} \\
+        &amp;amp; + (n-1)^{m+1} - (n-2)^{m+1} \\
+        &amp;amp; + (n-2)^{m+1} - (n-3)^{m+1} \\
+        &amp;amp; + \cdots \\
+        &amp;amp; + 2^{m+1} - 1^{m+1} \\
+        &amp;amp; + 1^{m+1} - 0^{m+1} \\
+        &amp;amp; = \sum_{i=1}^n (i^{m+1} - (i-1)^{m+1})
+\end{align*}
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Expand &lt;span class="math"&gt;\(i^{m+1} - (i-1)^{m+1}\)&lt;/span&gt; for the &lt;span class="math"&gt;\(m\)&lt;/span&gt; in question and use
+the linear transformation nature of summation to rewrite the right-hand side
+of &lt;span class="math"&gt;\(n^{m+1} = \sum_{i=1}^n (i^{m+1} - (i-1)^{m+1})\)&lt;/span&gt; as a sum of
+summations of &lt;span class="math"&gt;\(i^k\)&lt;/span&gt;’s.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Isolate the &lt;span class="math"&gt;\(\sum_{i=1}^n i^m\)&lt;/span&gt; term of the equation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Substitute the closed-form expressions for the remaining &lt;span class="math"&gt;\(\sum_{i=1}^n
+i^k\)&lt;/span&gt; terms.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, once we know that &lt;span class="math"&gt;\(\sum_{i=1}^n i = \frac{n(n+1)}{2}\)&lt;/span&gt; and
+&lt;span class="math"&gt;\(\sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}\)&lt;/span&gt;, we can derive
+&lt;span class="math"&gt;\(\sum_{i=1}^n i^3\)&lt;/span&gt; as follows:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{align*}
+n^4 &amp;amp; = \sum_{i=1}^n (i^4 - (i-1)^4) \\
+    &amp;amp; = \sum_{i=1}^n (4i^3 - 6i^2 + 4i - 1) \\
+    &amp;amp; = 4\sum_{i=1}^n i^3 - 6\sum_{i=1}^n i^2 + 4\sum_{i=1}^n i - n \\
+\sum_{i=1}^n i^3
+    &amp;amp; = \frac{1}{4} (n^4 + 6\sum_{i=1}^n i^2 - 4\sum_{i=1}^n i + n) \\
+    &amp;amp; = \frac{1}{4} (n^4 + 6\times\frac{n(n+1)(2n+1)}{6} - 4\times\frac{n(n+1)}{2} + n)\\
+    &amp;amp; = \frac{1}{4} (n^4 + 2n^3 + n^2)
+\end{align*}
+&lt;/div&gt;
+</content><category term="Mathematics"></category><category term="summations"></category></entry></feed>

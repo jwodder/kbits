@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Knowledge Bits - reStructuredText</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd read</description><lastBuildDate>Tue, 28 Jul 2020 00:00:00 -0400</lastBuildDate><item><title>All About reStructuredText Hyperlinks</title><link>https://jwodder.github.io/kbits/posts/rst-hyperlinks/</link><description>&lt;p class="first last"&gt;Writing the various hyperlink syntaxes in reStructuredText, along with
+internal hyperlinks and styling link text&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Tue, 28 Jul 2020 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2020-07-28:/kbits/posts/rst-hyperlinks/</guid><category>Software</category><category>markup</category><category>reStructuredText</category></item></channel></rss>

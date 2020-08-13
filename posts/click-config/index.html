@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Setting Default Option Values from Config Files with Click</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="How to set up a Click program to read default option values from a config file"/>
+        <meta name="tags" content="Python"/>
+        <meta name="tags" content="Click"/>
+        <meta name="tags" content="configuration file"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="Python,Click,configuration file"/>
+</head>
+
+<body>
+    <div id="topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d read</span>
+        </header><!-- /#banner -->
+    </div>
+
+    <div class="mainrow">
+        <div id="navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav><!-- /#menu -->
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/click-config/" rel="bookmark"
+                    title="Permalink to Setting Default Option Values from Config Files with Click">Setting Default Option Values from Config Files with Click</a>
+            </h1>
+            
+        </header>
+        <footer>
+            <table border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2020-07-17T00:00:00-04:00" pubdate="1">2020-07-17</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<span class="fn">John T. Wodder II</span>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/click/">Click</a>, <a href="https://jwodder.github.io/kbits/tags/configuration-file/">configuration file</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/click-config.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p>When developing a command-line application in Python with <a class="reference external" href="https://palletsprojects.com/p/click/">Click</a>, you may find
+yourself wanting to use a configuration file to set the parameters’ default
+values at runtime and to be able to specify such a file with a <tt class="docutils literal"><span class="pre">--config</span></tt>
+option.  There are various libraries of varying quality that provide such
+functionality in different ways; however, implementing such functionality on
+one’s own is simple enough (as this document will show), and knowing the
+basics will help you develop more advanced implementations when the libraries
+out there don’t meet your needs.</p>
+<p>All code in this document has been tested against Click version 7.1.2.</p>
+<div class="section" id="default-map">
+<h2><tt class="docutils literal">default_map</tt></h2>
+<p>The key feature of Click that will allow us to set parameter values from a
+configuration file is the <tt class="docutils literal">default_map</tt> attribute of <tt class="docutils literal">click.Context</tt>,
+documented at <a class="reference external" href="https://click.palletsprojects.com/en/7.x/commands/#overriding-defaults">[1]</a>.  Any values set in this <code class="py python"><span class="nb">dict</span></code> before parameters are
+processed will become the parameters’ new default values.  Any extra keys that
+do not correspond to defined parameters are ignored.</p>
+<p>Moreover, Click will map values in <tt class="docutils literal">default_map</tt> through the parameters’
+normal type conversion &amp; validation routines.  This means that, if you have an
+option <tt class="docutils literal"><span class="pre">--foo</span></tt> defined with <code class="py python"><span class="nb">type</span><span class="o">=</span><span class="nb">int</span></code>, you can set
+<code class="py python"><span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;5&quot;</span></code>, and the value will be converted to an
+<code class="py python"><span class="nb">int</span></code> by the time it’s passed to the command callback.  This even works for
+boolean flags: a value set for a boolean flag option will be processed by the
+<a class="reference external" href="https://click.palletsprojects.com/en/7.x/parameters/#parameter-types"><tt class="docutils literal">click.BOOL</tt></a> type, which maps boolean-like strings to <code class="py python"><span class="nb">bool</span></code> values.  This
+eases your workload when reading from a configuration file type like INI where
+values don’t come with type information; just pass the values straight to
+Click, and it’ll do the conversion for you the same as it does for values on
+the command line.</p>
+<p>Areas to be careful in include parameters defined with <code class="py python"><span class="n">multiple</span><span class="o">=</span><span class="kc">True</span></code>.
+The default value for such parameters (whether declared with <code class="py python"><span class="n">default</span><span class="o">=</span></code> in
+the parameter’s decorator or set in <tt class="docutils literal">default_map</tt>) must be a list or tuple;
+setting such a default to a string will cause the string to be interpreted as a
+list of single-character strings.  Also requiring special attention are options
+defined with <tt class="docutils literal">nargs</tt> or with a tuple of types; correct handling for all of
+these is left as an exercise for the reader.</p>
+</div>
+<div class="section" id="implementing-a-config-option">
+<h2>Implementing a <tt class="docutils literal"><span class="pre">--config</span></tt> option</h2>
+<p>In order to define a <tt class="docutils literal"><span class="pre">--config</span> FILE</tt> option that reads from <tt class="docutils literal">FILE</tt> and sets
+other parameters’ default values, the option first of all needs to be <a class="reference external" href="https://click.palletsprojects.com/en/7.x/options/#callbacks-and-eager-options">eager</a> so
+that it can modify <tt class="docutils literal">ctx.default_map</tt> before the other options read it, and it
+needs to be defined with a callback that does the actual work.  Everything else
+after that is straightforward.</p>
+<p>Here is a sample Python script with a <tt class="docutils literal"><span class="pre">--config</span></tt> option that reads from a
+given config file (or from <tt class="docutils literal">config.ini</tt> in the current directory if no config
+file is given).  The config file must be an INI file, and the values for the
+options are read from the <tt class="docutils literal">[options]</tt> section.  The command callback simply
+dumps out its arguments so you can see what’s being passed to it.</p>
+<pre class="code python literal-block">
+<span class="kn">from</span>   <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">click</span>
+
+<span class="n">DEFAULT_CFG</span> <span class="o">=</span> <span class="s1">'config.ini'</span>
+
+<span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">'options'</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="n">options</span>
+
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">'-c'</span><span class="p">,</span> <span class="s1">'--config'</span><span class="p">,</span>
+    <span class="nb">type</span>         <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dir_okay</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">default</span>      <span class="o">=</span> <span class="n">DEFAULT_CFG</span><span class="p">,</span>
+    <span class="n">callback</span>     <span class="o">=</span> <span class="n">configure</span><span class="p">,</span>
+    <span class="n">is_eager</span>     <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">expose_value</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span>         <span class="o">=</span> <span class="s1">'Read option defaults from the specified INI file'</span><span class="p">,</span>
+    <span class="n">show_default</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--integer'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--flag/--no-flag'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--str'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">'foo'</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--choice'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">]))</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre>
+<p>If we run this script with no options when <tt class="docutils literal">config.ini</tt> does not exist or is
+empty, we get the parameters’ built-in default values:</p>
+<pre class="code console literal-block">
+<span class="gp">$</span> python3 config01.py
+<span class="go">{
+    &quot;choice&quot;: null,
+    &quot;flag&quot;: false,
+    &quot;integer&quot;: 42,
+    &quot;str&quot;: &quot;foo&quot;
+}</span>
+</pre>
+<p>That’s boring!  Try populating <tt class="docutils literal">example.ini</tt> with the below text:</p>
+<pre class="code ini literal-block">
+<span class="k">[options]</span>
+<span class="na">integer</span> <span class="o">=</span> <span class="s">23</span>
+<span class="na">flag</span> <span class="o">=</span> <span class="s">yes</span>
+<span class="na">str</span> <span class="o">=</span> <span class="s">bar</span>
+<span class="na">choice</span> <span class="o">=</span> <span class="s">green</span>
+</pre>
+<p>… and then run with <tt class="docutils literal"><span class="pre">--config</span> example.ini</tt>:</p>
+<pre class="code console literal-block">
+<span class="gp">$</span> python3 config01.py --config example.ini
+<span class="go">{
+    &quot;choice&quot;: &quot;green&quot;,
+    &quot;flag&quot;: true,
+    &quot;integer&quot;: 23,
+    &quot;str&quot;: &quot;bar&quot;
+}</span>
+</pre>
+<p>Note that the values set for the <tt class="docutils literal">flag</tt> and <tt class="docutils literal">integer</tt> options have been
+converted to their appropriate types.</p>
+<p>Of course, options set in the config file are overridden by command-line
+options, no matter where the options occur in relation to <tt class="docutils literal"><span class="pre">--config</span></tt>:</p>
+<pre class="code console literal-block">
+<span class="gp">$</span> python3 config01.py --integer <span class="m">17</span> --config example.ini --str glarch
+<span class="go">{
+    &quot;choice&quot;: &quot;green&quot;,
+    &quot;flag&quot;: true,
+    &quot;integer&quot;: 17,
+    &quot;str&quot;: &quot;glarch&quot;
+}</span>
+</pre>
+<p>What if a value in the config file is invalid?  Try saving the following text
+to <tt class="docutils literal">bad.ini</tt>:</p>
+<pre class="code ini literal-block">
+<span class="k">[options]</span>
+<span class="na">choice</span> <span class="o">=</span> <span class="s">mauve</span>
+</pre>
+<p>The script will then error when passed this config file:</p>
+<pre class="code console literal-block">
+<span class="gp">$</span> python3 config01.py --config bad.ini
+<span class="go">Usage: config01.py [OPTIONS]
+Try 'config01.py --help' for help.
+
+Error: Invalid value for '--choice': invalid choice: mauve. (choose from red, green, blue)</span>
+</pre>
+<p>Not the best possible error message (It doesn’t tell us the bad value was in
+the config file), but it’s better than a stack trace.</p>
+<p>Note that, with this code, parameters in the config file must be named using
+the same name &amp; spelling as the parameter’s corresponding argument to the
+command callback.  For example, the <tt class="docutils literal"><span class="pre">--integer</span></tt> option must be written
+<tt class="docutils literal">integer</tt>, not <tt class="docutils literal"><span class="pre">--integer</span></tt> or <tt class="docutils literal"><span class="pre">-i</span></tt> or <tt class="docutils literal">i</tt>; any entries in the config
+file with an invalid spelling will be ignored.  For options with medial hyphens
+on the command line, like <tt class="docutils literal"><span class="pre">--log-level</span></tt>, the hyphens must become underscores
+in the configuration file, like <tt class="docutils literal">log_level</tt>.  If you want to support the
+spelling <tt class="docutils literal"><span class="pre">log-level</span></tt> as well, insert the following line after <code class="py python"><span class="n">cfg</span> <span class="o">=</span>
+<span class="n">ConfigParser</span><span class="p">()</span></code> to make the <tt class="docutils literal">ConfigParser</tt> object convert hyphens in option
+names to underscores:</p>
+<pre class="code python literal-block">
+<span class="n">cfg</span><span class="o">.</span><span class="n">optionxform</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span>
+</pre>
+</div>
+<div class="section" id="configuring-command-groups">
+<h2>Configuring command groups</h2>
+<p><tt class="docutils literal">default_map</tt> supports passing values to subcommands in command groups in a
+very simple way: if the main command has a subcommand named “<tt class="docutils literal">foo</tt>”, then
+<code class="py python"><span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]</span></code> can be set to a <code class="py python"><span class="nb">dict</span></code> of parameter names &amp;
+values for <tt class="docutils literal">foo</tt>.  For example, the following assignment:</p>
+<pre class="code python literal-block">
+<span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;baz&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;late&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre>
+<p>sets the default value for the main command’s <tt class="docutils literal"><span class="pre">--color</span></tt> option to <tt class="docutils literal">red</tt>,
+the default value of the <tt class="docutils literal">foo</tt> subcommand’s <tt class="docutils literal"><span class="pre">--speed</span></tt>  option to <tt class="docutils literal">high</tt>,
+the default value of the <tt class="docutils literal">bar</tt> subcommand’s <tt class="docutils literal"><span class="pre">--speed</span></tt> option to <tt class="docutils literal">low</tt>,
+and the default value of the <tt class="docutils literal">bar baz</tt> sub-subcommand’s <tt class="docutils literal"><span class="pre">--time</span></tt> option to
+<tt class="docutils literal">late</tt>.  As you can see, this comes with one major drawback: a command can’t
+have a subcommand with the same name as one of its parameters.</p>
+<p>Here is a sample Python script with command groups that reads configuration
+from an INI file.  Settings in the <tt class="docutils literal">[options]</tt> section are applied to the
+top-level command, settings in the <tt class="docutils literal">[options.CMD]</tt> section are applied to the
+subcommand <tt class="docutils literal">CMD</tt>, settings in <tt class="docutils literal">[options.CMD1.CMD2]</tt> are applied to the
+<tt class="docutils literal">CMD2</tt> sub-subcommand of the <tt class="docutils literal">CMD1</tt> subcommand, and so forth.  As above,
+each command prints out the parameters it receives.</p>
+<pre class="code python literal-block">
+<span class="kn">from</span>   <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">click</span>
+
+<span class="n">DEFAULT_CFG</span> <span class="o">=</span> <span class="s1">'config.ini'</span>
+
+<span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">sect</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+        <span class="n">command_path</span> <span class="o">=</span> <span class="n">sect</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">command_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'options'</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span>
+        <span class="k">for</span> <span class="n">cmdname</span> <span class="ow">in</span> <span class="n">command_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">cmdname</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="n">sect</span><span class="p">])</span>
+
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">invoke_without_command</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">'-c'</span><span class="p">,</span> <span class="s1">'--config'</span><span class="p">,</span>
+    <span class="nb">type</span>         <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dir_okay</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">default</span>      <span class="o">=</span> <span class="n">DEFAULT_CFG</span><span class="p">,</span>
+    <span class="n">callback</span>     <span class="o">=</span> <span class="n">configure</span><span class="p">,</span>
+    <span class="n">is_eager</span>     <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">expose_value</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span>         <span class="o">=</span> <span class="s1">'Read option defaults from the specified INI file'</span><span class="p">,</span>
+    <span class="n">show_default</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--integer'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--flag/--no-flag'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--str'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">'foo'</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--choice'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">]))</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'* main'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="nd">&#64;main</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--speed'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'medium'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'ludicrous'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'medium'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'* foo'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="nd">&#64;main</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">invoke_without_command</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--speed'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'medium'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'ludicrous'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'medium'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'* bar'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="nd">&#64;bar</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--time'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'early'</span><span class="p">,</span> <span class="s1">'late'</span><span class="p">,</span> <span class="s1">'exact'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'early'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">baz</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'* baz'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre>
+<p>Set <tt class="docutils literal">config.ini</tt> to the following:</p>
+<pre class="code ini literal-block">
+<span class="k">[options]</span>
+<span class="na">integer</span> <span class="o">=</span> <span class="s">23</span>
+<span class="na">flag</span> <span class="o">=</span> <span class="s">yes</span>
+<span class="na">str</span> <span class="o">=</span> <span class="s">bar</span>
+<span class="na">choice</span> <span class="o">=</span> <span class="s">green</span>
+
+<span class="k">[options.foo]</span>
+<span class="na">speed</span> <span class="o">=</span> <span class="s">high</span>
+
+<span class="k">[options.bar]</span>
+<span class="na">speed</span> <span class="o">=</span> <span class="s">low</span>
+
+<span class="k">[options.bar.baz]</span>
+<span class="na">time</span> <span class="o">=</span> <span class="s">late</span>
+</pre>
+<p>… and then invoke some commands to see the results:</p>
+<pre class="code console literal-block">
+<span class="gp">$</span> python3 config02.py
+<span class="go">* main
+{
+    &quot;choice&quot;: &quot;green&quot;,
+    &quot;flag&quot;: true,
+    &quot;integer&quot;: 23,
+    &quot;str&quot;: &quot;bar&quot;
+}
+</span><span class="gp">$</span> python3 config02.py foo
+<span class="go">* main
+{
+    &quot;choice&quot;: &quot;green&quot;,
+    &quot;flag&quot;: true,
+    &quot;integer&quot;: 23,
+    &quot;str&quot;: &quot;bar&quot;
+}
+* foo
+{
+    &quot;speed&quot;: &quot;high&quot;
+}
+</span><span class="gp">$</span> python3 config02.py bar
+<span class="go">* main
+{
+    &quot;choice&quot;: &quot;green&quot;,
+    &quot;flag&quot;: true,
+    &quot;integer&quot;: 23,
+    &quot;str&quot;: &quot;bar&quot;
+}
+* bar
+{
+    &quot;speed&quot;: &quot;low&quot;
+}
+</span><span class="gp">$</span> python3 config02.py bar baz
+<span class="go">* main
+{
+    &quot;choice&quot;: &quot;green&quot;,
+    &quot;flag&quot;: true,
+    &quot;integer&quot;: 23,
+    &quot;str&quot;: &quot;bar&quot;
+}
+* bar
+{
+    &quot;speed&quot;: &quot;low&quot;
+}
+* baz
+{
+    &quot;time&quot;: &quot;late&quot;
+}
+</span><span class="gp">$</span> python3 config02.py --choice red foo --speed medium
+<span class="go">* main
+{
+    &quot;choice&quot;: &quot;red&quot;,
+    &quot;flag&quot;: true,
+    &quot;integer&quot;: 23,
+    &quot;str&quot;: &quot;bar&quot;
+}
+* foo
+{
+    &quot;speed&quot;: &quot;medium&quot;
+}</span>
+</pre>
+</div>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>

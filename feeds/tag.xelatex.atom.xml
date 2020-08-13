@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - XeLaTeX</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.xelatex.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-07-27T00:00:00-04:00</updated><subtitle>References I wish I'd read</subtitle><entry><title>Unicode and LaTeX</title><link href="https://jwodder.github.io/kbits/posts/unicode-latex/" rel="alternate"></link><published>2020-07-27T00:00:00-04:00</published><updated>2020-07-27T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-07-27:/kbits/posts/unicode-latex/</id><summary type="html">&lt;p class="first last"&gt;How to configure LaTeX to accept UTF-8 input (or just use XeLaTeX/LuaLaTeX
+instead)&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;LaTeX is a powerful document typesetting system, but (especially if you’re
+using a version even a few years old), getting it to accept and display
+non-ASCII characters natively requires knowledge squirreled away in scattered
+documents.  Here we cover how to get LaTeX to work with UTF-8 input characters
+in hopes of thwarting the squirrels of obscurity.&lt;/p&gt;
+&lt;p&gt;Or you could just &lt;a class="reference internal" href="#xetex-and-luatex"&gt;skip all that&lt;/a&gt; and use XeLaTeX or
+LuaLaTeX instead.&lt;/p&gt;
+&lt;div class="section" id="pdftex-engine-pdflatex"&gt;
+&lt;h2&gt;pdfTeX Engine (pdfLaTeX)&lt;/h2&gt;
+&lt;p&gt;When using “basic” LaTeX with the pdfTeX engine, enabling UTF-8 input requires
+simply placing the following commands at the top of your document preamble:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The exact effects of these commands are as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; sets the output font encoding to &lt;a class="reference external" href="http://www.micropress-inc.com/fonts/encoding/t1.htm"&gt;T1&lt;/a&gt;.  A font
+encoding is a mapping between character codes and glyphs in a font; the font
+encodings defined by LaTeX are described in &lt;a class="footnote-reference" href="#encguide" id="id1"&gt;[4]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;By default, LaTeX uses the &lt;a class="reference external" href="http://www.micropress-inc.com/fonts/encoding/ot1.htm"&gt;OT1&lt;/a&gt; font encoding, a 7-bit encoding in which
+accented characters like “ö” are formed by adding an accent glyph to the base
+letter.  T1, by contrast, is an 8-bit encoding supporting widespread European
+languages in which many letter+accent combinations exist as single glyphs.
+&lt;a class="footnote-reference" href="#fontenc-vs-inputenc" id="id2"&gt;[3]&lt;/a&gt; &lt;a class="footnote-reference" href="#use-fontenc" id="id3"&gt;[14]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Without this command, characters will be represented using what’s available
+in OT1, and, as a result, words containing accented characters won’t be
+correctly hyphenated, copying-and-pasting accented characters from a built
+PDF won’t work correctly, and inputting a &lt;tt class="docutils literal"&gt;|&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;lt;&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;&amp;gt;&lt;/tt&gt; will produce
+a completely different character in the resulting PDF. &lt;a class="footnote-reference" href="#use-fontenc" id="id4"&gt;[14]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If one passes a comma-separated list of font encodings to the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt;
+package, the last encoding in the list becomes the document’s default
+encoding, and switching to the other encodings (e.g., in order to enter
+characters only defined by those encodings) requires using the commands
+&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;INSERT ENCODING NAME HERE&lt;span class="nb"&gt;}&lt;/span&gt; &lt;span class="k"&gt;\selectfont&lt;/span&gt;&lt;/code&gt;. &lt;a class="footnote-reference" href="#source2e" id="id5"&gt;[6]&lt;/a&gt;
+&lt;a class="footnote-reference" href="#minimal" id="id6"&gt;[13]&lt;/a&gt; &lt;a class="footnote-reference" href="#latex2e-unoff" id="id7"&gt;[9]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; sets the input encoding for the document
+source to UTF-8, allowing UTF-8 characters to appear in the input document.
+Additionally, for each font encoding used in the document, &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt; loads
+a mapping of UTF-8 characters to commands usable in that font encoding.
+&lt;a class="footnote-reference" href="#inputenc" id="id8"&gt;[1]&lt;/a&gt;  When paired with the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; command above, on recent LaTeX
+versions, &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt; loads mappings from the files &lt;tt class="docutils literal"&gt;omsenc.dfu&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;ot1enc.dfu&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;t1enc.dfu&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;ts1enc.dfu&lt;/tt&gt; &lt;a class="footnote-reference" href="#minimal" id="id9"&gt;[13]&lt;/a&gt;, located in
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;$TEXDIR/texmf-dist/tex/latex/base&lt;/span&gt;&lt;/tt&gt; in an installed TeX Live distribution;
+this in turn allows the user to input any of the characters mapped by those
+files into a document and have the characters be typeset appropriately.&lt;/p&gt;
+&lt;p&gt;Without this command, older versions of LaTeX will use a “raw” input encoding
+in which each input byte is typeset as the glyph in the same position in the
+current font. &lt;a class="footnote-reference" href="#ltnews28" id="id10"&gt;[8]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Beginning with the 2018-04-01 release, LaTeX uses UTF-8 as the default
+encoding for source files, making &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt;
+redundant. &lt;a class="footnote-reference" href="#ltnews28" id="id11"&gt;[8]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once the above commands are added to your document preamble, you will be able
+to enter a number of UTF-8 characters directly into your document and have them
+show up in the built PDF without having to type out their commands.  You’ll
+even be able to write smart quotes (&lt;tt class="docutils literal"&gt;“&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;”&lt;/tt&gt;) directly instead of typing
+quotes out as &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;\`\`&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;''&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;So instead of writing this:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+``My na&lt;span class="k"&gt;\&amp;quot;\i&lt;/span&gt;&lt;span class="nb"&gt;{}&lt;/span&gt;ve r&lt;span class="k"&gt;\'&lt;/span&gt;esum&lt;span class="k"&gt;\'&lt;/span&gt;e is attached.''  --- Se&lt;span class="k"&gt;\~&lt;/span&gt;nor &lt;span class="k"&gt;\TH&lt;/span&gt;&lt;span class="nb"&gt;{}&lt;/span&gt;or
+&lt;/pre&gt;
+&lt;p&gt;you can write this:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+“My naïve résumé is attached.”  — Señor Þor
+&lt;/pre&gt;
+&lt;p&gt;Note that LaTeX does not support combining characters; input must be in a
+composed form.&lt;/p&gt;
+&lt;p&gt;If LaTeX encounters a Unicode character that it doesn’t have a definition for,
+typesetting will stop with an error message of the form:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+! Package inputenc Error: Unicode char ☃ (U+2603)
+(inputenc)                not set up for use with LaTeX.
+&lt;/pre&gt;
+&lt;p&gt;If you want to use a certain character in your document that LaTeX doesn’t
+recognize, you can use the &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\DeclareUnicodeCharacter&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;hexcode&lt;span class="nb"&gt;}{&lt;/span&gt;cmd&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; command
+provided by &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt;.  Its first argument is the hexadecimal code point of
+the Unicode character to define, and the second argument is the LaTeX command
+to execute when the character is encountered. &lt;a class="footnote-reference" href="#inputenc" id="id12"&gt;[1]&lt;/a&gt;  For example:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;tikzsymbols&lt;span class="nb"&gt;}&lt;/span&gt;  &lt;span class="c"&gt;% provides \Snowman
+&lt;/span&gt;&lt;span class="k"&gt;\DeclareUnicodeCharacter&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;2603&lt;span class="nb"&gt;}{&lt;/span&gt;&lt;span class="k"&gt;\Snowman&lt;/span&gt;&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% Now you can put ☃ in your document!&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you don’t want to have to enter characters as codepoints, the
+&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\newunicodechar&lt;/span&gt;&lt;/code&gt; command provided by &lt;a class="reference external" href="https://ctan.org/pkg/newunicodechar"&gt;the newunicodechar package&lt;/a&gt; lets you use the character itself
+instead, &lt;a class="footnote-reference" href="#newunicodechar-docs" id="id13"&gt;[2]&lt;/a&gt; allowing us to rewrite the example above as:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;newunicodechar&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;tikzsymbols&lt;span class="nb"&gt;}&lt;/span&gt;  &lt;span class="c"&gt;% provides \Snowman
+&lt;/span&gt;&lt;span class="k"&gt;\newunicodechar&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;☃&lt;span class="nb"&gt;}{&lt;/span&gt;&lt;span class="k"&gt;\Snowman&lt;/span&gt;&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% Now you can put ☃ in your document!&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As a special case, using the &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; package enables all of the Unicode
+characters that can be represented with the package’s commands; e.g.,
+&lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; defines a &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\textmusicalnote&lt;/span&gt;&lt;/code&gt; command that produces ♪ (U+266A,
+EIGHTH NOTE), and so including &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; in your preamble allows you to
+write “♪” in your document.&lt;/p&gt;
+&lt;div class="section" id="non-latin-alphabets"&gt;
+&lt;h3&gt;Non-Latin Alphabets&lt;/h3&gt;
+&lt;p&gt;The commands described so far only provide meaningful support for text in
+Latin-derived alphabets.  In order to enter text in other alphabets, more
+elaborate steps are required.&lt;/p&gt;
+&lt;div class="section" id="cyrillic-alphabet"&gt;
+&lt;h4&gt;Cyrillic Alphabet&lt;/h4&gt;
+&lt;p&gt;The most direct way to enable Cyrillic input is to specify a Cyrillic font
+encoding in the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; command.  Due to the large number of Cyrillic
+characters in existence, the script is split up into three font encodings (T2A,
+T2B, and T2C) that match up with the T1 encoding in the lower 7-bit range, plus
+another encoding, X2, that contains all of the Cyrillic characters but is not
+compatible with T1. &lt;a class="footnote-reference" href="#encguide" id="id14"&gt;[4]&lt;/a&gt; &lt;a class="footnote-reference" href="#cyrguide" id="id15"&gt;[11]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A purely-Cyrillic document can be written with the X2 font encoding as follows:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[X2]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+Пролетарии всех стран, соединяйтесь!
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you want to use both Cyrillic and Latin characters in your document, you
+need to pass both T1 and X2 to &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt;.  Whichever one is listed last in
+the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; command becomes the default font encoding for the document; the
+other font encoding can be switched to by writing &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;INSERT
+ENCODING NAME HERE&lt;span class="nb"&gt;}&lt;/span&gt; &lt;span class="k"&gt;\selectfont&lt;/span&gt;&lt;/code&gt;. &lt;a class="footnote-reference" href="#source2e" id="id16"&gt;[6]&lt;/a&gt; &lt;a class="footnote-reference" href="#minimal" id="id17"&gt;[13]&lt;/a&gt; &lt;a class="footnote-reference" href="#latex2e-unoff" id="id18"&gt;[9]&lt;/a&gt;
+For example:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[X2,T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="nb"&gt;{&lt;/span&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;X2&lt;span class="nb"&gt;}&lt;/span&gt;&lt;span class="k"&gt;\selectfont&lt;/span&gt; Пролетарии всех стран, соединяйтесь!&lt;span class="nb"&gt;}&lt;/span&gt;” said
+Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Managing encodings this way can get annoying; fortunately, &lt;a class="reference external" href="https://ctan.org/pkg/babel"&gt;the babel package&lt;/a&gt; provides a better way.  Add a
+&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[LANGUAGES]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;babel&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; command to your preamble, where
+&lt;tt class="docutils literal"&gt;LANGUAGES&lt;/tt&gt; is replaced by a comma-separated list of the languages that will
+be used in your document; the last language in the list will become the
+document’s default language.  Within the document, the language can be changed
+with &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\selectlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;LANGUAGE&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; (though, for short passages, it’s better
+to use &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\foreignlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;LANGUAGE&lt;span class="nb"&gt;}{&lt;/span&gt;TEXT&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt;), and when it’s set to a
+Cyrillic-using language, you can write in Cyrillic. &lt;a class="footnote-reference" href="#babel" id="id19"&gt;[7]&lt;/a&gt; &lt;a class="footnote-reference" href="#cyrguide" id="id20"&gt;[11]&lt;/a&gt;  For
+example:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% If we don't explicitly load a Cyrillic font encoding, babel emits a
+% warning and defaults to loading T2A.
+&lt;/span&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T2A,T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[russian,english]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;babel&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="k"&gt;\foreignlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;russian&lt;span class="nb"&gt;}{&lt;/span&gt;Пролетарии всех стран, соединяйтесь!&lt;span class="nb"&gt;}&lt;/span&gt;” said
+Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="greek-alphabet"&gt;
+&lt;h4&gt;Greek Alphabet&lt;/h4&gt;
+&lt;p&gt;As with Cyrillic, entering Greek in LaTeX requires setting the font encoding,
+in this case to LGR: &lt;a class="footnote-reference" href="#encguide" id="id21"&gt;[4]&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[LGR,T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="nb"&gt;{&lt;/span&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;LGR&lt;span class="nb"&gt;}&lt;/span&gt;&lt;span class="k"&gt;\selectfont&lt;/span&gt; Ἄνδρα μοι ἔννεπε, Μοῦσα, πολύτροπον, ὃς
+μάλα πολλὰ&lt;span class="nb"&gt;}&lt;/span&gt;” said Homer.
+
+“Is he talking about me?” wondered Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As before, we can let also choose to let babel take care of the encodings for
+us:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;% No need to explicitly load LGR!
+&lt;/span&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[greek,english]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;babel&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“&lt;span class="k"&gt;\foreignlanguage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;greek&lt;span class="nb"&gt;}{&lt;/span&gt;Ἄνδρα μοι ἔννεπε, Μοῦσα, πολύτροπον, ὃς μάλα
+πολλὰ&lt;span class="nb"&gt;}&lt;/span&gt;” said Homer.
+
+“Is he talking about me?” wondered Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As another alternative, &lt;a class="reference external" href="https://ctan.org/pkg/greek-fontenc"&gt;the greek-fontenc package&lt;/a&gt; provides a &lt;tt class="docutils literal"&gt;textalpha&lt;/tt&gt; package that
+allows one to write Greek directly without the need for babel or
+language-switching: &lt;a class="footnote-reference" href="#greek-utf8" id="id22"&gt;[5]&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[T1]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;fontenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;textalpha&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;\begin&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+“Ἄνδρα μοι ἔννεπε, Μοῦσα, πολύτροπον, ὃς μάλα πολλὰ” said Homer.
+
+“Is he talking about me?” wondered Señor Þor.
+&lt;span class="k"&gt;\end&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;document&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;greek-fontenc also provides an &lt;tt class="docutils literal"&gt;alphabeta&lt;/tt&gt; package that lets one use Greek
+characters directly in math mode. &lt;a class="footnote-reference" href="#greek-utf8" id="id23"&gt;[5]&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="other-alphabets"&gt;
+&lt;h4&gt;Other Alphabets&lt;/h4&gt;
+&lt;p&gt;LaTeX’s built-in font encodings only cover Latin, Cyrillic, and Greek.
+Enabling input in other alphabets is a separate topic for each alphabet with no
+easy one-size-fits-all answer.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="xetex-engine-xelatex-and-luatex-engine-lualatex"&gt;
+&lt;span id="xetex-and-luatex"&gt;&lt;/span&gt;&lt;h2&gt;XeTeX Engine (XeLaTeX) and LuaTeX Engine (LuaLaTeX)&lt;/h2&gt;
+&lt;p&gt;Besides pdfTeX, LaTeX can also run on two major alternative engines:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://xetex.sourceforge.net"&gt;The XeTeX engine&lt;/a&gt;, on which LaTeX runs as
+XeLaTeX&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.luatex.org"&gt;The LuaTeX engine&lt;/a&gt;, on which LaTeX runs as
+LuaLaTeX.  This is a TeX engine with an embedded interpreter for &lt;a class="reference external" href="http://www.lua.org"&gt;the Lua
+programming language&lt;/a&gt; that allows developers to extend
+the engine by coding in Lua. &lt;a class="footnote-reference" href="#faq-xelua" id="id24"&gt;[12]&lt;/a&gt; &lt;a class="footnote-reference" href="#wiki-luatex" id="id25"&gt;[15]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both engines fully support Unicode input and support modern font technologies,
+including being able to use fonts from the operating system.  &lt;a class="footnote-reference" href="#xetex" id="id26"&gt;[16]&lt;/a&gt;
+&lt;a class="footnote-reference" href="#faq-xelua" id="id27"&gt;[12]&lt;/a&gt;  When it comes to Unicode support, the major differences between
+pdfLaTeX and XeLaTeX/LuaLaTeX are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;XeLaTeX and LuaLaTeX documents must always be written in UTF-8, while
+pdfLaTeX accepts document in various input encodings. &lt;a class="footnote-reference" href="#lshort" id="id28"&gt;[10]&lt;/a&gt; &lt;a class="footnote-reference" href="#minimal" id="id29"&gt;[13]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt; commands used in pdfLaTeX should be omitted
+when working with XeLaTeX/LuaLaTeX; the Unicode engines ignore (and give a
+warning about) &lt;tt class="docutils literal"&gt;inputenc&lt;/tt&gt;, while setting &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; can actually cause
+some characters (like smart quotes) to not be recognized.  Instead, you can
+just start entering Unicode characters directly into your document without
+having to include any packages.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The set of available Unicode characters in XeLaTeX/LuaLaTeX is determined by
+what characters are defined in the current font. &lt;a class="footnote-reference" href="#minimal" id="id30"&gt;[13]&lt;/a&gt;  The default
+font in both XeLaTeX and LuaLaTeX is &lt;a class="reference external" href="http://www.gust.org.pl/projects/e-foundry/latin-modern"&gt;Latin Modern&lt;/a&gt;, a derivative of
+TeX’s Computer Modern default font that adds many more characters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If XeLaTeX encounters a Unicode character that does not exist in the current
+font, the resulting PDF will show the font’s placeholder character if it has
+one; if the font has no placeholder character, nothing will be shown.  Either
+way, the &lt;tt class="docutils literal"&gt;.log&lt;/tt&gt; file will contain a line of the form:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Missing character: There is no ☃ in font [lmroman10-regular]:mapping=tex-text;!
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If LuaLaTeX encounters a Unicode character that does not exist in the current
+font, the character will be omitted in the resulting PDF.  No warning will be
+emitted or logged.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\DeclareUnicodeCharacter&lt;/span&gt;&lt;/code&gt; is not a valid command in XeLaTeX or LuaLaTeX;
+one must instead write something like:&lt;/p&gt;
+&lt;pre class="code latex literal-block"&gt;
+&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;tikzsymbols&lt;span class="nb"&gt;}&lt;/span&gt;  &lt;span class="c"&gt;% provides \Snowman
+&lt;/span&gt;&lt;span class="k"&gt;\catcode&lt;/span&gt;`☃=&lt;span class="k"&gt;\active&lt;/span&gt;
+&lt;span class="k"&gt;\protected\def&lt;/span&gt; ☃&lt;span class="nb"&gt;{&lt;/span&gt;&lt;span class="k"&gt;\Snowman&lt;/span&gt;&lt;span class="nb"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\newunicodechar&lt;/span&gt;&lt;/code&gt; can still be used in place of this method, though.
+&lt;a class="footnote-reference" href="#newunicodechar-docs" id="id31"&gt;[2]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Being able to write in another alphabet is largely a matter of switching to a
+font that supports that alphabet.  See &lt;a class="reference external" href="https://ctan.org/pkg/fontspec"&gt;the fontspec package&lt;/a&gt; for how to change fonts in XeLaTeX and
+LuaLaTeX.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;While neither XeLaTeX nor LuaLaTeX natively supports combining characters,
+the Lua scripting capabilities in the latter can be used to give combining
+characters in your source code the desired effect; see
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/a/149197"&gt;https://tex.stackexchange.com/a/149197&lt;/a&gt;&amp;gt; for an example.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="references"&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="inputenc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[1]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id8"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id12"&gt;2&lt;/a&gt;)&lt;/em&gt; Alan Jeffrey and Frank Mittelbach,
+&lt;cite&gt;inputenc.sty&lt;/cite&gt;.
+Version 1.3c.
+Last modified 2018 August 11,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/macros/latex/base/inputenc.pdf"&gt;http://mirrors.ctan.org/macros/latex/base/inputenc.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="newunicodechar-docs" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[2]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id13"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id31"&gt;2&lt;/a&gt;)&lt;/em&gt; Enrico Gregorio,
+&lt;cite&gt;The newunicodechar package&lt;/cite&gt;.
+Last modified 2018 April 8,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/macros/latex/contrib/newunicodechar/newunicodechar.pdf"&gt;http://mirrors.ctan.org/macros/latex/contrib/newunicodechar/newunicodechar.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="fontenc-vs-inputenc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;“fontenc vs inputenc”,
+&lt;cite&gt;TeX - LaTeX Stack Exchange&lt;/cite&gt;.
+Last modified 2018 April 3,
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/q/44694"&gt;https://tex.stackexchange.com/q/44694&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="encguide" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[4]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id1"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id14"&gt;2&lt;/a&gt;, &lt;a class="fn-backref" href="#id21"&gt;3&lt;/a&gt;)&lt;/em&gt; Frank Mittelbach, Robin Fairbairns, Werner Lemberg, and LaTeX3 Project Team,
+&lt;cite&gt;LaTeX font encodings&lt;/cite&gt;.
+Last modified 2016 February 18,
+&amp;lt;&lt;a class="reference external" href="https://www.latex-project.org/help/documentation/encguide.pdf"&gt;https://www.latex-project.org/help/documentation/encguide.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="greek-utf8" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[5]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id22"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id23"&gt;2&lt;/a&gt;)&lt;/em&gt; Günter Milde,
+&lt;cite&gt;Greek Unicode with 8-bit TeX and inputenc&lt;/cite&gt;.
+Last modified 2019 July 11,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/language/greek/greek-inputenc/greek-utf8.pdf"&gt;http://mirrors.ctan.org/language/greek/greek-inputenc/greek-utf8.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="source2e" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[6]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id5"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id16"&gt;2&lt;/a&gt;)&lt;/em&gt; Johannes Braams, David Carlisle, Alan Jeffrey, Leslie Lamport, Frank
+Mittelbach, Chris Rowley, and Rainer Schöpf,
+&lt;cite&gt;The LaTeX2e Sources&lt;/cite&gt;.
+Last modified 2020 February 2,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ibiblio.org/CTAN/macros/latex/base/source2e.pdf"&gt;http://mirrors.ibiblio.org/CTAN/macros/latex/base/source2e.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="babel" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id19"&gt;[7]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Johannes L. Braams and Javier Bezos,
+&lt;cite&gt;Babel: Localization and internationalization&lt;/cite&gt;.
+Version 3.47.
+Last modified 2020 July 13,
+&amp;lt;&lt;a class="reference external" href="http://mirrors.ctan.org/macros/latex/required/babel/base/babel.pdf"&gt;http://mirrors.ctan.org/macros/latex/required/babel/base/babel.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="ltnews28" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[8]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id10"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id11"&gt;2&lt;/a&gt;)&lt;/em&gt; &lt;cite&gt;LaTeX News&lt;/cite&gt;, issue 28, 2018 April.
+&amp;lt;&lt;a class="reference external" href="https://www.latex-project.org/news/latex2e-news/ltnews28.pdf"&gt;https://www.latex-project.org/news/latex2e-news/ltnews28.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="latex2e-unoff" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[9]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id7"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id18"&gt;2&lt;/a&gt;)&lt;/em&gt; &lt;cite&gt;LaTeX2e unofficial reference manual&lt;/cite&gt;.
+Last modified 2018 October,
+&amp;lt;&lt;a class="reference external" href="http://tug.org/texinfohtml/latex2e.html"&gt;http://tug.org/texinfohtml/latex2e.html&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="lshort" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id28"&gt;[10]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Tobias Oetiker, Hubert Partl, Irene Hyna, and Elisabeth Schlegl,
+&lt;cite&gt;The Not So Short Introduction to LaTeX2ε&lt;/cite&gt;.
+Version 6.2.
+Last modified 2018 February 28,
+&amp;lt;&lt;a class="reference external" href="http://tug.ctan.org/info/lshort/english/lshort.pdf"&gt;http://tug.ctan.org/info/lshort/english/lshort.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="cyrguide" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[11]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id15"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id20"&gt;2&lt;/a&gt;)&lt;/em&gt; Vladimir Volovich, Werner Lemberg, and LaTeX3 Project Team,
+&lt;cite&gt;Cyrillic languages support in LaTeX&lt;/cite&gt;.
+Last modified 1999 March 12,
+&amp;lt;&lt;a class="reference external" href="https://www.latex-project.org/help/documentation/cyrguide.pdf"&gt;https://www.latex-project.org/help/documentation/cyrguide.pdf&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="faq-xelua" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[12]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id24"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id27"&gt;2&lt;/a&gt;)&lt;/em&gt; “What are XeTeX and LuaTeX?”,
+&lt;cite&gt;The TeX Frequently Asked Question List&lt;/cite&gt;.
+&amp;lt;&lt;a class="reference external" href="https://www.texfaq.org/FAQ-xetex-luatex"&gt;https://www.texfaq.org/FAQ-xetex-luatex&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="minimal" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[13]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id6"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id9"&gt;2&lt;/a&gt;, &lt;a class="fn-backref" href="#id17"&gt;3&lt;/a&gt;, &lt;a class="fn-backref" href="#id29"&gt;4&lt;/a&gt;, &lt;a class="fn-backref" href="#id30"&gt;5&lt;/a&gt;)&lt;/em&gt; “What Unicode characters does pdfLaTeX support with a minimal preamble?”,
+&lt;cite&gt;TeX - LaTeX Stack Exchange&lt;/cite&gt;.
+Last modified 2020 July 27,
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/q/555199"&gt;https://tex.stackexchange.com/q/555199&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="use-fontenc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[14]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id3"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id4"&gt;2&lt;/a&gt;)&lt;/em&gt; “Why should I use \usepackage[T1]{fontenc}?”,
+&lt;cite&gt;TeX - LaTeX Stack Exchange&lt;/cite&gt;.
+Last modified 2017 April 13,
+&amp;lt;&lt;a class="reference external" href="https://tex.stackexchange.com/a/677"&gt;https://tex.stackexchange.com/a/677&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="wiki-luatex" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id25"&gt;[15]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Wikipedia contributors,
+“LuaTeX,”
+&lt;cite&gt;Wikipedia, The Free Encyclopedia&lt;/cite&gt;.
+&amp;lt;&lt;a class="reference external" href="https://en.wikipedia.org/w/index.php?title=LuaTeX&amp;amp;oldid=965669811"&gt;https://en.wikipedia.org/w/index.php?title=LuaTeX&amp;amp;oldid=965669811&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="xetex" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id26"&gt;[16]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;cite&gt;XeTeX - Unicode-based TeX&lt;/cite&gt;.
+&amp;lt;&lt;a class="reference external" href="http://xetex.sourceforge.net"&gt;http://xetex.sourceforge.net&lt;/a&gt;&amp;gt;
+(accessed 2020 July 27).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</content><category term="Software"></category><category term="markup"></category><category term="LaTeX"></category><category term="XeLaTeX"></category><category term="LuaLaTeX"></category><category term="Unicode"></category><category term="UTF-8"></category><category term="encoding"></category></entry></feed>
