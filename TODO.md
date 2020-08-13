@@ -1,3 +1,4 @@
 - Add a favicon?
 - Add an author autopage
 - Do whatever <https://github.com/pelican-plugins/seo> says
+- Add an "about" page?
