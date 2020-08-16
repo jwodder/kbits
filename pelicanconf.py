@@ -22,24 +22,24 @@ OUTPUT_PATH = 'build'
 
 ARTICLE_URL = 'posts/{slug}/'
 ARTICLE_SAVE_AS = ARTICLE_URL + 'index.html'
-ARTICLE_LANG_URL = '{lang}/posts/{slug}/'
+ARTICLE_LANG_URL = 'posts/{slug}/{lang}/'
 ARTICLE_LANG_SAVE_AS = ARTICLE_LANG_URL + 'index.html'
 
 ARCHIVES_SAVE_AS = 'posts/index.html'
 
 DRAFT_URL = 'drafts/{slug}/'
 DRAFT_SAVE_AS = DRAFT_URL + 'index.html'
-DRAFT_LANG_URL = '{lang}/drafts/{slug}/'
+DRAFT_LANG_URL = 'drafts/{slug}/{lang}/'
 DRAFT_LANG_SAVE_AS = DRAFT_LANG_URL + 'index.html'
 
 PAGE_URL = '{slug}/'
 PAGE_SAVE_AS = PAGE_URL + 'index.html'
-PAGE_LANG_URL = '{lang}/{slug}/'
+PAGE_LANG_URL = '{slug}/{lang}/'
 PAGE_LANG_SAVE_AS = PAGE_LANG_URL + 'index.html'
 
 DRAFT_PAGE_URL = 'drafts/{slug}/'
 DRAFT_PAGE_SAVE_AS = DRAFT_PAGE_URL + 'index.html'
-DRAFT_PAGE_LANG_URL = '{lang}/drafts/{slug}/'
+DRAFT_PAGE_LANG_URL = 'drafts/{slug}/{lang}/'
 DRAFT_PAGE_LANG_SAVE_AS = DRAFT_PAGE_LANG_URL + 'index.html'
 
 #AUTHOR_URL = 'authors/{slug}/'
@@ -99,6 +99,7 @@ THEME = './theme'
 
 
 # Theme variables
+USE_MATHJAX = True
 GITHUB_SOURCE_URL = 'https://github.com/jwodder/kbits'
 PATH_IN_REPO = PATH  # PATH relative to root of repository
 SHOW_AUTHOR = True
