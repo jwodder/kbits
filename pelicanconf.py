@@ -81,9 +81,6 @@ PAGE_ORDER_BY = 'title'
 DEFAULT_CATEGORY = 'Miscellanea'
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
-# <https://github.com/getpelican/pelican/pull/2785>
-FORMATTED_FIELDS = ['summary', 'Summary']
-
 
 # Plugins
 PLUGINS = ['plugins.autopages']
