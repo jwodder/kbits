@@ -77,6 +77,10 @@ a:visited {
     width: 20%;
 }
 
+.menu-name {
+    font-weight: bold;
+}
+
 div.postfeeds {
     text-align: center;
 }
@@ -91,6 +95,10 @@ div.subfeeds {
     margin-left: 1%;
     margin-right: 1%;
     width: 76%;
+}
+
+.summary {
+    margin-top: 1em;
 }
 
 #pagination {

@@ -7,11 +7,9 @@
  * :Copyright: This stylesheet has been placed in the public domain.
  */
 
-/* Messes with admonitions; how useful is this?  -- jwodder
-.first {
+.first:not(.admonition-title):not(.sidebar-title) {
     margin-top: 0 ! important;
 }
-*/
 
 .last,
 .with-subtitle {
