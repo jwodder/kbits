@@ -54,9 +54,9 @@ The exact effects of these commands are as follows:
   If one passes a comma-separated list of font encodings to the ``fontenc``
   package, the last encoding in the list becomes the document's default
   encoding, and switching to the other encodings (e.g., in order to enter
-  characters only defined by those encodings) requires using the commands
-  :tx:`\fontencoding{INSERT ENCODING NAME HERE} \selectfont`. [#source2e]_
-  [#minimal]_ [#latex2e-unoff]_
+  characters only defined by those encodings) becomes possible using the
+  command sequence :tx:`\fontencoding{INSERT ENCODING NAME HERE} \selectfont`.
+  [#source2e]_ [#minimal]_ [#latex2e-unoff]_
 
   .. _T1: http://www.micropress-inc.com/fonts/encoding/t1.htm
   .. _OT1: http://www.micropress-inc.com/fonts/encoding/ot1.htm
@@ -84,7 +84,7 @@ Once the above commands are added to your document preamble, you will be able
 to enter a number of UTF-8 characters directly into your document and have them
 show up in the built PDF without having to type out their commands.  You'll
 even be able to write smart quotes (``“`` and ``”``) directly instead of typing
-quotes out as ``\`\``` and ``''``.
+quotes out as \`\` and ``''``.
 
 So instead of writing this:
 
@@ -97,6 +97,8 @@ you can write this:
 .. code:: latex
 
     “My naïve résumé is attached.”  — Señor Þor
+
+and LaTeX will handle the input correctly.
 
 Note that LaTeX does not support combining characters; input must be in a
 composed form.
@@ -131,11 +133,12 @@ instead, [#newunicodechar-docs]_ allowing us to rewrite the example above as:
     \newunicodechar{☃}{\Snowman}
     % Now you can put ☃ in your document!
 
-As a special case, using the ``textcomp`` package enables all of the Unicode
-characters that can be represented with the package's commands; e.g.,
-``textcomp`` defines a :tx:`\textmusicalnote` command that produces ♪ (U+266A,
-EIGHTH NOTE), and so including ``textcomp`` in your preamble allows you to
-write "♪" in your document.
+As a special case, loading the ``textcomp`` package lets you input all of the
+Unicode characters that can be output with ``textcomp``'s commands; for
+example, ``textcomp`` defines a :tx:`\textmusicalnote` command that produces ♪
+(U+266A, EIGHTH NOTE), and so including ``textcomp`` in your preamble allows
+you to write "♪" in your document and have it be treated as the
+:tx:`\textmusicalnote` command, producing a "♪" in the output.
 
 
 Non-Latin Alphabets
@@ -151,9 +154,9 @@ Cyrillic Alphabet
 The most direct way to enable Cyrillic input is to specify a Cyrillic font
 encoding in the ``fontenc`` command.  Due to the large number of Cyrillic
 characters in existence, the script is split up into three font encodings (T2A,
-T2B, and T2C) that match up with the T1 encoding in the lower 7-bit range, plus
-another encoding, X2, that contains all of the Cyrillic characters but is not
-compatible with T1. [#encguide]_ [#cyrguide]_
+T2B, and T2C) that each match up with the T1 encoding in the lower 7-bit range,
+plus a fourth encoding, X2, that contains all of the Cyrillic characters but is
+not compatible with T1. [#encguide]_ [#cyrguide]_
 
 A purely-Cyrillic document can be written with the X2 font encoding as follows:
 
