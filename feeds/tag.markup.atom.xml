@@ -587,9 +587,9 @@ a completely different character in the resulting PDF. &lt;a class="footnote-ref
 &lt;p&gt;If one passes a comma-separated list of font encodings to the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt;
 package, the last encoding in the list becomes the document’s default
 encoding, and switching to the other encodings (e.g., in order to enter
-characters only defined by those encodings) requires using the commands
-&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;INSERT ENCODING NAME HERE&lt;span class="nb"&gt;}&lt;/span&gt; &lt;span class="k"&gt;\selectfont&lt;/span&gt;&lt;/code&gt;. &lt;a class="footnote-reference" href="#source2e" id="id5"&gt;[6]&lt;/a&gt;
-&lt;a class="footnote-reference" href="#minimal" id="id6"&gt;[13]&lt;/a&gt; &lt;a class="footnote-reference" href="#latex2e-unoff" id="id7"&gt;[9]&lt;/a&gt;&lt;/p&gt;
+characters only defined by those encodings) becomes possible using the
+command sequence &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\fontencoding&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;INSERT ENCODING NAME HERE&lt;span class="nb"&gt;}&lt;/span&gt; &lt;span class="k"&gt;\selectfont&lt;/span&gt;&lt;/code&gt;.
+&lt;a class="footnote-reference" href="#source2e" id="id5"&gt;[6]&lt;/a&gt; &lt;a class="footnote-reference" href="#minimal" id="id6"&gt;[13]&lt;/a&gt; &lt;a class="footnote-reference" href="#latex2e-unoff" id="id7"&gt;[9]&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\usepackage&lt;/span&gt;&lt;span class="na"&gt;[utf8]&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;inputenc&lt;span class="nb"&gt;}&lt;/span&gt;&lt;/code&gt; sets the input encoding for the document
 source to UTF-8, allowing UTF-8 characters to appear in the input document.
@@ -613,7 +613,7 @@ redundant. &lt;a class="footnote-reference" href="#ltnews28" id="id11"&gt;[8]&lt
 to enter a number of UTF-8 characters directly into your document and have them
 show up in the built PDF without having to type out their commands.  You’ll
 even be able to write smart quotes (&lt;tt class="docutils literal"&gt;“&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;”&lt;/tt&gt;) directly instead of typing
-quotes out as &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;\`\`&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;''&lt;/tt&gt;.&lt;/p&gt;
+quotes out as `` and &lt;tt class="docutils literal"&gt;''&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;So instead of writing this:&lt;/p&gt;
 &lt;pre class="code latex literal-block"&gt;
 ``My na&lt;span class="k"&gt;\&amp;quot;\i&lt;/span&gt;&lt;span class="nb"&gt;{}&lt;/span&gt;ve r&lt;span class="k"&gt;\'&lt;/span&gt;esum&lt;span class="k"&gt;\'&lt;/span&gt;e is attached.''  --- Se&lt;span class="k"&gt;\~&lt;/span&gt;nor &lt;span class="k"&gt;\TH&lt;/span&gt;&lt;span class="nb"&gt;{}&lt;/span&gt;or
@@ -622,6 +622,7 @@ quotes out as &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;\`\`&lt
 &lt;pre class="code latex literal-block"&gt;
 “My naïve résumé is attached.”  — Señor Þor
 &lt;/pre&gt;
+&lt;p&gt;and LaTeX will handle the input correctly.&lt;/p&gt;
 &lt;p&gt;Note that LaTeX does not support combining characters; input must be in a
 composed form.&lt;/p&gt;
 &lt;p&gt;If LaTeX encounters a Unicode character that it doesn’t have a definition for,
@@ -649,11 +650,12 @@ instead, &lt;a class="footnote-reference" href="#newunicodechar-docs" id="id13"&
 &lt;/span&gt;&lt;span class="k"&gt;\newunicodechar&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;☃&lt;span class="nb"&gt;}{&lt;/span&gt;&lt;span class="k"&gt;\Snowman&lt;/span&gt;&lt;span class="nb"&gt;}&lt;/span&gt;
 &lt;span class="c"&gt;% Now you can put ☃ in your document!&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;As a special case, using the &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; package enables all of the Unicode
-characters that can be represented with the package’s commands; e.g.,
-&lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; defines a &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\textmusicalnote&lt;/span&gt;&lt;/code&gt; command that produces ♪ (U+266A,
-EIGHTH NOTE), and so including &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; in your preamble allows you to
-write “♪” in your document.&lt;/p&gt;
+&lt;p&gt;As a special case, loading the &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; package lets you input all of the
+Unicode characters that can be output with &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt;’s commands; for
+example, &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; defines a &lt;code class="tx tex"&gt;&lt;span class="k"&gt;\textmusicalnote&lt;/span&gt;&lt;/code&gt; command that produces ♪
+(U+266A, EIGHTH NOTE), and so including &lt;tt class="docutils literal"&gt;textcomp&lt;/tt&gt; in your preamble allows
+you to write “♪” in your document and have it be treated as the
+&lt;code class="tx tex"&gt;&lt;span class="k"&gt;\textmusicalnote&lt;/span&gt;&lt;/code&gt; command, producing a “♪” in the output.&lt;/p&gt;
 &lt;div class="section" id="non-latin-alphabets"&gt;
 &lt;h3&gt;Non-Latin Alphabets&lt;/h3&gt;
 &lt;p&gt;The commands described so far only provide meaningful support for text in
@@ -664,9 +666,9 @@ elaborate steps are required.&lt;/p&gt;
 &lt;p&gt;The most direct way to enable Cyrillic input is to specify a Cyrillic font
 encoding in the &lt;tt class="docutils literal"&gt;fontenc&lt;/tt&gt; command.  Due to the large number of Cyrillic
 characters in existence, the script is split up into three font encodings (T2A,
-T2B, and T2C) that match up with the T1 encoding in the lower 7-bit range, plus
-another encoding, X2, that contains all of the Cyrillic characters but is not
-compatible with T1. &lt;a class="footnote-reference" href="#encguide" id="id14"&gt;[4]&lt;/a&gt; &lt;a class="footnote-reference" href="#cyrguide" id="id15"&gt;[11]&lt;/a&gt;&lt;/p&gt;
+T2B, and T2C) that each match up with the T1 encoding in the lower 7-bit range,
+plus a fourth encoding, X2, that contains all of the Cyrillic characters but is
+not compatible with T1. &lt;a class="footnote-reference" href="#encguide" id="id14"&gt;[4]&lt;/a&gt; &lt;a class="footnote-reference" href="#cyrguide" id="id15"&gt;[11]&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;A purely-Cyrillic document can be written with the X2 font encoding as follows:&lt;/p&gt;
 &lt;pre class="code latex literal-block"&gt;
 &lt;span class="k"&gt;\documentclass&lt;/span&gt;&lt;span class="nb"&gt;{&lt;/span&gt;article&lt;span class="nb"&gt;}&lt;/span&gt;

@@ -116,9 +116,9 @@ a completely different character in the resulting PDF. <a class="footnote-refere
 <p>If one passes a comma-separated list of font encodings to the <tt class="docutils literal">fontenc</tt>
 package, the last encoding in the list becomes the document’s default
 encoding, and switching to the other encodings (e.g., in order to enter
-characters only defined by those encodings) requires using the commands
-<code class="tx tex"><span class="k">\fontencoding</span><span class="nb">{</span>INSERT ENCODING NAME HERE<span class="nb">}</span> <span class="k">\selectfont</span></code>. <a class="footnote-reference" href="#source2e" id="id5">[6]</a>
-<a class="footnote-reference" href="#minimal" id="id6">[13]</a> <a class="footnote-reference" href="#latex2e-unoff" id="id7">[9]</a></p>
+characters only defined by those encodings) becomes possible using the
+command sequence <code class="tx tex"><span class="k">\fontencoding</span><span class="nb">{</span>INSERT ENCODING NAME HERE<span class="nb">}</span> <span class="k">\selectfont</span></code>.
+<a class="footnote-reference" href="#source2e" id="id5">[6]</a> <a class="footnote-reference" href="#minimal" id="id6">[13]</a> <a class="footnote-reference" href="#latex2e-unoff" id="id7">[9]</a></p>
 </li>
 <li><p class="first"><code class="tx tex"><span class="k">\usepackage</span><span class="na">[utf8]</span><span class="nb">{</span>inputenc<span class="nb">}</span></code> sets the input encoding for the document
 source to UTF-8, allowing UTF-8 characters to appear in the input document.
@@ -142,7 +142,7 @@ redundant. <a class="footnote-reference" href="#ltnews28" id="id11">[8]</a></p>
 to enter a number of UTF-8 characters directly into your document and have them
 show up in the built PDF without having to type out their commands.  You’ll
 even be able to write smart quotes (<tt class="docutils literal">“</tt> and <tt class="docutils literal">”</tt>) directly instead of typing
-quotes out as <tt class="docutils literal"><span class="pre">\`\`</span></tt> and <tt class="docutils literal">''</tt>.</p>
+quotes out as `` and <tt class="docutils literal">''</tt>.</p>
 <p>So instead of writing this:</p>
 <pre class="code latex literal-block">
 ``My na<span class="k">\&quot;\i</span><span class="nb">{}</span>ve r<span class="k">\'</span>esum<span class="k">\'</span>e is attached.''  --- Se<span class="k">\~</span>nor <span class="k">\TH</span><span class="nb">{}</span>or
@@ -151,6 +151,7 @@ quotes out as <tt class="docutils literal"><span class="pre">\`\`</span></tt> an
 <pre class="code latex literal-block">
 “My naïve résumé is attached.”  — Señor Þor
 </pre>
+<p>and LaTeX will handle the input correctly.</p>
 <p>Note that LaTeX does not support combining characters; input must be in a
 composed form.</p>
 <p>If LaTeX encounters a Unicode character that it doesn’t have a definition for,
@@ -178,11 +179,12 @@ instead, <a class="footnote-reference" href="#newunicodechar-docs" id="id13">[2]
 </span><span class="k">\newunicodechar</span><span class="nb">{</span>☃<span class="nb">}{</span><span class="k">\Snowman</span><span class="nb">}</span>
 <span class="c">% Now you can put ☃ in your document!</span>
 </pre>
-<p>As a special case, using the <tt class="docutils literal">textcomp</tt> package enables all of the Unicode
-characters that can be represented with the package’s commands; e.g.,
-<tt class="docutils literal">textcomp</tt> defines a <code class="tx tex"><span class="k">\textmusicalnote</span></code> command that produces ♪ (U+266A,
-EIGHTH NOTE), and so including <tt class="docutils literal">textcomp</tt> in your preamble allows you to
-write “♪” in your document.</p>
+<p>As a special case, loading the <tt class="docutils literal">textcomp</tt> package lets you input all of the
+Unicode characters that can be output with <tt class="docutils literal">textcomp</tt>’s commands; for
+example, <tt class="docutils literal">textcomp</tt> defines a <code class="tx tex"><span class="k">\textmusicalnote</span></code> command that produces ♪
+(U+266A, EIGHTH NOTE), and so including <tt class="docutils literal">textcomp</tt> in your preamble allows
+you to write “♪” in your document and have it be treated as the
+<code class="tx tex"><span class="k">\textmusicalnote</span></code> command, producing a “♪” in the output.</p>
 <div class="section" id="non-latin-alphabets">
 <h3>Non-Latin Alphabets</h3>
 <p>The commands described so far only provide meaningful support for text in
@@ -193,9 +195,9 @@ elaborate steps are required.</p>
 <p>The most direct way to enable Cyrillic input is to specify a Cyrillic font
 encoding in the <tt class="docutils literal">fontenc</tt> command.  Due to the large number of Cyrillic
 characters in existence, the script is split up into three font encodings (T2A,
-T2B, and T2C) that match up with the T1 encoding in the lower 7-bit range, plus
-another encoding, X2, that contains all of the Cyrillic characters but is not
-compatible with T1. <a class="footnote-reference" href="#encguide" id="id14">[4]</a> <a class="footnote-reference" href="#cyrguide" id="id15">[11]</a></p>
+T2B, and T2C) that each match up with the T1 encoding in the lower 7-bit range,
+plus a fourth encoding, X2, that contains all of the Cyrillic characters but is
+not compatible with T1. <a class="footnote-reference" href="#encguide" id="id14">[4]</a> <a class="footnote-reference" href="#cyrguide" id="id15">[11]</a></p>
 <p>A purely-Cyrillic document can be written with the X2 font encoding as follows:</p>
 <pre class="code latex literal-block">
 <span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
