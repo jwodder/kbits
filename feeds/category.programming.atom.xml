@@ -1,5 +1,609 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Programming</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.programming.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-07-17T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Setting Default Option Values from Config Files with Click</title><link href="https://jwodder.github.io/kbits/posts/click-config/" rel="alternate"></link><published>2020-07-17T00:00:00-04:00</published><updated>2020-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-07-17:/kbits/posts/click-config/</id><summary type="html">&lt;p class="first last"&gt;How to set up a Click program to read default option values from a config
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Programming</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.programming.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-08-22T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Common Python Packaging Mistakes</title><link href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="alternate"></link><published>2020-08-22T00:00:00-04:00</published><updated>2020-08-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-22:/kbits/posts/pypkg-mistakes/</id><summary type="html">&lt;p class="first last"&gt;An overview of common mistakes made in creating &amp;amp; building a Python package
+and how to avoid them&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;I think we can all agree that packaging a Python project is harder than it
+should be.  With numerous guides &amp;amp; tutorials out there, people still make
+mistakes.  Some of these mistakes break a project, some just make it less
+attractive, and some even cause a project to step on the toes of other
+projects.&lt;/p&gt;
+&lt;p&gt;As the admin of the wheel-analysis and -browsing site &lt;a class="reference external" href="https://www.wheelodex.org"&gt;Wheelodex&lt;/a&gt;, I see a
+number of poorly-built wheels each morning as I peruse the day’s new entries.
+This eventually motivated me to create &lt;a class="reference external" href="https://github.com/jwodder/check-wheel-contents"&gt;check-wheel-contents&lt;/a&gt; — a program for
+scanning a wheel for many of the below problems plus several others — in an
+attempt to get people to clean up their wheels, yet still the poorly-packaged
+projects persist.&lt;/p&gt;
+&lt;p&gt;In yet another attempt to get people to fix their broken packages, here now are
+some of the more frequent types of mistakes I see — along with advice on how to
+avoid &amp;amp; correct them — in no particular order.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;Unless otherwise specified, references to packaging configurations assume
+that the project is using setuptools and that configuration is being placed
+in &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; instead of &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;.  Consult the appropriate
+documentation if your project is structured differently.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title"&gt;Contents&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#avoiding-general-mistakes" id="id13"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#look-at-your-built-distributions" id="id14"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#installations-are-not-namespaced" id="id15"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#top-level-tests-directory-in-wheel" id="id16"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="id17"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#project-description-doesn-t-render" id="id18"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#project-description-not-included" id="id19"&gt;Project Description Not Included&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#python-package-not-included-in-wheel" id="id20"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#subpackages-not-included-in-wheel" id="id21"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#package-data-not-included-in-wheel" id="id22"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#pyc-files-included-in-wheel" id="id23"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="id24"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="id25"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#conclusion" id="id26"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#footnotes" id="id27"&gt;Footnotes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="avoiding-general-mistakes"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;First, some general advice that will help you avoid (or at least detect) the
+vast majority of packaging errors.&lt;/p&gt;
+&lt;div class="section" id="look-at-your-built-distributions"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Before you upload your sdist and wheel (especially if it’s your first release
+for the project in question), actually take a look at what files are inside and
+make sure that everything you want to include is in there.  An sdist is either
+a tarball (&lt;tt class="docutils literal"&gt;*.tar.gz&lt;/tt&gt;) or a zipfile (&lt;tt class="docutils literal"&gt;*.zip&lt;/tt&gt;), so its contents can be
+listed with one of these two commands:&lt;/p&gt;
+&lt;pre class="code shell literal-block"&gt;
+&lt;span class="c1"&gt;# Tarball
+&lt;/span&gt;$ tar ztf projectname-version.tar.gz
+
+&lt;span class="c1"&gt;# Zipfile
+&lt;/span&gt;$ zipinfo projectname-version.zip
+&lt;/pre&gt;
+&lt;p&gt;At time of writing, the exact layout of an sdist has yet to be standardized,
+but if you’re building with a recent version of setuptools, the contents are
+structured as follows:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Everything in the sdist is inside a top-level directory named
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}/&lt;/span&gt;&lt;/tt&gt;.  This directory contains a copy of your package
+code, the project’s &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;pyproject.toml&lt;/tt&gt; file, and various other
+files from your project directory; see &lt;a class="reference external" href="https://packaging.python.org/guides/using-manifest-in/"&gt;here&lt;/a&gt; for more
+information on what gets included by default.&lt;/li&gt;
+&lt;li&gt;There exists a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt; file containing the project metadata.  For
+historical reasons, this does not include project dependencies.&lt;/li&gt;
+&lt;li&gt;Next to your Python package, there is a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}.egg-info/&lt;/span&gt;&lt;/tt&gt; directory
+containing more metadata, including a copy of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt;, a &lt;tt class="docutils literal"&gt;SOURCES.txt&lt;/tt&gt;
+file listing the files in the sdist, and a &lt;tt class="docutils literal"&gt;requires.txt&lt;/tt&gt; file listing your
+project’s dependencies.  Other files may be present depending on what
+features your project uses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If your sdist is missing some files from your project directory or contains
+some files that you don’t want in there, then (assuming you’re building your
+project with setuptools), you can adjust what gets included via &lt;a class="reference external" href="https://packaging.python.org/guides/using-manifest-in/"&gt;a &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; file&lt;/a&gt; and rebuild.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;Exactly what files should and should not be included in an sdist is, for
+the most part, largely a matter of opinion, but your sdist needs to include
+your Python code and anything from your project directory that’s needed to
+built a complete wheel.  The files that setuptools includes by default
+should generally be left in there, and most people will recommend also
+including tests and documentation.  Things that should generally be left
+out include &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; files, repository metadata like &lt;tt class="docutils literal"&gt;.gitignore&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;.hgtags&lt;/tt&gt;, and (except in special circumstances) anything that you
+wouldn’t commit to version control.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Wheels (&lt;tt class="docutils literal"&gt;*.whl&lt;/tt&gt;), meanwhile, are just zipfiles with a funny extension, so you
+can list their contents with &lt;tt class="docutils literal"&gt;zipinfo&lt;/tt&gt;.  The basic layout of a wheel is as
+follows:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Your Python package is located at the root of the wheel, rather than inside
+a directory.&lt;/li&gt;
+&lt;li&gt;There exists a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}.dist-info/&lt;/span&gt;&lt;/tt&gt; directory containing
+metadata: a &lt;tt class="docutils literal"&gt;METADATA&lt;/tt&gt; file describing the project (similar to an sdist’s
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt;, but including dependencies), a &lt;tt class="docutils literal"&gt;WHEEL&lt;/tt&gt; file describing the
+wheel version and tags, and a &lt;tt class="docutils literal"&gt;RECORD&lt;/tt&gt; file listing the files in the wheel
+and their hashes.  Licenses included in the wheel with the &lt;tt class="docutils literal"&gt;license_files&lt;/tt&gt;
+setting also end up in this directory.  Other files may also be present
+depending on what features your project uses and the versions of setuptools
+and wheel used to build the wheel.&lt;/li&gt;
+&lt;li&gt;If your project includes any files that are installed outside of
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages&lt;/span&gt;&lt;/tt&gt; — headers, scripts, data files (not to be confused with
+package data), etc. — they are stored in a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}.data/&lt;/span&gt;&lt;/tt&gt;
+directory.  Files in this directory are organized into subdirectories named
+after the the distutils scheme keys (&lt;tt class="docutils literal"&gt;purelib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;platlib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;headers&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;scripts&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;data&lt;/tt&gt;) that map to the files’ install locations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;Aside from the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;*.dist-info/&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;*.data/&lt;/tt&gt; directories, a wheel should
+only contain Python packages &amp;amp; modules, consisting of code and data files.
+Files like your project’s &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;pyproject.toml&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;,
+etc. do not belong in a wheel.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Controlling what gets included in a wheel is more involved than for an sdist
+(when using setuptools, at least); consult documentation elsewhere on how to do
+this.&lt;/p&gt;
+&lt;div class="admonition warning"&gt;
+&lt;p class="first admonition-title"&gt;Warning&lt;/p&gt;
+&lt;p class="last"&gt;Do NOT try to fix your sdists or wheels by manually adding, removing, or
+editing the files inside, as this is likely to make the sdist/wheel
+invalid.  Instead, change your project configuration and create new built
+distributions until you get what you want — &lt;a class="reference internal" href="#rebuild-noclean"&gt;and be sure to delete the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory in
+between builds!&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installations-are-not-namespaced"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;A key thing to understand about how Python packages are installed is that
+(almost) all of the files in a wheel are simply placed directly in
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages/&lt;/span&gt;&lt;/tt&gt;; the only subdirectories present will be the directories
+that are already in the wheel.  This means that, if your wheel has a &lt;tt class="docutils literal"&gt;foo/&lt;/tt&gt;
+directory at the top level containing &lt;tt class="docutils literal"&gt;bar.py&lt;/tt&gt;, then &lt;tt class="docutils literal"&gt;bar.py&lt;/tt&gt; will be
+installed to &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages/foo/bar.py&lt;/span&gt;&lt;/tt&gt;; nothing is added to the path to
+separate it from other packages’ &lt;tt class="docutils literal"&gt;foo/bar.py&lt;/tt&gt; files.  Properly namespacing
+your files must be done by putting everything under a directory (normally your
+top-level Python package) with a name the same as or similar to the name of
+your project — which is the standard practice anyway.  Where problems arise is
+when a top-level file or directory in a wheel has a name that other projects
+are also likely to use, in which case files end up overwritten with the wrong
+content and bugs result.&lt;/p&gt;
+&lt;p&gt;See &lt;a class="reference external" href="https://github.com/pypa/pip/issues/4625"&gt;pip issue #4625&lt;/a&gt; for pip’s
+attempts at handling file collisions whenever they arise.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="top-level-tests-directory-in-wheel"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The first (and probably most common) Python packaging mistake occurs when you
+put your tests in a &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; directory at the root of your project (outside
+of your Python package) and then include this directory in your project’s
+wheels.  The &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; directory then ends up placed at the top-level of your
+wheel’s filesystem, and, &lt;a class="reference internal" href="#installations-are-not-namespaced"&gt;as stated above&lt;/a&gt;, this means that it will be installed at
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages/tests/&lt;/span&gt;&lt;/tt&gt;.  The problem comes from the fact that “&lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt;” is
+a name that &lt;em&gt;everybody&lt;/em&gt; uses for their tests and too many other projects also
+include a top-level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; directory in their wheels.  As a result,
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages/tests/&lt;/span&gt;&lt;/tt&gt; becomes a mish-mash of code from different packages,
+some files even overwriting each other, and if someone tries to run those
+tests, chaos will ensue.  (And if you don’t expect people to be running your
+tests from your installed project, why are you including tests in the wheel in
+the first place?)&lt;/p&gt;
+&lt;p&gt;The most common reason why &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; ends up included in wheels is because the
+project’s author used &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; in their &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; but didn’t use
+the function’s &lt;tt class="docutils literal"&gt;exclude&lt;/tt&gt; argument.  &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; works by searching
+for directories in the project root (or in the directory passed as the
+&lt;tt class="docutils literal"&gt;where&lt;/tt&gt; argument) that contain an &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file, and then it searches
+those directories for any subdirectories that also contain an &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt;
+file, and so on until it runs out of directories with &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; files.
+Sometimes, people put an &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file in &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; (Whether this is
+necessary depends on the test framework being used), and so &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt;
+with the default arguments picks it up and adds it to the project’s list of
+packages, resulting in it being included in the wheel.&lt;/p&gt;
+&lt;p&gt;To avoid this, you have five options:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Remove the &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; files from your &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; directory and its
+subdirectories.  Whether this is doable depends on your test framework.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Use &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt;’s &lt;tt class="docutils literal"&gt;exclude&lt;/tt&gt; argument to exclude &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; and its
+subdirectories like so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;find_packages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;exclude&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;tests&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;tests.*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Note that we list both &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests&amp;quot;&lt;/span&gt;&lt;/code&gt; and &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests.*&amp;quot;&lt;/span&gt;&lt;/code&gt;.  Listing just
+&lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests&amp;quot;&lt;/span&gt;&lt;/code&gt; would exclude &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; but not its subdirectories, so we
+need to also list &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests.*&amp;quot;&lt;/span&gt;&lt;/code&gt; in order to exclude everything.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Use &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt;’s &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; argument to include only your Python
+package and its subpackages like so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;find_packages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;packagename&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;packagename.*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As with &lt;tt class="docutils literal"&gt;exclude&lt;/tt&gt;, we list both the package name and the package name
+followed by “&lt;tt class="docutils literal"&gt;.*&lt;/tt&gt;” so that all subpackages of the package will be matched
+&amp;amp; included.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Move your &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; directory inside your Python package directory so it’s
+no longer at the top level.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="src"&gt;&lt;p class="first"&gt;Switch your project to a &lt;tt class="docutils literal"&gt;src/&lt;/tt&gt; layout, where your Python package
+directory is located inside a directory named &lt;tt class="docutils literal"&gt;src/&lt;/tt&gt; and everything else —
+including &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; — is outside of &lt;tt class="docutils literal"&gt;src/&lt;/tt&gt;.  With this layout, simply
+write your &lt;tt class="docutils literal"&gt;packages&lt;/tt&gt; line as &lt;code class="py python"&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;find_packages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;src&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;/code&gt;, and
+&lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; will only look at what’s in &lt;tt class="docutils literal"&gt;src/&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Note that you will also need to add &lt;code class="py python"&gt;&lt;span class="n"&gt;package_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;src&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/code&gt; to your
+&lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt; arguments in order for setuptools to grok your layout.  More
+information about the &lt;tt class="docutils literal"&gt;src/&lt;/tt&gt; layout can be found &lt;a class="reference external" href="https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure"&gt;here&lt;/a&gt; and &lt;a class="reference external" href="https://hynek.me/articles/testing-packaging/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The second most common reason why &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; ends up in wheels is that the
+project author used the &lt;tt class="docutils literal"&gt;exclude&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; but listed
+only &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests&amp;quot;&lt;/span&gt;&lt;/code&gt; and not &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests.*&amp;quot;&lt;/span&gt;&lt;/code&gt;, and so the subdirectories of
+&lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; (inside an otherwise-empty &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; directory) ended up in the
+wheel.  Both &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests&amp;quot;&lt;/span&gt;&lt;/code&gt; and &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;tests.*&amp;quot;&lt;/span&gt;&lt;/code&gt; need to be included in the
+&lt;tt class="docutils literal"&gt;exclude&lt;/tt&gt; list in order to exclude the entire &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; hierarchy.&lt;/p&gt;
+&lt;p&gt;Besides &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt;, it is also a problem to include a top-level directory named
+&lt;tt class="docutils literal"&gt;test/&lt;/tt&gt; (singular), &lt;tt class="docutils literal"&gt;docs/&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;examples/&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;data/&lt;/tt&gt;, or similar, as such
+directories are also often included in wheels despite the clashes that will
+result.&lt;/p&gt;
+&lt;p&gt;Do note that, when it comes to sdists, it’s perfectly fine to have a &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt;
+etc. directory at the base of your project, as sdists themselves are not
+installed, they’re just used to build wheels, which are what actually get
+installed.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="top-level-readme-or-license-file-in-wheel"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Similarly to the above mistake involving &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt;, it is also a bad idea to
+include your project’s &lt;tt class="docutils literal"&gt;README.rst&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;README.md&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; file (or
+&lt;tt class="docutils literal"&gt;CHANGELOG&lt;/tt&gt; or really anything that’s not a Python module or &lt;tt class="docutils literal"&gt;*.pth&lt;/tt&gt; file)
+at the root of your wheel, as it will collide with the &lt;tt class="docutils literal"&gt;README&lt;/tt&gt;s and
+&lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt;s of other projects that do the same thing.  This mistake is
+particularly common among projects built using &lt;a class="reference external" href="https://python-poetry.org"&gt;Poetry&lt;/a&gt;, where the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option can be used to add
+any file directly into both the sdist and wheel.&lt;/p&gt;
+&lt;p&gt;If you do want to include your &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; in your wheel, the
+correct way is as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;For &lt;tt class="docutils literal"&gt;README&lt;/tt&gt;, the file’s contents should already be used as the project’s
+(long) description, in which case the contents are already included in the
+project metadata, which is stored in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt; (for sdists) or
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;*.dist-info/METADATA&lt;/span&gt;&lt;/tt&gt; (for wheels), and thus there is no need to include
+the &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; as a separate file.  If you need to be able to retrieve the
+&lt;tt class="docutils literal"&gt;README&lt;/tt&gt;’s contents at runtime, this can be done by using
+&lt;a class="reference external" href="https://docs.python.org/3/library/importlib.metadata.html"&gt;&lt;tt class="docutils literal"&gt;importlib.metadata&lt;/tt&gt;&lt;/a&gt; or similar to fetch the project’s description.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Licenses and related files belong inside a wheel’s &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;*.dist-info&lt;/span&gt;&lt;/tt&gt; directory.
+If using setuptools with wheel 0.32 or higher, licenses can be placed there
+by passing them to the &lt;tt class="docutils literal"&gt;[metadata]license_files&lt;/tt&gt; option in &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;;
+&lt;a class="reference external" href="https://wheel.readthedocs.io/en/stable/user_guide.html#including-license-files-in-the-generated-wheel-file"&gt;see the wheel documentation for more information&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;At time of writing, Poetry does not support adding license files to a wheel’s
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;*.dist-info&lt;/span&gt;&lt;/tt&gt; directory, but &lt;a class="reference external" href="https://github.com/python-poetry/poetry/pull/1367"&gt;PR #1367&lt;/a&gt; would change that.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="project-description-doesn-t-render"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The Python Package Index (PyPI) supports project (long) descriptions written in
+three possible formats: &lt;a class="reference external" href="https://docutils.sourceforge.io/rst.html"&gt;reStructuredText&lt;/a&gt; (the default if no format is
+specified), Markdown (either &lt;a class="reference external" href="https://github.github.com/gfm/"&gt;GitHub Flavored Markdown&lt;/a&gt; or &lt;a class="reference external" href="https://commonmark.org"&gt;CommonMark&lt;/a&gt;), and
+plain text.  Markdown and plain text are lenient formats; anything you write in
+them is valid.  However, documents written in reStructuredText can be
+malformed, producing errors &amp;amp; warning messages when rendered.  When a project
+with a malformed reStructuredText description (either because it uses
+reStructuredText incorrectly or because it’s actually Markdown that wasn’t
+declared as Markdown) is uploaded to PyPI, PyPI does one of the following two
+things:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;If the project does not declare a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; for its malformed
+description, PyPI will fall back to displaying the source of the description
+as though it were plain text.&lt;/li&gt;
+&lt;li&gt;If the project explicitly declares the malformed description’s
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; as reStructuredText (i.e., as the MIME type &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;text/x-rst&lt;/span&gt;&lt;/tt&gt;),
+PyPI will reject the upload.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Neither situation is desirable, but at least the latter gives you the chance to
+correct your project description before it’s released on PyPI, while the former
+situation means your project’s PyPI page shows an ugly, unprofessional-looking
+description until you make a new release.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;When using setuptools, you may find that your project’s long description
+has been mangled somewhat, with a bunch of “Field: Value” entries added to
+the bottom and various information missing from the listing on the left
+side of the PyPI project page.  This happens whenever you include a newline
+in your project’s summary/short description, thereby triggering &lt;a class="reference external" href="https://github.com/pypa/setuptools/issues/1390"&gt;setuptools
+bug #1390&lt;/a&gt;.  Always make sure that no newlines end up passed to the
+&lt;tt class="docutils literal"&gt;description&lt;/tt&gt; argument of &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt;!&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;There are two things you can do to avoid uploading a project with a malformed
+description to PyPI:&lt;/p&gt;
+&lt;ul id="set-content-type"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Set your description’s &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; appropriately.  If you’re using
+reStructuredText, this will cause PyPI to reject any uploads with malformed
+project descriptions.  If you’re not using reStructuredText, setting the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; is necessary in order for your description to be rendered
+properly.&lt;/p&gt;
+&lt;p&gt;The content types for the supported formats are as follows:&lt;/p&gt;
+&lt;table class="docutils field-list" frame="void" rules="none"&gt;
+&lt;col class="field-name" /&gt;
+&lt;col class="field-body" /&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr class="field"&gt;&lt;th class="field-name" colspan="2"&gt;reStructuredText:&lt;/th&gt;&lt;/tr&gt;
+&lt;tr class="field"&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;td class="field-body"&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;text/x-rst&lt;/span&gt;&lt;/tt&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="field"&gt;&lt;th class="field-name" colspan="2"&gt;Markdown (GitHub Flavored Markdown):&lt;/th&gt;&lt;/tr&gt;
+&lt;tr class="field"&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;td class="field-body"&gt;&lt;tt class="docutils literal"&gt;text/markdown&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;text/markdown; variant=GFM&lt;/tt&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="field"&gt;&lt;th class="field-name" colspan="2"&gt;Markdown (CommonMark):&lt;/th&gt;&lt;/tr&gt;
+&lt;tr class="field"&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;td class="field-body"&gt;&lt;tt class="docutils literal"&gt;text/markdown; variant=CommonMark&lt;/tt&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="field"&gt;&lt;th class="field-name"&gt;Plain text:&lt;/th&gt;&lt;td class="field-body"&gt;&lt;tt class="docutils literal"&gt;text/plain&lt;/tt&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If your project is built using setuptools, you set the description’s
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; by setting the &lt;tt class="docutils literal"&gt;long_description_content_type&lt;/tt&gt; argument to
+&lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt; to the appropriate value from the above table.  Note that this
+requires setuptools 36.4.0 or higher in order to work (or 38.3.0 or higher if
+you’re setting it in &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Run the &lt;tt class="docutils literal"&gt;twine check&lt;/tt&gt; command from &lt;a class="reference external" href="https://twine.readthedocs.io"&gt;twine&lt;/a&gt; on your sdist and wheel before
+uploading them.  This command checks whether your project description can be
+rendered on PyPI before you actually upload it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="project-description-not-included"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Project Description Not Included&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;It’s just embarassing when this happens.  A project without a long description
+just looks completely pointless; how am I supposed to know what it does or how
+to use it?  Sadly, too many projects on PyPI lack long descriptions.  Did the
+developer not care enough to write even a README?  Did the developer forget to
+use the README as the long description or not know they had to?&lt;/p&gt;
+&lt;p&gt;If your project’s got a README — and really, a project that doesn’t have one
+isn’t ready to be released — and it’s written in reStructuredText, Markdown, or
+plain text (a safe bet), you can (and should) use it as your project’s long
+description by adding the following or similar to your &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;README.extension&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;long_description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+    &lt;span class="n"&gt;long_description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;long_description&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If your project isn’t in reStructuredText, you’ll also need to set
+&lt;tt class="docutils literal"&gt;long_description_content_type&lt;/tt&gt; to the appropriate value in &lt;a class="reference internal" href="#set-content-type"&gt;the table above&lt;/a&gt; so that the description renders properly on PyPI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="python-package-not-included-in-wheel"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If not having a description is embarassing, not having any code in your wheel
+is crippling.  With a wheel like this, when people install your project, they
+get nothing!  That’s certainly not what you want, is it?&lt;/p&gt;
+&lt;p&gt;Possible reasons why this can happen include:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;You’re using &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; to autolocate your project’s packages, but
+you failed to add an &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file to the top-level package (and
+possibly also some subpackages).  Solution: Add that &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt;.&lt;ul&gt;
+&lt;li&gt;If your intention is to leave out the &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file in order to
+create a namespace package, you’ll need to use &lt;a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html#find-namespace-packages"&gt;&lt;tt class="docutils literal"&gt;find_namespace_packages()&lt;/tt&gt;&lt;/a&gt;
+instead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Your project’s code is a single Python module (as opposed to a directory of
+modules) and you’re using the &lt;tt class="docutils literal"&gt;packages&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt; and/or
+&lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; in an attempt to declare the module to setuptools.  This
+is wrong.  When your project is a single Python module, instead of the
+&lt;tt class="docutils literal"&gt;packages&lt;/tt&gt; argument, you need to use the &lt;tt class="docutils literal"&gt;py_modules&lt;/tt&gt; argument.  Set
+&lt;tt class="docutils literal"&gt;py_modules&lt;/tt&gt; to a list of strings where each string is the name of a
+top-level Python module &lt;em&gt;without&lt;/em&gt; the “&lt;tt class="docutils literal"&gt;.py&lt;/tt&gt;” extension.  (Usually, you’ll
+just have one module to list here.)  You can’t use &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; for
+this.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p id="pkg-test"&gt;If your project includes any tests (which it should), you can implicitly test
+that your wheel contains your project code by testing against the installed
+version of your project instead of the copy in your repository.  To do this,
+&lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;-install your package (ideally in a virtualenv, and not in
+development/editable mode!) before running the tests and ensure that the
+directory containing the repository copy of your code is not in &lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;
+when the tests run.  &lt;a class="reference external" href="https://tox.readthedocs.io"&gt;Tox&lt;/a&gt; can help with the first part.  The second part
+depends in part on your test framework, but you can guarantee your tests aren’t
+picking up the local copy by switching to a &lt;tt class="docutils literal"&gt;src/&lt;/tt&gt; layout (&lt;a class="reference internal" href="#src"&gt;see above&lt;/a&gt;).  With these two things in place, your tests will be forced to import
+your package from &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages&lt;/span&gt;&lt;/tt&gt;, where it’s in a form determined by the
+contents of the project’s wheel.  If your wheel is missing code and your tests
+try to import that code, you’ll get an error when the tests run, and you’ll
+know that you need to fix something.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="subpackages-not-included-in-wheel"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Sometimes, a project’s top-level package directory and the files within get
+included in a wheel, but the subdirectories and their contents get left out.
+Admittedly, I don’t know how common this is, as you can’t determine whether a
+wheel is missing subpackages just by looking at its contents unless you also
+know what’s in the project’s repository.  However, it’s an easy thing to mess
+up, and various packaging articles I’ve read frequently make reference to this
+problem, so it can’t be that uncommon.&lt;/p&gt;
+&lt;p&gt;There are two major reasons why one or more of your Python package’s
+subpackages might be omitted from wheels:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;You’re passing a list of packages to the &lt;tt class="docutils literal"&gt;packages&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt;
+and the list fails to include every package &amp;amp; subpackage in your project.  If
+your project’s top-level package is named “&lt;tt class="docutils literal"&gt;foo&lt;/tt&gt;” and it contains two
+subdirectories named “&lt;tt class="docutils literal"&gt;bar&lt;/tt&gt;” and “&lt;tt class="docutils literal"&gt;baz&lt;/tt&gt;” that contain (directly or
+indirectly) Python source files, then &lt;tt class="docutils literal"&gt;bar&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;baz&lt;/tt&gt; are subpackages of
+&lt;tt class="docutils literal"&gt;foo&lt;/tt&gt;, and they all need to be included in the packages list:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;foo.bar&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;foo.baz&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If &lt;tt class="docutils literal"&gt;baz&lt;/tt&gt; contains another directory named “&lt;tt class="docutils literal"&gt;glarch&lt;/tt&gt;” that contains more
+Python source files, then &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;foo.baz.glarch&amp;quot;&lt;/span&gt;&lt;/code&gt; needs to be included in the
+list as well, and so on.&lt;/p&gt;
+&lt;p&gt;Note that directories that only contain data files and no Python source files
+do not count as packages and should not be passed to the &lt;tt class="docutils literal"&gt;packages&lt;/tt&gt;
+argument.  They are instead &lt;em&gt;package data&lt;/em&gt; directories; &lt;a class="reference internal" href="#package-data"&gt;see below&lt;/a&gt; for advice on dealing with them.&lt;/p&gt;
+&lt;p&gt;Of course, a simple alternative to listing every package explicitly is to
+just use the &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; function, which brings us to cause #2 …&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;You’re using &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; to autolocate your project’s packages, but
+you failed to add an &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file to one or more subpackages.
+&lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; only counts something as a package if it contains an
+&lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file, so you need to include that file in any subdirectory of
+your Python package that contains Python source files or contains a directory
+that contains Python source files.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As with omitting the package entirely from the wheel, &lt;a class="reference internal" href="#pkg-test"&gt;proper testing practices&lt;/a&gt; can let you know when this happens in advance of a release.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="package-data-not-included-in-wheel"&gt;
+&lt;span id="package-data"&gt;&lt;/span&gt;&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Sometimes, you want to include non-Python data or resource files inside a
+Python package so that they can be used at runtime, but sometimes those files
+fail to end up in the final wheel.  Like the omission of subpackages, it’s hard
+to know just how common this is, but even experienced Python programmers have
+made mistakes with package data configurations on occasion.  This also happens
+to be yet another situation where &lt;a class="reference internal" href="#pkg-test"&gt;testing the installed version of your code&lt;/a&gt; will help you out.&lt;/p&gt;
+&lt;p&gt;Setuptools provides two ways to specify package data.  The first way is to
+configure &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; so that the desired package data files are included
+in the sdist and then pass &lt;code class="py python"&gt;&lt;span class="n"&gt;include_package_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;/code&gt; to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt; so
+that all files inside the Python package that are included in the sdist are
+also included in the wheel.  Pretty much the only way to make a mistake here is
+by not matching all of the files you want with &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; commands;
+&lt;a class="reference external" href="https://packaging.python.org/guides/using-manifest-in/"&gt;consult this reference&lt;/a&gt; if you run into problems.&lt;/p&gt;
+&lt;p&gt;The second way to specify package data is with the &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; argument to
+&lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt;.  This argument takes a &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; mapping package &amp;amp; subpackage names
+to lists of glob patterns defining what package data files to include in sdists
+&amp;amp; wheels.  The biggest gotcha with this method is the fact that each glob
+pattern is only applied to the corresponding package and not any of its
+subpackages.  This means that, with a &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; like this:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;package_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;package&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;*.txt&lt;/tt&gt; files in &lt;tt class="docutils literal"&gt;package&lt;/tt&gt; will be recognized as package data and included
+in the sdist &amp;amp; wheel, but &lt;tt class="docutils literal"&gt;*.txt&lt;/tt&gt; files in &lt;tt class="docutils literal"&gt;package.subpackage&lt;/tt&gt; will not.
+To include &lt;tt class="docutils literal"&gt;*.txt&lt;/tt&gt; files in &lt;tt class="docutils literal"&gt;package.subpackage&lt;/tt&gt;, you’ll need to either add
+a &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;package.subpackage&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;/code&gt; entry to &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; or else
+include all &lt;tt class="docutils literal"&gt;*.txt&lt;/tt&gt; files in all packages &amp;amp; subpackages by using the empty
+string as a key: &lt;code class="py python"&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;No matter which method you choose, be sure to exclude &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; files from
+consideration as package data; &lt;a class="reference internal" href="#pyc"&gt;see the next section&lt;/a&gt; for why.&lt;/p&gt;
+&lt;p&gt;Note that if you combine the two ways to specify package data by setting
+&lt;code class="py python"&gt;&lt;span class="n"&gt;include_package_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;/code&gt; while also using &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt;, then the
+files matched by &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; will not be included in the sdist unless
+they’re already included by &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;.  Getting this wrong can cause
+wheels built from an sdist to lack package data files.&lt;/p&gt;
+&lt;p&gt;See &lt;a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files"&gt;“Including Data Files” in the setuptools documentation&lt;/a&gt; for more
+information.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pyc-files-included-in-wheel"&gt;
+&lt;span id="pyc"&gt;&lt;/span&gt;&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;When a Python source file is imported into a Python process, a &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; file
+containing compiled bytecode is created and (in Python 3) stored in a
+&lt;tt class="docutils literal"&gt;__pycache__/&lt;/tt&gt; directory so that future imports of the same file will be
+faster.  These &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; files use a format that is specific to the OS, Python
+implementation, and Python version, and so it is pointless to share them.  They
+do not belong in wheels (especially considering that pip already generates a
+host-appropriate set of &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; files when it installs a wheel), and yet too
+often people distribute wheels with &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; files in them.&lt;/p&gt;
+&lt;p&gt;Probably the most common reason why &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; files end up in wheels is that
+the project’s &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; file contains “&lt;tt class="docutils literal"&gt;graft packagename&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;graft
+src&lt;/tt&gt;”, or a similar line and &lt;code class="py python"&gt;&lt;span class="n"&gt;include_package_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;/code&gt; is passed to
+&lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt;.  With this configuration, all files in the Python package
+directory when the wheel is built are added to the wheel.  To prevent &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt;
+files from being added, “&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;global-exclude&lt;/span&gt; *.pyc&lt;/tt&gt;” or similar needs to be added
+to the &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;, ideally at the end of the file.&lt;/p&gt;
+&lt;p&gt;Alternatively, if the project specifies its package data with the
+&lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; argument, including a &lt;tt class="docutils literal"&gt;&amp;quot;*&amp;quot;&lt;/tt&gt; pattern in the &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt;
+mapping is liable to cause &lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; files to be included in the wheel.  They
+should be excluded from package data by setting &lt;tt class="docutils literal"&gt;exclude_package_data&lt;/tt&gt; to a
+&lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; that maps the appropriate keys to &lt;code class="py python"&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.pyc&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rebuilding-wheels-without-deleting-build"&gt;
+&lt;span id="rebuild-noclean"&gt;&lt;/span&gt;&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;You should have noticed when building your project’s wheels that, in addition
+to creating a &lt;tt class="docutils literal"&gt;dist/&lt;/tt&gt; directory containing the output wheel, setuptools also
+creates a &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory containing a couple directories and a copy of
+your code.  This &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory is an intermediate stage in the process
+of assembling a wheel; you should exclude it from version control and feel free
+to delete it at any time.  In fact, it’s a good idea to delete it before
+running the command to create a wheel, &lt;em&gt;especially&lt;/em&gt; if you’ve moved or renamed
+any files or directories in your code since the last time you built a wheel.&lt;/p&gt;
+&lt;p&gt;Consider the following scenario:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;You build a wheel for your project, and you leave the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory
+lying around afterwards.&lt;/li&gt;
+&lt;li&gt;You move, rename, and/or delete some files in your Python package, perhaps
+even renaming the package itself.&lt;/li&gt;
+&lt;li&gt;You build the wheel again — and when you do so, setuptools copies your new
+package tree into &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;.  Files that existed the last time the wheel was
+built overwrite their old copies in &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; successfully, but any old
+paths that have since been removed remain in &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;.&lt;/li&gt;
+&lt;li&gt;As a result, your wheel ends up containing a mixture of your new and old
+code.  In the case where you renamed your package, the wheel will contain
+both the pre-rename package and the post-rename package next to each other in
+their entirety, so you wheel has double the code with half of it under the
+wrong name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is clearly not desirable.  The solution is to always delete the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;
+directory before building a wheel, such as by cleaning your repository with
+&lt;tt class="docutils literal"&gt;git clean&lt;/tt&gt; or similar, or by running &lt;tt class="docutils literal"&gt;python setup.py clean &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; &lt;a class="footnote-reference" href="#id10" id="id7"&gt;[1]&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pinning-project-requirements-to-exact-versions"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;There are a number of projects on PyPI where the dependencies are all of the
+form “&lt;tt class="docutils literal"&gt;foo == 1.2.3&lt;/tt&gt;”, as opposed to “&lt;tt class="docutils literal"&gt;foo &amp;gt;= 1.2.3&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;foo &amp;gt;= 1.2, &amp;lt;
+2&lt;/tt&gt;”, or just “&lt;tt class="docutils literal"&gt;foo&lt;/tt&gt;”.  This is called &lt;em&gt;pinning&lt;/em&gt; requirements.  This makes
+sense when you’re developing a Python application that will be the primary
+project in its environment (in which case you often won’t be uploading it to
+PyPI), but it doesn’t make sense when you’re distributing a library for others
+to use alongside other arbitrary libraries.  For one thing, your library is
+almost certainly going to work just as well with version 1.2.4 of foo &lt;a class="footnote-reference" href="#id11" id="id8"&gt;[2]&lt;/a&gt;, so
+why leave it out?  For another thing, if someone wants to use your library with
+its pinned &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; requirement alongside other libraries, sooner or later
+they’ll run into a situation where they’re installing both it and another
+project that requires a different version of &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; (maybe even differing by
+one micro version!), and then problems ensue &lt;a class="footnote-reference" href="#id12" id="id9"&gt;[3]&lt;/a&gt;.  True, clashes between
+version dependencies in disparate projects can’t be avoided 100%, but they can
+be made to occur far less often if projects require generous version ranges
+instead of specific versions.&lt;/p&gt;
+&lt;p&gt;A general way to construct a decent version range for a requirement is to first
+determine the lowest version of the dependency that has all of the features you
+need and then use this version as the requirement’s lower bound.  If the
+dependency follows or approximates &lt;a class="reference external" href="https://semver.org"&gt;semantic versioning&lt;/a&gt;,
+use the next major version (or the next minor version, if pre-v1) as the
+(exclusive) upper bound.  If the dependency uses something like calendar
+versioning instead, things are less clear, but my preference is to leave out
+the upper bound and afterwards keep abreast of any future changes to the
+dependency.  If any versions of the dependency inside the requirement’s bounds
+have known bugs that interfere with your project’s behavior, feel free to
+exclude them by adding specifiers of the form &lt;tt class="docutils literal"&gt;!= X.Y.Z&lt;/tt&gt; to the version
+range.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I’m very disappointed in all of you for making these mistakes so often, and I
+hope this article makes at least one Python package less broken.  (I’d prefer
+it if all broken packages were less broken, but I know not to get my hopes up.)&lt;/p&gt;
+&lt;p&gt;Admittedly, most of these mistakes are due to users not using or understanding
+setuptools properly (aside from a Poetry antipattern that sneaked in at #2).
+Though flit and Poetry may promise to fix setuptools’ usability issues, people
+keep on using setuptools, and it keeps on outsmarting them.  Hopefully sites
+like the &lt;a class="reference external" href="https://packaging.python.org"&gt;Python Packaging User Guide&lt;/a&gt; eventually expand &amp;amp; become mature
+enough in the near future to cover — if not all the edge cases — at least the
+best practices that avoid them.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="footnotes"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Footnotes&lt;/a&gt;&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="id10" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id7"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Setuptools is currently trying to get people to move away from
+&lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; commands, so &lt;tt class="docutils literal"&gt;setup.py clean&lt;/tt&gt; will be discouraged — and
+probably deprecated — at some indeterminate point in the future.  Until
+that happens, though, don’t feel bad about using it if you need to.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id11" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id8"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Unless &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; is an unpredictable, compatibility-breaking mess, in
+which case you should probably reconsider dependending on it.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id12" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id9"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Currently, pip handles conflicting version requirements with a warning
+and picking one requirement to follow, but pip’s new dependency resolver
+due out in October 2020 (already available if you pass the right flag to
+pip) will react to such situations by searching for older versions of
+the installation candidates with non-conflicting requirements, and if it
+can’t find any, it errors out without installing anything.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="Python"></category><category term="Python packaging"></category><category term="setuptools"></category><category term="best practices"></category><category term="advice"></category></entry><entry><title>Setting Default Option Values from Config Files with Click</title><link href="https://jwodder.github.io/kbits/posts/click-config/" rel="alternate"></link><published>2020-07-17T00:00:00-04:00</published><updated>2020-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-07-17:/kbits/posts/click-config/</id><summary type="html">&lt;p class="first last"&gt;How to set up a Click program to read default option values from a config
 file&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;When developing a command-line application in Python with &lt;a class="reference external" href="https://palletsprojects.com/p/click/"&gt;Click&lt;/a&gt;, you may find
 yourself wanting to use a configuration file to set the parameters’ default
