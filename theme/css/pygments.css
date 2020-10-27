@@ -4,6 +4,7 @@ pre.code .hll,
 code .hll,
 .highlight .hll {
     background-color: #ffffcc;
+    display: block;
 }
 
 pre.code,
@@ -503,4 +504,22 @@ code .il,
 .highlight .il {
     /* Literal.Number.Integer.Long */
     color: #666666;
+}
+
+table.highlighttable {
+    border-width: 0 ! important;
+    width: 100%;
+}
+
+.highlighttable tr, .highlighttable td, .highlighttable th {
+    padding: 0;
+    border-width: 0;
+}
+
+.highlighttable .special, .lineno.special {
+    font-weight: bold;
+}
+
+.lineno {
+    float: left;
 }

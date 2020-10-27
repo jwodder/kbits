@@ -98,7 +98,7 @@ p.rubric {
 }
 
 pre.literal-block, pre.doctest-block, pre.math, pre.code {
-    margin-left: 2em ;
+    margin-left: 2em;
     margin-right: 2em;
 }
 
@@ -194,18 +194,18 @@ table.borderless th {
 }
 
 /* "booktabs" style (no vertical lines) */
-table.docutils.booktabs {
+table.booktabs {
     border: 0px;
     border-top: 2px solid;
     border-bottom: 2px solid;
     border-collapse: collapse;
 }
 
-table.docutils.booktabs * {
+table.booktabs * {
     border: 0px;
 }
 
-table.docutils.booktabs th {
+table.booktabs th {
     border-bottom: thin solid;
     text-align: left;
 }

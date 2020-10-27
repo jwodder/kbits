@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - continuous integration</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.continuous-integration.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-10-26T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Running Extra Steps after Releasing with auto in GitHub Actions</title><link href="https://jwodder.github.io/kbits/posts/auto-post-release/" rel="alternate"></link><published>2020-10-26T00:00:00-04:00</published><updated>2020-10-26T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-10-26:/kbits/posts/auto-post-release/</id><summary type="html">&lt;p class="first last"&gt;Let’s say you’ve set up &lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; for your project via a GitHub Actions
+workflow, and now you want that workflow to carry out additional steps —
+such as building &amp;amp; uploading assets — whenever &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; creates a new
+release.  Let’s also say that none of the available plugins for &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;
+covers your use-case and you’re not a JavaScript programmer, so you won’t
+be writing a new plugin to do what you want.  How do you adjust your GitHub
+Actions workflow to run these extra steps at the right time?  Read to find
+out.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Let’s say you’ve set up &lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; for your project via a GitHub Actions workflow,
+and now you want that workflow to carry out additional steps — such as building
+&amp;amp; uploading assets — whenever &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; creates a new release.  Let’s also say
+that none of the available plugins for &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; covers your use-case and you’re
+not a JavaScript programmer, so you won’t be writing a new plugin to do what
+you want.  How do you adjust your GitHub Actions workflow to run these extra
+steps at the right time?  Read on to find out.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;p&gt;So you’ve got a GitHub Actions workflow for &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; already set up.
+Presumably, it looks something liks this:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Auto-release on PR merge&lt;/span&gt;
+
+&lt;span class="nt"&gt;on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="c1"&gt;# This is the closest thing to triggering on a PR merge, as long as you&lt;/span&gt;
+  &lt;span class="c1"&gt;# don't push directly to master.&lt;/span&gt;
+  &lt;span class="nt"&gt;push&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;
+
+&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;auto-release&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class="nt"&gt;if&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;!contains(github.event.head_commit.message,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;'ci&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;skip')&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;!contains(github.event.head_commit.message,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;'skip&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ci')&amp;quot;&lt;/span&gt;
+    &lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Checkout source&lt;/span&gt;
+        &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;actions/checkout&amp;#64;v2&lt;/span&gt;
+        &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;fetch-depth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;0&lt;/span&gt;
+
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Download latest auto&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p-Indicator"&gt;|&lt;/span&gt;
+          &lt;span class="no"&gt;curl -vL -o - &amp;quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &amp;quot;auto-linux.gz&amp;quot;) | .browser_download_url')&amp;quot; | gunzip &amp;gt; ~/auto&lt;/span&gt;
+          &lt;span class="no"&gt;chmod a+x ~/auto&lt;/span&gt;
+
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Create release&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;~/auto shipit&lt;/span&gt;
+        &lt;span class="nt"&gt;env&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ secrets.GITHUB_TOKEN }}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Now you want to insert further workflow steps that will be triggered whenever
+&lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; successfully creates a new release.  Theoretically, one option
+would be to create a separate workflow that runs whenever a new tag is pushed
+or a new GitHub release is created, but this won’t work with an out-of-the-box
+setup; &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; uses &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt; to create the tag &amp;amp; release, and GitHub
+Actions workflows &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token"&gt;specifically do not trigger&lt;/a&gt; on events performed with a
+&lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt;.  You could get this to work by passing &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; a personal
+access token instead of &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt;, but there’s a more direct way to make
+this work instead that also lets you keep your release-related workflow steps
+in a single file.&lt;/p&gt;
+&lt;p&gt;Here’s the key trick: By running &lt;a class="reference external" href="https://intuit.github.io/auto/docs/generated/version"&gt;&lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt;&lt;/a&gt; before &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt;, you
+find out whether &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; is about to create a new release, and you can save
+the output from &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; to use to trigger extra steps later.  If
+&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; is about to create a new release, &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; will output the
+release level (“&lt;tt class="docutils literal"&gt;patch&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;minor&lt;/tt&gt;”, or “&lt;tt class="docutils literal"&gt;major&lt;/tt&gt;”); otherwise, if &lt;tt class="docutils literal"&gt;auto
+shipit&lt;/tt&gt; would do nothing, &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; just outputs an empty line.&lt;/p&gt;
+&lt;p&gt;Hence, insert the following step before the &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; step:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Check whether a release is due&lt;/span&gt;
+  &lt;span class="nt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;auto-version&lt;/span&gt;
+  &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;echo &amp;quot;::set-output name=version::$(~/auto version)&amp;quot;&lt;/span&gt;
+  &lt;span class="nt"&gt;env&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ secrets.GITHUB_TOKEN }}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Here, we use the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;set-output&lt;/span&gt;&lt;/tt&gt; &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/workflow-commands-for-github-actions"&gt;workflow command&lt;/a&gt; to make the output from
+&lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; available to subsequent steps.  Later steps can then be
+configured to only run if a new release is being made by adding an &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif"&gt;&lt;tt class="docutils literal"&gt;if&lt;/tt&gt; field&lt;/a&gt;
+to them, like so:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Build asset for new release&lt;/span&gt;
+  &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;...&lt;/span&gt;
+  &lt;span class="nt"&gt;if&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;steps.auto-version.outputs.version != ''&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you have multiple steps that you want to run after a release, adding an
+&lt;tt class="docutils literal"&gt;if&lt;/tt&gt; field to all of them can become excessive; isn’t there a way to apply an
+&lt;tt class="docutils literal"&gt;if&lt;/tt&gt; to a whole block of steps?  There is indeed; you can split off the extra
+steps into a separate job in the same workflow and have that entire job be
+guarded by a single &lt;tt class="docutils literal"&gt;if&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;First, in order to make the output from the &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; step available to
+other jobs in the workflow, you need to add an &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idoutputs"&gt;&lt;tt class="docutils literal"&gt;outputs&lt;/tt&gt; field&lt;/a&gt; to the original
+&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; job (the one that in the example above is named “&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;auto-release&lt;/span&gt;&lt;/tt&gt;”),
+at the same level as the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;runs-on&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;steps&lt;/tt&gt; keys.  This &lt;tt class="docutils literal"&gt;outputs&lt;/tt&gt;
+field should contain a YAML object mapping a name for the output value to a
+&lt;tt class="docutils literal"&gt;${{ &lt;span class="pre"&gt;steps.….outputs.…&lt;/span&gt; }}&lt;/tt&gt; expression that evaluates to the output from the
+&lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; step.  For the example workflow configurations shown so far,
+this would mean a configuration like the following:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;auto-release&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class="nt"&gt;if&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;!contains(github.event.head_commit.message,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;'ci&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;skip')&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;!contains(github.event.head_commit.message,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;'skip&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ci')&amp;quot;&lt;/span&gt;
+    &lt;span class="c1"&gt;### vv Add this bit vv ###&lt;/span&gt;
+    &lt;span class="nt"&gt;outputs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;auto-version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ steps.auto-version.outputs.version }}&lt;/span&gt;
+    &lt;span class="c1"&gt;### ^^ Add this bit ^^ ###&lt;/span&gt;
+    &lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="c1"&gt;# ...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;With this in place, a new job can be added to the workflow containing all the
+steps you want to run after a new release is made.  This new job needs two
+special fields (at the same level as &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;runs-on&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;steps&lt;/tt&gt;):&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;A &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds"&gt;&lt;tt class="docutils literal"&gt;needs&lt;/tt&gt; field&lt;/a&gt; containing the job ID of the &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; job (so &lt;tt class="docutils literal"&gt;needs:
+&lt;span class="pre"&gt;auto-release&lt;/span&gt;&lt;/tt&gt; for the examples given here) to declare a dependency on it&lt;/li&gt;
+&lt;li&gt;An &lt;tt class="docutils literal"&gt;if&lt;/tt&gt; field containing an expression of the form
+&lt;tt class="docutils literal"&gt;needs.AUTO_JOB_NAME.outputs.AUTO_VERSION_OUTPUT_NAME != ''&lt;/tt&gt; (so &lt;tt class="docutils literal"&gt;if:
+&lt;span class="pre"&gt;needs.auto-release.outputs.auto-version&lt;/span&gt; != ''&lt;/tt&gt; for the examples given here);
+this causes the job to be skipped if &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; outputs nothing, i.e.,
+if no release is made&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The configuration for this new job would then look like:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+
+  &lt;span class="c1"&gt;# `auto release` job from above omitted&lt;/span&gt;
+  &lt;span class="c1"&gt;# ...&lt;/span&gt;
+
+  &lt;span class="nt"&gt;build-and-publish&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class="nt"&gt;needs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;auto-release&lt;/span&gt;
+    &lt;span class="nt"&gt;if&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;needs.auto-release.outputs.auto-version != ''&lt;/span&gt;
+    &lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="c1"&gt;# ...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;There’s one more thing to be aware of: If you check out your repository in this
+new job, by default the HEAD will be the commit that triggered the workflow
+originally and will not include the changelog commit or tag created by
+&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;.  If you need the commit or tag (say, because your project uses
+&lt;a class="reference external" href="https://pypi.org/project/setuptools-scm/"&gt;&lt;tt class="docutils literal"&gt;setuptools_scm&lt;/tt&gt;&lt;/a&gt; or the like to derive its version number from Git tags at
+build time), you can tell the &lt;tt class="docutils literal"&gt;actions/checkout&lt;/tt&gt; action to check out the
+latest commit from the repository by passing the default branch as the &lt;tt class="docutils literal"&gt;ref&lt;/tt&gt;
+input like so:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Checkout source&lt;/span&gt;
+  &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;actions/checkout&amp;#64;v2&lt;/span&gt;
+  &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;  &lt;span class="c1"&gt;# or `main` or whatever your default branch is&lt;/span&gt;
+    &lt;span class="c1"&gt;# This setting is needed to fetch tags:&lt;/span&gt;
+    &lt;span class="nt"&gt;fetch-depth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;0&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This does come with a caveat, though: in the event that multiple commits or
+merges to the default branch were made in quick succession, you may end up
+checking out a later commit than the tag that &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; created.  If this is a
+problem, one way to deal with it is to specifically check out the tag for the
+latest GitHub release, like so:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Get tag of latest release&lt;/span&gt;
+  &lt;span class="nt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;latest-release&lt;/span&gt;
+  &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p-Indicator"&gt;|&lt;/span&gt;
+    &lt;span class="no"&gt;echo &amp;quot;::set-output name=tag::$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&amp;quot;&lt;/span&gt;
+
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Checkout source&lt;/span&gt;
+  &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;actions/checkout&amp;#64;v2&lt;/span&gt;
+  &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ steps.latest-release.outputs.tag }}&lt;/span&gt;
+    &lt;span class="nt"&gt;fetch-depth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;0&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This, of course, fails if &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; creates multiple tags in quick succession.
+I’m not aware of a decent way to deal with this eventuality; how about
+&lt;a class="reference external" href="https://intuit.github.io/auto/docs/welcome/quick-merge"&gt;listening to the docs&lt;/a&gt; and just not running &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; that often in the first
+place?&lt;/p&gt;
+&lt;p&gt;Using all of these tricks, your final workflow configuration should look
+something like this:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Auto-release on PR merge&lt;/span&gt;
+
+&lt;span class="nt"&gt;on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="c1"&gt;# This is the closest thing to triggering on a PR merge, as long as you&lt;/span&gt;
+  &lt;span class="c1"&gt;# don't push directly to master.&lt;/span&gt;
+  &lt;span class="nt"&gt;push&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;
+
+&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;auto-release&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class="nt"&gt;if&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;!contains(github.event.head_commit.message,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;'ci&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;skip')&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;!contains(github.event.head_commit.message,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;'skip&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ci')&amp;quot;&lt;/span&gt;
+    &lt;span class="nt"&gt;outputs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;auto-version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ steps.auto-version.outputs.version }}&lt;/span&gt;
+    &lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Checkout source&lt;/span&gt;
+        &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;actions/checkout&amp;#64;v2&lt;/span&gt;
+        &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;fetch-depth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;0&lt;/span&gt;
+
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Download latest auto&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p-Indicator"&gt;|&lt;/span&gt;
+          &lt;span class="no"&gt;curl -vL -o - &amp;quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &amp;quot;auto-linux.gz&amp;quot;) | .browser_download_url')&amp;quot; | gunzip &amp;gt; ~/auto&lt;/span&gt;
+          &lt;span class="no"&gt;chmod a+x ~/auto&lt;/span&gt;
+
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Check whether a release is due&lt;/span&gt;
+        &lt;span class="nt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;auto-version&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;echo &amp;quot;::set-output name=version::$(~/auto version)&amp;quot;&lt;/span&gt;
+        &lt;span class="nt"&gt;env&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ secrets.GITHUB_TOKEN }}&lt;/span&gt;
+
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Create release&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;~/auto shipit&lt;/span&gt;
+        &lt;span class="nt"&gt;env&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ secrets.GITHUB_TOKEN }}&lt;/span&gt;
+
+  &lt;span class="nt"&gt;build-and-publish&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class="nt"&gt;needs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;auto-release&lt;/span&gt;
+    &lt;span class="nt"&gt;if&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;needs.auto-release.outputs.auto-version != ''&lt;/span&gt;
+    &lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Get tag of latest release&lt;/span&gt;
+        &lt;span class="nt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;latest-release&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p-Indicator"&gt;|&lt;/span&gt;
+          &lt;span class="no"&gt;echo &amp;quot;::set-output name=tag::$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&amp;quot;&lt;/span&gt;
+
+      &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Checkout source&lt;/span&gt;
+        &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;actions/checkout&amp;#64;v2&lt;/span&gt;
+        &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ steps.latest-release.outputs.tag }}&lt;/span&gt;
+          &lt;span class="nt"&gt;fetch-depth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;0&lt;/span&gt;
+
+      &lt;span class="c1"&gt;# Remaining steps go here&lt;/span&gt;
+      &lt;span class="c1"&gt;# ...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+</content><category term="Programming"></category><category term="GitHub Actions"></category><category term="auto"></category><category term="continuous integration"></category></entry></feed>

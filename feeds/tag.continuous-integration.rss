@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Knowledge Bits - continuous integration</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Mon, 26 Oct 2020 00:00:00 -0400</lastBuildDate><item><title>Running Extra Steps after Releasing with auto in GitHub Actions</title><link>https://jwodder.github.io/kbits/posts/auto-post-release/</link><description>&lt;p class="first last"&gt;Let’s say you’ve set up &lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; for your project via a GitHub Actions
+workflow, and now you want that workflow to carry out additional steps —
+such as building &amp;amp; uploading assets — whenever &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; creates a new
+release.  Let’s also say that none of the available plugins for &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;
+covers your use-case and you’re not a JavaScript programmer, so you won’t
+be writing a new plugin to do what you want.  How do you adjust your GitHub
+Actions workflow to run these extra steps at the right time?  Read to find
+out.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Mon, 26 Oct 2020 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2020-10-26:/kbits/posts/auto-post-release/</guid><category>Programming</category><category>GitHub Actions</category><category>auto</category><category>continuous integration</category></item></channel></rss>
