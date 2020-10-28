@@ -111,7 +111,8 @@ Presumably, it looks something liks this:</p>
 
       <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Download latest auto</span>
         <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-          <span class="no">curl -vL -o - &quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot; | gunzip &gt; ~/auto</span>
+          <span class="no">auto_download_url=&quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot;</span>
+          <span class="no">wget -O- &quot;$auto_download_url&quot; | gunzip &gt; ~/auto</span>
           <span class="no">chmod a+x ~/auto</span>
 
       <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Create release</span>
@@ -139,7 +140,9 @@ shipit</tt> would do nothing, <tt class="docutils literal">auto version</tt> jus
 <pre class="code yaml literal-block">
 <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Check whether a release is due</span>
   <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">auto-version</span>
-  <span class="nt">run</span><span class="p">:</span> <span class="l-Scalar-Plain">echo &quot;::set-output name=version::$(~/auto version)&quot;</span>
+  <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
+    <span class="no">version=&quot;$(~/auto version)&quot;</span>
+    <span class="no">echo &quot;::set-output name=version::$version&quot;</span>
   <span class="nt">env</span><span class="p">:</span>
     <span class="nt">GH_TOKEN</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
 </pre>
@@ -228,7 +231,8 @@ latest GitHub release, like so:</p>
 <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Get tag of latest release</span>
   <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">latest-release</span>
   <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-    <span class="no">echo &quot;::set-output name=tag::$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span>
+    <span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span>
+    <span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span>
 
 <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Checkout source</span>
   <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/checkout&#64;v2</span>
@@ -266,12 +270,15 @@ something like this:</p>
 
       <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Download latest auto</span>
         <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-          <span class="no">curl -vL -o - &quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot; | gunzip &gt; ~/auto</span>
+          <span class="no">auto_download_url=&quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot;</span>
+          <span class="no">wget -O- &quot;$auto_download_url&quot; | gunzip &gt; ~/auto</span>
           <span class="no">chmod a+x ~/auto</span>
 
       <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Check whether a release is due</span>
         <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">auto-version</span>
-        <span class="nt">run</span><span class="p">:</span> <span class="l-Scalar-Plain">echo &quot;::set-output name=version::$(~/auto version)&quot;</span>
+        <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
+          <span class="no">version=&quot;$(~/auto version)&quot;</span>
+          <span class="no">echo &quot;::set-output name=version::$version&quot;</span>
         <span class="nt">env</span><span class="p">:</span>
           <span class="nt">GH_TOKEN</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
 
@@ -288,7 +295,8 @@ something like this:</p>
       <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Get tag of latest release</span>
         <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">latest-release</span>
         <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-          <span class="no">echo &quot;::set-output name=tag::$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span>
+          <span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span>
+          <span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span>
 
       <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Checkout source</span>
         <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/checkout&#64;v2</span>
