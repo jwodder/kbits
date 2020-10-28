@@ -54,7 +54,8 @@ Presumably, it looks something liks this:
 
           - name: Download latest auto
             run: |
-              curl -vL -o - "$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == "auto-linux.gz") | .browser_download_url')" | gunzip > ~/auto
+              auto_download_url="$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == "auto-linux.gz") | .browser_download_url')"
+              wget -O- "$auto_download_url" | gunzip > ~/auto
               chmod a+x ~/auto
 
           - name: Create release
@@ -93,7 +94,9 @@ Hence, insert the following step before the ``auto shipit`` step:
 
           - name: Check whether a release is due
             id: auto-version
-            run: echo "::set-output name=version::$(~/auto version)"
+            run: |
+              version="$(~/auto version)"
+              echo "::set-output name=version::$version"
             env:
               GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -213,7 +216,8 @@ latest GitHub release, like so:
       - name: Get tag of latest release
         id: latest-release
         run: |
-          echo "::set-output name=tag::$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)"
+          latest_tag="$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)"
+          echo "::set-output name=tag::$latest_tag"
 
       - name: Checkout source
         uses: actions/checkout@v2
@@ -256,12 +260,15 @@ something like this:
 
           - name: Download latest auto
             run: |
-              curl -vL -o - "$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == "auto-linux.gz") | .browser_download_url')" | gunzip > ~/auto
+              auto_download_url="$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == "auto-linux.gz") | .browser_download_url')"
+              wget -O- "$auto_download_url" | gunzip > ~/auto
               chmod a+x ~/auto
 
           - name: Check whether a release is due
             id: auto-version
-            run: echo "::set-output name=version::$(~/auto version)"
+            run: |
+              version="$(~/auto version)"
+              echo "::set-output name=version::$version"
             env:
               GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -278,7 +285,8 @@ something like this:
           - name: Get tag of latest release
             id: latest-release
             run: |
-              echo "::set-output name=tag::$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)"
+              latest_tag="$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)"
+              echo "::set-output name=tag::$latest_tag"
 
           - name: Checkout source
             uses: actions/checkout@v2
