@@ -64,15 +64,21 @@ Presumably, it looks something liks this:
               GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 Now you want to insert further workflow steps that will be triggered whenever
-``auto shipit`` successfully creates a new release.  Theoretically, one option
-would be to create a separate workflow that runs whenever a new tag is pushed
-or a new GitHub release is created, but this won't work with an out-of-the-box
-setup; ``auto`` uses ``GITHUB_TOKEN`` to create the tag & release, and GitHub
-Actions workflows `specifically do not trigger`__ on events performed with a
-``GITHUB_TOKEN``.  You could get this to work by passing ``auto`` a personal
-access token instead of ``GITHUB_TOKEN``, but there's a more direct way to make
-this work instead that also lets you keep your release-related workflow steps
-in a single file.
+``auto shipit`` successfully creates a new release.  Just adding the steps and
+nothing else directly to the workflow won't work, as ``auto shipit`` doesn't
+always create a new release, such as when a pull request with a
+``skip-release`` label is merged, or when a pull request without a ``release``
+label is merged while ``onlyPublishWithReleaseLabel`` is set to ``true``.  So
+we need some logic to test whether there's a new release.
+
+Theoretically, one option would be to create a separate workflow that runs
+whenever a new tag is pushed or a new GitHub release is created, but this won't
+work with an out-of-the-box setup; ``auto`` uses ``GITHUB_TOKEN`` to create the
+tag & release, and GitHub Actions workflows `specifically do not trigger`__ on
+events performed with a ``GITHUB_TOKEN``.  You could get this approach to work
+by passing ``auto`` a personal access token instead of ``GITHUB_TOKEN``, but
+there's a more direct way to make this work instead that also lets you keep
+your release-related workflow steps in a single file.
 
 __ https://docs.github.com/en/free-pro-team@latest/actions/reference/
    events-that-trigger-workflows#triggering-new-workflows-using-a-personal-
