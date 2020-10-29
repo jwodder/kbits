@@ -49,15 +49,20 @@ Presumably, it looks something liks this:&lt;/p&gt;
           &lt;span class="nt"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ secrets.GITHUB_TOKEN }}&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;Now you want to insert further workflow steps that will be triggered whenever
-&lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; successfully creates a new release.  Theoretically, one option
-would be to create a separate workflow that runs whenever a new tag is pushed
-or a new GitHub release is created, but this won’t work with an out-of-the-box
-setup; &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; uses &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt; to create the tag &amp;amp; release, and GitHub
-Actions workflows &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token"&gt;specifically do not trigger&lt;/a&gt; on events performed with a
-&lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt;.  You could get this to work by passing &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; a personal
-access token instead of &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt;, but there’s a more direct way to make
-this work instead that also lets you keep your release-related workflow steps
-in a single file.&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; successfully creates a new release.  Just adding the steps and
+nothing else directly to the workflow won’t work, as &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; doesn’t
+always create a new release, such as when a pull request with a
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;skip-release&lt;/span&gt;&lt;/tt&gt; label is merged, or when a pull request without a &lt;tt class="docutils literal"&gt;release&lt;/tt&gt;
+label is merged while &lt;tt class="docutils literal"&gt;onlyPublishWithReleaseLabel&lt;/tt&gt; is set to &lt;tt class="docutils literal"&gt;true&lt;/tt&gt;.  So
+we need some logic to test whether there’s a new release.&lt;/p&gt;
+&lt;p&gt;Theoretically, one option would be to create a separate workflow that runs
+whenever a new tag is pushed or a new GitHub release is created, but this won’t
+work with an out-of-the-box setup; &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; uses &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt; to create the
+tag &amp;amp; release, and GitHub Actions workflows &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token"&gt;specifically do not trigger&lt;/a&gt; on
+events performed with a &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt;.  You could get this approach to work
+by passing &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; a personal access token instead of &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt;, but
+there’s a more direct way to make this work instead that also lets you keep
+your release-related workflow steps in a single file.&lt;/p&gt;
 &lt;p&gt;Here’s the key trick: By running &lt;a class="reference external" href="https://intuit.github.io/auto/docs/generated/version"&gt;&lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt;&lt;/a&gt; before &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt;, you
 find out whether &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; is about to create a new release, and you can save
 the output from &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; to use to trigger extra steps later.  If
