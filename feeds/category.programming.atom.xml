@@ -1,5 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Programming</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.programming.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-10-26T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Running Extra Steps after Releasing with auto in GitHub Actions</title><link href="https://jwodder.github.io/kbits/posts/auto-post-release/" rel="alternate"></link><published>2020-10-26T00:00:00-04:00</published><updated>2020-10-26T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-10-26:/kbits/posts/auto-post-release/</id><summary type="html">&lt;p class="first last"&gt;Let’s say you’ve set up &lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; for your project via a GitHub Actions
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Programming</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.programming.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-12-29T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
+non-Python files in the project that the code can then access at runtime,
+such as templates, images, and data.  These files are called &lt;em&gt;package
+data&lt;/em&gt;, and this article describes how to include them in &amp;amp; access them from
+your project.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;When creating a Python project, you may want to include a number of non-Python
+files in the project that the code can then access at runtime, such as
+templates, images, and data.  These files are called &lt;em&gt;package data&lt;/em&gt; &lt;a class="footnote-reference" href="#f1" id="id1"&gt;[1]&lt;/a&gt;, and
+they are included in &amp;amp; accessed from your project as follows.&lt;/p&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title"&gt;Contents&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#including-package-data-in-projects" id="id8"&gt;Including Package Data in Projects&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#including-package-data-via-manifest-in" id="id9"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#including-package-data-via-setup-py" id="id10"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#excluding-package-data-via-setup-py" id="id11"&gt;Excluding Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#including-package-data-via-setuptools-plugins" id="id12"&gt;Including Package Data via Setuptools Plugins&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#accessing-package-data-at-runtime" id="id13"&gt;Accessing Package Data at Runtime&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#installing-importing-importlib-resources" id="id14"&gt;Installing &amp;amp; Importing &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#the-importlib-resources-api" id="id15"&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; API&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#footnotes" id="id16"&gt;Footnotes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="including-package-data-in-projects"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data in Projects&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;The following section only pertains to projects built with setuptools.
+Users of flit, Poetry, and other tools must consult their respective
+backend’s documentation to see how to include package data.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The first requirement for being able to include package data in your &lt;a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#packages"&gt;package&lt;/a&gt;
+&lt;a class="footnote-reference" href="#f2" id="id2"&gt;[2]&lt;/a&gt; is for the files to be located somewhere inside the actual package
+directory.  If your project is a single-file &lt;tt class="docutils literal"&gt;.py&lt;/tt&gt; module, you must convert
+it to a directory/package layout before you can store package data in it.&lt;/p&gt;
+&lt;p&gt;Once your package data is inside the package, you must tell setuptools to
+include the files in both the project’s wheel (so that the files will be
+installed when your package is installed) and sdist (so that the files can be
+included in the wheel when building from an sdist).  There are two different
+major ways to do this: a blanket “include all” method that uses a
+&lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; file and a fine-grained method that configures one package &amp;amp;
+subpackage at time via the &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt; file.&lt;/p&gt;
+&lt;div class="section" id="including-package-data-via-manifest-in"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;There are two steps to this method:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Create or edit your project’s &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; file with the proper commands
+to tell setuptools to include all of your package data file in the project’s
+sdists.  See &lt;a class="reference external" href="https://packaging.python.org/guides/using-manifest-in/"&gt;the Python Packaging User Guide&lt;/a&gt; for information on how to
+do this.&lt;/p&gt;
+&lt;p&gt;In the simplest case — in which you want all non-Python files in your
+package to be treated as package data — you can simply include your entire
+package in your sdist with the &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; command “&lt;tt class="docutils literal"&gt;graft
+packagename&lt;/tt&gt;” (or “&lt;tt class="docutils literal"&gt;graft src&lt;/tt&gt;” if you’re using a &lt;a class="reference external" href="https://hynek.me/articles/testing-packaging/"&gt;&lt;tt class="docutils literal"&gt;src/&lt;/tt&gt; layout&lt;/a&gt;).  If
+you use this command, you should also follow it with “&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;global-exclude&lt;/span&gt;
+*.py[cod]&lt;/tt&gt;” so that compiled Python bytecode files are not included in the
+sdist.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;In your &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;, pass &lt;tt class="docutils literal"&gt;include_package_data=True&lt;/tt&gt; to the &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt;
+function.   If you are placing your project configuration in &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;
+instead, set &lt;tt class="docutils literal"&gt;include_package_data = True&lt;/tt&gt; in the &lt;tt class="docutils literal"&gt;[options]&lt;/tt&gt; section of
+&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Doing this tells setuptools that any non-Python files found inside your
+package that are included in the sdist should also be included in the wheel.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="including-package-data-via-setup-py"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This method allows you to specify package data file patterns on a per-package
+basis through the &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt;.  &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt;
+must be a &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; mapping package or subpackage names (or the empty string, to
+specify all packages &amp;amp; subpackages) to lists of glob patterns indicating which
+files within those packages to include in the sdist and wheel.&lt;/p&gt;
+&lt;p&gt;A sample &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; looks like this:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;package_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;# If any package or subpackage contains *.txt or *.rst files, include&lt;/span&gt;
+    &lt;span class="c1"&gt;# them:&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;*.rst&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="c1"&gt;# Include any *.msg files found in the &amp;quot;hello&amp;quot; package (but not in its&lt;/span&gt;
+    &lt;span class="c1"&gt;# subpackages):&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.msg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="c1"&gt;# Include any *.csv files found in the &amp;quot;hello.utils&amp;quot; package:&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;hello.utils&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.csv&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="c1"&gt;# Include any *.dat files found in the &amp;quot;data&amp;quot; subdirectory of the&lt;/span&gt;
+    &lt;span class="c1"&gt;# &amp;quot;mypkg&amp;quot; package:&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;mypkg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;data/*.dat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you are placing your project configuration in &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;, you must
+instead specify &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; via an &lt;tt class="docutils literal"&gt;[options.package_data]&lt;/tt&gt; section in
+which the keys are the package &amp;amp; subpackage names — using &lt;tt class="docutils literal"&gt;*&lt;/tt&gt; instead of the
+empty string to signify all packages — and the values are comma-separated glob
+patterns.  The above &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; sample translates to &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt; as
+follows:&lt;/p&gt;
+&lt;pre class="code ini literal-block"&gt;
+&lt;span class="k"&gt;[options.package_data]&lt;/span&gt;
+&lt;span class="c1"&gt;# If any package or subpackage contains *.txt or *.rst files, include them:&lt;/span&gt;
+&lt;span class="na"&gt;*&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.txt, *.rst&lt;/span&gt;
+&lt;span class="c1"&gt;# Include any *.msg files found in the &amp;quot;hello&amp;quot; package (but not in its&lt;/span&gt;
+&lt;span class="c1"&gt;# subpackages):&lt;/span&gt;
+&lt;span class="na"&gt;hello&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.msg&lt;/span&gt;
+&lt;span class="c1"&gt;# Include any *.csv files found in the &amp;quot;hello.utils&amp;quot; package:&lt;/span&gt;
+&lt;span class="na"&gt;hello.utils&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.csv&lt;/span&gt;
+&lt;span class="c1"&gt;# Include any *.dat files found in the &amp;quot;data&amp;quot; subdirectory of the &amp;quot;mypkg&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# package:&lt;/span&gt;
+&lt;span class="na"&gt;mypkg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data/*.dat&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Note that glob patterns only select files located directly within the given
+package (or in the given subdirectory of the package, if the pattern includes a
+directory path); e.g., &lt;tt class="docutils literal"&gt;&amp;quot;hello&amp;quot;: &lt;span class="pre"&gt;[&amp;quot;*.msg&amp;quot;]&lt;/span&gt;&lt;/tt&gt; selects &lt;tt class="docutils literal"&gt;*.msg&lt;/tt&gt; files in the
+&lt;tt class="docutils literal"&gt;hello&lt;/tt&gt; package but not in any of its subpackages.  To select files in
+subpackages, you must either include an entry for each subpackage or else use
+the empty string key (or asterisk key in &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;) to specify a pattern
+for all packages &amp;amp; subpackages.&lt;/p&gt;
+&lt;p&gt;If a pattern contains any directory components, the forward slash (&lt;tt class="docutils literal"&gt;/&lt;/tt&gt;) must
+be used as the directory separator, even on Windows.&lt;/p&gt;
+&lt;p&gt;If a package data file is located in a directory that does not have an
+&lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file (say, a &lt;tt class="docutils literal"&gt;data/&lt;/tt&gt; directory inside
+&lt;tt class="docutils literal"&gt;package.subpackage&lt;/tt&gt;), that directory does not count as a package, and the
+file must be listed in &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; in the form &lt;tt class="docutils literal"&gt;&amp;quot;package.subpackage&amp;quot;:
+[&amp;quot;data/PATTERN&amp;quot;]&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="admonition warning"&gt;
+&lt;p class="first admonition-title"&gt;Warning&lt;/p&gt;
+&lt;p class="last"&gt;If you use both &lt;tt class="docutils literal"&gt;include_package_data&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt;, files
+specified with &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; will not be automatically included in
+sdists; you must instead list them in your &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="excluding-package-data-via-setup-py"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Excluding Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;exclude_package_data&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt; can be used in conjunction
+with either of the above methods to prevent one or more files from being
+treated as package data.  &lt;tt class="docutils literal"&gt;exclude_package_data&lt;/tt&gt; takes a &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; with the
+same structure as &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt;, and any matched files are excluded from
+wheels.  Matched files are also excluded from sdists if they are not already
+matched by the project’s &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;In a &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;exclude_package_data&lt;/tt&gt; becomes an
+&lt;tt class="docutils literal"&gt;[options.exclude_package_data]&lt;/tt&gt; section whose contents have the same
+structure as &lt;tt class="docutils literal"&gt;[options.package_data]&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="including-package-data-via-setuptools-plugins"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data via Setuptools Plugins&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;As an alternative to the above methods, you can use a plugin for setuptools
+that automatically recognizes &amp;amp; includes package data in sdists &amp;amp; wheels,
+usually based on what files in the project directory are under verson control.
+One example of such a plugin is &lt;a class="reference external" href="https://github.com/pypa/setuptools_scm"&gt;setuptools_scm&lt;/a&gt;, which automatically finds all
+files under version control in a Git or Mercurial repository and augments the
+project’s &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; (if any) with the found files.  This eliminates the
+need to write a &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; manually (unless there are files under version
+control that you want to exclude from sdists or wheels), though you still need
+to set &lt;tt class="docutils literal"&gt;include_package_data&lt;/tt&gt; to &lt;tt class="docutils literal"&gt;True&lt;/tt&gt; for files in your package directory
+to be included in wheels.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="accessing-package-data-at-runtime"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Accessing Package Data at Runtime&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;There have been multiple ways to access package data over the years, from
+&lt;a class="reference external" href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#resourcemanager-api"&gt;&lt;tt class="docutils literal"&gt;pkg_resources&lt;/tt&gt;’ &lt;tt class="docutils literal"&gt;ResourceManager&lt;/tt&gt; API&lt;/a&gt; to &lt;a class="reference external" href="https://docs.python.org/3/library/pkgutil.html#pkgutil.get_data"&gt;&lt;tt class="docutils literal"&gt;pkgutil.get_data()&lt;/tt&gt;&lt;/a&gt;, but the most
+recent and currently-recommended way is with the &lt;a class="reference external" href="http://importlib-resources.readthedocs.io"&gt;importlib-resources&lt;/a&gt;
+package.&lt;/p&gt;
+&lt;div class="section" id="installing-importing-importlib-resources"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Installing &amp;amp; Importing &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;There are two versions of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; available:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pypi.org/project/importlib-resources/"&gt;The one on PyPI&lt;/a&gt; that is installed with &lt;tt class="docutils literal"&gt;pip install
+&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; and imported with &lt;tt class="docutils literal"&gt;import importlib_resources&lt;/tt&gt; (note
+underscore)&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://docs.python.org/3/library/importlib.html#module-importlib.resources"&gt;The one in the Python standard library&lt;/a&gt; starting with Python 3.7 that is
+imported with &lt;tt class="docutils literal"&gt;import importlib.resources&lt;/tt&gt; (note period)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Development of the PyPI version tends to be ahead of whatever’s in the latest
+Python version.  In particular, the new &lt;tt class="docutils literal"&gt;files()&lt;/tt&gt;-based API described here
+was only introduced in version 1.1.0 of the PyPI project and was only added to
+the Python standard library in Python 3.9.  In order to be guaranteed a version
+of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; that supports this API, you should add the following
+to your project’s &lt;tt class="docutils literal"&gt;install_requires&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+importlib-resources&amp;gt;=1.1.0; python_version &amp;lt; '3.9'
+&lt;/pre&gt;
+&lt;p&gt;and import &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; in your code as follows:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;version_info&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c1"&gt;# importlib.resources either doesn't exist or lacks the files()&lt;/span&gt;
+    &lt;span class="c1"&gt;# function, so use the PyPI version:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;importlib_resources&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="c1"&gt;# importlib.resources has files(), so use that:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;importlib.resources&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;importlib_resources&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-importlib-resources-api"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; API&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;To access a package data file in your project, start by calling
+&lt;tt class="docutils literal"&gt;importlib_resources.files()&lt;/tt&gt; on the name of your package:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;pkg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;importlib_resources&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;packagename&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# The argument can optionally refer to a subpackage in the form&lt;/span&gt;
+&lt;span class="c1"&gt;# &amp;quot;packagename.subpackage&amp;quot;.&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This gives you a &lt;a class="reference external" href="https://github.com/python/importlib_resources/blob/eb0554035b499e4a5349dcc56a2bda51835f4fde/importlib_resources/abc.py#L61"&gt;Traversable&lt;/a&gt; object that acts like a limited &lt;tt class="docutils literal"&gt;pathlib.Path&lt;/tt&gt;
+object for traversing package data files.  To refer to a &lt;tt class="docutils literal"&gt;data.csv&lt;/tt&gt; file in a
+&lt;tt class="docutils literal"&gt;data/&lt;/tt&gt; directory in your package, write:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;pkg_data_file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pkg&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;data&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;data.csv&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;So now that we’ve got a reference to the package data file, how do we get
+anything out of it?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;To open the file for reading, call the &lt;tt class="docutils literal"&gt;open()&lt;/tt&gt; method:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;pkg_data_file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="c1"&gt;# Do things with fp&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;To get the file’s contents as &lt;tt class="docutils literal"&gt;bytes&lt;/tt&gt;, call the &lt;tt class="docutils literal"&gt;read_bytes()&lt;/tt&gt; method:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pkg_data_file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_bytes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;To get the file’s contents as a &lt;tt class="docutils literal"&gt;str&lt;/tt&gt;, call the &lt;tt class="docutils literal"&gt;read_text()&lt;/tt&gt; method,
+optionally with an &lt;tt class="docutils literal"&gt;encoding&lt;/tt&gt; argument:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pkg_data_file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;To get the path to the file, call &lt;tt class="docutils literal"&gt;importlib_resources.as_file()&lt;/tt&gt; on it and
+use the return value as a context manager:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;importlib_resources&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pkg_data_file&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="c1"&gt;# Do things with the pathlib.Path object that is `path`&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The use of context managers allows &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; to support
+packages stored in zipfiles; when a path is requested for a package data file
+in a zipfile, the library can extract the file to a temporary location at the
+start of the &lt;tt class="docutils literal"&gt;with&lt;/tt&gt; block and remove it at the end of the block.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;To iterate through a directory (either a package or a non-package directory),
+use the &lt;tt class="docutils literal"&gt;iterdir()&lt;/tt&gt; method.  You can test whether a resource is a directory
+or a file with the &lt;tt class="docutils literal"&gt;is_dir()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;is_file()&lt;/tt&gt; methods, and you can get a
+resource’s basename via the &lt;tt class="docutils literal"&gt;name&lt;/tt&gt; property:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pkg&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;data&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterdir&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_dir&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;DIR&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;FILE&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="footnotes"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Footnotes&lt;/a&gt;&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="f1" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Specifically, package data files are files that are stored in a Python
+project’s package directory next to the Python source files.  An
+alternative to package data is &lt;em&gt;data files&lt;/em&gt;, which are files installed
+elsewhere on the file system.  This article only deals with the
+former.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="f2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Throughout this article, the term “package” is used in the sense of a
+directory of &lt;tt class="docutils literal"&gt;.py&lt;/tt&gt; files and other packages (a.k.a. an “&lt;a class="reference external" href="https://packaging.python.org/glossary/#term-Import-Package"&gt;import
+package&lt;/a&gt;”), not in the sense of a “&lt;a class="reference external" href="https://packaging.python.org/glossary/#term-Distribution-Package"&gt;distribution package&lt;/a&gt;” (i.e, an
+sdist or wheel).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="Python"></category><category term="Python packaging"></category><category term="setuptools"></category></entry><entry><title>Running Extra Steps after Releasing with auto in GitHub Actions</title><link href="https://jwodder.github.io/kbits/posts/auto-post-release/" rel="alternate"></link><published>2020-10-26T00:00:00-04:00</published><updated>2020-10-26T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-10-26:/kbits/posts/auto-post-release/</id><summary type="html">&lt;p class="first last"&gt;Let’s say you’ve set up &lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; for your project via a GitHub Actions
 workflow, and now you want that workflow to carry out additional steps —
 such as building &amp;amp; uploading assets — whenever &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; creates a new
 release.  Let’s also say that none of the available plugins for &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;
