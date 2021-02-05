@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - GitHub Actions</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.github-actions.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-10-26T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Running Extra Steps after Releasing with auto in GitHub Actions</title><link href="https://jwodder.github.io/kbits/posts/auto-post-release/" rel="alternate"></link><published>2020-10-26T00:00:00-04:00</published><updated>2020-10-26T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-10-26:/kbits/posts/auto-post-release/</id><summary type="html">&lt;p class="first last"&gt;Let’s say you’ve set up &lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; for your project via a GitHub Actions
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - GitHub Actions</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.github-actions.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-02-05T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Running Extra Steps after Releasing with auto in GitHub Actions</title><link href="https://jwodder.github.io/kbits/posts/auto-post-release/" rel="alternate"></link><published>2020-10-26T00:00:00-04:00</published><updated>2021-02-05T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-10-26:/kbits/posts/auto-post-release/</id><summary type="html">&lt;p class="first last"&gt;Let’s say you’ve set up &lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; for your project via a GitHub Actions
 workflow, and now you want that workflow to carry out additional steps —
 such as building &amp;amp; uploading assets — whenever &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; creates a new
 release.  Let’s also say that none of the available plugins for &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;
@@ -48,13 +48,37 @@ Presumably, it looks something liks this:&lt;/p&gt;
         &lt;span class="nt"&gt;env&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
           &lt;span class="nt"&gt;GH_TOKEN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;${{ secrets.GITHUB_TOKEN }}&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;Now you want to insert further workflow steps that will be triggered whenever
-&lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; successfully creates a new release.  Just adding the steps and
-nothing else directly to the workflow won’t work, as &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; doesn’t
-always create a new release, such as when a pull request with a
-&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;skip-release&lt;/span&gt;&lt;/tt&gt; label is merged, or when a pull request without a &lt;tt class="docutils literal"&gt;release&lt;/tt&gt;
-label is merged while &lt;tt class="docutils literal"&gt;onlyPublishWithReleaseLabel&lt;/tt&gt; is set to &lt;tt class="docutils literal"&gt;true&lt;/tt&gt;.  So
-we need some logic to test whether there’s a new release.&lt;/p&gt;
+&lt;p&gt;Now you want to insert further steps that will be triggered whenever &lt;tt class="docutils literal"&gt;auto
+shipit&lt;/tt&gt; successfully creates a new release.&lt;/p&gt;
+&lt;p&gt;For simple cases — where the commands to run can be expressed in a single shell
+command — we can use &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;’s &lt;a class="reference external" href="https://intuit.github.io/auto/docs/generated/exec"&gt;&lt;tt class="docutils literal"&gt;exec&lt;/tt&gt; plugin&lt;/a&gt; to run the desired commands via
+the &lt;tt class="docutils literal"&gt;afterRelease&lt;/tt&gt; hook.  For example, building &amp;amp; uploading a Python package
+for PyPI can be integrated into &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; by adding the following item to the
+&lt;tt class="docutils literal"&gt;&amp;quot;plugins&amp;quot;&lt;/tt&gt; field in the repository’s &lt;tt class="docutils literal"&gt;.autorc&lt;/tt&gt; file:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+    ...
+    &amp;quot;plugins&amp;quot;: [
+        ...
+        [
+            &amp;quot;exec&amp;quot;,
+            {
+                &amp;quot;afterRelease&amp;quot;: &amp;quot;python -m build &amp;amp;&amp;amp; twine upload/*&amp;quot;
+            }
+        ]
+    ]
+}
+&lt;/pre&gt;
+&lt;p&gt;(This particular example assumes that the appropriate Python dependencies are
+already set up earlier in the workflow and that the twine username &amp;amp; password
+are passed as environment variables to the &lt;tt class="docutils literal"&gt;~/auto shipit&lt;/tt&gt; step.)&lt;/p&gt;
+&lt;p&gt;For more complex post-release activity which can only be implemented as GitHub
+Actions steps, we need something else.  Just adding the steps and nothing else
+directly to the workflow won’t work, as &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; doesn’t always create a
+new release, such as when a pull request with a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;skip-release&lt;/span&gt;&lt;/tt&gt; label is
+merged, or when a pull request without a &lt;tt class="docutils literal"&gt;release&lt;/tt&gt; label is merged while
+&lt;tt class="docutils literal"&gt;onlyPublishWithReleaseLabel&lt;/tt&gt; is set to &lt;tt class="docutils literal"&gt;true&lt;/tt&gt;.  So we need some logic to
+test whether there’s a new release.&lt;/p&gt;
 &lt;p&gt;Theoretically, one option would be to create a separate workflow that runs
 whenever a new tag is pushed or a new GitHub release is created, but this won’t
 work with an out-of-the-box setup; &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; uses &lt;tt class="docutils literal"&gt;GITHUB_TOKEN&lt;/tt&gt; to create the

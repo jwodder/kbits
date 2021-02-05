@@ -60,6 +60,10 @@
                     <td><time datetime="2020-10-26T00:00:00-04:00" pubdate="1">2020-10-26</time></td>
                 </tr>
                 <tr>
+                    <th>Modified:</th>
+                    <td><time datetime="2021-02-05T00:00:00-05:00">2021-02-05</time></td>
+                </tr>
+                <tr>
                     <th>Author:</th>
                     <td>
 <span class="fn">John T. Wodder II</span>                    </td>
@@ -120,13 +124,37 @@ Presumably, it looks something liks this:</p>
         <span class="nt">env</span><span class="p">:</span>
           <span class="nt">GH_TOKEN</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
 </pre>
-<p>Now you want to insert further workflow steps that will be triggered whenever
-<tt class="docutils literal">auto shipit</tt> successfully creates a new release.  Just adding the steps and
-nothing else directly to the workflow won’t work, as <tt class="docutils literal">auto shipit</tt> doesn’t
-always create a new release, such as when a pull request with a
-<tt class="docutils literal"><span class="pre">skip-release</span></tt> label is merged, or when a pull request without a <tt class="docutils literal">release</tt>
-label is merged while <tt class="docutils literal">onlyPublishWithReleaseLabel</tt> is set to <tt class="docutils literal">true</tt>.  So
-we need some logic to test whether there’s a new release.</p>
+<p>Now you want to insert further steps that will be triggered whenever <tt class="docutils literal">auto
+shipit</tt> successfully creates a new release.</p>
+<p>For simple cases — where the commands to run can be expressed in a single shell
+command — we can use <tt class="docutils literal">auto</tt>’s <a class="reference external" href="https://intuit.github.io/auto/docs/generated/exec"><tt class="docutils literal">exec</tt> plugin</a> to run the desired commands via
+the <tt class="docutils literal">afterRelease</tt> hook.  For example, building &amp; uploading a Python package
+for PyPI can be integrated into <tt class="docutils literal">auto</tt> by adding the following item to the
+<tt class="docutils literal">&quot;plugins&quot;</tt> field in the repository’s <tt class="docutils literal">.autorc</tt> file:</p>
+<pre class="literal-block">
+{
+    ...
+    &quot;plugins&quot;: [
+        ...
+        [
+            &quot;exec&quot;,
+            {
+                &quot;afterRelease&quot;: &quot;python -m build &amp;&amp; twine upload/*&quot;
+            }
+        ]
+    ]
+}
+</pre>
+<p>(This particular example assumes that the appropriate Python dependencies are
+already set up earlier in the workflow and that the twine username &amp; password
+are passed as environment variables to the <tt class="docutils literal">~/auto shipit</tt> step.)</p>
+<p>For more complex post-release activity which can only be implemented as GitHub
+Actions steps, we need something else.  Just adding the steps and nothing else
+directly to the workflow won’t work, as <tt class="docutils literal">auto shipit</tt> doesn’t always create a
+new release, such as when a pull request with a <tt class="docutils literal"><span class="pre">skip-release</span></tt> label is
+merged, or when a pull request without a <tt class="docutils literal">release</tt> label is merged while
+<tt class="docutils literal">onlyPublishWithReleaseLabel</tt> is set to <tt class="docutils literal">true</tt>.  So we need some logic to
+test whether there’s a new release.</p>
 <p>Theoretically, one option would be to create a separate workflow that runs
 whenever a new tag is pushed or a new GitHub release is created, but this won’t
 work with an out-of-the-box setup; <tt class="docutils literal">auto</tt> uses <tt class="docutils literal">GITHUB_TOKEN</tt> to create the
@@ -324,7 +352,7 @@ something like this:</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
