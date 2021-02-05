@@ -3,6 +3,7 @@ Running Extra Steps after Releasing with ``auto`` in GitHub Actions
 ===================================================================
 
 :Date: 2020-10-26
+:Modified: 2021-02-05
 :Category: Programming
 :Tags: GitHub Actions, auto, continuous integration
 :Summary:
@@ -63,13 +64,42 @@ Presumably, it looks something liks this:
             env:
               GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-Now you want to insert further workflow steps that will be triggered whenever
-``auto shipit`` successfully creates a new release.  Just adding the steps and
-nothing else directly to the workflow won't work, as ``auto shipit`` doesn't
-always create a new release, such as when a pull request with a
-``skip-release`` label is merged, or when a pull request without a ``release``
-label is merged while ``onlyPublishWithReleaseLabel`` is set to ``true``.  So
-we need some logic to test whether there's a new release.
+Now you want to insert further steps that will be triggered whenever ``auto
+shipit`` successfully creates a new release.
+
+For simple cases — where the commands to run can be expressed in a single shell
+command — we can use ``auto``'s |exec plugin|_ to run the desired commands via
+the ``afterRelease`` hook.  For example, building & uploading a Python package
+for PyPI can be integrated into ``auto`` by adding the following item to the
+``"plugins"`` field in the repository's ``.autorc`` file::
+
+    {
+        ...
+        "plugins": [
+            ...
+            [
+                "exec",
+                {
+                    "afterRelease": "python -m build && twine upload/*"
+                }
+            ]
+        ]
+    }
+
+(This particular example assumes that the appropriate Python dependencies are
+already set up earlier in the workflow and that the twine username & password
+are passed as environment variables to the ``~/auto shipit`` step.)
+
+.. |exec plugin| replace:: ``exec`` plugin
+.. _exec plugin: https://intuit.github.io/auto/docs/generated/exec
+
+For more complex post-release activity which can only be implemented as GitHub
+Actions steps, we need something else.  Just adding the steps and nothing else
+directly to the workflow won't work, as ``auto shipit`` doesn't always create a
+new release, such as when a pull request with a ``skip-release`` label is
+merged, or when a pull request without a ``release`` label is merged while
+``onlyPublishWithReleaseLabel`` is set to ``true``.  So we need some logic to
+test whether there's a new release.
 
 Theoretically, one option would be to create a separate workflow that runs
 whenever a new tag is pushed or a new GitHub release is created, but this won't
