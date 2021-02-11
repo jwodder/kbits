@@ -1,5 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Programming</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.programming.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-02-05T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Programming</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.programming.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-02-11T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Integrating auto with bump2version</title><link href="https://jwodder.github.io/kbits/posts/auto-bump2version/" rel="alternate"></link><published>2021-02-11T00:00:00-05:00</published><updated>2021-02-11T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-02-11:/kbits/posts/auto-bump2version/</id><summary type="html">&lt;p class="first last"&gt;&lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; by Intuit lets you set up automatic creation of tags &amp;amp; releases and
+population of changelogs in a GitHub project.  It takes care of determining
+the version number for new releases, but, by default, it does not set the
+new version number in your code.  This isn’t a problem if your project uses
+something like &lt;a class="reference external" href="https://github.com/pypa/setuptools_scm"&gt;&lt;tt class="docutils literal"&gt;setuptools_scm&lt;/tt&gt;&lt;/a&gt; or &lt;a class="reference external" href="https://github.com/python-versioneer/python-versioneer"&gt;&lt;tt class="docutils literal"&gt;versioneer&lt;/tt&gt;&lt;/a&gt; to fetch the version
+number from Git, but if your project’s version number is hardcoded in your
+code, you’ll need another solution.  &lt;a class="reference external" href="https://github.com/c4urself/bump2version"&gt;&lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt;&lt;/a&gt; is that solution, and
+it can be integrated into &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; as shown here.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;a class="reference external" href="https://github.com/intuit/auto"&gt;&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/a&gt; by Intuit lets you set up automatic creation of tags &amp;amp; releases and
+population of changelogs in a GitHub project.  It takes care of determining the
+version number for new releases, but, by default, it does not set the new
+version number in your code.  This isn’t a problem if your project uses
+something like &lt;a class="reference external" href="https://github.com/pypa/setuptools_scm"&gt;&lt;tt class="docutils literal"&gt;setuptools_scm&lt;/tt&gt;&lt;/a&gt; or &lt;a class="reference external" href="https://github.com/python-versioneer/python-versioneer"&gt;&lt;tt class="docutils literal"&gt;versioneer&lt;/tt&gt;&lt;/a&gt; to fetch the version number
+from Git, but if your project’s version number is hardcoded in your code,
+you’ll need another solution.  &lt;a class="reference external" href="https://github.com/c4urself/bump2version"&gt;&lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt;&lt;/a&gt; is that solution, and it can be
+integrated into &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; as follows.&lt;/p&gt;
+&lt;div class="section" id="set-up-bump2version"&gt;
+&lt;h2&gt;Set up &lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt;&lt;/h2&gt;
+&lt;p&gt;To make your project’s repository usable with &lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt;, create a
+&lt;tt class="docutils literal"&gt;.bumpversion.cfg&lt;/tt&gt; (no “2”!) file as follows:&lt;/p&gt;
+&lt;pre class="code ini literal-block"&gt;
+&lt;span class="k"&gt;[bumpversion]&lt;/span&gt;
+&lt;span class="c1"&gt;# Replace the value here with your project's current version number:&lt;/span&gt;
+&lt;span class="na"&gt;current_version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0.1.0&lt;/span&gt;
+
+&lt;span class="na"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;True&lt;/span&gt;
+
+&lt;span class="c1"&gt;# If integrating with GitHub Actions, you'll need to include &amp;quot;[skip ci]&amp;quot; in&lt;/span&gt;
+&lt;span class="c1"&gt;# the bump2version commit message in order to prevent auto from running&lt;/span&gt;
+&lt;span class="c1"&gt;# unnecessarily:&lt;/span&gt;
+&lt;span class="na"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;[skip ci] Bump version: {current_version} → {new_version}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# auto will be taking care of the tagging for us, so set `tag` to False:&lt;/span&gt;
+&lt;span class="na"&gt;tag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;False&lt;/span&gt;
+
+&lt;span class="c1"&gt;# For each file in your code that contains your project's version number,&lt;/span&gt;
+&lt;span class="c1"&gt;# add a `[bumpversion:file:PATH]` section header, like so:&lt;/span&gt;
+&lt;span class="k"&gt;[bumpversion:file:src/myproject/__init__.py]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;With this file in place and &lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt; installed, you can automatically
+update your project’s version number by running &lt;tt class="docutils literal"&gt;bump2version $PART&lt;/tt&gt;, where
+&lt;tt class="docutils literal"&gt;$PART&lt;/tt&gt; is the part of the version number to increase (&lt;tt class="docutils literal"&gt;major&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;minor&lt;/tt&gt;,
+or &lt;tt class="docutils literal"&gt;patch&lt;/tt&gt;).&lt;/p&gt;
+&lt;p&gt;See &lt;a class="reference external" href="https://github.com/c4urself/bump2version/blob/master/README.md"&gt;the bump2version documentation&lt;/a&gt; for more information.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="integrate-with-auto"&gt;
+&lt;h2&gt;Integrate with &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;&lt;/h2&gt;
+&lt;p&gt;I assume &lt;a class="reference external" href="https://intuit.github.io/auto/docs/welcome/getting-started"&gt;you’ve already set up auto for your repository&lt;/a&gt;.  To get &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;
+to run &lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt; automatically at the right time when creating a new
+release, use the &lt;a class="reference external" href="https://intuit.github.io/auto/docs/generated/exec"&gt;&lt;tt class="docutils literal"&gt;exec&lt;/tt&gt; plugin&lt;/a&gt; to register an &lt;a class="reference external" href="https://intuit.github.io/auto/docs/plugins/release-lifecycle-hooks#afterchangelog"&gt;&lt;tt class="docutils literal"&gt;afterChangelog&lt;/tt&gt;&lt;/a&gt; hook.  Add the
+following to the &lt;tt class="docutils literal"&gt;&amp;quot;plugins&amp;quot;&lt;/tt&gt; field in your repository’s &lt;tt class="docutils literal"&gt;.autorc&lt;/tt&gt; file:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+    ...
+    &amp;quot;plugins&amp;quot;: [
+        ...
+        [
+            &amp;quot;exec&amp;quot;,
+            {
+                &amp;quot;afterChangelog&amp;quot;: &amp;quot;bump2version \&amp;quot;$(printf '%s\n' \&amp;quot;$ARG_0\&amp;quot; | jq -r .bump)\&amp;quot;&amp;quot;
+            }
+        ]
+    ]
+}
+&lt;/pre&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="first admonition-title"&gt;Tip&lt;/p&gt;
+&lt;p class="last"&gt;Despite what the &lt;tt class="docutils literal"&gt;exec&lt;/tt&gt; documentation may imply, the &lt;tt class="docutils literal"&gt;$ARG_0&lt;/tt&gt;
+environment variable is a JSON object containing the payload passed to the
+respective hook.  This means we must extract the semantic version part to
+bump using &lt;tt class="docutils literal"&gt;jq&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="admonition warning"&gt;
+&lt;p class="first admonition-title"&gt;Warning&lt;/p&gt;
+&lt;p class="last"&gt;&lt;strong&gt;Do not&lt;/strong&gt; use &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt; in place of &lt;tt class="docutils literal"&gt;printf&lt;/tt&gt; here!  The &lt;tt class="docutils literal"&gt;$ARG_0&lt;/tt&gt;
+variable contains JSON containing strings with &lt;tt class="docutils literal"&gt;\n&lt;/tt&gt; escape sequences,
+which &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt; would convert into newlines, resulting in invalid JSON.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;With this setting in place, &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; will run &lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt; on each new
+release after populating the changelog, and the commit created by
+&lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt; will be the commit to receive the new version tag.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="integrate-with-github-actions"&gt;
+&lt;h2&gt;Integrate with GitHub Actions&lt;/h2&gt;
+&lt;p&gt;Assuming you’ve already set up a GitHub Actions workflow for running &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;
+(&lt;a class="reference external" href="https://jwodder.github.io/kbits/posts/auto-post-release/"&gt;see here&lt;/a&gt; for an example), the only
+addition needed to support &lt;tt class="docutils literal"&gt;bump2version&lt;/tt&gt; is to install it before running
+&lt;tt class="docutils literal"&gt;auto&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Set up Python&lt;/span&gt;
+  &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;actions/setup-python&amp;#64;v2&lt;/span&gt;
+  &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;python-version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'^3.6'&lt;/span&gt;
+
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;Install bump2version&lt;/span&gt;
+  &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;python -m pip install bump2version&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="GitHub Actions"></category><category term="auto"></category><category term="bump2version"></category><category term="continuous integration"></category></entry><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
 non-Python files in the project that the code can then access at runtime,
 such as templates, images, and data.  These files are called &lt;em&gt;package
 data&lt;/em&gt;, and this article describes how to include them in &amp;amp; access them from

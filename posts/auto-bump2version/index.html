@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Integrating auto with bump2version</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="auto by Intuit lets you set up automatic creation of tags &amp; releases and population of changelogs in a GitHub project. It takes care of determining the version number for new releases, but, by default, it does not set the new version number in your code. This isn’t a problem if your project uses something like setuptools_scm or versioneer to fetch the version number from Git, but if your project’s version number is hardcoded in your code, you’ll need another solution. bump2version is that solution, and it can be integrated into auto as shown here."/>
+        <meta name="tags" content="GitHub Actions"/>
+        <meta name="tags" content="auto"/>
+        <meta name="tags" content="bump2version"/>
+        <meta name="tags" content="continuous integration"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="GitHub Actions,auto,bump2version,continuous integration"/>
+</head>
+
+<body>
+    <div id="topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d already found</span>
+        </header>
+    </div>
+
+    <div class="mainrow">
+        <div id="navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav>
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/auto-bump2version/" rel="bookmark"
+                    title="Permalink to Integrating auto with bump2version">Integrating <tt class="docutils literal">auto</tt> with <tt class="docutils literal">bump2version</tt></a>
+            </h1>
+        </header>
+        <footer>
+            <table border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2021-02-11T00:00:00-05:00" pubdate="1">2021-02-11</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<span class="fn">John T. Wodder II</span>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/github-actions/">GitHub Actions</a>, <a href="https://jwodder.github.io/kbits/tags/auto/">auto</a>, <a href="https://jwodder.github.io/kbits/tags/bump2version/">bump2version</a>, <a href="https://jwodder.github.io/kbits/tags/continuous-integration/">continuous integration</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/auto-bump2version.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p><a class="reference external" href="https://github.com/intuit/auto"><tt class="docutils literal">auto</tt></a> by Intuit lets you set up automatic creation of tags &amp; releases and
+population of changelogs in a GitHub project.  It takes care of determining the
+version number for new releases, but, by default, it does not set the new
+version number in your code.  This isn’t a problem if your project uses
+something like <a class="reference external" href="https://github.com/pypa/setuptools_scm"><tt class="docutils literal">setuptools_scm</tt></a> or <a class="reference external" href="https://github.com/python-versioneer/python-versioneer"><tt class="docutils literal">versioneer</tt></a> to fetch the version number
+from Git, but if your project’s version number is hardcoded in your code,
+you’ll need another solution.  <a class="reference external" href="https://github.com/c4urself/bump2version"><tt class="docutils literal">bump2version</tt></a> is that solution, and it can be
+integrated into <tt class="docutils literal">auto</tt> as follows.</p>
+<div class="section" id="set-up-bump2version">
+<h2>Set up <tt class="docutils literal">bump2version</tt></h2>
+<p>To make your project’s repository usable with <tt class="docutils literal">bump2version</tt>, create a
+<tt class="docutils literal">.bumpversion.cfg</tt> (no “2”!) file as follows:</p>
+<pre class="code ini literal-block">
+<span class="k">[bumpversion]</span>
+<span class="c1"># Replace the value here with your project's current version number:</span>
+<span class="na">current_version</span> <span class="o">=</span> <span class="s">0.1.0</span>
+
+<span class="na">commit</span> <span class="o">=</span> <span class="s">True</span>
+
+<span class="c1"># If integrating with GitHub Actions, you'll need to include &quot;[skip ci]&quot; in</span>
+<span class="c1"># the bump2version commit message in order to prevent auto from running</span>
+<span class="c1"># unnecessarily:</span>
+<span class="na">message</span> <span class="o">=</span> <span class="s">[skip ci] Bump version: {current_version} → {new_version}</span>
+
+<span class="c1"># auto will be taking care of the tagging for us, so set `tag` to False:</span>
+<span class="na">tag</span> <span class="o">=</span> <span class="s">False</span>
+
+<span class="c1"># For each file in your code that contains your project's version number,</span>
+<span class="c1"># add a `[bumpversion:file:PATH]` section header, like so:</span>
+<span class="k">[bumpversion:file:src/myproject/__init__.py]</span>
+</pre>
+<p>With this file in place and <tt class="docutils literal">bump2version</tt> installed, you can automatically
+update your project’s version number by running <tt class="docutils literal">bump2version $PART</tt>, where
+<tt class="docutils literal">$PART</tt> is the part of the version number to increase (<tt class="docutils literal">major</tt>, <tt class="docutils literal">minor</tt>,
+or <tt class="docutils literal">patch</tt>).</p>
+<p>See <a class="reference external" href="https://github.com/c4urself/bump2version/blob/master/README.md">the bump2version documentation</a> for more information.</p>
+</div>
+<div class="section" id="integrate-with-auto">
+<h2>Integrate with <tt class="docutils literal">auto</tt></h2>
+<p>I assume <a class="reference external" href="https://intuit.github.io/auto/docs/welcome/getting-started">you’ve already set up auto for your repository</a>.  To get <tt class="docutils literal">auto</tt>
+to run <tt class="docutils literal">bump2version</tt> automatically at the right time when creating a new
+release, use the <a class="reference external" href="https://intuit.github.io/auto/docs/generated/exec"><tt class="docutils literal">exec</tt> plugin</a> to register an <a class="reference external" href="https://intuit.github.io/auto/docs/plugins/release-lifecycle-hooks#afterchangelog"><tt class="docutils literal">afterChangelog</tt></a> hook.  Add the
+following to the <tt class="docutils literal">&quot;plugins&quot;</tt> field in your repository’s <tt class="docutils literal">.autorc</tt> file:</p>
+<pre class="literal-block">
+{
+    ...
+    &quot;plugins&quot;: [
+        ...
+        [
+            &quot;exec&quot;,
+            {
+                &quot;afterChangelog&quot;: &quot;bump2version \&quot;$(printf '%s\n' \&quot;$ARG_0\&quot; | jq -r .bump)\&quot;&quot;
+            }
+        ]
+    ]
+}
+</pre>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Despite what the <tt class="docutils literal">exec</tt> documentation may imply, the <tt class="docutils literal">$ARG_0</tt>
+environment variable is a JSON object containing the payload passed to the
+respective hook.  This means we must extract the semantic version part to
+bump using <tt class="docutils literal">jq</tt>.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><strong>Do not</strong> use <tt class="docutils literal">echo</tt> in place of <tt class="docutils literal">printf</tt> here!  The <tt class="docutils literal">$ARG_0</tt>
+variable contains JSON containing strings with <tt class="docutils literal">\n</tt> escape sequences,
+which <tt class="docutils literal">echo</tt> would convert into newlines, resulting in invalid JSON.</p>
+</div>
+<p>With this setting in place, <tt class="docutils literal">auto</tt> will run <tt class="docutils literal">bump2version</tt> on each new
+release after populating the changelog, and the commit created by
+<tt class="docutils literal">bump2version</tt> will be the commit to receive the new version tag.</p>
+</div>
+<div class="section" id="integrate-with-github-actions">
+<h2>Integrate with GitHub Actions</h2>
+<p>Assuming you’ve already set up a GitHub Actions workflow for running <tt class="docutils literal">auto</tt>
+(<a class="reference external" href="https://jwodder.github.io/kbits/posts/auto-post-release/">see here</a> for an example), the only
+addition needed to support <tt class="docutils literal">bump2version</tt> is to install it before running
+<tt class="docutils literal">auto</tt>:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Set up Python</span>
+  <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/setup-python&#64;v2</span>
+  <span class="nt">with</span><span class="p">:</span>
+    <span class="nt">python-version</span><span class="p">:</span> <span class="s">'^3.6'</span>
+
+<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Install bump2version</span>
+  <span class="nt">run</span><span class="p">:</span> <span class="l-Scalar-Plain">python -m pip install bump2version</span>
+</pre>
+</div>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>
