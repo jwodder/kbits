@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python packaging</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python-packaging.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2020-12-29T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python packaging</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python-packaging.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-03-21T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
 non-Python files in the project that the code can then access at runtime,
 such as templates, images, and data.  These files are called &lt;em&gt;package
 data&lt;/em&gt;, and this article describes how to include them in &amp;amp; access them from
@@ -280,7 +280,7 @@ sdist or wheel).&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="Python packaging"></category><category term="setuptools"></category></entry><entry><title>Common Python Packaging Mistakes</title><link href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="alternate"></link><published>2020-08-22T00:00:00-04:00</published><updated>2020-08-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-22:/kbits/posts/pypkg-mistakes/</id><summary type="html">&lt;p class="first last"&gt;An overview of common mistakes made in creating &amp;amp; building a Python package
+</content><category term="Programming"></category><category term="Python"></category><category term="Python packaging"></category><category term="setuptools"></category></entry><entry><title>Common Python Packaging Mistakes</title><link href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="alternate"></link><published>2020-08-22T00:00:00-04:00</published><updated>2021-03-21T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-22:/kbits/posts/pypkg-mistakes/</id><summary type="html">&lt;p class="first last"&gt;An overview of common mistakes made in creating &amp;amp; building a Python package
 and how to avoid them&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I think we can all agree that packaging a Python project is harder than it
 should be.  With numerous guides &amp;amp; tutorials out there, people still make
@@ -809,6 +809,18 @@ wrong name.&lt;/li&gt;
 &lt;p&gt;This is clearly not desirable.  The solution is to always delete the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;
 directory before building a wheel, such as by cleaning your repository with
 &lt;tt class="docutils literal"&gt;git clean&lt;/tt&gt; or similar, or by running &lt;tt class="docutils literal"&gt;python setup.py clean &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; &lt;a class="footnote-reference" href="#id10" id="id7"&gt;[1]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;An even worse situation occurs if your &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; uses
+&lt;tt class="docutils literal"&gt;find_namespace_packages()&lt;/tt&gt; without any arguments.  In this case, if you
+rebuild your package without first deleting the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory,
+&lt;tt class="docutils literal"&gt;find_namespace_packages()&lt;/tt&gt; will notice the &lt;tt class="docutils literal"&gt;.py&lt;/tt&gt; files in &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; and
+assume that &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; is a namespace package, and so it’ll include &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;
+in your wheels — which means that &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; gets copied into &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;,
+resulting in multiple package hierarchies in your wheels, with the problem
+compounding the more times you build your project without deleting the
+&lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory.  This particular problem can be mitigated by using the
+&lt;tt class="docutils literal"&gt;where&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;exclude&lt;/tt&gt;, and/or &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; arguments to
+&lt;tt class="docutils literal"&gt;find_namespace_packages()&lt;/tt&gt;, which have the same meaning as for
+&lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="pinning-project-requirements-to-exact-versions"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/h2&gt;
