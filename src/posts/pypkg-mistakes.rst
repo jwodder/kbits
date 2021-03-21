@@ -3,6 +3,7 @@ Common Python Packaging Mistakes
 ================================
 
 :Date: 2020-08-22
+:Modified: 2021-03-21
 :Category: Programming
 :Tags: Python, Python packaging, setuptools, best practices, advice
 :Summary:
@@ -638,6 +639,19 @@ Consider the following scenario:
 This is clearly not desirable.  The solution is to always delete the ``build/``
 directory before building a wheel, such as by cleaning your repository with
 ``git clean`` or similar, or by running ``python setup.py clean --all`` [1]_.
+
+An even worse situation occurs if your ``setup.py`` uses
+``find_namespace_packages()`` without any arguments.  In this case, if you
+rebuild your package without first deleting the ``build/`` directory,
+``find_namespace_packages()`` will notice the ``.py`` files in ``build/`` and
+assume that ``build/`` is a namespace package, and so it'll include ``build/``
+in your wheels — which means that ``build/`` gets copied into ``build/``,
+resulting in multiple package hierarchies in your wheels, with the problem
+compounding the more times you build your project without deleting the
+``build/`` directory.  This particular problem can be mitigated by using the
+``where``, ``exclude``, and/or ``include`` arguments to
+``find_namespace_packages()``, which have the same meaning as for
+``find_packages()``.
 
 
 Pinning Project Requirements to Exact Versions
