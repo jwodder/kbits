@@ -3,7 +3,7 @@ Common Python Packaging Mistakes
 ================================
 
 :Date: 2020-08-22
-:Modified: 2021-03-21
+:Modified: 2021-03-22
 :Category: Programming
 :Tags: Python, Python packaging, setuptools, best practices, advice
 :Summary:
@@ -273,10 +273,26 @@ Similarly to the above mistake involving ``tests/``, it is also a bad idea to
 include your project's ``README.rst``/``README.md`` or ``LICENSE`` file (or
 ``CHANGELOG`` or really anything that's not a Python module or ``*.pth`` file)
 at the root of your wheel, as it will collide with the ``README``\s and
-``LICENSE``\s of other projects that do the same thing.  This mistake is
-particularly common among projects built using `Poetry
-<https://python-poetry.org>`_, where the ``include`` option can be used to add
-any file directly into both the sdist and wheel.
+``LICENSE``\s of other projects that do the same thing.
+
+This mistake is particularly common among projects built using `Poetry
+<https://python-poetry.org>`_, where simple usage of the ``include`` option
+adds files directly into both the sdist and wheel.  To include a file in only
+the sdist, one needs to change the ``include`` option from this form:
+
+.. code:: toml
+
+    [tool.poetry]
+    include = ["CHANGELOG.md"]
+
+to this form:
+
+.. code:: toml
+
+    [tool.poetry]
+    include = [
+        { path = "CHANGELOG.md", format = "sdist" }
+    ]
 
 If you do want to include your ``README`` or ``LICENSE`` in your wheel, the
 correct way is as follows:
