@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-03-21T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-03-22T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
 non-Python files in the project that the code can then access at runtime,
 such as templates, images, and data.  These files are called &lt;em&gt;package
 data&lt;/em&gt;, and this article describes how to include them in &amp;amp; access them from
@@ -280,7 +280,7 @@ sdist or wheel).&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="Python packaging"></category><category term="setuptools"></category></entry><entry><title>Common Python Packaging Mistakes</title><link href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="alternate"></link><published>2020-08-22T00:00:00-04:00</published><updated>2021-03-21T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-22:/kbits/posts/pypkg-mistakes/</id><summary type="html">&lt;p class="first last"&gt;An overview of common mistakes made in creating &amp;amp; building a Python package
+</content><category term="Programming"></category><category term="Python"></category><category term="Python packaging"></category><category term="setuptools"></category></entry><entry><title>Common Python Packaging Mistakes</title><link href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="alternate"></link><published>2020-08-22T00:00:00-04:00</published><updated>2021-03-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-22:/kbits/posts/pypkg-mistakes/</id><summary type="html">&lt;p class="first last"&gt;An overview of common mistakes made in creating &amp;amp; building a Python package
 and how to avoid them&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I think we can all agree that packaging a Python project is harder than it
 should be.  With numerous guides &amp;amp; tutorials out there, people still make
@@ -517,9 +517,21 @@ installed.&lt;/p&gt;
 include your project’s &lt;tt class="docutils literal"&gt;README.rst&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;README.md&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; file (or
 &lt;tt class="docutils literal"&gt;CHANGELOG&lt;/tt&gt; or really anything that’s not a Python module or &lt;tt class="docutils literal"&gt;*.pth&lt;/tt&gt; file)
 at the root of your wheel, as it will collide with the &lt;tt class="docutils literal"&gt;README&lt;/tt&gt;s and
-&lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt;s of other projects that do the same thing.  This mistake is
-particularly common among projects built using &lt;a class="reference external" href="https://python-poetry.org"&gt;Poetry&lt;/a&gt;, where the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option can be used to add
-any file directly into both the sdist and wheel.&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt;s of other projects that do the same thing.&lt;/p&gt;
+&lt;p&gt;This mistake is particularly common among projects built using &lt;a class="reference external" href="https://python-poetry.org"&gt;Poetry&lt;/a&gt;, where simple usage of the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option
+adds files directly into both the sdist and wheel.  To include a file in only
+the sdist, one needs to change the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option from this form:&lt;/p&gt;
+&lt;pre class="code toml literal-block"&gt;
+&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
+&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;[&amp;quot;CHANGELOG.md&amp;quot;]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;to this form:&lt;/p&gt;
+&lt;pre class="code toml literal-block"&gt;
+&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
+&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sdist&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
 &lt;p&gt;If you do want to include your &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; in your wheel, the
 correct way is as follows:&lt;/p&gt;
 &lt;ul&gt;

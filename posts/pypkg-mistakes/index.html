@@ -63,7 +63,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2021-03-21T00:00:00-04:00">2021-03-21</time></td>
+                    <td><time datetime="2021-03-22T00:00:00-04:00">2021-03-22</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -320,9 +320,21 @@ installed.</p>
 include your project’s <tt class="docutils literal">README.rst</tt>/<tt class="docutils literal">README.md</tt> or <tt class="docutils literal">LICENSE</tt> file (or
 <tt class="docutils literal">CHANGELOG</tt> or really anything that’s not a Python module or <tt class="docutils literal">*.pth</tt> file)
 at the root of your wheel, as it will collide with the <tt class="docutils literal">README</tt>s and
-<tt class="docutils literal">LICENSE</tt>s of other projects that do the same thing.  This mistake is
-particularly common among projects built using <a class="reference external" href="https://python-poetry.org">Poetry</a>, where the <tt class="docutils literal">include</tt> option can be used to add
-any file directly into both the sdist and wheel.</p>
+<tt class="docutils literal">LICENSE</tt>s of other projects that do the same thing.</p>
+<p>This mistake is particularly common among projects built using <a class="reference external" href="https://python-poetry.org">Poetry</a>, where simple usage of the <tt class="docutils literal">include</tt> option
+adds files directly into both the sdist and wheel.  To include a file in only
+the sdist, one needs to change the <tt class="docutils literal">include</tt> option from this form:</p>
+<pre class="code toml literal-block">
+<span class="k">[tool.poetry]</span>
+<span class="n">include</span> <span class="o">=</span> <span class="k">[&quot;CHANGELOG.md&quot;]</span>
+</pre>
+<p>to this form:</p>
+<pre class="code toml literal-block">
+<span class="k">[tool.poetry]</span>
+<span class="n">include</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;CHANGELOG.md&quot;</span><span class="p">,</span> <span class="n">format</span> <span class="o">=</span> <span class="s">&quot;sdist&quot;</span> <span class="p">}</span>
+<span class="p">]</span>
+</pre>
 <p>If you do want to include your <tt class="docutils literal">README</tt> or <tt class="docutils literal">LICENSE</tt> in your wheel, the
 correct way is as follows:</p>
 <ul>

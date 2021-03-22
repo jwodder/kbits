@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Knowledge Bits - Python packaging</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Sun, 21 Mar 2021 00:00:00 -0400</lastBuildDate><item><title>Using Package Data in Python Projects with Setuptools</title><link>https://jwodder.github.io/kbits/posts/pypkg-data/</link><description>&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
+<rss version="2.0"><channel><title>Knowledge Bits - Python packaging</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Mon, 22 Mar 2021 00:00:00 -0400</lastBuildDate><item><title>Using Package Data in Python Projects with Setuptools</title><link>https://jwodder.github.io/kbits/posts/pypkg-data/</link><description>&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
 non-Python files in the project that the code can then access at runtime,
 such as templates, images, and data.  These files are called &lt;em&gt;package
 data&lt;/em&gt;, and this article describes how to include them in &amp;amp; access them from
