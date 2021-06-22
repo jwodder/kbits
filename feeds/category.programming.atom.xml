@@ -470,7 +470,7 @@ your release-related workflow steps in a single file.&lt;/p&gt;
 find out whether &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; is about to create a new release, and you can save
 the output from &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; to use to trigger extra steps later.  If
 &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; is about to create a new release, &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; will output the
-release level (“&lt;tt class="docutils literal"&gt;patch&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;minor&lt;/tt&gt;”, or “&lt;tt class="docutils literal"&gt;major&lt;/tt&gt;”); otherwise, if &lt;tt class="docutils literal"&gt;auto
+release level (”&lt;tt class="docutils literal"&gt;patch&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;minor&lt;/tt&gt;”, or “&lt;tt class="docutils literal"&gt;major&lt;/tt&gt;”); otherwise, if &lt;tt class="docutils literal"&gt;auto
 shipit&lt;/tt&gt; would do nothing, &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; just outputs an empty line.&lt;/p&gt;
 &lt;p&gt;Hence, insert the following step before the &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; step:&lt;/p&gt;
 &lt;pre class="code yaml literal-block"&gt;
@@ -1361,7 +1361,7 @@ dumps out its arguments so you can see what’s being passed to it.&lt;/p&gt;
 &lt;p&gt;If we run this script with no options when &lt;tt class="docutils literal"&gt;config.ini&lt;/tt&gt; does not exist or is
 empty, we get the parameters’ built-in default values:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;
-&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py
+&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config01.py
 &lt;span class="go"&gt;{
     &amp;quot;choice&amp;quot;: null,
     &amp;quot;flag&amp;quot;: false,
@@ -1379,7 +1379,7 @@ empty, we get the parameters’ built-in default values:&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;… and then run with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt; example.ini&lt;/tt&gt;:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;
-&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py --config example.ini
+&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config01.py --config example.ini
 &lt;span class="go"&gt;{
     &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
     &amp;quot;flag&amp;quot;: true,
@@ -1392,7 +1392,7 @@ converted to their appropriate types.&lt;/p&gt;
 &lt;p&gt;Of course, options set in the config file are overridden by command-line
 options, no matter where the options occur in relation to &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;
-&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py --integer &lt;span class="m"&gt;17&lt;/span&gt; --config example.ini --str glarch
+&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config01.py --integer &lt;span class="m"&gt;17&lt;/span&gt; --config example.ini --str glarch
 &lt;span class="go"&gt;{
     &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
     &amp;quot;flag&amp;quot;: true,
@@ -1408,7 +1408,7 @@ to &lt;tt class="docutils literal"&gt;bad.ini&lt;/tt&gt;:&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;The script will then error when passed this config file:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;
-&lt;span class="gp"&gt;$&lt;/span&gt; python3 config01.py --config bad.ini
+&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config01.py --config bad.ini
 &lt;span class="go"&gt;Usage: config01.py [OPTIONS]
 Try 'config01.py --help' for help.
 
@@ -1541,7 +1541,7 @@ each command prints out the parameters it receives.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;… and then invoke some commands to see the results:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;
-&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py
+&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config02.py
 &lt;span class="go"&gt;* main
 {
     &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
@@ -1549,7 +1549,7 @@ each command prints out the parameters it receives.&lt;/p&gt;
     &amp;quot;integer&amp;quot;: 23,
     &amp;quot;str&amp;quot;: &amp;quot;bar&amp;quot;
 }
-&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py foo
+&lt;/span&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config02.py foo
 &lt;span class="go"&gt;* main
 {
     &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
@@ -1561,7 +1561,7 @@ each command prints out the parameters it receives.&lt;/p&gt;
 {
     &amp;quot;speed&amp;quot;: &amp;quot;high&amp;quot;
 }
-&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py bar
+&lt;/span&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config02.py bar
 &lt;span class="go"&gt;* main
 {
     &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
@@ -1573,7 +1573,7 @@ each command prints out the parameters it receives.&lt;/p&gt;
 {
     &amp;quot;speed&amp;quot;: &amp;quot;low&amp;quot;
 }
-&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py bar baz
+&lt;/span&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config02.py bar baz
 &lt;span class="go"&gt;* main
 {
     &amp;quot;choice&amp;quot;: &amp;quot;green&amp;quot;,
@@ -1589,7 +1589,7 @@ each command prints out the parameters it receives.&lt;/p&gt;
 {
     &amp;quot;time&amp;quot;: &amp;quot;late&amp;quot;
 }
-&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; python3 config02.py --choice red foo --speed medium
+&lt;/span&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;python3 config02.py --choice red foo --speed medium
 &lt;span class="go"&gt;* main
 {
     &amp;quot;choice&amp;quot;: &amp;quot;red&amp;quot;,

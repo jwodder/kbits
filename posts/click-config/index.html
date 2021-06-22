@@ -166,7 +166,7 @@ dumps out its arguments so you can see what’s being passed to it.</p>
 <p>If we run this script with no options when <tt class="docutils literal">config.ini</tt> does not exist or is
 empty, we get the parameters’ built-in default values:</p>
 <pre class="code console literal-block">
-<span class="gp">$</span> python3 config01.py
+<span class="gp">$ </span>python3 config01.py
 <span class="go">{
     &quot;choice&quot;: null,
     &quot;flag&quot;: false,
@@ -184,7 +184,7 @@ empty, we get the parameters’ built-in default values:</p>
 </pre>
 <p>… and then run with <tt class="docutils literal"><span class="pre">--config</span> example.ini</tt>:</p>
 <pre class="code console literal-block">
-<span class="gp">$</span> python3 config01.py --config example.ini
+<span class="gp">$ </span>python3 config01.py --config example.ini
 <span class="go">{
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
@@ -197,7 +197,7 @@ converted to their appropriate types.</p>
 <p>Of course, options set in the config file are overridden by command-line
 options, no matter where the options occur in relation to <tt class="docutils literal"><span class="pre">--config</span></tt>:</p>
 <pre class="code console literal-block">
-<span class="gp">$</span> python3 config01.py --integer <span class="m">17</span> --config example.ini --str glarch
+<span class="gp">$ </span>python3 config01.py --integer <span class="m">17</span> --config example.ini --str glarch
 <span class="go">{
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
@@ -213,7 +213,7 @@ to <tt class="docutils literal">bad.ini</tt>:</p>
 </pre>
 <p>The script will then error when passed this config file:</p>
 <pre class="code console literal-block">
-<span class="gp">$</span> python3 config01.py --config bad.ini
+<span class="gp">$ </span>python3 config01.py --config bad.ini
 <span class="go">Usage: config01.py [OPTIONS]
 Try 'config01.py --help' for help.
 
@@ -346,7 +346,7 @@ each command prints out the parameters it receives.</p>
 </pre>
 <p>… and then invoke some commands to see the results:</p>
 <pre class="code console literal-block">
-<span class="gp">$</span> python3 config02.py
+<span class="gp">$ </span>python3 config02.py
 <span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
@@ -354,7 +354,7 @@ each command prints out the parameters it receives.</p>
     &quot;integer&quot;: 23,
     &quot;str&quot;: &quot;bar&quot;
 }
-</span><span class="gp">$</span> python3 config02.py foo
+</span><span class="gp">$ </span>python3 config02.py foo
 <span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
@@ -366,7 +366,7 @@ each command prints out the parameters it receives.</p>
 {
     &quot;speed&quot;: &quot;high&quot;
 }
-</span><span class="gp">$</span> python3 config02.py bar
+</span><span class="gp">$ </span>python3 config02.py bar
 <span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
@@ -378,7 +378,7 @@ each command prints out the parameters it receives.</p>
 {
     &quot;speed&quot;: &quot;low&quot;
 }
-</span><span class="gp">$</span> python3 config02.py bar baz
+</span><span class="gp">$ </span>python3 config02.py bar baz
 <span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
@@ -394,7 +394,7 @@ each command prints out the parameters it receives.</p>
 {
     &quot;time&quot;: &quot;late&quot;
 }
-</span><span class="gp">$</span> python3 config02.py --choice red foo --speed medium
+</span><span class="gp">$ </span>python3 config02.py --choice red foo --speed medium
 <span class="go">* main
 {
     &quot;choice&quot;: &quot;red&quot;,

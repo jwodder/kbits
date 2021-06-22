@@ -189,7 +189,7 @@ your release-related workflow steps in a single file.&lt;/p&gt;
 find out whether &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; is about to create a new release, and you can save
 the output from &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; to use to trigger extra steps later.  If
 &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; is about to create a new release, &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; will output the
-release level (“&lt;tt class="docutils literal"&gt;patch&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;minor&lt;/tt&gt;”, or “&lt;tt class="docutils literal"&gt;major&lt;/tt&gt;”); otherwise, if &lt;tt class="docutils literal"&gt;auto
+release level (”&lt;tt class="docutils literal"&gt;patch&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;minor&lt;/tt&gt;”, or “&lt;tt class="docutils literal"&gt;major&lt;/tt&gt;”); otherwise, if &lt;tt class="docutils literal"&gt;auto
 shipit&lt;/tt&gt; would do nothing, &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; just outputs an empty line.&lt;/p&gt;
 &lt;p&gt;Hence, insert the following step before the &lt;tt class="docutils literal"&gt;auto shipit&lt;/tt&gt; step:&lt;/p&gt;
 &lt;pre class="code yaml literal-block"&gt;

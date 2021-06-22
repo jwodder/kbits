@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Git</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.git.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-06-22T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Special VCS Files</title><link href="https://jwodder.github.io/kbits/posts/vcs-files/" rel="alternate"></link><published>2021-06-22T00:00:00-04:00</published><updated>2021-06-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-06-22:/kbits/posts/vcs-files/</id><summary type="html">&lt;p class="first last"&gt;A list of VCS-specific files that one may find in the working directories
+of common version control systems&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The following is a list of VCS-specific files that one may find in the working
+directories of common version control systems.  This list is useful for, say,
+knowing what files to ignore when traversing a project directory.&lt;/p&gt;
+&lt;p&gt;Did I leave anything out?  &lt;a class="reference external" href="https://github.com/jwodder/kbits"&gt;Feel free to send a pull request.&lt;/a&gt;&lt;/p&gt;
+&lt;table border="1" class="colwidths-auto docutils align-center"&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;VCS&lt;/th&gt;
+&lt;th class="head"&gt;File/Directory&lt;/th&gt;
+&lt;th class="head"&gt;Purpose&lt;/th&gt;
+&lt;th class="head"&gt;Documentation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td rowspan="5"&gt;&lt;a class="reference external" href="https://git-scm.com"&gt;Git&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;tt class="docutils literal"&gt;.git/&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Repository data&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://git-scm.com/docs/gitrepository-layout"&gt;gitrepository-layout(5)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.gitattributes&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Defines per-path attributes&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://git-scm.com/docs/gitattributes"&gt;gitattributes(5)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.gitignore&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Lists files to exclude from version control&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://git-scm.com/docs/gitignore"&gt;gitignore(5)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.gitmodules&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Defines submodules&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://git-scm.com/docs/gitmodules"&gt;gitmodules(5)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.mailmap&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Maps names &amp;amp; e-mails to canonical values&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://git-scm.com/docs/gitmailmap"&gt;gitmailmap(5)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td rowspan="4"&gt;&lt;a class="reference external" href="https://www.mercurial-scm.org"&gt;Mercurial&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;tt class="docutils literal"&gt;.hg/&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Repository data&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://www.mercurial-scm.org/wiki/FileFormats"&gt;wiki:FileFormats&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.hgignore&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Lists files to exclude from version control&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://www.selenic.com/mercurial/hgignore.5.html"&gt;hgignore(5)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.hgsigs&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Contains changeset signatures from the GPG extension&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.hgtags&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Defines tags&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td rowspan="3"&gt;&lt;a class="reference external" href="http://darcs.net"&gt;Darcs&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;tt class="docutils literal"&gt;_darcs/&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Repository data&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.binaries&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Lists files to treat as binary &lt;a class="footnote-reference" href="#fn1" id="id2"&gt;[1]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="binaries"&gt;Manual&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.boring&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Lists files to exclude from version control &lt;a class="footnote-reference" href="#fn1" id="id3"&gt;[1]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="http://darcs.net/manual/Configuring_darcs.html#SECTION00410040000000000000"&gt;Manual&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td rowspan="2"&gt;&lt;a class="reference external" href="https://bazaar.canonical.com"&gt;Bazaar&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;tt class="docutils literal"&gt;.bzr/&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Repository data&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;.bzrignore&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Lists files to exclude from version control&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="http://doc.bazaar.canonical.com/bzr.2.7/en/user-reference/ignore-help.html"&gt;bzr ignore&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;a class="reference external" href="http://subversion.apache.org"&gt;Subversion&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;tt class="docutils literal"&gt;.svn/&lt;/tt&gt; or
+&lt;tt class="docutils literal"&gt;_svn/&lt;/tt&gt; &lt;a class="footnote-reference" href="#fn2" id="id4"&gt;[2]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Local copy of repository data &lt;a class="footnote-reference" href="#fn3" id="id5"&gt;[3]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;a class="reference external" href="http://cvs.nongnu.org"&gt;CVS&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;tt class="docutils literal"&gt;CVS/&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Local copy of repository data (one per directory)&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://www.gnu.org/software/trans-coord/manual/cvs/html_node/Working-directory-storage.html"&gt;Manual&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td rowspan="2"&gt;&lt;a class="reference external" href="https://www.gnu.org/software/rcs/"&gt;RCS&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;em&gt;filename&lt;/em&gt;&lt;tt class="docutils literal"&gt;,v&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Verson history for &lt;em&gt;filename&lt;/em&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://www.gnu.org/software/rcs/manual/html_node/Concepts.html#RCS-file"&gt;Manual&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;RCS/&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Conventional directory for storing &lt;tt class="docutils literal"&gt;*,v&lt;/tt&gt; files&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="fn1" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[1]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#id2"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#id3"&gt;2&lt;/a&gt;)&lt;/em&gt; Darcs normally stores its binaries file and boring file inside the
+&lt;tt class="docutils literal"&gt;_darcs/&lt;/tt&gt; directory, but it is possible to use any file under version
+control in their place; the names listed here are the conventional names for
+such files.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="fn2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;For compability with ASP.NET, Subversion will use the name &lt;tt class="docutils literal"&gt;_svn&lt;/tt&gt;
+instead of &lt;tt class="docutils literal"&gt;.svn&lt;/tt&gt; if the &lt;tt class="docutils literal"&gt;SVN_ASP_DOT_NET_HACK&lt;/tt&gt; environment variable is
+defined.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="fn3" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Prior to version 1.7, Subversion placed a &lt;tt class="docutils literal"&gt;.svn&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;_svn&lt;/tt&gt; directory
+in every subdirectory of the working directory under version control.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content><category term="Software"></category><category term="Git"></category><category term="VCS"></category><category term="dotfiles"></category></entry></feed>
