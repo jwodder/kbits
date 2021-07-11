@@ -45,12 +45,12 @@ div.abstract p.topic-title {
     margin-top: 10px;
 }
 
-div.topic::after {
+div.topic::after, div.toc::after {
     display: block;
     content: '';
     clear: both;
 }
 
-div.topic > :last-child {
+div.topic > :last-child, div.toc > :last-child {
     margin-bottom: 0;
 }

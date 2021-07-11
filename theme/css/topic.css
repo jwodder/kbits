@@ -32,7 +32,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-div.topic:not(.dedication):not(.abstract) {
+div.topic:not(.dedication):not(.abstract), div.toc {
     background-color: #fafafa;
     margin: 10px -10px;
     padding: 10px;
@@ -42,7 +42,7 @@ div.topic:not(.dedication):not(.abstract) {
     border-left: none;
 }
 
-div.topic:not(.dedication):not(.abstract) p.topic-title {
+div.topic:not(.dedication):not(.abstract) p.topic-title, div.toc span.toctitle {
     font-weight: normal;
     font-size: /*24px*/ 1.5em;
     margin: 0 0 10px 0;

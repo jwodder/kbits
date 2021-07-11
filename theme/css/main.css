@@ -51,7 +51,7 @@ a:visited {
     color: #551A8B;
 }
 
-#topbar {
+#kbits-theme-topbar {
     border-bottom: 1px solid #eaecef;
     margin-top: 0;
     margin-bottom: 16px;
@@ -76,11 +76,11 @@ a:visited {
     margin-left: 1em;
 }
 
-#mainrow {
+.mainrow {
     display: block;
 }
 
-#navbar {
+#kbits-theme-navbar {
     float: left;
     display: block;
     margin-left: 1%;
@@ -100,7 +100,7 @@ div.subfeeds {
     margin: 1em 0;
 }
 
-#content {
+#kbits-theme-content {
     float: right;
     display: block;
     margin-left: 1%;
@@ -112,7 +112,7 @@ div.subfeeds {
     margin-top: 1em;
 }
 
-#pagination {
+#kbits-theme-pagination {
     text-align: center;
     margin-top: 1em;
 }
@@ -121,7 +121,7 @@ div.subfeeds {
     font-family: BabelStone Shapes;
 }
 
-#footer {
+#kbits-theme-footer {
     display: block;
     clear: both;
     text-align: center;
@@ -129,7 +129,7 @@ div.subfeeds {
     padding-top: 1em;
 }
 
-#preamble-content {
+#kbits-theme-preamble-content {
     margin-bottom: 1.5em;
 }
 
