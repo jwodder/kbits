@@ -1425,8 +1425,8 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
   ``asyncio``'s high-level API
 
 
-Python 3.11 (TBD)
-=================
+Python 3.11 (2022-10-03)
+========================
 
 Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 
