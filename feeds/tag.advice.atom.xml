@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - advice</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.advice.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-03-22T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Common Python Packaging Mistakes</title><link href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="alternate"></link><published>2020-08-22T00:00:00-04:00</published><updated>2021-03-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-22:/kbits/posts/pypkg-mistakes/</id><summary type="html">&lt;p class="first last"&gt;An overview of common mistakes made in creating &amp;amp; building a Python package
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - advice</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.advice.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-03-22T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><subtitle>References I wish I'd already found</subtitle><entry><title>Common Python Packaging Mistakes</title><link href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="alternate"></link><published>2020-08-22T00:00:00-04:00</published><updated>2021-03-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-08-22:/kbits/posts/pypkg-mistakes/</id><summary type="html">&lt;p class="first last"&gt;An overview of common mistakes made in creating &amp;amp; building a Python package
 and how to avoid them&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I think we can all agree that packaging a Python project is harder than it
 should be.  With numerous guides &amp;amp; tutorials out there, people still make
@@ -242,7 +242,7 @@ adds files directly into both the sdist and wheel.  To include a file in only
 the sdist, one needs to change the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option from this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
 &lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
-&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;[&amp;quot;CHANGELOG.md&amp;quot;]&lt;/span&gt;
+&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;to this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;

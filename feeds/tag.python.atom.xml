@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-07-11T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-07-11T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-09-27T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-09-27T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
 introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
@@ -759,7 +759,7 @@ unpackings (as appropriate)&lt;/li&gt;
 &lt;li&gt;System calls are now retried when interrupted by a signal&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;from __future__ import generator_stop&lt;/tt&gt; added to cause &lt;tt class="docutils literal"&gt;StopIteration&lt;/tt&gt;
 exceptions raised inside generators to be transformed into
-&lt;tt class="docutils literal"&gt;RuntimeException&lt;/tt&gt;s, which will become the default in Python 3.7&lt;ul&gt;
+&lt;tt class="docutils literal"&gt;RuntimeException&lt;/tt&gt;s, which becomes the default in Python 3.7&lt;ul&gt;
 &lt;li&gt;Without the &lt;tt class="docutils literal"&gt;__future__&lt;/tt&gt; import, such exceptions generate
 &lt;tt class="docutils literal"&gt;PendingDeprecationWarning&lt;/tt&gt;s.&lt;/li&gt;
 &lt;/ul&gt;
@@ -924,7 +924,7 @@ path-like object or sequence of path-like objects on POSIX systems&lt;/li&gt;
 &lt;p&gt;Release notes: &lt;a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html"&gt;[link]&lt;/a&gt;&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;from __future__ import annotations&lt;/tt&gt; added to enable postponed evaluation
-of annotations, which will become the default in Python 3.10&lt;/li&gt;
+of annotations, which will become the default in Python 3.11&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;dict&lt;/tt&gt;s are now guaranteed to preserve insertion order&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;async&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; are now reserved keywords&lt;/li&gt;
 &lt;li&gt;New modules: &lt;tt class="docutils literal"&gt;contextvars&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;dataclasses&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;importlib.resources&lt;/tt&gt;&lt;/li&gt;
@@ -1146,6 +1146,13 @@ e.g.:&lt;/p&gt;
       &lt;span class="n"&gt;CtxManager2&lt;/span&gt;&lt;span class="p"&gt;()):&lt;/span&gt;
 &lt;/pre&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Assignment expressions can now be used unparenthesized within set literals,
+set comprehensions, and sequence indexes (but not slices)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Numeric literals immediately followed by keywords (e.g., &lt;tt class="docutils literal"&gt;0in x&lt;/tt&gt;) now
+generate a deprecation warning.  Future Python versions will change this to a
+syntax warning and then a syntax error.&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Common syntax errors now have better error messages&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;AttributeError&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;NameError&lt;/tt&gt; error messages now include suggestions
@@ -1153,35 +1160,54 @@ as to what you might have meant&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;Union[X, Y]&lt;/tt&gt; can now be written &lt;tt class="docutils literal"&gt;X | Y&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Collections ABCs can no longer be imported from &lt;tt class="docutils literal"&gt;collections&lt;/tt&gt;; import them
-from &lt;tt class="docutils literal"&gt;collections.abc&lt;/tt&gt; instead&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;Dictionary views returned by &lt;tt class="docutils literal"&gt;dict.keys()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;dict.values()&lt;/tt&gt;, and
+&lt;tt class="docutils literal"&gt;dict.items()&lt;/tt&gt; now have &lt;tt class="docutils literal"&gt;mapping&lt;/tt&gt; attributes wrapping the original
+&lt;tt class="docutils literal"&gt;dict&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;The second argument of &lt;tt class="docutils literal"&gt;isinstance()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;issubclass()&lt;/tt&gt; can now be a
 &lt;tt class="docutils literal"&gt;Union&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;typing&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;Concatenate&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;ParamSpec&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;TypeAlias&lt;/tt&gt;,
-&lt;tt class="docutils literal"&gt;TypeGuard&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;is_typeddict()&lt;/tt&gt; added&lt;/p&gt;
-&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;New &lt;tt class="docutils literal"&gt;int&lt;/tt&gt; method: &lt;tt class="docutils literal"&gt;bit_count()&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;open()&lt;/tt&gt; and friends can now be passed &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;encoding=&amp;quot;locale&amp;quot;&lt;/span&gt;&lt;/tt&gt; in order to
+explicitly use the current locale’s encoding&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;zip()&lt;/tt&gt; now has a &lt;tt class="docutils literal"&gt;strict&lt;/tt&gt; parameter for requiring that all input
 iterables have the same length&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Assignment expressions can now be used unparenthesized within set literals,
-set comprehensions, and sequence indexes (but not slices)&lt;/p&gt;
-&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;New builtin functions: &lt;tt class="docutils literal"&gt;aiter()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;anext()&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter (deprecated in Python 3.8) is now removed from most of
+&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s high-level API&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;base64&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;b32hexencode()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;b32hexdecode()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;bisect&lt;/tt&gt; module: The functions now accept a &lt;tt class="docutils literal"&gt;key&lt;/tt&gt; argument&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;codecs&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;unregister()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Collections ABCs can no longer be imported from &lt;tt class="docutils literal"&gt;collections&lt;/tt&gt;; import them
+from &lt;tt class="docutils literal"&gt;collections.abc&lt;/tt&gt; instead&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;contextlib&lt;/tt&gt;: &lt;tt class="docutils literal"&gt;aclosing()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;dataclasses&lt;/tt&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The &lt;tt class="docutils literal"&gt;dataclass&lt;/tt&gt; decorator now accepts a &lt;tt class="docutils literal"&gt;slots&lt;/tt&gt; argument&lt;/li&gt;
+&lt;li&gt;Fields can now be made keyword-only&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;distutils&lt;/tt&gt; is now deprecated and will be removed in Python 3.12&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;glob&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;glob()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;iglob()&lt;/tt&gt; now accept &lt;tt class="docutils literal"&gt;root_dir&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;dir_fd&lt;/tt&gt; arguments&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Aligned &lt;tt class="docutils literal"&gt;importlib.metadata&lt;/tt&gt; with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-metadata&lt;/span&gt;&lt;/tt&gt; v4.6&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;entry_points()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;package_distributions()&lt;/tt&gt; added&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;inspect&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;get_annotations()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;os.path.realpath()&lt;/tt&gt; now has a &lt;tt class="docutils literal"&gt;strict&lt;/tt&gt; parameter for erroring when a
 path doesn’t exist or a symlink loop is encountered&lt;/p&gt;
@@ -1195,23 +1221,25 @@ deprecated and will be removed in Python 3.12&lt;/li&gt;
 argument&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;platform&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;freedesktop_os_release()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;statistics&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;covariance()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;correlation()&lt;/tt&gt;, and
 &lt;tt class="docutils literal"&gt;linear_regression()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;sys&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;orig_argv&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;stdlib_module_names&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;traceback&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;format_exception()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;format_exception_only()&lt;/tt&gt;,
+and &lt;tt class="docutils literal"&gt;print_exception()&lt;/tt&gt; can now take just an exception argument as a
+positional-only parameter&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;types&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;EllipsisType&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;NoneType&lt;/tt&gt;, and
 &lt;tt class="docutils literal"&gt;NotImplementedType&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Numeric literals immediately followed by keywords (e.g., &lt;tt class="docutils literal"&gt;0in x&lt;/tt&gt;) now
-generate a deprecation warning.  Future Python versions will change this to a
-syntax warning and then a syntax error.&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;typing&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;Concatenate&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;ParamSpec&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;TypeAlias&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;TypeGuard&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;is_typeddict()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Removed the &lt;tt class="docutils literal"&gt;formatter&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;parser&lt;/tt&gt; modules (deprecated in Python 3.4
 and 3.9, respectively)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter (deprecated in Python 3.8) is now removed from most of
-&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s high-level API&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -1751,7 +1779,7 @@ adds files directly into both the sdist and wheel.  To include a file in only
 the sdist, one needs to change the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option from this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
 &lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
-&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;[&amp;quot;CHANGELOG.md&amp;quot;]&lt;/span&gt;
+&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;to this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;

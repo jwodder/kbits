@@ -59,6 +59,10 @@
                     <td><time datetime="2021-07-11T00:00:00-04:00" pubdate="1">2021-07-11</time></td>
                 </tr>
                 <tr>
+                    <th>Modified:</th>
+                    <td><time datetime="2021-09-27T00:00:00-04:00">2021-09-27</time></td>
+                </tr>
+                <tr>
                     <th>Author:</th>
                     <td>
 <span class="fn">John T. Wodder II</span>                    </td>
@@ -836,7 +840,7 @@ unpackings (as appropriate)</li>
 <li>System calls are now retried when interrupted by a signal</li>
 <li><tt class="docutils literal">from __future__ import generator_stop</tt> added to cause <tt class="docutils literal">StopIteration</tt>
 exceptions raised inside generators to be transformed into
-<tt class="docutils literal">RuntimeException</tt>s, which will become the default in Python 3.7<ul>
+<tt class="docutils literal">RuntimeException</tt>s, which becomes the default in Python 3.7<ul>
 <li>Without the <tt class="docutils literal">__future__</tt> import, such exceptions generate
 <tt class="docutils literal">PendingDeprecationWarning</tt>s.</li>
 </ul>
@@ -1001,7 +1005,7 @@ path-like object or sequence of path-like objects on POSIX systems</li>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html">[link]</a></p>
 <ul class="simple">
 <li><tt class="docutils literal">from __future__ import annotations</tt> added to enable postponed evaluation
-of annotations, which will become the default in Python 3.10</li>
+of annotations, which will become the default in Python 3.11</li>
 <li><tt class="docutils literal">dict</tt>s are now guaranteed to preserve insertion order</li>
 <li><tt class="docutils literal">async</tt> and <tt class="docutils literal">await</tt> are now reserved keywords</li>
 <li>New modules: <tt class="docutils literal">contextvars</tt>, <tt class="docutils literal">dataclasses</tt>, <tt class="docutils literal">importlib.resources</tt></li>
@@ -1223,6 +1227,13 @@ e.g.:</p>
       <span class="n">CtxManager2</span><span class="p">()):</span>
 </pre>
 </li>
+<li><p class="first">Assignment expressions can now be used unparenthesized within set literals,
+set comprehensions, and sequence indexes (but not slices)</p>
+</li>
+<li><p class="first">Numeric literals immediately followed by keywords (e.g., <tt class="docutils literal">0in x</tt>) now
+generate a deprecation warning.  Future Python versions will change this to a
+syntax warning and then a syntax error.</p>
+</li>
 <li><p class="first">Common syntax errors now have better error messages</p>
 </li>
 <li><p class="first"><tt class="docutils literal">AttributeError</tt> and <tt class="docutils literal">NameError</tt> error messages now include suggestions
@@ -1230,35 +1241,54 @@ as to what you might have meant</p>
 </li>
 <li><p class="first"><tt class="docutils literal">Union[X, Y]</tt> can now be written <tt class="docutils literal">X | Y</tt></p>
 </li>
-<li><p class="first">Collections ABCs can no longer be imported from <tt class="docutils literal">collections</tt>; import them
-from <tt class="docutils literal">collections.abc</tt> instead</p>
+<li><p class="first">Dictionary views returned by <tt class="docutils literal">dict.keys()</tt>, <tt class="docutils literal">dict.values()</tt>, and
+<tt class="docutils literal">dict.items()</tt> now have <tt class="docutils literal">mapping</tt> attributes wrapping the original
+<tt class="docutils literal">dict</tt></p>
 </li>
 <li><p class="first">The second argument of <tt class="docutils literal">isinstance()</tt> and <tt class="docutils literal">issubclass()</tt> can now be a
 <tt class="docutils literal">Union</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal">typing</tt> module: <tt class="docutils literal">Concatenate</tt>, <tt class="docutils literal">ParamSpec</tt>, <tt class="docutils literal">TypeAlias</tt>,
-<tt class="docutils literal">TypeGuard</tt>, and <tt class="docutils literal">is_typeddict()</tt> added</p>
-</li>
 <li><p class="first">New <tt class="docutils literal">int</tt> method: <tt class="docutils literal">bit_count()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">open()</tt> and friends can now be passed <tt class="docutils literal"><span class="pre">encoding=&quot;locale&quot;</span></tt> in order to
+explicitly use the current locale’s encoding</p>
 </li>
 <li><p class="first"><tt class="docutils literal">zip()</tt> now has a <tt class="docutils literal">strict</tt> parameter for requiring that all input
 iterables have the same length</p>
 </li>
-<li><p class="first">Assignment expressions can now be used unparenthesized within set literals,
-set comprehensions, and sequence indexes (but not slices)</p>
-</li>
 <li><p class="first">New builtin functions: <tt class="docutils literal">aiter()</tt> and <tt class="docutils literal">anext()</tt></p>
+</li>
+<li><p class="first">The <tt class="docutils literal">loop</tt> parameter (deprecated in Python 3.8) is now removed from most of
+<tt class="docutils literal">asyncio</tt>’s high-level API</p>
 </li>
 <li><p class="first"><tt class="docutils literal">base64</tt> module: <tt class="docutils literal">b32hexencode()</tt> and <tt class="docutils literal">b32hexdecode()</tt> added</p>
 </li>
+<li><p class="first"><tt class="docutils literal">bisect</tt> module: The functions now accept a <tt class="docutils literal">key</tt> argument</p>
+</li>
+<li><p class="first"><tt class="docutils literal">codecs</tt> module: <tt class="docutils literal">unregister()</tt> added</p>
+</li>
+<li><p class="first">Collections ABCs can no longer be imported from <tt class="docutils literal">collections</tt>; import them
+from <tt class="docutils literal">collections.abc</tt> instead</p>
+</li>
 <li><p class="first"><tt class="docutils literal">contextlib</tt>: <tt class="docutils literal">aclosing()</tt> added</p>
 </li>
+<li><p class="first"><tt class="docutils literal">dataclasses</tt>:</p>
+<ul class="simple">
+<li>The <tt class="docutils literal">dataclass</tt> decorator now accepts a <tt class="docutils literal">slots</tt> argument</li>
+<li>Fields can now be made keyword-only</li>
+</ul>
+</li>
 <li><p class="first"><tt class="docutils literal">distutils</tt> is now deprecated and will be removed in Python 3.12</p>
+</li>
+<li><p class="first"><tt class="docutils literal">glob</tt> module: <tt class="docutils literal">glob()</tt> and <tt class="docutils literal">iglob()</tt> now accept <tt class="docutils literal">root_dir</tt> and
+<tt class="docutils literal">dir_fd</tt> arguments</p>
 </li>
 <li><p class="first">Aligned <tt class="docutils literal">importlib.metadata</tt> with <tt class="docutils literal"><span class="pre">importlib-metadata</span></tt> v4.6</p>
 <ul class="simple">
 <li><tt class="docutils literal">entry_points()</tt> and <tt class="docutils literal">package_distributions()</tt> added</li>
 </ul>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">get_annotations()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">os.path.realpath()</tt> now has a <tt class="docutils literal">strict</tt> parameter for erroring when a
 path doesn’t exist or a symlink loop is encountered</p>
@@ -1272,23 +1302,25 @@ deprecated and will be removed in Python 3.12</li>
 argument</li>
 </ul>
 </li>
+<li><p class="first"><tt class="docutils literal">platform</tt> module: <tt class="docutils literal">freedesktop_os_release()</tt> added</p>
+</li>
 <li><p class="first"><tt class="docutils literal">statistics</tt> module: <tt class="docutils literal">covariance()</tt>, <tt class="docutils literal">correlation()</tt>, and
 <tt class="docutils literal">linear_regression()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">orig_argv</tt> and <tt class="docutils literal">stdlib_module_names</tt> added</p>
 </li>
+<li><p class="first"><tt class="docutils literal">traceback</tt> module: <tt class="docutils literal">format_exception()</tt>, <tt class="docutils literal">format_exception_only()</tt>,
+and <tt class="docutils literal">print_exception()</tt> can now take just an exception argument as a
+positional-only parameter</p>
+</li>
 <li><p class="first"><tt class="docutils literal">types</tt> module: <tt class="docutils literal">EllipsisType</tt>, <tt class="docutils literal">NoneType</tt>, and
 <tt class="docutils literal">NotImplementedType</tt> added</p>
 </li>
-<li><p class="first">Numeric literals immediately followed by keywords (e.g., <tt class="docutils literal">0in x</tt>) now
-generate a deprecation warning.  Future Python versions will change this to a
-syntax warning and then a syntax error.</p>
+<li><p class="first"><tt class="docutils literal">typing</tt> module: <tt class="docutils literal">Concatenate</tt>, <tt class="docutils literal">ParamSpec</tt>, <tt class="docutils literal">TypeAlias</tt>,
+<tt class="docutils literal">TypeGuard</tt>, and <tt class="docutils literal">is_typeddict()</tt> added</p>
 </li>
 <li><p class="first">Removed the <tt class="docutils literal">formatter</tt> and <tt class="docutils literal">parser</tt> modules (deprecated in Python 3.4
 and 3.9, respectively)</p>
-</li>
-<li><p class="first">The <tt class="docutils literal">loop</tt> parameter (deprecated in Python 3.8) is now removed from most of
-<tt class="docutils literal">asyncio</tt>’s high-level API</p>
 </li>
 </ul>
 </div>
