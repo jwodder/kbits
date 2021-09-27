@@ -3,6 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
+:Modified: 2021-09-27
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -865,7 +866,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.5.html>`__
 
 - ``from __future__ import generator_stop`` added to cause ``StopIteration``
   exceptions raised inside generators to be transformed into
-  ``RuntimeException``\s, which will become the default in Python 3.7
+  ``RuntimeException``\s, which becomes the default in Python 3.7
 
   - Without the ``__future__`` import, such exceptions generate
     ``PendingDeprecationWarning``\s.
@@ -1098,7 +1099,7 @@ Python 3.7 (2018-06-27)
 Release notes: `[link] <https://docs.python.org/3/whatsnew/3.7.html>`__
 
 - ``from __future__ import annotations`` added to enable postponed evaluation
-  of annotations, which will become the default in Python 3.10
+  of annotations, which will become the default in Python 3.11
 
 - ``dict``\s are now guaranteed to preserve insertion order
 
@@ -1359,6 +1360,13 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
       with (CtxManager1() as example,
             CtxManager2()):
 
+- Assignment expressions can now be used unparenthesized within set literals,
+  set comprehensions, and sequence indexes (but not slices)
+
+- Numeric literals immediately followed by keywords (e.g., ``0in x``) now
+  generate a deprecation warning.  Future Python versions will change this to a
+  syntax warning and then a syntax error.
+
 - Common syntax errors now have better error messages
 
 - ``AttributeError`` and ``NameError`` error messages now include suggestions
@@ -1366,34 +1374,52 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
 
 - ``Union[X, Y]`` can now be written ``X | Y``
 
-- Collections ABCs can no longer be imported from ``collections``; import them
-  from ``collections.abc`` instead
+- Dictionary views returned by ``dict.keys()``, ``dict.values()``, and
+  ``dict.items()`` now have ``mapping`` attributes wrapping the original
+  ``dict``
 
 - The second argument of ``isinstance()`` and ``issubclass()`` can now be a
   ``Union``
 
-- ``typing`` module: ``Concatenate``, ``ParamSpec``, ``TypeAlias``,
-  ``TypeGuard``, and ``is_typeddict()`` added
-
 - New ``int`` method: ``bit_count()``
+
+- ``open()`` and friends can now be passed ``encoding="locale"`` in order to
+  explicitly use the current locale's encoding
 
 - ``zip()`` now has a ``strict`` parameter for requiring that all input
   iterables have the same length
 
-- Assignment expressions can now be used unparenthesized within set literals,
-  set comprehensions, and sequence indexes (but not slices)
-
 - New builtin functions: ``aiter()`` and ``anext()``
+
+- The ``loop`` parameter (deprecated in Python 3.8) is now removed from most of
+  ``asyncio``'s high-level API
 
 - ``base64`` module: ``b32hexencode()`` and ``b32hexdecode()`` added
 
+- ``bisect`` module: The functions now accept a ``key`` argument
+
+- ``codecs`` module: ``unregister()`` added
+
+- Collections ABCs can no longer be imported from ``collections``; import them
+  from ``collections.abc`` instead
+
 - ``contextlib``: ``aclosing()`` added
 
+- ``dataclasses``:
+
+  - The ``dataclass`` decorator now accepts a ``slots`` argument
+  - Fields can now be made keyword-only
+
 - ``distutils`` is now deprecated and will be removed in Python 3.12
+
+- ``glob`` module: ``glob()`` and ``iglob()`` now accept ``root_dir`` and
+  ``dir_fd`` arguments
 
 - Aligned ``importlib.metadata`` with ``importlib-metadata`` v4.6
 
   - ``entry_points()`` and ``package_distributions()`` added
+
+- ``inspect`` module: ``get_annotations()`` added
 
 - ``os.path.realpath()`` now has a ``strict`` parameter for erroring when a
   path doesn't exist or a symlink loop is encountered
@@ -1406,23 +1432,25 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
   - ``Path.stat()`` and ``Path.chmod()`` now have a ``follow_symlinks``
     argument
 
+- ``platform`` module: ``freedesktop_os_release()`` added
+
 - ``statistics`` module: ``covariance()``, ``correlation()``, and
   ``linear_regression()`` added
 
 - ``sys`` module: ``orig_argv`` and ``stdlib_module_names`` added
 
+- ``traceback`` module: ``format_exception()``, ``format_exception_only()``,
+  and ``print_exception()`` can now take just an exception argument as a
+  positional-only parameter
+
 - ``types`` module: ``EllipsisType``, ``NoneType``, and
   ``NotImplementedType`` added
 
-- Numeric literals immediately followed by keywords (e.g., ``0in x``) now
-  generate a deprecation warning.  Future Python versions will change this to a
-  syntax warning and then a syntax error.
+- ``typing`` module: ``Concatenate``, ``ParamSpec``, ``TypeAlias``,
+  ``TypeGuard``, and ``is_typeddict()`` added
 
 - Removed the ``formatter`` and ``parser`` modules (deprecated in Python 3.4
   and 3.9, respectively)
-
-- The ``loop`` parameter (deprecated in Python 3.8) is now removed from most of
-  ``asyncio``'s high-level API
 
 
 Python 3.11 (2022-10-03)
