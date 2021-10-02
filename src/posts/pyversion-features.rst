@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2021-09-27
+:Modified: 2021-10-02
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1132,12 +1132,18 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.7.html>`__
 - ``contextlib`` module: ``nullcontext()``, ``asynccontextmanager()``, and
   ``AsyncExitStack`` added
 
-- ``datetime`` module: ``datetime.fromisoformat()`` added
+- ``datetime`` module:
+
+  - ``datetime.fromisoformat()`` added
+  - The ``"%z"`` format of the ``strptime()`` methods now accepts timezone
+    offsets containing colons as well as a timezone specifier of "``Z``".
 
 - ``enum`` module: Support for the ``_ignore_`` class property added to
   ``Enum``
 
 - ``functools`` module: ``singledispatch()`` now recognizes type annotations
+
+- ``http.server`` command-line interface: ``--directory`` option added
 
 - ``ipaddress`` module: ``subnet_of()`` and ``supernet_of()`` methods added to
   ``IPv4Network`` and ``IPv6Network``
