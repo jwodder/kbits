@@ -141,7 +141,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.0.html>`__
 - ``intern()`` moved to ``sys.intern()``
 
 - Builtins ``apply()``, ``buffer()``, ``callable()`` (later reintroduced in
-  Python 3.3), ``coerce()``, ``execfile()``, and ``file`` removed
+  Python 3.2), ``coerce()``, ``execfile()``, and ``file`` removed
 
 - ``reduce()`` moved to ``functools.reduce()``
 
@@ -389,7 +389,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.2.html>`__
 
 - New ``range`` methods: ``index()`` and ``count()``
 
-- ``callable()`` function from Python 2 added
+- ``callable()`` function from Python 2 restored
 
 - ``abc`` module: ``abstractclassmethod()`` and ``abstractstaticmethod()``
   added
@@ -530,7 +530,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.3.html>`__
 
 - Chained exception context can be suppressed with ``raise e from None``
 
-- The ``u"unicode"`` syntax for Unicode strings in Python 2 is now supported
+- The ``u"unicode"`` syntax for Unicode strings from Python 2 is now supported
   again
 
 - Functions & classes now have a ``__qualname__`` attribute
