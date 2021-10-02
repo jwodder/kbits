@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2021-09-27T00:00:00-04:00">2021-09-27</time></td>
+                    <td><time datetime="2021-10-02T00:00:00-04:00">2021-10-02</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -230,7 +230,7 @@ stuff}</tt></p>
 <li><p class="first"><tt class="docutils literal">intern()</tt> moved to <tt class="docutils literal">sys.intern()</tt></p>
 </li>
 <li><p class="first">Builtins <tt class="docutils literal">apply()</tt>, <tt class="docutils literal">buffer()</tt>, <tt class="docutils literal">callable()</tt> (later reintroduced in
-Python 3.3), <tt class="docutils literal">coerce()</tt>, <tt class="docutils literal">execfile()</tt>, and <tt class="docutils literal">file</tt> removed</p>
+Python 3.2), <tt class="docutils literal">coerce()</tt>, <tt class="docutils literal">execfile()</tt>, and <tt class="docutils literal">file</tt> removed</p>
 </li>
 <li><p class="first"><tt class="docutils literal">reduce()</tt> moved to <tt class="docutils literal">functools.reduce()</tt></p>
 </li>
@@ -492,7 +492,7 @@ parameter</li>
 <li>New <tt class="docutils literal">str</tt> method: <tt class="docutils literal">format_map()</tt></li>
 <li>The <tt class="docutils literal">str()</tt> of a <tt class="docutils literal">float</tt> or <tt class="docutils literal">complex</tt> is now the same as its <tt class="docutils literal">repr()</tt></li>
 <li>New <tt class="docutils literal">range</tt> methods: <tt class="docutils literal">index()</tt> and <tt class="docutils literal">count()</tt></li>
-<li><tt class="docutils literal">callable()</tt> function from Python 2 added</li>
+<li><tt class="docutils literal">callable()</tt> function from Python 2 restored</li>
 <li><tt class="docutils literal">abc</tt> module: <tt class="docutils literal">abstractclassmethod()</tt> and <tt class="docutils literal">abstractstaticmethod()</tt>
 added</li>
 <li><tt class="docutils literal">ast</tt> module: <tt class="docutils literal">literal_eval()</tt> now supports <tt class="docutils literal">set</tt> &amp; <tt class="docutils literal">bytes</tt> literals</li>
@@ -600,7 +600,7 @@ there is no longer a distinction between “narrow” and “wide” builds</li>
 various subclasses for common error conditions</li>
 <li>Delegating to a subgenerator/subiterator with <tt class="docutils literal">yield from</tt> is now possible</li>
 <li>Chained exception context can be suppressed with <tt class="docutils literal">raise e from None</tt></li>
-<li>The <tt class="docutils literal">u&quot;unicode&quot;</tt> syntax for Unicode strings in Python 2 is now supported
+<li>The <tt class="docutils literal">u&quot;unicode&quot;</tt> syntax for Unicode strings from Python 2 is now supported
 again</li>
 <li>Functions &amp; classes now have a <tt class="docutils literal">__qualname__</tt> attribute</li>
 <li><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">signature()</tt>, <tt class="docutils literal">Signature</tt>, <tt class="docutils literal">Parameter</tt>, and
@@ -1023,10 +1023,16 @@ of nanoseconds as an integer</li>
 <li><tt class="docutils literal">collections</tt> module: <tt class="docutils literal">defaults</tt> argument added to <tt class="docutils literal">namedtuple()</tt></li>
 <li><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">nullcontext()</tt>, <tt class="docutils literal">asynccontextmanager()</tt>, and
 <tt class="docutils literal">AsyncExitStack</tt> added</li>
-<li><tt class="docutils literal">datetime</tt> module: <tt class="docutils literal">datetime.fromisoformat()</tt> added</li>
+<li><tt class="docutils literal">datetime</tt> module:<ul>
+<li><tt class="docutils literal">datetime.fromisoformat()</tt> added</li>
+<li>The <tt class="docutils literal">&quot;%z&quot;</tt> format of the <tt class="docutils literal">strptime()</tt> methods now accepts timezone
+offsets containing colons as well as a timezone specifier of “<tt class="docutils literal">Z</tt>”.</li>
+</ul>
+</li>
 <li><tt class="docutils literal">enum</tt> module: Support for the <tt class="docutils literal">_ignore_</tt> class property added to
 <tt class="docutils literal">Enum</tt></li>
 <li><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">singledispatch()</tt> now recognizes type annotations</li>
+<li><tt class="docutils literal">http.server</tt> command-line interface: <tt class="docutils literal"><span class="pre">--directory</span></tt> option added</li>
 <li><tt class="docutils literal">ipaddress</tt> module: <tt class="docutils literal">subnet_of()</tt> and <tt class="docutils literal">supernet_of()</tt> methods added to
 <tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt></li>
 <li><tt class="docutils literal">math</tt> module: <tt class="docutils literal">remainder()</tt> added</li>
