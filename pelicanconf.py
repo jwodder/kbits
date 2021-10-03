@@ -70,6 +70,7 @@ CACHE_CONTENT = False
 STATIC_CHECK_IF_MODIFIED = True
 
 DOCUTILS_SETTINGS = {
+    "compact_lists": False,
     "smart_quotes": True,
     "strip_comments": True,
     "math_output": "mathjax irrelevant.value",
