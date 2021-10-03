@@ -238,14 +238,16 @@ this would mean a configuration like the following:&lt;/p&gt;
 &lt;p&gt;With this in place, a new job can be added to the workflow containing all the
 steps you want to run after a new release is made.  This new job needs two
 special fields (at the same level as &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;runs-on&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;steps&lt;/tt&gt;):&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;A &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds"&gt;&lt;tt class="docutils literal"&gt;needs&lt;/tt&gt; field&lt;/a&gt; containing the job ID of the &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; job (so &lt;tt class="docutils literal"&gt;needs:
-&lt;span class="pre"&gt;auto-release&lt;/span&gt;&lt;/tt&gt; for the examples given here) to declare a dependency on it&lt;/li&gt;
-&lt;li&gt;An &lt;tt class="docutils literal"&gt;if&lt;/tt&gt; field containing an expression of the form
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;A &lt;a class="reference external" href="https://docs.github.com/en/free-pro-team&amp;#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds"&gt;&lt;tt class="docutils literal"&gt;needs&lt;/tt&gt; field&lt;/a&gt; containing the job ID of the &lt;tt class="docutils literal"&gt;auto&lt;/tt&gt; job (so &lt;tt class="docutils literal"&gt;needs:
+&lt;span class="pre"&gt;auto-release&lt;/span&gt;&lt;/tt&gt; for the examples given here) to declare a dependency on it&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;An &lt;tt class="docutils literal"&gt;if&lt;/tt&gt; field containing an expression of the form
 &lt;tt class="docutils literal"&gt;needs.AUTO_JOB_NAME.outputs.AUTO_VERSION_OUTPUT_NAME != ''&lt;/tt&gt; (so &lt;tt class="docutils literal"&gt;if:
 &lt;span class="pre"&gt;needs.auto-release.outputs.auto-version&lt;/span&gt; != ''&lt;/tt&gt; for the examples given here);
 this causes the job to be skipped if &lt;tt class="docutils literal"&gt;auto version&lt;/tt&gt; outputs nothing, i.e.,
-if no release is made&lt;/li&gt;
+if no release is made&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The configuration for this new job would then look like:&lt;/p&gt;
 &lt;pre class="code yaml literal-block"&gt;

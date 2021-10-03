@@ -86,19 +86,31 @@
 introduced in each major release of Python, starting with Python 3.0.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
-<ul class="simple">
-<li><a class="reference internal" href="#python-3-0-2008-12-03-relative-to-python-2-6" id="id1">Python 3.0 (2008-12-03), Relative to Python 2.6</a></li>
-<li><a class="reference internal" href="#python-3-1-2009-06-26" id="id2">Python 3.1 (2009-06-26)</a></li>
-<li><a class="reference internal" href="#python-3-2-2011-02-20" id="id3">Python 3.2 (2011-02-20)</a></li>
-<li><a class="reference internal" href="#python-3-3-2012-09-29" id="id4">Python 3.3 (2012-09-29)</a></li>
-<li><a class="reference internal" href="#python-3-4-2014-03-17" id="id5">Python 3.4 (2014-03-17)</a></li>
-<li><a class="reference internal" href="#python-3-5-2015-09-13" id="id6">Python 3.5 (2015-09-13)</a></li>
-<li><a class="reference internal" href="#python-3-6-2016-12-23" id="id7">Python 3.6 (2016-12-23)</a></li>
-<li><a class="reference internal" href="#python-3-7-2018-06-27" id="id8">Python 3.7 (2018-06-27)</a></li>
-<li><a class="reference internal" href="#python-3-8-2019-10-14" id="id9">Python 3.8 (2019-10-14)</a></li>
-<li><a class="reference internal" href="#python-3-9-2020-10-05" id="id10">Python 3.9 (2020-10-05)</a></li>
-<li><a class="reference internal" href="#python-3-10-2021-10-04" id="id11">Python 3.10 (2021-10-04)</a></li>
-<li><a class="reference internal" href="#python-3-11-2022-10-03" id="id12">Python 3.11 (2022-10-03)</a></li>
+<ul>
+<li><p class="first"><a class="reference internal" href="#python-3-0-2008-12-03-relative-to-python-2-6" id="id1">Python 3.0 (2008-12-03), Relative to Python 2.6</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-1-2009-06-26" id="id2">Python 3.1 (2009-06-26)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-2-2011-02-20" id="id3">Python 3.2 (2011-02-20)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-3-2012-09-29" id="id4">Python 3.3 (2012-09-29)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-4-2014-03-17" id="id5">Python 3.4 (2014-03-17)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-5-2015-09-13" id="id6">Python 3.5 (2015-09-13)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-6-2016-12-23" id="id7">Python 3.6 (2016-12-23)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-7-2018-06-27" id="id8">Python 3.7 (2018-06-27)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-8-2019-10-14" id="id9">Python 3.8 (2019-10-14)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-9-2020-10-05" id="id10">Python 3.9 (2020-10-05)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-10-2021-10-04" id="id11">Python 3.10 (2021-10-04)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-11-2022-10-03" id="id12">Python 3.11 (2022-10-03)</a></p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-0-2008-12-03-relative-to-python-2-6">
@@ -127,8 +139,9 @@ no more</p>
 is no more</p>
 </li>
 <li><p class="first">Python 2’s <tt class="docutils literal">long</tt> is Python 3’s <tt class="docutils literal">int</tt></p>
-<ul class="simple">
-<li>The <tt class="docutils literal">repr()</tt> of a (long) integer no longer includes a trailing <tt class="docutils literal">L</tt></li>
+<ul>
+<li><p class="first">The <tt class="docutils literal">repr()</tt> of a (long) integer no longer includes a trailing <tt class="docutils literal">L</tt></p>
+</li>
 </ul>
 </li>
 <li><p class="first">Python 2’s <tt class="docutils literal">unichr</tt> is Python 3’s <tt class="docutils literal">chr</tt></p>
@@ -145,25 +158,32 @@ different types</p>
 <li><p class="first">Dividing two integers with <tt class="docutils literal">/</tt> now returns a float</p>
 </li>
 <li><p class="first"><tt class="docutils literal">sys</tt> module:</p>
-<ul class="simple">
-<li><tt class="docutils literal">stdin</tt>, <tt class="docutils literal">stdout</tt>, and <tt class="docutils literal">stderr</tt> are now text streams</li>
-<li><tt class="docutils literal">maxint</tt>, <tt class="docutils literal">exitfunc()</tt>, <tt class="docutils literal">exc_clear()</tt>, <tt class="docutils literal">exc_type</tt>, <tt class="docutils literal">exc_value</tt>,
-and <tt class="docutils literal">exc_traceback</tt> removed</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">stdin</tt>, <tt class="docutils literal">stdout</tt>, and <tt class="docutils literal">stderr</tt> are now text streams</p>
+</li>
+<li><p class="first"><tt class="docutils literal">maxint</tt>, <tt class="docutils literal">exitfunc()</tt>, <tt class="docutils literal">exc_clear()</tt>, <tt class="docutils literal">exc_type</tt>, <tt class="docutils literal">exc_value</tt>,
+and <tt class="docutils literal">exc_traceback</tt> removed</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">itertools</tt> module:</p>
-<ul class="simple">
-<li><tt class="docutils literal">imap()</tt>, <tt class="docutils literal">ifilter()</tt>, and <tt class="docutils literal">izip()</tt> removed</li>
-<li><tt class="docutils literal">ifilterfalse()</tt> renamed to <tt class="docutils literal">filterfalse()</tt></li>
-<li><tt class="docutils literal">izip_longest()</tt> renamed to <tt class="docutils literal">zip_longest()</tt></li>
+<ul>
+<li><p class="first"><tt class="docutils literal">imap()</tt>, <tt class="docutils literal">ifilter()</tt>, and <tt class="docutils literal">izip()</tt> removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ifilterfalse()</tt> renamed to <tt class="docutils literal">filterfalse()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">izip_longest()</tt> renamed to <tt class="docutils literal">zip_longest()</tt></p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">ceil()</tt> and <tt class="docutils literal">floor()</tt> now return integers</p>
 </li>
 <li><p class="first"><tt class="docutils literal">array</tt> module:</p>
-<ul class="simple">
-<li><tt class="docutils literal">array.read()</tt> and <tt class="docutils literal">array.write()</tt> removed</li>
-<li><tt class="docutils literal">c</tt> typecode removed</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">array.read()</tt> and <tt class="docutils literal">array.write()</tt> removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">c</tt> typecode removed</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">sequenceIncludes()</tt> and <tt class="docutils literal">isCallable()</tt> removed</p>
@@ -190,8 +210,9 @@ reintroduced in Python 3.3)</p>
 </li>
 <li><p class="first"><tt class="docutils literal">\uXXXX</tt> and <tt class="docutils literal">\UXXXXXXXX</tt> escapes in raw string literals are now
 interpreted literally instead of being converted to Unicode characters</p>
-<ul class="simple">
-<li>As a consequence of this, the <tt class="docutils literal">ur</tt> string prefix is no longer supported</li>
+<ul>
+<li><p class="first">As a consequence of this, the <tt class="docutils literal">ur</tt> string prefix is no longer supported</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">basestring</tt> removed</p>
@@ -445,607 +466,986 @@ from primary_exception</tt></p>
 <div class="section" id="python-3-1-2009-06-26">
 <h2><a class="toc-backref" href="#contents">Python 3.1 (2009-06-26)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.1.html">[link]</a></p>
-<ul class="simple">
-<li>Multiple context managers can now be used in a single <tt class="docutils literal">with</tt> statement</li>
-<li>Directories &amp; zip archives containing a <tt class="docutils literal">__main__.py</tt> can now be executed
-by passing their path to the interpreter</li>
-<li>Packages containing a <tt class="docutils literal">__main__</tt> submodule can now be executed with
-<tt class="docutils literal">python <span class="pre">-m</span></tt> and <tt class="docutils literal">runpy</tt></li>
-<li>New <tt class="docutils literal">bytes</tt> and <tt class="docutils literal">bytearray</tt> method: <tt class="docutils literal">maketrans()</tt></li>
-<li>The <tt class="docutils literal">repr()</tt>s of <tt class="docutils literal">float</tt>s are now shorter</li>
-<li>New <tt class="docutils literal">int</tt> method: <tt class="docutils literal">bit_length</tt></li>
-<li>The fields in strings formatted with <tt class="docutils literal">str.format()</tt> can now omit numbering
+<ul>
+<li><p class="first">Multiple context managers can now be used in a single <tt class="docutils literal">with</tt> statement</p>
+</li>
+<li><p class="first">Directories &amp; zip archives containing a <tt class="docutils literal">__main__.py</tt> can now be executed
+by passing their path to the interpreter</p>
+</li>
+<li><p class="first">Packages containing a <tt class="docutils literal">__main__</tt> submodule can now be executed with
+<tt class="docutils literal">python <span class="pre">-m</span></tt> and <tt class="docutils literal">runpy</tt></p>
+</li>
+<li><p class="first">New <tt class="docutils literal">bytes</tt> and <tt class="docutils literal">bytearray</tt> method: <tt class="docutils literal">maketrans()</tt></p>
+</li>
+<li><p class="first">The <tt class="docutils literal">repr()</tt>s of <tt class="docutils literal">float</tt>s are now shorter</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">int</tt> method: <tt class="docutils literal">bit_length</tt></p>
+</li>
+<li><p class="first">The fields in strings formatted with <tt class="docutils literal">str.format()</tt> can now omit numbering
 in order to be automatically numbered, as in <tt class="docutils literal">'Sir {} of
-<span class="pre">{}'.format('Gallahad',</span> 'Camelot')</tt></li>
-<li>The format specification mini-language now includes a thousands separator
-specifier</li>
-<li><tt class="docutils literal">round(x, n)</tt> now returns an integer if <tt class="docutils literal">x</tt> is an integer</li>
-<li>New modules: <tt class="docutils literal">importlib</tt> and <tt class="docutils literal">tkinter.ttk</tt></li>
-<li><tt class="docutils literal">collections</tt> module:<ul>
-<li><tt class="docutils literal">Counter</tt> and <tt class="docutils literal">OrderedDict</tt> added</li>
-<li><tt class="docutils literal">namedtuple()</tt> now accepts a <tt class="docutils literal">rename</tt> parameter</li>
+<span class="pre">{}'.format('Gallahad',</span> 'Camelot')</tt></p>
+</li>
+<li><p class="first">The format specification mini-language now includes a thousands separator
+specifier</p>
+</li>
+<li><p class="first"><tt class="docutils literal">round(x, n)</tt> now returns an integer if <tt class="docutils literal">x</tt> is an integer</p>
+</li>
+<li><p class="first">New modules: <tt class="docutils literal">importlib</tt> and <tt class="docutils literal">tkinter.ttk</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">Counter</tt> and <tt class="docutils literal">OrderedDict</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">namedtuple()</tt> now accepts a <tt class="docutils literal">rename</tt> parameter</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">nested()</tt> is now deprecated</li>
-<li><tt class="docutils literal">decimal</tt> module: <tt class="docutils literal">Decimal.from_float()</tt> added</li>
-<li><tt class="docutils literal">io</tt> module: <tt class="docutils literal">SEEK_SET</tt>, <tt class="docutils literal">SEEK_CUR</tt>, and <tt class="docutils literal">SEEK_END</tt> added</li>
-<li><tt class="docutils literal">itertools</tt> module:<ul>
-<li><tt class="docutils literal">combinations_with_replacement()</tt> and <tt class="docutils literal">compress()</tt> added</li>
-<li><tt class="docutils literal">count()</tt> now accepts a <tt class="docutils literal">step</tt> parameter</li>
+<li><p class="first"><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">nested()</tt> is now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">decimal</tt> module: <tt class="docutils literal">Decimal.from_float()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">io</tt> module: <tt class="docutils literal">SEEK_SET</tt>, <tt class="docutils literal">SEEK_CUR</tt>, and <tt class="docutils literal">SEEK_END</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">itertools</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">combinations_with_replacement()</tt> and <tt class="docutils literal">compress()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">count()</tt> now accepts a <tt class="docutils literal">step</tt> parameter</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">json</tt> module: Decoders now accept an <tt class="docutils literal">object_pairs_hook</tt> parameter</li>
-<li><tt class="docutils literal">logging</tt> module: <tt class="docutils literal">NullHandler</tt> added</li>
-<li><tt class="docutils literal">re</tt> module: <tt class="docutils literal">sub()</tt>, <tt class="docutils literal">subn()</tt>, and <tt class="docutils literal">split()</tt> now accept a <tt class="docutils literal">flags</tt>
-parameter</li>
-<li><tt class="docutils literal">string</tt> module: <tt class="docutils literal">maketrans()</tt> is now deprecated</li>
+<li><p class="first"><tt class="docutils literal">json</tt> module: Decoders now accept an <tt class="docutils literal">object_pairs_hook</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">logging</tt> module: <tt class="docutils literal">NullHandler</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">re</tt> module: <tt class="docutils literal">sub()</tt>, <tt class="docutils literal">subn()</tt>, and <tt class="docutils literal">split()</tt> now accept a <tt class="docutils literal">flags</tt>
+parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">string</tt> module: <tt class="docutils literal">maketrans()</tt> is now deprecated</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-2-2011-02-20">
 <h2><a class="toc-backref" href="#contents">Python 3.2 (2011-02-20)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.2.html">[link]</a></p>
-<ul class="simple">
-<li>New modules: <tt class="docutils literal">argparse</tt>, <tt class="docutils literal">concurrent.futures</tt>, <tt class="docutils literal">html</tt>, and
-<tt class="docutils literal">sysconfig</tt></li>
-<li><tt class="docutils literal">.pyc</tt> files are now stored in <tt class="docutils literal">__pycache__/</tt> directories</li>
-<li>Modules now have a <tt class="docutils literal">__cached__</tt> attribute</li>
-<li>New <tt class="docutils literal">str</tt> method: <tt class="docutils literal">format_map()</tt></li>
-<li>The <tt class="docutils literal">str()</tt> of a <tt class="docutils literal">float</tt> or <tt class="docutils literal">complex</tt> is now the same as its <tt class="docutils literal">repr()</tt></li>
-<li>New <tt class="docutils literal">range</tt> methods: <tt class="docutils literal">index()</tt> and <tt class="docutils literal">count()</tt></li>
-<li><tt class="docutils literal">callable()</tt> function from Python 2 restored</li>
-<li><tt class="docutils literal">abc</tt> module: <tt class="docutils literal">abstractclassmethod()</tt> and <tt class="docutils literal">abstractstaticmethod()</tt>
-added</li>
-<li><tt class="docutils literal">ast</tt> module: <tt class="docutils literal">literal_eval()</tt> now supports <tt class="docutils literal">set</tt> &amp; <tt class="docutils literal">bytes</tt> literals</li>
-<li><tt class="docutils literal">collections</tt> module:<ul>
-<li><tt class="docutils literal">Counter.subtract()</tt> added</li>
-<li><tt class="docutils literal">OrderedDict.move_to_end()</tt> added</li>
-<li><tt class="docutils literal">deque.count()</tt> and <tt class="docutils literal">deque.reverse()</tt> added</li>
+<ul>
+<li><p class="first">New modules: <tt class="docutils literal">argparse</tt>, <tt class="docutils literal">concurrent.futures</tt>, <tt class="docutils literal">html</tt>, and
+<tt class="docutils literal">sysconfig</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">.pyc</tt> files are now stored in <tt class="docutils literal">__pycache__/</tt> directories</p>
+</li>
+<li><p class="first">Modules now have a <tt class="docutils literal">__cached__</tt> attribute</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">str</tt> method: <tt class="docutils literal">format_map()</tt></p>
+</li>
+<li><p class="first">The <tt class="docutils literal">str()</tt> of a <tt class="docutils literal">float</tt> or <tt class="docutils literal">complex</tt> is now the same as its <tt class="docutils literal">repr()</tt></p>
+</li>
+<li><p class="first">New <tt class="docutils literal">range</tt> methods: <tt class="docutils literal">index()</tt> and <tt class="docutils literal">count()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">callable()</tt> function from Python 2 restored</p>
+</li>
+<li><p class="first"><tt class="docutils literal">abc</tt> module: <tt class="docutils literal">abstractclassmethod()</tt> and <tt class="docutils literal">abstractstaticmethod()</tt>
+added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ast</tt> module: <tt class="docutils literal">literal_eval()</tt> now supports <tt class="docutils literal">set</tt> &amp; <tt class="docutils literal">bytes</tt> literals</p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">Counter.subtract()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">OrderedDict.move_to_end()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">deque.count()</tt> and <tt class="docutils literal">deque.reverse()</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">compileall</tt> command-line interface: <tt class="docutils literal"><span class="pre">-i</span></tt> and <tt class="docutils literal"><span class="pre">-b</span></tt> options added</li>
-<li><tt class="docutils literal">configparser</tt> module:<ul>
-<li><tt class="docutils literal">ConfigParser</tt> class replaced with <tt class="docutils literal">SafeConfigParser</tt>, which is now
-customizable</li>
-<li>New API added based on the mapping protocol</li>
+<li><p class="first"><tt class="docutils literal">compileall</tt> command-line interface: <tt class="docutils literal"><span class="pre">-i</span></tt> and <tt class="docutils literal"><span class="pre">-b</span></tt> options added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">configparser</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">ConfigParser</tt> class replaced with <tt class="docutils literal">SafeConfigParser</tt>, which is now
+customizable</p>
+</li>
+<li><p class="first">New API added based on the mapping protocol</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">contextlib</tt> module:<ul>
-<li><tt class="docutils literal">ContextDecorator</tt> added</li>
-<li><tt class="docutils literal">nested()</tt> removed</li>
+<li><p class="first"><tt class="docutils literal">contextlib</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">ContextDecorator</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">nested()</tt> removed</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">csv</tt> module:<ul>
-<li><tt class="docutils literal">unix_dialect</tt> dialect (dialect name <tt class="docutils literal">&quot;unix&quot;</tt>) added</li>
-<li><tt class="docutils literal">DictWriter.writeheader()</tt> added</li>
+<li><p class="first"><tt class="docutils literal">csv</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">unix_dialect</tt> dialect (dialect name <tt class="docutils literal">&quot;unix&quot;</tt>) added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">DictWriter.writeheader()</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">datetime</tt> module:<ul>
-<li><tt class="docutils literal">timezone</tt> added</li>
-<li><tt class="docutils literal">timedelta</tt> instances can now be multiplied by <tt class="docutils literal">float</tt>s and divided by
-<tt class="docutils literal">float</tt>s &amp; <tt class="docutils literal">int</tt>s</li>
-<li><tt class="docutils literal">date.strftime()</tt> now supports years from 1000 through 9999</li>
+<li><p class="first"><tt class="docutils literal">datetime</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">timezone</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">timedelta</tt> instances can now be multiplied by <tt class="docutils literal">float</tt>s and divided by
+<tt class="docutils literal">float</tt>s &amp; <tt class="docutils literal">int</tt>s</p>
+</li>
+<li><p class="first"><tt class="docutils literal">date.strftime()</tt> now supports years from 1000 through 9999</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">decimal</tt> module:<ul>
-<li>The <tt class="docutils literal">Decimal</tt> constructor now accepts <tt class="docutils literal">float</tt>s</li>
-<li><tt class="docutils literal">Decimal</tt> instances can now be compared with <tt class="docutils literal">float</tt> and
-<tt class="docutils literal">fractions.Fraction</tt> instances</li>
-<li><tt class="docutils literal">Context.clamp</tt> added</li>
+<li><p class="first"><tt class="docutils literal">decimal</tt> module:</p>
+<ul>
+<li><p class="first">The <tt class="docutils literal">Decimal</tt> constructor now accepts <tt class="docutils literal">float</tt>s</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Decimal</tt> instances can now be compared with <tt class="docutils literal">float</tt> and
+<tt class="docutils literal">fractions.Fraction</tt> instances</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Context.clamp</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">email.parser</tt> module: <tt class="docutils literal">BytesFeedParser</tt>, <tt class="docutils literal">BytesParser</tt>,
-<tt class="docutils literal">message_from_bytes()</tt> and <tt class="docutils literal">message_from_binary_file()</tt> added</li>
-<li><tt class="docutils literal">email.generator</tt> module: <tt class="docutils literal">BytesGenerator</tt> added</li>
-<li><tt class="docutils literal">fractions</tt> module: The <tt class="docutils literal">Fraction</tt> constructor now accepts <tt class="docutils literal">float</tt>s
-and <tt class="docutils literal">decimal.Decimal</tt>s</li>
-<li><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">cmp_to_key()</tt>, <tt class="docutils literal">lru_cache()</tt>, and
-<tt class="docutils literal">total_ordering()</tt> added</li>
-<li><tt class="docutils literal">gzip</tt> module: <tt class="docutils literal">compress()</tt> and <tt class="docutils literal">decompress()</tt> added</li>
-<li><tt class="docutils literal">hashlib</tt> module: <tt class="docutils literal">algorithms_available</tt> and <tt class="docutils literal">algorithms_guaranteed</tt>
-added</li>
-<li>Various ABCs added to <tt class="docutils literal">importlib.abc</tt></li>
-<li><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">getgeneratorstate()</tt> and <tt class="docutils literal">getattr_static()</tt> added</li>
-<li><tt class="docutils literal">io</tt> module: <tt class="docutils literal">BytesIO.getbuffer()</tt> added</li>
-<li><tt class="docutils literal">itertools</tt> module: <tt class="docutils literal">accumulate()</tt> added</li>
-<li><tt class="docutils literal">json</tt> module: The <tt class="docutils literal">indent</tt> parameter to <tt class="docutils literal">dumps()</tt> etc. can now be a
-string</li>
-<li><tt class="docutils literal">logging</tt> module:<ul>
-<li><tt class="docutils literal">basicConfig()</tt> now accepts a <tt class="docutils literal">style</tt> parameter</li>
-<li>If a logging event occurs before any explicit configuration is set up, a
-default configuration (available in <tt class="docutils literal">lastResort</tt>) is now enabled</li>
-<li>Python callables returning booleans can now be used as filters</li>
+<li><p class="first"><tt class="docutils literal">email.parser</tt> module: <tt class="docutils literal">BytesFeedParser</tt>, <tt class="docutils literal">BytesParser</tt>,
+<tt class="docutils literal">message_from_bytes()</tt> and <tt class="docutils literal">message_from_binary_file()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">email.generator</tt> module: <tt class="docutils literal">BytesGenerator</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">fractions</tt> module: The <tt class="docutils literal">Fraction</tt> constructor now accepts <tt class="docutils literal">float</tt>s
+and <tt class="docutils literal">decimal.Decimal</tt>s</p>
+</li>
+<li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">cmp_to_key()</tt>, <tt class="docutils literal">lru_cache()</tt>, and
+<tt class="docutils literal">total_ordering()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">gzip</tt> module: <tt class="docutils literal">compress()</tt> and <tt class="docutils literal">decompress()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">hashlib</tt> module: <tt class="docutils literal">algorithms_available</tt> and <tt class="docutils literal">algorithms_guaranteed</tt>
+added</p>
+</li>
+<li><p class="first">Various ABCs added to <tt class="docutils literal">importlib.abc</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">getgeneratorstate()</tt> and <tt class="docutils literal">getattr_static()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">io</tt> module: <tt class="docutils literal">BytesIO.getbuffer()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">itertools</tt> module: <tt class="docutils literal">accumulate()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">json</tt> module: The <tt class="docutils literal">indent</tt> parameter to <tt class="docutils literal">dumps()</tt> etc. can now be a
+string</p>
+</li>
+<li><p class="first"><tt class="docutils literal">logging</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">basicConfig()</tt> now accepts a <tt class="docutils literal">style</tt> parameter</p>
+</li>
+<li><p class="first">If a logging event occurs before any explicit configuration is set up, a
+default configuration (available in <tt class="docutils literal">lastResort</tt>) is now enabled</p>
+</li>
+<li><p class="first">Python callables returning booleans can now be used as filters</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">logging.config</tt> module: <tt class="docutils literal">dictConfig()</tt> added</li>
-<li><tt class="docutils literal">math</tt> module: <tt class="docutils literal">isfinite()</tt>, <tt class="docutils literal">expm1()</tt>, <tt class="docutils literal">erf()</tt>, <tt class="docutils literal">erfc()</tt>,
-<tt class="docutils literal">gamma()</tt>, and <tt class="docutils literal">lgamma()</tt> added</li>
-<li><tt class="docutils literal">os</tt> module: <tt class="docutils literal">fsencode()</tt>, <tt class="docutils literal">fsdecode()</tt>, <tt class="docutils literal">supports_bytes_environ</tt>,
-<tt class="docutils literal">getenvb()</tt>, and <tt class="docutils literal">environb</tt> added</li>
-<li><tt class="docutils literal">shutil</tt> module:<ul>
-<li><tt class="docutils literal">copytree()</tt> now accepts <tt class="docutils literal">ignore_dangling_symlinks</tt> and
-<tt class="docutils literal">copy_function</tt> parameters</li>
-<li><tt class="docutils literal">make_archive()</tt>, <tt class="docutils literal">unpack_archive()</tt>, etc. added</li>
+<li><p class="first"><tt class="docutils literal">logging.config</tt> module: <tt class="docutils literal">dictConfig()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">isfinite()</tt>, <tt class="docutils literal">expm1()</tt>, <tt class="docutils literal">erf()</tt>, <tt class="docutils literal">erfc()</tt>,
+<tt class="docutils literal">gamma()</tt>, and <tt class="docutils literal">lgamma()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">os</tt> module: <tt class="docutils literal">fsencode()</tt>, <tt class="docutils literal">fsdecode()</tt>, <tt class="docutils literal">supports_bytes_environ</tt>,
+<tt class="docutils literal">getenvb()</tt>, and <tt class="docutils literal">environb</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">shutil</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">copytree()</tt> now accepts <tt class="docutils literal">ignore_dangling_symlinks</tt> and
+<tt class="docutils literal">copy_function</tt> parameters</p>
+</li>
+<li><p class="first"><tt class="docutils literal">make_archive()</tt>, <tt class="docutils literal">unpack_archive()</tt>, etc. added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">site</tt> module: <tt class="docutils literal">getsitepackage()</tt>, <tt class="docutils literal">getuserbase()</tt>, and
-<tt class="docutils literal">getusersitepackages()</tt> added</li>
-<li><tt class="docutils literal">smtplib</tt> module: <tt class="docutils literal">SMTP.send_message()</tt> added</li>
-<li><tt class="docutils literal">ssl</tt> module:<ul>
-<li><tt class="docutils literal">SSLContext</tt> and <tt class="docutils literal">match_hostname()</tt> added</li>
-<li>Server Name Indication (SNI) is now supported when linked against recent
-versions of OpenSSL</li>
+<li><p class="first"><tt class="docutils literal">site</tt> module: <tt class="docutils literal">getsitepackage()</tt>, <tt class="docutils literal">getuserbase()</tt>, and
+<tt class="docutils literal">getusersitepackages()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">smtplib</tt> module: <tt class="docutils literal">SMTP.send_message()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ssl</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">SSLContext</tt> and <tt class="docutils literal">match_hostname()</tt> added</p>
+</li>
+<li><p class="first">Server Name Indication (SNI) is now supported when linked against recent
+versions of OpenSSL</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">string</tt> module: <tt class="docutils literal">maketrans()</tt> removed</li>
-<li><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">hash_info</tt> added</li>
-<li><tt class="docutils literal">tarfile</tt> module: <tt class="docutils literal">TarFile.add()</tt> now accepts a <tt class="docutils literal">filter</tt> parameter, and
-the <tt class="docutils literal">exclude</tt> parameter is now deprecated</li>
-<li><tt class="docutils literal">tempfile</tt> module: <tt class="docutils literal">TemporaryDirectory</tt> added</li>
-<li><tt class="docutils literal">threading</tt> module: <tt class="docutils literal">Barrier</tt> added</li>
-<li><tt class="docutils literal">unicodedata</tt> updated to Unicode 6.0.0</li>
-<li><tt class="docutils literal">urllib.parse</tt> module: <tt class="docutils literal">urlparse()</tt> now supports IPv6 addresses</li>
+<li><p class="first"><tt class="docutils literal">string</tt> module: <tt class="docutils literal">maketrans()</tt> removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">hash_info</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">tarfile</tt> module: <tt class="docutils literal">TarFile.add()</tt> now accepts a <tt class="docutils literal">filter</tt> parameter, and
+the <tt class="docutils literal">exclude</tt> parameter is now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">tempfile</tt> module: <tt class="docutils literal">TemporaryDirectory</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">threading</tt> module: <tt class="docutils literal">Barrier</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 6.0.0</p>
+</li>
+<li><p class="first"><tt class="docutils literal">urllib.parse</tt> module: <tt class="docutils literal">urlparse()</tt> now supports IPv6 addresses</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-3-2012-09-29">
 <h2><a class="toc-backref" href="#contents">Python 3.3 (2012-09-29)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.3.html">[link]</a></p>
-<ul class="simple">
-<li>New modules: <tt class="docutils literal">faulthandler</tt>, <tt class="docutils literal">ipaddress</tt>, <tt class="docutils literal">lzma</tt>, <tt class="docutils literal">unittest.mock</tt>,
-and <tt class="docutils literal">venv</tt></li>
-<li>Support for implicit namespace packages (directories without an
-<tt class="docutils literal">__init__.py</tt>) added</li>
-<li>All Unicode codepoints, from U+0000 to U+10FFFF, are now always supported;
-there is no longer a distinction between “narrow” and “wide” builds</li>
-<li>Multiple exception types have been merged into <tt class="docutils literal">OSError</tt>, which now has
-various subclasses for common error conditions</li>
-<li>Delegating to a subgenerator/subiterator with <tt class="docutils literal">yield from</tt> is now possible</li>
-<li>Chained exception context can be suppressed with <tt class="docutils literal">raise e from None</tt></li>
-<li>The <tt class="docutils literal">u&quot;unicode&quot;</tt> syntax for Unicode strings from Python 2 is now supported
-again</li>
-<li>Functions &amp; classes now have a <tt class="docutils literal">__qualname__</tt> attribute</li>
-<li><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">signature()</tt>, <tt class="docutils literal">Signature</tt>, <tt class="docutils literal">Parameter</tt>, and
-<tt class="docutils literal">BoundArguments</tt> added</li>
-<li><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">implementation</tt> added</li>
-<li><tt class="docutils literal">types</tt> module: <tt class="docutils literal">SimpleNamespace</tt> added</li>
-<li><tt class="docutils literal">importlib</tt> module: Various classes &amp; functions added</li>
-<li>Modules now have a <tt class="docutils literal">__loader__</tt> attribute</li>
-<li><tt class="docutils literal"><span class="pre">&quot;\N{...}&quot;</span></tt> can now take name aliases</li>
-<li><tt class="docutils literal">unicodedata</tt> updated to UCD 6.1.0</li>
-<li>New <tt class="docutils literal">list</tt> and <tt class="docutils literal">bytearray</tt> methods: <tt class="docutils literal">copy()</tt> and <tt class="docutils literal">clear()</tt></li>
-<li>Raw bytes literals can now be written <tt class="docutils literal"><span class="pre">rb&quot;...&quot;</span></tt> in addition to <tt class="docutils literal"><span class="pre">br&quot;...&quot;</span></tt></li>
-<li><tt class="docutils literal">open()</tt> now accepts an <tt class="docutils literal">opener</tt> parameter</li>
-<li><tt class="docutils literal">print()</tt> now accepts a <tt class="docutils literal">flush</tt> parameter</li>
-<li>Hash randomization with <tt class="docutils literal">hash()</tt> is now enabled by default</li>
-<li>New <tt class="docutils literal">str</tt> method: <tt class="docutils literal">casefold()</tt></li>
-<li><tt class="docutils literal">abc</tt>:<ul>
-<li>It is now possible to combine <tt class="docutils literal">abstractmethod</tt> with <tt class="docutils literal">property</tt>,
-<tt class="docutils literal">classmethod</tt>, or <tt class="docutils literal">staticmethod</tt></li>
-<li><tt class="docutils literal">abstractproperty</tt>, <tt class="docutils literal">abstractclassmethod</tt>, and <tt class="docutils literal">abstractstaticmethod</tt>
-are now deprecated</li>
-<li><tt class="docutils literal">ABCMeta.register()</tt> can now be used as a class decorator</li>
+<ul>
+<li><p class="first">New modules: <tt class="docutils literal">faulthandler</tt>, <tt class="docutils literal">ipaddress</tt>, <tt class="docutils literal">lzma</tt>, <tt class="docutils literal">unittest.mock</tt>,
+and <tt class="docutils literal">venv</tt></p>
+</li>
+<li><p class="first">Support for implicit namespace packages (directories without an
+<tt class="docutils literal">__init__.py</tt>) added</p>
+</li>
+<li><p class="first">All Unicode codepoints, from U+0000 to U+10FFFF, are now always supported;
+there is no longer a distinction between “narrow” and “wide” builds</p>
+</li>
+<li><p class="first">Multiple exception types have been merged into <tt class="docutils literal">OSError</tt>, which now has
+various subclasses for common error conditions</p>
+</li>
+<li><p class="first">Delegating to a subgenerator/subiterator with <tt class="docutils literal">yield from</tt> is now possible</p>
+</li>
+<li><p class="first">Chained exception context can be suppressed with <tt class="docutils literal">raise e from None</tt></p>
+</li>
+<li><p class="first">The <tt class="docutils literal">u&quot;unicode&quot;</tt> syntax for Unicode strings from Python 2 is now supported
+again</p>
+</li>
+<li><p class="first">Functions &amp; classes now have a <tt class="docutils literal">__qualname__</tt> attribute</p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">signature()</tt>, <tt class="docutils literal">Signature</tt>, <tt class="docutils literal">Parameter</tt>, and
+<tt class="docutils literal">BoundArguments</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">implementation</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">types</tt> module: <tt class="docutils literal">SimpleNamespace</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib</tt> module: Various classes &amp; functions added</p>
+</li>
+<li><p class="first">Modules now have a <tt class="docutils literal">__loader__</tt> attribute</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">&quot;\N{...}&quot;</span></tt> can now take name aliases</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to UCD 6.1.0</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">list</tt> and <tt class="docutils literal">bytearray</tt> methods: <tt class="docutils literal">copy()</tt> and <tt class="docutils literal">clear()</tt></p>
+</li>
+<li><p class="first">Raw bytes literals can now be written <tt class="docutils literal"><span class="pre">rb&quot;...&quot;</span></tt> in addition to <tt class="docutils literal"><span class="pre">br&quot;...&quot;</span></tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">open()</tt> now accepts an <tt class="docutils literal">opener</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">print()</tt> now accepts a <tt class="docutils literal">flush</tt> parameter</p>
+</li>
+<li><p class="first">Hash randomization with <tt class="docutils literal">hash()</tt> is now enabled by default</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">str</tt> method: <tt class="docutils literal">casefold()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">abc</tt>:</p>
+<ul>
+<li><p class="first">It is now possible to combine <tt class="docutils literal">abstractmethod</tt> with <tt class="docutils literal">property</tt>,
+<tt class="docutils literal">classmethod</tt>, or <tt class="docutils literal">staticmethod</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">abstractproperty</tt>, <tt class="docutils literal">abstractclassmethod</tt>, and <tt class="docutils literal">abstractstaticmethod</tt>
+are now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ABCMeta.register()</tt> can now be used as a class decorator</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">array</tt> module: <tt class="docutils literal">long long</tt> type now supported</li>
-<li><tt class="docutils literal">base64</tt> module: Decoding functions now accept ASCII-only <tt class="docutils literal">str</tt>s</li>
-<li><tt class="docutils literal">binascii</tt> module: The <tt class="docutils literal">a2b_*</tt> functions now accept ASCII-only <tt class="docutils literal">str</tt>s</li>
-<li><tt class="docutils literal">bz2</tt> module:<ul>
-<li><tt class="docutils literal">open()</tt> added</li>
-<li><tt class="docutils literal">BZ2File()</tt> now accepts arbitrary file-like objects and implements most
-of the <tt class="docutils literal">io.BufferedIOBase</tt> API</li>
+<li><p class="first"><tt class="docutils literal">array</tt> module: <tt class="docutils literal">long long</tt> type now supported</p>
+</li>
+<li><p class="first"><tt class="docutils literal">base64</tt> module: Decoding functions now accept ASCII-only <tt class="docutils literal">str</tt>s</p>
+</li>
+<li><p class="first"><tt class="docutils literal">binascii</tt> module: The <tt class="docutils literal">a2b_*</tt> functions now accept ASCII-only <tt class="docutils literal">str</tt>s</p>
+</li>
+<li><p class="first"><tt class="docutils literal">bz2</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">open()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">BZ2File()</tt> now accepts arbitrary file-like objects and implements most
+of the <tt class="docutils literal">io.BufferedIOBase</tt> API</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">collections</tt> module:<ul>
-<li><tt class="docutils literal">ChainMap</tt> added</li>
-<li>ABCs moved to <tt class="docutils literal">collections.abc</tt>; aliases are still present in
-<tt class="docutils literal">collections</tt> itself, but importing them is deprecated</li>
-<li><tt class="docutils literal">Counter</tt> now supports <tt class="docutils literal">+</tt>, <tt class="docutils literal">-</tt>, <tt class="docutils literal">+=</tt>, <tt class="docutils literal"><span class="pre">-=</span></tt>, <tt class="docutils literal">|=</tt>, and <tt class="docutils literal">&amp;=</tt></li>
+<li><p class="first"><tt class="docutils literal">collections</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">ChainMap</tt> added</p>
+</li>
+<li><p class="first">ABCs moved to <tt class="docutils literal">collections.abc</tt>; aliases are still present in
+<tt class="docutils literal">collections</tt> itself, but importing them is deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Counter</tt> now supports <tt class="docutils literal">+</tt>, <tt class="docutils literal">-</tt>, <tt class="docutils literal">+=</tt>, <tt class="docutils literal"><span class="pre">-=</span></tt>, <tt class="docutils literal">|=</tt>, and <tt class="docutils literal">&amp;=</tt></p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">ExitStack</tt> added</li>
-<li><tt class="docutils literal">datetime</tt> module: New <tt class="docutils literal">datetime</tt> methods: <tt class="docutils literal">timestamp()</tt>,
-<tt class="docutils literal">strftime()</tt>, and <tt class="docutils literal">astimezone()</tt></li>
-<li><tt class="docutils literal">email</tt> module: Policy framework added</li>
-<li><tt class="docutils literal">email.parser</tt> module: <tt class="docutils literal">BytesHeaderParser</tt> added</li>
-<li><tt class="docutils literal">email.utils</tt> module: <tt class="docutils literal">format_datetime()</tt>, <tt class="docutils literal">parsedate_to_datetime()</tt>,
-and <tt class="docutils literal">localtime()</tt> added</li>
-<li><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">lru_cache()</tt> now accepts a <tt class="docutils literal">typed</tt> parameter</li>
-<li><tt class="docutils literal">hmac</tt> module: <tt class="docutils literal">compare_digest()</tt> added</li>
-<li><tt class="docutils literal">http.client</tt> module: <tt class="docutils literal">HTTPResponse.readinto()</tt> added</li>
-<li><tt class="docutils literal">html.parser</tt> module: <tt class="docutils literal">HTMLParser</tt> can now parse broken markup without
-errors</li>
-<li><tt class="docutils literal">html.entities</tt>: <tt class="docutils literal">html5</tt> added</li>
-<li><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">getclosurevars()</tt> and <tt class="docutils literal">getgeneratorlocals()</tt> added</li>
-<li><tt class="docutils literal">io</tt> module:<ul>
-<li><tt class="docutils literal">x</tt> mode added to <tt class="docutils literal">open()</tt> function</li>
-<li>The <tt class="docutils literal">TextIOWrapper</tt> constructor now accepts a <tt class="docutils literal">write_through</tt> parameter</li>
+<li><p class="first"><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">ExitStack</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">datetime</tt> module: New <tt class="docutils literal">datetime</tt> methods: <tt class="docutils literal">timestamp()</tt>,
+<tt class="docutils literal">strftime()</tt>, and <tt class="docutils literal">astimezone()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">email</tt> module: Policy framework added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">email.parser</tt> module: <tt class="docutils literal">BytesHeaderParser</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">email.utils</tt> module: <tt class="docutils literal">format_datetime()</tt>, <tt class="docutils literal">parsedate_to_datetime()</tt>,
+and <tt class="docutils literal">localtime()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">lru_cache()</tt> now accepts a <tt class="docutils literal">typed</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">hmac</tt> module: <tt class="docutils literal">compare_digest()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">http.client</tt> module: <tt class="docutils literal">HTTPResponse.readinto()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">html.parser</tt> module: <tt class="docutils literal">HTMLParser</tt> can now parse broken markup without
+errors</p>
+</li>
+<li><p class="first"><tt class="docutils literal">html.entities</tt>: <tt class="docutils literal">html5</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">getclosurevars()</tt> and <tt class="docutils literal">getgeneratorlocals()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">io</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">x</tt> mode added to <tt class="docutils literal">open()</tt> function</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">TextIOWrapper</tt> constructor now accepts a <tt class="docutils literal">write_through</tt> parameter</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">itertools</tt> module: <tt class="docutils literal">accumulate()</tt> now accepts a <tt class="docutils literal">func</tt> parameter</li>
-<li><tt class="docutils literal">logging</tt> module: <tt class="docutils literal">basicConfig()</tt> now accepts a <tt class="docutils literal">handlers</tt> parameter</li>
-<li><tt class="docutils literal">math</tt> module: <tt class="docutils literal">log2()</tt> added</li>
-<li><tt class="docutils literal">multiprocessing</tt> module:<ul>
-<li>The <tt class="docutils literal">Process</tt> constructor now accepts a <tt class="docutils literal">daemon</tt> parameter</li>
-<li><tt class="docutils literal">Process.sentinel</tt> added</li>
+<li><p class="first"><tt class="docutils literal">itertools</tt> module: <tt class="docutils literal">accumulate()</tt> now accepts a <tt class="docutils literal">func</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">logging</tt> module: <tt class="docutils literal">basicConfig()</tt> now accepts a <tt class="docutils literal">handlers</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">log2()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">multiprocessing</tt> module:</p>
+<ul>
+<li><p class="first">The <tt class="docutils literal">Process</tt> constructor now accepts a <tt class="docutils literal">daemon</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Process.sentinel</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">multiprocessing.connection</tt> module: <tt class="docutils literal">wait()</tt> added</li>
-<li><tt class="docutils literal">multiprocessing.pool</tt> module: New <tt class="docutils literal">Pool</tt> methods <tt class="docutils literal">starmap()</tt> and
-<tt class="docutils literal">starmap_async()</tt> added</li>
-<li><tt class="docutils literal">os</tt> module:<ul>
-<li><tt class="docutils literal">fwalk()</tt>, <tt class="docutils literal">pipe2()</tt>, <tt class="docutils literal">sendfile()</tt>, <tt class="docutils literal">getpriority()</tt>,
+<li><p class="first"><tt class="docutils literal">multiprocessing.connection</tt> module: <tt class="docutils literal">wait()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">multiprocessing.pool</tt> module: New <tt class="docutils literal">Pool</tt> methods <tt class="docutils literal">starmap()</tt> and
+<tt class="docutils literal">starmap_async()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">os</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">fwalk()</tt>, <tt class="docutils literal">pipe2()</tt>, <tt class="docutils literal">sendfile()</tt>, <tt class="docutils literal">getpriority()</tt>,
 <tt class="docutils literal">setpriority()</tt>, <tt class="docutils literal">replace()</tt>, <tt class="docutils literal">get_terminal_size()</tt>, <tt class="docutils literal">getxattr()</tt>,
 <tt class="docutils literal">listxattr()</tt>, <tt class="docutils literal">removexattr()</tt>, <tt class="docutils literal">setxatter()</tt>, <tt class="docutils literal">sync()</tt>, and others
-added</li>
-<li>Various functions now accept <tt class="docutils literal">dir_fd</tt> and/or <tt class="docutils literal">follow_symlinks</tt>
-parameters</li>
-<li>Various functions can now take file descriptors as path arguments</li>
-<li><tt class="docutils literal">stat()</tt>, <tt class="docutils literal">fstat()</tt>, <tt class="docutils literal">lstat()</tt>, and <tt class="docutils literal">utime()</tt> now support
-timestamps with nanosecond precision</li>
+added</p>
+</li>
+<li><p class="first">Various functions now accept <tt class="docutils literal">dir_fd</tt> and/or <tt class="docutils literal">follow_symlinks</tt>
+parameters</p>
+</li>
+<li><p class="first">Various functions can now take file descriptors as path arguments</p>
+</li>
+<li><p class="first"><tt class="docutils literal">stat()</tt>, <tt class="docutils literal">fstat()</tt>, <tt class="docutils literal">lstat()</tt>, and <tt class="docutils literal">utime()</tt> now support
+timestamps with nanosecond precision</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">re</tt> module: <tt class="docutils literal">str</tt> regular expressions now support <tt class="docutils literal">\uXXXX</tt> and
-<tt class="docutils literal">\UXXXXXXXX</tt> escapes</li>
-<li><tt class="docutils literal">pipes.quote()</tt> moved to <tt class="docutils literal">shlex</tt></li>
-<li><tt class="docutils literal">shutil</tt> module:<ul>
-<li><tt class="docutils literal">disk_usage()</tt>, <tt class="docutils literal">chown()</tt>, and <tt class="docutils literal">get_terminal_size()</tt> added</li>
-<li>Several functions now accept a <tt class="docutils literal">symlink</tt> parameter</li>
+<li><p class="first"><tt class="docutils literal">re</tt> module: <tt class="docutils literal">str</tt> regular expressions now support <tt class="docutils literal">\uXXXX</tt> and
+<tt class="docutils literal">\UXXXXXXXX</tt> escapes</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pipes.quote()</tt> moved to <tt class="docutils literal">shlex</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">shutil</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">disk_usage()</tt>, <tt class="docutils literal">chown()</tt>, and <tt class="docutils literal">get_terminal_size()</tt> added</p>
+</li>
+<li><p class="first">Several functions now accept a <tt class="docutils literal">symlink</tt> parameter</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">stat</tt> module: <tt class="docutils literal">filemode()</tt> added</li>
-<li><tt class="docutils literal">struct</tt> module: <tt class="docutils literal">size_t</tt> and <tt class="docutils literal">ssize_t</tt> now supported</li>
-<li><tt class="docutils literal">subprocess</tt>:<ul>
-<li>Command strings can now be bytes on POSIX</li>
-<li><tt class="docutils literal">DEVNULL</tt> added</li>
+<li><p class="first"><tt class="docutils literal">stat</tt> module: <tt class="docutils literal">filemode()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">struct</tt> module: <tt class="docutils literal">size_t</tt> and <tt class="docutils literal">ssize_t</tt> now supported</p>
+</li>
+<li><p class="first"><tt class="docutils literal">subprocess</tt>:</p>
+<ul>
+<li><p class="first">Command strings can now be bytes on POSIX</p>
+</li>
+<li><p class="first"><tt class="docutils literal">DEVNULL</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">thread_info</tt> added</li>
-<li><tt class="docutils literal">textwrap</tt> module: <tt class="docutils literal">indent()</tt> added</li>
-<li><tt class="docutils literal">time</tt> module: <tt class="docutils literal">get_clock_info()</tt>, <tt class="docutils literal">monotonic()</tt>, <tt class="docutils literal">perf_counter()</tt>,
+<li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">thread_info</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">textwrap</tt> module: <tt class="docutils literal">indent()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">time</tt> module: <tt class="docutils literal">get_clock_info()</tt>, <tt class="docutils literal">monotonic()</tt>, <tt class="docutils literal">perf_counter()</tt>,
 <tt class="docutils literal">process_time()</tt>, <tt class="docutils literal">clock_getres()</tt>, <tt class="docutils literal">clock_gettime()</tt>,
-<tt class="docutils literal">clock_settime()</tt>, and <tt class="docutils literal">CLOCK_*</tt> constants added</li>
-<li><tt class="docutils literal">types</tt> module: <tt class="docutils literal">MappingProxyType</tt>, <tt class="docutils literal">new_class()</tt>, and
-<tt class="docutils literal">prepare_class()</tt> added</li>
-<li><tt class="docutils literal">urllib.request</tt> module: The <tt class="docutils literal">Request</tt> constructor now accepts a
-<tt class="docutils literal">method</tt> parameter</li>
-<li><tt class="docutils literal">array</tt> module: The <tt class="docutils literal">u</tt> format is now deprecated</li>
+<tt class="docutils literal">clock_settime()</tt>, and <tt class="docutils literal">CLOCK_*</tt> constants added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">types</tt> module: <tt class="docutils literal">MappingProxyType</tt>, <tt class="docutils literal">new_class()</tt>, and
+<tt class="docutils literal">prepare_class()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">urllib.request</tt> module: The <tt class="docutils literal">Request</tt> constructor now accepts a
+<tt class="docutils literal">method</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">array</tt> module: The <tt class="docutils literal">u</tt> format is now deprecated</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-4-2014-03-17">
 <h2><a class="toc-backref" href="#contents">Python 3.4 (2014-03-17)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.4.html">[link]</a></p>
-<ul class="simple">
-<li>New modules: <tt class="docutils literal">asyncio</tt>, <tt class="docutils literal">ensurepip</tt>, <tt class="docutils literal">enum</tt>, <tt class="docutils literal">pathlib</tt>,
-<tt class="docutils literal">selectors</tt>, <tt class="docutils literal">statistics</tt>, and <tt class="docutils literal">tracemalloc</tt></li>
-<li><tt class="docutils literal">codecs</tt> module: <tt class="docutils literal">encode()</tt> and <tt class="docutils literal">decode()</tt> are now documented</li>
-<li><tt class="docutils literal">unicodedata</tt> updated to UCD 6.3</li>
-<li><tt class="docutils literal">min()</tt> and <tt class="docutils literal">max()</tt> now accept a <tt class="docutils literal">default</tt> parameter</li>
-<li>New special method: <tt class="docutils literal">__length_hint__()</tt></li>
-<li><tt class="docutils literal">abc</tt> module: <tt class="docutils literal">ABC</tt> and <tt class="docutils literal">get_cache_token()</tt> added</li>
-<li><tt class="docutils literal">argparse</tt> module: <tt class="docutils literal">FileType</tt> now accepts <tt class="docutils literal">encoding</tt> and <tt class="docutils literal">errors</tt>
-parameters</li>
-<li><tt class="docutils literal">base64</tt> module:<ul>
-<li>Encoding &amp; decoding functions now accept any bytes-like object</li>
-<li><tt class="docutils literal">a85encode()</tt>, <tt class="docutils literal">a85decode()</tt>, <tt class="docutils literal">b85encode()</tt>, and <tt class="docutils literal">b85decode()</tt>
-added</li>
+<ul>
+<li><p class="first">New modules: <tt class="docutils literal">asyncio</tt>, <tt class="docutils literal">ensurepip</tt>, <tt class="docutils literal">enum</tt>, <tt class="docutils literal">pathlib</tt>,
+<tt class="docutils literal">selectors</tt>, <tt class="docutils literal">statistics</tt>, and <tt class="docutils literal">tracemalloc</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">codecs</tt> module: <tt class="docutils literal">encode()</tt> and <tt class="docutils literal">decode()</tt> are now documented</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to UCD 6.3</p>
+</li>
+<li><p class="first"><tt class="docutils literal">min()</tt> and <tt class="docutils literal">max()</tt> now accept a <tt class="docutils literal">default</tt> parameter</p>
+</li>
+<li><p class="first">New special method: <tt class="docutils literal">__length_hint__()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">abc</tt> module: <tt class="docutils literal">ABC</tt> and <tt class="docutils literal">get_cache_token()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">argparse</tt> module: <tt class="docutils literal">FileType</tt> now accepts <tt class="docutils literal">encoding</tt> and <tt class="docutils literal">errors</tt>
+parameters</p>
+</li>
+<li><p class="first"><tt class="docutils literal">base64</tt> module:</p>
+<ul>
+<li><p class="first">Encoding &amp; decoding functions now accept any bytes-like object</p>
+</li>
+<li><p class="first"><tt class="docutils literal">a85encode()</tt>, <tt class="docutils literal">a85decode()</tt>, <tt class="docutils literal">b85encode()</tt>, and <tt class="docutils literal">b85decode()</tt>
+added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">suppress()</tt> and <tt class="docutils literal">redirect_stdout()</tt> added</li>
-<li><tt class="docutils literal">doctest</tt> command-line interface: <tt class="docutils literal"><span class="pre">-o</span></tt> and <tt class="docutils literal"><span class="pre">-f</span></tt> options added</li>
-<li><tt class="docutils literal">email</tt> module:<ul>
-<li><tt class="docutils literal">as_string()</tt> now accepts a <tt class="docutils literal">policy</tt> argument</li>
-<li><tt class="docutils literal">as_bytes()</tt> method added</li>
-<li><tt class="docutils literal">EmailMessage</tt> and <tt class="docutils literal">MIMEPart</tt> added as part of new API</li>
-<li><tt class="docutils literal">contextmanager</tt> submodule added</li>
+<li><p class="first"><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">suppress()</tt> and <tt class="docutils literal">redirect_stdout()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">doctest</tt> command-line interface: <tt class="docutils literal"><span class="pre">-o</span></tt> and <tt class="docutils literal"><span class="pre">-f</span></tt> options added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">email</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">as_string()</tt> now accepts a <tt class="docutils literal">policy</tt> argument</p>
+</li>
+<li><p class="first"><tt class="docutils literal">as_bytes()</tt> method added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">EmailMessage</tt> and <tt class="docutils literal">MIMEPart</tt> added as part of new API</p>
+</li>
+<li><p class="first"><tt class="docutils literal">contextmanager</tt> submodule added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">filecmp</tt> module: <tt class="docutils literal">clear_cache()</tt> and <tt class="docutils literal">DEFAULT_IGNORES</tt> added</li>
-<li><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">partialmethod()</tt> and <tt class="docutils literal">singledispatch()</tt> added</li>
-<li><tt class="docutils literal">glob</tt> module: <tt class="docutils literal">escape()</tt> added</li>
-<li><tt class="docutils literal">hashlib</tt> module: <tt class="docutils literal">pbkdf2_hmac()</tt> added</li>
-<li><tt class="docutils literal">html</tt> module: <tt class="docutils literal">unescape()</tt> added</li>
-<li><tt class="docutils literal">html.parser</tt> module: <tt class="docutils literal">HTMLParser</tt> constructor now accepts a
-<tt class="docutils literal">convert_charrefs</tt> parameter, and the <tt class="docutils literal">strict</tt> argument is now deprecated</li>
-<li><tt class="docutils literal">http.server</tt> command-line interface: <tt class="docutils literal"><span class="pre">--bind</span></tt> option added</li>
-<li><tt class="docutils literal">imp.reload()</tt> moved to <tt class="docutils literal">importlib</tt></li>
-<li><tt class="docutils literal">importlib</tt> module: <tt class="docutils literal">InspectLoader.source_to_code()</tt> added</li>
-<li><tt class="docutils literal">importlib.util</tt> module: <tt class="docutils literal">MAGIC_NUMBER</tt>, <tt class="docutils literal">cache_from_source()</tt>,
-<tt class="docutils literal">source_from_cache()</tt>, and <tt class="docutils literal">decode_source()</tt> added</li>
-<li><tt class="docutils literal">importlib.machinery</tt> module: <tt class="docutils literal">ExtensionFileLoader.get_filename()</tt> added</li>
-<li><tt class="docutils literal">runpy</tt> and <tt class="docutils literal">python <span class="pre">-m</span></tt> can now be used with namespace packages</li>
-<li><tt class="docutils literal">inspect</tt> module:<ul>
-<li>Command-line interface added</li>
-<li><tt class="docutils literal">unwrap()</tt> added</li>
+<li><p class="first"><tt class="docutils literal">filecmp</tt> module: <tt class="docutils literal">clear_cache()</tt> and <tt class="docutils literal">DEFAULT_IGNORES</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">partialmethod()</tt> and <tt class="docutils literal">singledispatch()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">glob</tt> module: <tt class="docutils literal">escape()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">hashlib</tt> module: <tt class="docutils literal">pbkdf2_hmac()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">html</tt> module: <tt class="docutils literal">unescape()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">html.parser</tt> module: <tt class="docutils literal">HTMLParser</tt> constructor now accepts a
+<tt class="docutils literal">convert_charrefs</tt> parameter, and the <tt class="docutils literal">strict</tt> argument is now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">http.server</tt> command-line interface: <tt class="docutils literal"><span class="pre">--bind</span></tt> option added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">imp.reload()</tt> moved to <tt class="docutils literal">importlib</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib</tt> module: <tt class="docutils literal">InspectLoader.source_to_code()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib.util</tt> module: <tt class="docutils literal">MAGIC_NUMBER</tt>, <tt class="docutils literal">cache_from_source()</tt>,
+<tt class="docutils literal">source_from_cache()</tt>, and <tt class="docutils literal">decode_source()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib.machinery</tt> module: <tt class="docutils literal">ExtensionFileLoader.get_filename()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">runpy</tt> and <tt class="docutils literal">python <span class="pre">-m</span></tt> can now be used with namespace packages</p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module:</p>
+<ul>
+<li><p class="first">Command-line interface added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unwrap()</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">ipaddress</tt> module: <tt class="docutils literal">is_global</tt> property added</li>
-<li><tt class="docutils literal">json</tt> module: <tt class="docutils literal">dumps()</tt> etc. will now automatically set <tt class="docutils literal">separators</tt>
-to <tt class="docutils literal"><span class="pre">(&quot;,&quot;,</span> &quot;: &quot;)</tt> when <tt class="docutils literal">indent</tt> is non-<tt class="docutils literal">None</tt></li>
-<li><tt class="docutils literal">multiprocessing</tt> module:<ul>
-<li>Start methods <tt class="docutils literal">spawn</tt> and <tt class="docutils literal">forkserver</tt> added</li>
-<li>Contexts added</li>
-<li><tt class="docutils literal">get_all_start_methods()</tt>, <tt class="docutils literal">get_start_method()</tt>,
-<tt class="docutils literal">set_start_method()</tt>, and <tt class="docutils literal">get_context()</tt> added</li>
+<li><p class="first"><tt class="docutils literal">ipaddress</tt> module: <tt class="docutils literal">is_global</tt> property added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">json</tt> module: <tt class="docutils literal">dumps()</tt> etc. will now automatically set <tt class="docutils literal">separators</tt>
+to <tt class="docutils literal"><span class="pre">(&quot;,&quot;,</span> &quot;: &quot;)</tt> when <tt class="docutils literal">indent</tt> is non-<tt class="docutils literal">None</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">multiprocessing</tt> module:</p>
+<ul>
+<li><p class="first">Start methods <tt class="docutils literal">spawn</tt> and <tt class="docutils literal">forkserver</tt> added</p>
+</li>
+<li><p class="first">Contexts added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">get_all_start_methods()</tt>, <tt class="docutils literal">get_start_method()</tt>,
+<tt class="docutils literal">set_start_method()</tt>, and <tt class="docutils literal">get_context()</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">length_hint()</tt> added</li>
-<li><tt class="docutils literal">os</tt> module:<ul>
-<li><tt class="docutils literal">cpu_count()</tt> added</li>
-<li><tt class="docutils literal">open()</tt> now supports the <tt class="docutils literal">O_PATH</tt> and <tt class="docutils literal">O_TMPFILE</tt> flags</li>
+<li><p class="first"><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">length_hint()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">os</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">cpu_count()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">open()</tt> now supports the <tt class="docutils literal">O_PATH</tt> and <tt class="docutils literal">O_TMPFILE</tt> flags</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">pdb</tt> module: <tt class="docutils literal">print</tt> command removed</li>
-<li><tt class="docutils literal">pickle</tt> module: Protocol 4 added</li>
-<li><tt class="docutils literal">plistlib</tt> module: <tt class="docutils literal">load()</tt>, <tt class="docutils literal">dump()</tt>, <tt class="docutils literal">loads()</tt>, and <tt class="docutils literal">dumps()</tt>
-added</li>
-<li><tt class="docutils literal">pprint</tt> module: <tt class="docutils literal">PrettyPrinter</tt>, <tt class="docutils literal">pformat()</tt>, and <tt class="docutils literal">pprint()</tt> now
-accept a <tt class="docutils literal">compact</tt> parameter</li>
-<li><tt class="docutils literal">re</tt> module: <tt class="docutils literal">fullmatch()</tt> and <tt class="docutils literal">regex.fullmatch()</tt> added</li>
-<li><tt class="docutils literal">resource</tt> module: <tt class="docutils literal">prlimit()</tt> added</li>
-<li><tt class="docutils literal">shutil</tt> module: <tt class="docutils literal">copyfile()</tt> now raises a <tt class="docutils literal">SameFileError</tt> when the
-source and destination are the same file</li>
-<li><tt class="docutils literal">ssl</tt> module:<ul>
-<li><tt class="docutils literal">create_default_context()</tt> and <tt class="docutils literal">get_default_verify_paths()</tt> added</li>
-<li>New <tt class="docutils literal">SSLContext</tt> methods: <tt class="docutils literal">cert_store_stats()</tt>, <tt class="docutils literal">get_ca_certs()</tt>, and
-<tt class="docutils literal">load_default_certs()</tt></li>
+<li><p class="first"><tt class="docutils literal">pdb</tt> module: <tt class="docutils literal">print</tt> command removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pickle</tt> module: Protocol 4 added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">plistlib</tt> module: <tt class="docutils literal">load()</tt>, <tt class="docutils literal">dump()</tt>, <tt class="docutils literal">loads()</tt>, and <tt class="docutils literal">dumps()</tt>
+added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pprint</tt> module: <tt class="docutils literal">PrettyPrinter</tt>, <tt class="docutils literal">pformat()</tt>, and <tt class="docutils literal">pprint()</tt> now
+accept a <tt class="docutils literal">compact</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">re</tt> module: <tt class="docutils literal">fullmatch()</tt> and <tt class="docutils literal">regex.fullmatch()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">resource</tt> module: <tt class="docutils literal">prlimit()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">shutil</tt> module: <tt class="docutils literal">copyfile()</tt> now raises a <tt class="docutils literal">SameFileError</tt> when the
+source and destination are the same file</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ssl</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">create_default_context()</tt> and <tt class="docutils literal">get_default_verify_paths()</tt> added</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">SSLContext</tt> methods: <tt class="docutils literal">cert_store_stats()</tt>, <tt class="docutils literal">get_ca_certs()</tt>, and
+<tt class="docutils literal">load_default_certs()</tt></p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">stat</tt> module: <tt class="docutils literal">S_IFDOOR</tt>, <tt class="docutils literal">S_IFPORT</tt>, and <tt class="docutils literal">S_IFWHT</tt> added</li>
-<li><tt class="docutils literal">struct</tt> module: <tt class="docutils literal">iter_unpack()</tt> and <tt class="docutils literal">Struct.iter_unpack()</tt> added</li>
-<li><tt class="docutils literal">subprocess</tt> module:<ul>
-<li><tt class="docutils literal">check_output()</tt> now accepts an <tt class="docutils literal">input</tt> parameter</li>
+<li><p class="first"><tt class="docutils literal">stat</tt> module: <tt class="docutils literal">S_IFDOOR</tt>, <tt class="docutils literal">S_IFPORT</tt>, and <tt class="docutils literal">S_IFWHT</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">struct</tt> module: <tt class="docutils literal">iter_unpack()</tt> and <tt class="docutils literal">Struct.iter_unpack()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">subprocess</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">check_output()</tt> now accepts an <tt class="docutils literal">input</tt> parameter</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">getallocatedblocks()</tt> and <tt class="docutils literal">__interactivehook__</tt> added</li>
-<li><tt class="docutils literal">tarfile</tt> module: Command-line interface added</li>
-<li><tt class="docutils literal">textwrap</tt> module:<ul>
-<li>The <tt class="docutils literal">TextWrapper</tt> constructor now accepts <tt class="docutils literal">max_lines</tt> and
-<tt class="docutils literal">placeholder</tt> parameters</li>
-<li><tt class="docutils literal">shorten()</tt> added</li>
+<li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">getallocatedblocks()</tt> and <tt class="docutils literal">__interactivehook__</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">tarfile</tt> module: Command-line interface added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">textwrap</tt> module:</p>
+<ul>
+<li><p class="first">The <tt class="docutils literal">TextWrapper</tt> constructor now accepts <tt class="docutils literal">max_lines</tt> and
+<tt class="docutils literal">placeholder</tt> parameters</p>
+</li>
+<li><p class="first"><tt class="docutils literal">shorten()</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">threading</tt> module: <tt class="docutils literal">main_thread()</tt> added</li>
-<li><tt class="docutils literal">traceback</tt> module: <tt class="docutils literal">clear_frames()</tt> added</li>
-<li><tt class="docutils literal">types</tt> module: <tt class="docutils literal">DynamicClassAttribute()</tt> added</li>
-<li><tt class="docutils literal">urllib.request</tt> module:<ul>
-<li><tt class="docutils literal">data:</tt> URLs now supported</li>
-<li><tt class="docutils literal">Request</tt> objects are now reusable</li>
+<li><p class="first"><tt class="docutils literal">threading</tt> module: <tt class="docutils literal">main_thread()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">traceback</tt> module: <tt class="docutils literal">clear_frames()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">types</tt> module: <tt class="docutils literal">DynamicClassAttribute()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">urllib.request</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">data:</tt> URLs now supported</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Request</tt> objects are now reusable</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">urllib.error</tt> module: <tt class="docutils literal">HTTPError.headers</tt> added</li>
-<li><tt class="docutils literal">venv</tt> module: The <tt class="docutils literal">EnvBuilder</tt> constructor and <tt class="docutils literal">create()</tt> now accept a
-<tt class="docutils literal">with_pip</tt> parameter</li>
-<li><tt class="docutils literal">importlib</tt> module: A number of methods &amp; functions are deprecated</li>
-<li>The <tt class="docutils literal">imp</tt> module is now pending deprecation</li>
-<li>The <tt class="docutils literal">formatter</tt> module is now deprecated</li>
-<li>The <tt class="docutils literal">U</tt> mode of various “open” functions is now deprecated</li>
+<li><p class="first"><tt class="docutils literal">urllib.error</tt> module: <tt class="docutils literal">HTTPError.headers</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">venv</tt> module: The <tt class="docutils literal">EnvBuilder</tt> constructor and <tt class="docutils literal">create()</tt> now accept a
+<tt class="docutils literal">with_pip</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib</tt> module: A number of methods &amp; functions are deprecated</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">imp</tt> module is now pending deprecation</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">formatter</tt> module is now deprecated</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">U</tt> mode of various “open” functions is now deprecated</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-5-2015-09-13">
 <h2><a class="toc-backref" href="#contents">Python 3.5 (2015-09-13)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.5.html">[link]</a></p>
-<ul class="simple">
-<li>Coroutine functions (<tt class="docutils literal">async def</tt>), awaitable objects (<tt class="docutils literal">await</tt> and
+<ul>
+<li><p class="first">Coroutine functions (<tt class="docutils literal">async def</tt>), awaitable objects (<tt class="docutils literal">await</tt> and
 <tt class="docutils literal">__await__()</tt>), asynchronous iteration (<tt class="docutils literal">async for</tt>, <tt class="docutils literal">__aiter__()</tt>, and
 <tt class="docutils literal">__anext__()</tt>), and asynchronous context managers (<tt class="docutils literal">async with</tt>,
-<tt class="docutils literal">__aenter__()</tt>, and <tt class="docutils literal">__aexit__()</tt>) added</li>
-<li><tt class="docutils literal">&#64;</tt> operator (with <tt class="docutils literal">__matmul__()</tt> etc. special methods) for matrix
-multiplication added</li>
-<li>Multiple <tt class="docutils literal">*</tt> and/or <tt class="docutils literal">**</tt> unpackings can now be used in a single function
-call</li>
-<li>Tuple, list, set, &amp; dictionary displays may now contain <tt class="docutils literal">*</tt> or <tt class="docutils literal">**</tt>
-unpackings (as appropriate)</li>
-<li>Percent-formatting of <tt class="docutils literal">bytes</tt> and <tt class="docutils literal">bytearray</tt> objects with <tt class="docutils literal">%</tt> added</li>
-<li>New modules: <tt class="docutils literal">typing</tt> and <tt class="docutils literal">zipapp</tt></li>
-<li><tt class="docutils literal">os</tt> module: <tt class="docutils literal">scandir()</tt> added</li>
-<li>System calls are now retried when interrupted by a signal</li>
-<li><tt class="docutils literal">from __future__ import generator_stop</tt> added to cause <tt class="docutils literal">StopIteration</tt>
+<tt class="docutils literal">__aenter__()</tt>, and <tt class="docutils literal">__aexit__()</tt>) added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">&#64;</tt> operator (with <tt class="docutils literal">__matmul__()</tt> etc. special methods) for matrix
+multiplication added</p>
+</li>
+<li><p class="first">Multiple <tt class="docutils literal">*</tt> and/or <tt class="docutils literal">**</tt> unpackings can now be used in a single function
+call</p>
+</li>
+<li><p class="first">Tuple, list, set, &amp; dictionary displays may now contain <tt class="docutils literal">*</tt> or <tt class="docutils literal">**</tt>
+unpackings (as appropriate)</p>
+</li>
+<li><p class="first">Percent-formatting of <tt class="docutils literal">bytes</tt> and <tt class="docutils literal">bytearray</tt> objects with <tt class="docutils literal">%</tt> added</p>
+</li>
+<li><p class="first">New modules: <tt class="docutils literal">typing</tt> and <tt class="docutils literal">zipapp</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">os</tt> module: <tt class="docutils literal">scandir()</tt> added</p>
+</li>
+<li><p class="first">System calls are now retried when interrupted by a signal</p>
+</li>
+<li><p class="first"><tt class="docutils literal">from __future__ import generator_stop</tt> added to cause <tt class="docutils literal">StopIteration</tt>
 exceptions raised inside generators to be transformed into
-<tt class="docutils literal">RuntimeException</tt>s, which becomes the default in Python 3.7<ul>
-<li>Without the <tt class="docutils literal">__future__</tt> import, such exceptions generate
-<tt class="docutils literal">PendingDeprecationWarning</tt>s.</li>
+<tt class="docutils literal">RuntimeException</tt>s, which becomes the default in Python 3.7</p>
+<ul>
+<li><p class="first">Without the <tt class="docutils literal">__future__</tt> import, such exceptions generate
+<tt class="docutils literal">PendingDeprecationWarning</tt>s.</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">cmath</tt> module: <tt class="docutils literal">isclose()</tt> added</li>
-<li><tt class="docutils literal">.pyo</tt> files eliminated; optimized bytecode is now stored in <tt class="docutils literal">.pyc</tt> files
-with <tt class="docutils literal">opt-</tt> tags in their name</li>
-<li><tt class="docutils literal">&quot;namereplace&quot;</tt> error handler added</li>
-<li>Various additions &amp; improvements to the <tt class="docutils literal">asyncio</tt> module</li>
-<li><tt class="docutils literal">collections</tt> module:<ul>
-<li>New <tt class="docutils literal">deque</tt> methods: <tt class="docutils literal">index()</tt>, <tt class="docutils literal">insert()</tt>, and <tt class="docutils literal">copy()</tt></li>
-<li><tt class="docutils literal">deque</tt> now supports <tt class="docutils literal">+</tt> and <tt class="docutils literal">*</tt></li>
+<li><p class="first"><tt class="docutils literal">cmath</tt> module: <tt class="docutils literal">isclose()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">.pyo</tt> files eliminated; optimized bytecode is now stored in <tt class="docutils literal">.pyc</tt> files
+with <tt class="docutils literal">opt-</tt> tags in their name</p>
+</li>
+<li><p class="first"><tt class="docutils literal">&quot;namereplace&quot;</tt> error handler added</p>
+</li>
+<li><p class="first">Various additions &amp; improvements to the <tt class="docutils literal">asyncio</tt> module</p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections</tt> module:</p>
+<ul>
+<li><p class="first">New <tt class="docutils literal">deque</tt> methods: <tt class="docutils literal">index()</tt>, <tt class="docutils literal">insert()</tt>, and <tt class="docutils literal">copy()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">deque</tt> now supports <tt class="docutils literal">+</tt> and <tt class="docutils literal">*</tt></p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">collections.abc</tt> module: <tt class="docutils literal">Generator</tt>, <tt class="docutils literal">Awaitable</tt>, <tt class="docutils literal">Coroutine</tt>,
-<tt class="docutils literal">AsyncIterator</tt>, and <tt class="docutils literal">AsyncIterable</tt> added</li>
-<li><tt class="docutils literal">configparser</tt> module: <tt class="docutils literal">ConfigParser</tt> can now take a dictionary of
-converters, and subclasses can define additional converters as methods</li>
-<li><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">redirect_stderr()</tt> added</li>
-<li><tt class="docutils literal">enum</tt> module: The <tt class="docutils literal">Enum</tt> callable now accepts a <tt class="docutils literal">start</tt> parameter</li>
-<li><tt class="docutils literal">glob</tt> module: <tt class="docutils literal">glob()</tt> and <tt class="docutils literal"><span class="pre">iglob()`</span> now support the <span class="pre">``**</span></tt> pattern</li>
-<li><tt class="docutils literal">http</tt> module: <tt class="docutils literal">HTTPStatus</tt> added</li>
-<li><tt class="docutils literal">importlib.util</tt> module: <tt class="docutils literal">module_from_spec()</tt> added</li>
-<li><tt class="docutils literal">inspect</tt> module:<ul>
-<li><tt class="docutils literal">BoundArguments.apply_defaults()</tt> added</li>
-<li><tt class="docutils literal">Signature.from_callable()</tt> added</li>
-<li><tt class="docutils literal">signature()</tt> now accepts a <tt class="docutils literal">follow_wrapped</tt> parameter</li>
-<li><tt class="docutils literal">iscoroutine()</tt>, <tt class="docutils literal">iscoroutinefunction()</tt>, <tt class="docutils literal">isawaitable()</tt>,
-<tt class="docutils literal">getcoroutinelocals()</tt>, and <tt class="docutils literal">getcoroutinestate()</tt> added</li>
+<li><p class="first"><tt class="docutils literal">collections.abc</tt> module: <tt class="docutils literal">Generator</tt>, <tt class="docutils literal">Awaitable</tt>, <tt class="docutils literal">Coroutine</tt>,
+<tt class="docutils literal">AsyncIterator</tt>, and <tt class="docutils literal">AsyncIterable</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">configparser</tt> module: <tt class="docutils literal">ConfigParser</tt> can now take a dictionary of
+converters, and subclasses can define additional converters as methods</p>
+</li>
+<li><p class="first"><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">redirect_stderr()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">enum</tt> module: The <tt class="docutils literal">Enum</tt> callable now accepts a <tt class="docutils literal">start</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">glob</tt> module: <tt class="docutils literal">glob()</tt> and <tt class="docutils literal"><span class="pre">iglob()`</span> now support the <span class="pre">``**</span></tt> pattern</p>
+</li>
+<li><p class="first"><tt class="docutils literal">http</tt> module: <tt class="docutils literal">HTTPStatus</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib.util</tt> module: <tt class="docutils literal">module_from_spec()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">BoundArguments.apply_defaults()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Signature.from_callable()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">signature()</tt> now accepts a <tt class="docutils literal">follow_wrapped</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">iscoroutine()</tt>, <tt class="docutils literal">iscoroutinefunction()</tt>, <tt class="docutils literal">isawaitable()</tt>,
+<tt class="docutils literal">getcoroutinelocals()</tt>, and <tt class="docutils literal">getcoroutinestate()</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">io</tt> module: new <tt class="docutils literal">BufferedIOBase</tt> method: <tt class="docutils literal">readinto1()</tt></li>
-<li><tt class="docutils literal">ipaddress</tt> module:<ul>
-<li>The <tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt> constructors now accept an
-<tt class="docutils literal">(address, netmask)</tt> argument</li>
-<li>New <tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt> attribute: <tt class="docutils literal">reverse_pointer</tt></li>
+<li><p class="first"><tt class="docutils literal">io</tt> module: new <tt class="docutils literal">BufferedIOBase</tt> method: <tt class="docutils literal">readinto1()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">ipaddress</tt> module:</p>
+<ul>
+<li><p class="first">The <tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt> constructors now accept an
+<tt class="docutils literal">(address, netmask)</tt> argument</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt> attribute: <tt class="docutils literal">reverse_pointer</tt></p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">json</tt> module: JSON decoding errors now raise <tt class="docutils literal">JSONDecodeError</tt></li>
-<li><tt class="docutils literal">json.tool</tt> command-line interface: The input order of keys is now
-preserved on output; the <tt class="docutils literal"><span class="pre">--sort-keys</span></tt> option will sort the keys instead</li>
-<li><tt class="docutils literal">linecache</tt> module: <tt class="docutils literal">lazycache()</tt> added</li>
-<li><tt class="docutils literal">locale</tt> module: <tt class="docutils literal">delocalize()</tt> added</li>
-<li><tt class="docutils literal">logging</tt> module: Logging methods now accept exception instances as
-<tt class="docutils literal">exc_info</tt> arguments</li>
-<li><tt class="docutils literal">math</tt> module: <tt class="docutils literal">isclose()</tt>, <tt class="docutils literal">gcd()</tt>, <tt class="docutils literal">inf</tt>, and <tt class="docutils literal">nan</tt> added</li>
-<li><tt class="docutils literal">fractions</tt> module: <tt class="docutils literal">gcd()</tt> is now deprecated</li>
-<li><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">matmul()</tt> and <tt class="docutils literal">imatmul()</tt> added</li>
-<li><tt class="docutils literal">os.path</tt> module: <tt class="docutils literal">commonpath()</tt> added</li>
-<li><tt class="docutils literal">pathlib</tt> module:<ul>
-<li>New <tt class="docutils literal">Path</tt> methods: <tt class="docutils literal">samefile()</tt>, <tt class="docutils literal">expanduser()</tt>, <tt class="docutils literal">write_text()</tt>,
-<tt class="docutils literal">read_text()</tt>, <tt class="docutils literal">write_bytes()</tt>, and <tt class="docutils literal">read_bytes()</tt></li>
-<li>Class method <tt class="docutils literal">Path.home()</tt> added</li>
-<li><tt class="docutils literal">Path.mkdir()</tt> now accepts an <tt class="docutils literal">exist_ok</tt> parameter</li>
+<li><p class="first"><tt class="docutils literal">json</tt> module: JSON decoding errors now raise <tt class="docutils literal">JSONDecodeError</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">json.tool</tt> command-line interface: The input order of keys is now
+preserved on output; the <tt class="docutils literal"><span class="pre">--sort-keys</span></tt> option will sort the keys instead</p>
+</li>
+<li><p class="first"><tt class="docutils literal">linecache</tt> module: <tt class="docutils literal">lazycache()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">locale</tt> module: <tt class="docutils literal">delocalize()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">logging</tt> module: Logging methods now accept exception instances as
+<tt class="docutils literal">exc_info</tt> arguments</p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">isclose()</tt>, <tt class="docutils literal">gcd()</tt>, <tt class="docutils literal">inf</tt>, and <tt class="docutils literal">nan</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">fractions</tt> module: <tt class="docutils literal">gcd()</tt> is now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">matmul()</tt> and <tt class="docutils literal">imatmul()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">os.path</tt> module: <tt class="docutils literal">commonpath()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pathlib</tt> module:</p>
+<ul>
+<li><p class="first">New <tt class="docutils literal">Path</tt> methods: <tt class="docutils literal">samefile()</tt>, <tt class="docutils literal">expanduser()</tt>, <tt class="docutils literal">write_text()</tt>,
+<tt class="docutils literal">read_text()</tt>, <tt class="docutils literal">write_bytes()</tt>, and <tt class="docutils literal">read_bytes()</tt></p>
+</li>
+<li><p class="first">Class method <tt class="docutils literal">Path.home()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Path.mkdir()</tt> now accepts an <tt class="docutils literal">exist_ok</tt> parameter</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">readline</tt> module: <tt class="docutils literal">append_history_file()</tt> added</li>
-<li><tt class="docutils literal">selectors</tt> module: <tt class="docutils literal">DevpollSelector</tt> added</li>
-<li><tt class="docutils literal">shutil</tt> module: <tt class="docutils literal">move()</tt> now accepts a <tt class="docutils literal">copy_function</tt> argument</li>
-<li><tt class="docutils literal">signal</tt> module: <tt class="docutils literal">SIG*</tt> contants have been converted to enums</li>
-<li><tt class="docutils literal">socket</tt> module: <tt class="docutils literal">socket.sendfile()</tt> added</li>
-<li><tt class="docutils literal">ssl</tt> module: <tt class="docutils literal">SSLObject</tt> added</li>
-<li><tt class="docutils literal">subprocess</tt>: <tt class="docutils literal">run()</tt> added</li>
-<li><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">set_coroutine_wrapper()</tt>, <tt class="docutils literal">get_coroutine_wrapper()</tt>, and
-<tt class="docutils literal">is_finalizing()</tt> added</li>
-<li><tt class="docutils literal">time</tt> module: <tt class="docutils literal">monotonic()</tt> is now always available</li>
-<li><tt class="docutils literal">timeit</tt> command-line interface: <tt class="docutils literal"><span class="pre">--unit</span></tt> option added</li>
-<li><tt class="docutils literal">traceback</tt> module: <tt class="docutils literal">TracebackException</tt>, <tt class="docutils literal">StackSummary</tt>,
-<tt class="docutils literal">FrameSummary</tt>, <tt class="docutils literal">walk_stack()</tt>, and <tt class="docutils literal">walk_tb()</tt> added</li>
-<li><tt class="docutils literal">types</tt> module: <tt class="docutils literal">CoroutineType</tt> and <tt class="docutils literal">coroutine()</tt> added</li>
-<li><tt class="docutils literal">unicodedata</tt> updated to Unicode 8.0.0</li>
-<li><tt class="docutils literal">unittest</tt> command-line interface: <tt class="docutils literal"><span class="pre">--locals</span></tt> option added</li>
-<li><tt class="docutils literal">unittest.mock</tt> module: <tt class="docutils literal">Mock.assert_not_called()</tt> added</li>
-<li><tt class="docutils literal">urllib.request</tt> module: <tt class="docutils literal">HTTPPasswordMgrWithPriorAuth</tt> added</li>
-<li><tt class="docutils literal">platform</tt> module: <tt class="docutils literal">dist()</tt> and <tt class="docutils literal">linux_distribution()</tt> are now
-deprecated</li>
-<li><tt class="docutils literal">html.parser</tt> module: The <tt class="docutils literal">convert_charrefs</tt> parameter to the
-<tt class="docutils literal">HTMLParser</tt> constructor now defaults to <tt class="docutils literal">True</tt></li>
+<li><p class="first"><tt class="docutils literal">readline</tt> module: <tt class="docutils literal">append_history_file()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">selectors</tt> module: <tt class="docutils literal">DevpollSelector</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">shutil</tt> module: <tt class="docutils literal">move()</tt> now accepts a <tt class="docutils literal">copy_function</tt> argument</p>
+</li>
+<li><p class="first"><tt class="docutils literal">signal</tt> module: <tt class="docutils literal">SIG*</tt> contants have been converted to enums</p>
+</li>
+<li><p class="first"><tt class="docutils literal">socket</tt> module: <tt class="docutils literal">socket.sendfile()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ssl</tt> module: <tt class="docutils literal">SSLObject</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">subprocess</tt>: <tt class="docutils literal">run()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">set_coroutine_wrapper()</tt>, <tt class="docutils literal">get_coroutine_wrapper()</tt>, and
+<tt class="docutils literal">is_finalizing()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">time</tt> module: <tt class="docutils literal">monotonic()</tt> is now always available</p>
+</li>
+<li><p class="first"><tt class="docutils literal">timeit</tt> command-line interface: <tt class="docutils literal"><span class="pre">--unit</span></tt> option added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">traceback</tt> module: <tt class="docutils literal">TracebackException</tt>, <tt class="docutils literal">StackSummary</tt>,
+<tt class="docutils literal">FrameSummary</tt>, <tt class="docutils literal">walk_stack()</tt>, and <tt class="docutils literal">walk_tb()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">types</tt> module: <tt class="docutils literal">CoroutineType</tt> and <tt class="docutils literal">coroutine()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 8.0.0</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unittest</tt> command-line interface: <tt class="docutils literal"><span class="pre">--locals</span></tt> option added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unittest.mock</tt> module: <tt class="docutils literal">Mock.assert_not_called()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">urllib.request</tt> module: <tt class="docutils literal">HTTPPasswordMgrWithPriorAuth</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">platform</tt> module: <tt class="docutils literal">dist()</tt> and <tt class="docutils literal">linux_distribution()</tt> are now
+deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">html.parser</tt> module: The <tt class="docutils literal">convert_charrefs</tt> parameter to the
+<tt class="docutils literal">HTMLParser</tt> constructor now defaults to <tt class="docutils literal">True</tt></p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-6-2016-12-23">
 <h2><a class="toc-backref" href="#contents">Python 3.6 (2016-12-23)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.6.html">[link]</a></p>
-<ul class="simple">
-<li>Formatted string literals (“f-strings”)</li>
-<li>Variables can now be annotated by following the name of the variable with a
-colon and the annotation</li>
-<li>Underscores can now be used in numeric literals</li>
-<li><tt class="docutils literal">await</tt> and <tt class="docutils literal">yield</tt> can now be used in the same function, thereby
-enabling asynchronous generators</li>
-<li><tt class="docutils literal">async for</tt> can now be used in list, set, &amp; dict comprehensions and in
-generator expressions</li>
-<li><tt class="docutils literal">await</tt> expressions can now be used in any comprehension</li>
-<li>Special methods <tt class="docutils literal">__init_subclass__()</tt> and <tt class="docutils literal">__set_name__()</tt> added</li>
-<li><tt class="docutils literal">os.PathLike</tt>, the <tt class="docutils literal">__fspath__()</tt> method, and <tt class="docutils literal">os.fspath()</tt> added<ul>
-<li>Relevant file functions now accept <tt class="docutils literal">os.PathLike</tt> objects</li>
+<ul>
+<li><p class="first">Formatted string literals (“f-strings”)</p>
+</li>
+<li><p class="first">Variables can now be annotated by following the name of the variable with a
+colon and the annotation</p>
+</li>
+<li><p class="first">Underscores can now be used in numeric literals</p>
+</li>
+<li><p class="first"><tt class="docutils literal">await</tt> and <tt class="docutils literal">yield</tt> can now be used in the same function, thereby
+enabling asynchronous generators</p>
+</li>
+<li><p class="first"><tt class="docutils literal">async for</tt> can now be used in list, set, &amp; dict comprehensions and in
+generator expressions</p>
+</li>
+<li><p class="first"><tt class="docutils literal">await</tt> expressions can now be used in any comprehension</p>
+</li>
+<li><p class="first">Special methods <tt class="docutils literal">__init_subclass__()</tt> and <tt class="docutils literal">__set_name__()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">os.PathLike</tt>, the <tt class="docutils literal">__fspath__()</tt> method, and <tt class="docutils literal">os.fspath()</tt> added</p>
+<ul>
+<li><p class="first">Relevant file functions now accept <tt class="docutils literal">os.PathLike</tt> objects</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">datetime</tt> module:<ul>
-<li><tt class="docutils literal">fold</tt> attribute added to <tt class="docutils literal">datetime</tt> and <tt class="docutils literal">time</tt> for denoting the
-second instance of a time duplicated due to DST</li>
-<li>The <tt class="docutils literal">strftime()</tt> method of <tt class="docutils literal">date</tt> and <tt class="docutils literal">datetime</tt> now supports <tt class="docutils literal">%G</tt>,
-<tt class="docutils literal">%u</tt>, and <tt class="docutils literal">%V</tt></li>
-<li><tt class="docutils literal">datetime.astimezone()</tt> can now be called on naïve instances</li>
+<li><p class="first"><tt class="docutils literal">datetime</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">fold</tt> attribute added to <tt class="docutils literal">datetime</tt> and <tt class="docutils literal">time</tt> for denoting the
+second instance of a time duplicated due to DST</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">strftime()</tt> method of <tt class="docutils literal">date</tt> and <tt class="docutils literal">datetime</tt> now supports <tt class="docutils literal">%G</tt>,
+<tt class="docutils literal">%u</tt>, and <tt class="docutils literal">%V</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">datetime.astimezone()</tt> can now be called on naïve instances</p>
+</li>
 </ul>
 </li>
-<li>The file system and console encodings on Windows are now both UTF-8</li>
-<li>A class’s <tt class="docutils literal">__dict__</tt> now preserves the order in which the attributes were
-defined</li>
-<li><tt class="docutils literal">**kwargs</tt> now preserves insertion order</li>
-<li><tt class="docutils literal">dict</tt>s are now implemented in such a way that they preserve insertion
-order</li>
-<li>New module: <tt class="docutils literal">secrets</tt></li>
-<li>Various additions &amp; improvements to the <tt class="docutils literal">asyncio</tt> module</li>
-<li><tt class="docutils literal">cmath</tt> module: <tt class="docutils literal">tau</tt>, <tt class="docutils literal">inf</tt>, <tt class="docutils literal">nan</tt>, <tt class="docutils literal">infj</tt>, and <tt class="docutils literal">nanj</tt> added</li>
-<li><tt class="docutils literal">collections.abc</tt>: <tt class="docutils literal">Collection</tt>, <tt class="docutils literal">Reversible</tt>, and <tt class="docutils literal">AsyncGenerator</tt>
-added</li>
-<li><tt class="docutils literal">enum</tt> module: <tt class="docutils literal">auto</tt>, <tt class="docutils literal">Flag</tt>, and <tt class="docutils literal">IntFlag</tt> added</li>
-<li><tt class="docutils literal">json</tt> module: <tt class="docutils literal">load()</tt> and <tt class="docutils literal">loads()</tt> now support binary input in
-UTF-8, UTF-16, and UTF-32</li>
-<li><tt class="docutils literal">math</tt> module: <tt class="docutils literal">tau</tt> added</li>
-<li><tt class="docutils literal">random</tt> module: <tt class="docutils literal">choices()</tt> added</li>
-<li><tt class="docutils literal">re</tt> module:<ul>
-<li>Modifier spans (e.g., as in <tt class="docutils literal"><span class="pre">'(?i)g(?-i:v)r'</span></tt>) are now supported in
-regular expressions</li>
-<li>Match objects can now be indexed to access groups</li>
+<li><p class="first">The file system and console encodings on Windows are now both UTF-8</p>
+</li>
+<li><p class="first">A class’s <tt class="docutils literal">__dict__</tt> now preserves the order in which the attributes were
+defined</p>
+</li>
+<li><p class="first"><tt class="docutils literal">**kwargs</tt> now preserves insertion order</p>
+</li>
+<li><p class="first"><tt class="docutils literal">dict</tt>s are now implemented in such a way that they preserve insertion
+order</p>
+</li>
+<li><p class="first">New module: <tt class="docutils literal">secrets</tt></p>
+</li>
+<li><p class="first">Various additions &amp; improvements to the <tt class="docutils literal">asyncio</tt> module</p>
+</li>
+<li><p class="first"><tt class="docutils literal">cmath</tt> module: <tt class="docutils literal">tau</tt>, <tt class="docutils literal">inf</tt>, <tt class="docutils literal">nan</tt>, <tt class="docutils literal">infj</tt>, and <tt class="docutils literal">nanj</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections.abc</tt>: <tt class="docutils literal">Collection</tt>, <tt class="docutils literal">Reversible</tt>, and <tt class="docutils literal">AsyncGenerator</tt>
+added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">enum</tt> module: <tt class="docutils literal">auto</tt>, <tt class="docutils literal">Flag</tt>, and <tt class="docutils literal">IntFlag</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">json</tt> module: <tt class="docutils literal">load()</tt> and <tt class="docutils literal">loads()</tt> now support binary input in
+UTF-8, UTF-16, and UTF-32</p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">tau</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">random</tt> module: <tt class="docutils literal">choices()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">re</tt> module:</p>
+<ul>
+<li><p class="first">Modifier spans (e.g., as in <tt class="docutils literal"><span class="pre">'(?i)g(?-i:v)r'</span></tt>) are now supported in
+regular expressions</p>
+</li>
+<li><p class="first">Match objects can now be indexed to access groups</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">statistics</tt> module: <tt class="docutils literal">harmonic_mean()</tt> added</li>
-<li><tt class="docutils literal">subprocess</tt> module:<ul>
-<li><tt class="docutils literal">encoding</tt> and <tt class="docutils literal">errors</tt> arguments added to <tt class="docutils literal">Popen</tt> and the wrappers
-around it</li>
-<li>The <tt class="docutils literal">args</tt> parameter to <tt class="docutils literal">Popen</tt> and the wrappers around it can now be a
-path-like object or sequence of path-like objects on POSIX systems</li>
+<li><p class="first"><tt class="docutils literal">statistics</tt> module: <tt class="docutils literal">harmonic_mean()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">subprocess</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">encoding</tt> and <tt class="docutils literal">errors</tt> arguments added to <tt class="docutils literal">Popen</tt> and the wrappers
+around it</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">args</tt> parameter to <tt class="docutils literal">Popen</tt> and the wrappers around it can now be a
+path-like object or sequence of path-like objects on POSIX systems</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">time</tt> module: The <tt class="docutils literal">tm_gmtoff</tt> and <tt class="docutils literal">tm_zone</tt> attributes of
-<tt class="docutils literal">struct_time</tt> are now available on all platforms</li>
-<li><tt class="docutils literal">typing</tt> module:<ul>
-<li>Generic type aliases like <tt class="docutils literal">Dict[str, Tuple[S, T]]</tt> are now supported</li>
-<li><tt class="docutils literal">TYPE_CHECKING</tt> added</li>
-<li><tt class="docutils literal">ClassVar</tt> added</li>
-<li><tt class="docutils literal">NewType()</tt> added</li>
-<li><tt class="docutils literal">NamedTuple</tt> now supports variable annotation syntax</li>
+<li><p class="first"><tt class="docutils literal">time</tt> module: The <tt class="docutils literal">tm_gmtoff</tt> and <tt class="docutils literal">tm_zone</tt> attributes of
+<tt class="docutils literal">struct_time</tt> are now available on all platforms</p>
+</li>
+<li><p class="first"><tt class="docutils literal">typing</tt> module:</p>
+<ul>
+<li><p class="first">Generic type aliases like <tt class="docutils literal">Dict[str, Tuple[S, T]]</tt> are now supported</p>
+</li>
+<li><p class="first"><tt class="docutils literal">TYPE_CHECKING</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ClassVar</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">NewType()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">NamedTuple</tt> now supports variable annotation syntax</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">unittest.mock</tt> module: New <tt class="docutils literal">Mock</tt> methods <tt class="docutils literal">assert_called()</tt> and
-<tt class="docutils literal">assert_called_once()</tt> added</li>
-<li><tt class="docutils literal">venv</tt> command-line interface: <tt class="docutils literal"><span class="pre">--prompt</span></tt> option added</li>
-<li>Using <tt class="docutils literal">async</tt> or <tt class="docutils literal">await</tt> as a name will now generate a
-<tt class="docutils literal">DeprecationWarning</tt></li>
-<li><tt class="docutils literal">StopIteration</tt> exceptions raised inside generators now generate
-<tt class="docutils literal">DeprecationWarnings</tt></li>
-<li>Invalid escape sequences now generate a <tt class="docutils literal">DeprecationWarning</tt></li>
-<li>The <tt class="docutils literal">asynchat</tt> and <tt class="docutils literal">asyncore</tt> modules are now deprecated</li>
-<li>The <tt class="docutils literal">pyvenv</tt> script for creating venvs is now deprecated</li>
-<li><tt class="docutils literal">unicodedata</tt> updated to Unicode 9.0.0</li>
+<li><p class="first"><tt class="docutils literal">unittest.mock</tt> module: New <tt class="docutils literal">Mock</tt> methods <tt class="docutils literal">assert_called()</tt> and
+<tt class="docutils literal">assert_called_once()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">venv</tt> command-line interface: <tt class="docutils literal"><span class="pre">--prompt</span></tt> option added</p>
+</li>
+<li><p class="first">Using <tt class="docutils literal">async</tt> or <tt class="docutils literal">await</tt> as a name will now generate a
+<tt class="docutils literal">DeprecationWarning</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">StopIteration</tt> exceptions raised inside generators now generate
+<tt class="docutils literal">DeprecationWarnings</tt></p>
+</li>
+<li><p class="first">Invalid escape sequences now generate a <tt class="docutils literal">DeprecationWarning</tt></p>
+</li>
+<li><p class="first">The <tt class="docutils literal">asynchat</tt> and <tt class="docutils literal">asyncore</tt> modules are now deprecated</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">pyvenv</tt> script for creating venvs is now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 9.0.0</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-7-2018-06-27">
 <h2><a class="toc-backref" href="#contents">Python 3.7 (2018-06-27)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html">[link]</a></p>
-<ul class="simple">
-<li><tt class="docutils literal">from __future__ import annotations</tt> added to enable postponed evaluation
-of annotations, which will become the default in Python 3.11</li>
-<li><tt class="docutils literal">dict</tt>s are now guaranteed to preserve insertion order</li>
-<li><tt class="docutils literal">async</tt> and <tt class="docutils literal">await</tt> are now reserved keywords</li>
-<li>New modules: <tt class="docutils literal">contextvars</tt>, <tt class="docutils literal">dataclasses</tt>, <tt class="docutils literal">importlib.resources</tt></li>
-<li>New builtin function: <tt class="docutils literal">breakpoint()</tt></li>
-<li>The interpreter now coerces ASCII locales to UTF-8 under certain
-circumstances on non-Windows OSes</li>
-<li><tt class="docutils literal">__getattr__()</tt> and <tt class="docutils literal">__dir__()</tt> can now be defined on modules</li>
-<li><tt class="docutils literal">time</tt> module: variants of the timer functions added that return a number
-of nanoseconds as an integer</li>
-<li>Special methods <tt class="docutils literal">__class_getitem__()</tt> and <tt class="docutils literal">__mro_entries__()</tt> added</li>
-<li>Python Development Mode added</li>
-<li>New <tt class="docutils literal">str</tt>, <tt class="docutils literal">bytes</tt>, and <tt class="docutils literal">bytearray</tt> method: <tt class="docutils literal">isascii()</tt></li>
-<li><tt class="docutils literal">argparse</tt> module: <tt class="docutils literal">ArgumentParser.parser_intermixed_args()</tt> added</li>
-<li>Various additions &amp; improvements to the <tt class="docutils literal">asyncio</tt> module</li>
-<li><tt class="docutils literal">collections</tt> module: <tt class="docutils literal">defaults</tt> argument added to <tt class="docutils literal">namedtuple()</tt></li>
-<li><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">nullcontext()</tt>, <tt class="docutils literal">asynccontextmanager()</tt>, and
-<tt class="docutils literal">AsyncExitStack</tt> added</li>
-<li><tt class="docutils literal">datetime</tt> module:<ul>
-<li><tt class="docutils literal">datetime.fromisoformat()</tt> added</li>
-<li>The <tt class="docutils literal">&quot;%z&quot;</tt> format of the <tt class="docutils literal">strptime()</tt> methods now accepts timezone
-offsets containing colons as well as a timezone specifier of “<tt class="docutils literal">Z</tt>”.</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">from __future__ import annotations</tt> added to enable postponed evaluation
+of annotations, which will become the default in Python 3.11</p>
+</li>
+<li><p class="first"><tt class="docutils literal">dict</tt>s are now guaranteed to preserve insertion order</p>
+</li>
+<li><p class="first"><tt class="docutils literal">async</tt> and <tt class="docutils literal">await</tt> are now reserved keywords</p>
+</li>
+<li><p class="first">New modules: <tt class="docutils literal">contextvars</tt>, <tt class="docutils literal">dataclasses</tt>, <tt class="docutils literal">importlib.resources</tt></p>
+</li>
+<li><p class="first">New builtin function: <tt class="docutils literal">breakpoint()</tt></p>
+</li>
+<li><p class="first">The interpreter now coerces ASCII locales to UTF-8 under certain
+circumstances on non-Windows OSes</p>
+</li>
+<li><p class="first"><tt class="docutils literal">__getattr__()</tt> and <tt class="docutils literal">__dir__()</tt> can now be defined on modules</p>
+</li>
+<li><p class="first"><tt class="docutils literal">time</tt> module: variants of the timer functions added that return a number
+of nanoseconds as an integer</p>
+</li>
+<li><p class="first">Special methods <tt class="docutils literal">__class_getitem__()</tt> and <tt class="docutils literal">__mro_entries__()</tt> added</p>
+</li>
+<li><p class="first">Python Development Mode added</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">str</tt>, <tt class="docutils literal">bytes</tt>, and <tt class="docutils literal">bytearray</tt> method: <tt class="docutils literal">isascii()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">argparse</tt> module: <tt class="docutils literal">ArgumentParser.parser_intermixed_args()</tt> added</p>
+</li>
+<li><p class="first">Various additions &amp; improvements to the <tt class="docutils literal">asyncio</tt> module</p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections</tt> module: <tt class="docutils literal">defaults</tt> argument added to <tt class="docutils literal">namedtuple()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">nullcontext()</tt>, <tt class="docutils literal">asynccontextmanager()</tt>, and
+<tt class="docutils literal">AsyncExitStack</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">datetime</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">datetime.fromisoformat()</tt> added</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">&quot;%z&quot;</tt> format of the <tt class="docutils literal">strptime()</tt> methods now accepts timezone
+offsets containing colons as well as a timezone specifier of “<tt class="docutils literal">Z</tt>”.</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">enum</tt> module: Support for the <tt class="docutils literal">_ignore_</tt> class property added to
-<tt class="docutils literal">Enum</tt></li>
-<li><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">singledispatch()</tt> now recognizes type annotations</li>
-<li><tt class="docutils literal">http.server</tt> command-line interface: <tt class="docutils literal"><span class="pre">--directory</span></tt> option added</li>
-<li><tt class="docutils literal">ipaddress</tt> module: <tt class="docutils literal">subnet_of()</tt> and <tt class="docutils literal">supernet_of()</tt> methods added to
-<tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt></li>
-<li><tt class="docutils literal">math</tt> module: <tt class="docutils literal">remainder()</tt> added</li>
-<li><tt class="docutils literal">pathlib</tt> module: <tt class="docutils literal">Path.is_mount()</tt> added</li>
-<li><tt class="docutils literal">subprocess</tt> module:<ul>
-<li><tt class="docutils literal">capture_output</tt> argument added to <tt class="docutils literal">run()</tt></li>
-<li><tt class="docutils literal">text</tt> argument added to <tt class="docutils literal">run()</tt> and the <tt class="docutils literal">Popen</tt> constructor</li>
+<li><p class="first"><tt class="docutils literal">enum</tt> module: Support for the <tt class="docutils literal">_ignore_</tt> class property added to
+<tt class="docutils literal">Enum</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">singledispatch()</tt> now recognizes type annotations</p>
+</li>
+<li><p class="first"><tt class="docutils literal">http.server</tt> command-line interface: <tt class="docutils literal"><span class="pre">--directory</span></tt> option added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ipaddress</tt> module: <tt class="docutils literal">subnet_of()</tt> and <tt class="docutils literal">supernet_of()</tt> methods added to
+<tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">remainder()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pathlib</tt> module: <tt class="docutils literal">Path.is_mount()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">subprocess</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">capture_output</tt> argument added to <tt class="docutils literal">run()</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">text</tt> argument added to <tt class="docutils literal">run()</tt> and the <tt class="docutils literal">Popen</tt> constructor</p>
+</li>
 </ul>
 </li>
-<li>Removed the <tt class="docutils literal">fpectl</tt> module</li>
-<li><tt class="docutils literal">StopIteration</tt> exceptions raised inside coroutines and generators are now
-transformed into <tt class="docutils literal">RuntimeException</tt>s</li>
-<li><tt class="docutils literal">unicodedata</tt> updated to Unicode 11</li>
+<li><p class="first">Removed the <tt class="docutils literal">fpectl</tt> module</p>
+</li>
+<li><p class="first"><tt class="docutils literal">StopIteration</tt> exceptions raised inside coroutines and generators are now
+transformed into <tt class="docutils literal">RuntimeException</tt>s</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 11</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-8-2019-10-14">
@@ -1091,11 +1491,14 @@ modular multiplicative inverse (or a power thereof) is calculated</p>
 <li><p class="first">Running <tt class="docutils literal">python <span class="pre">-m</span> asyncio</tt> now starts an async REPL</p>
 </li>
 <li><p class="first"><tt class="docutils literal">asyncio</tt> module:</p>
-<ul class="simple">
-<li><tt class="docutils literal">coroutine()</tt> is now deprecated</li>
-<li>Passing a <tt class="docutils literal">loop</tt> parameter is now deprecated for most of <tt class="docutils literal">asyncio</tt>’s
-high-level API</li>
-<li>Explicitly passing coroutines to <tt class="docutils literal">wait()</tt> is now deprecated</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">coroutine()</tt> is now deprecated</p>
+</li>
+<li><p class="first">Passing a <tt class="docutils literal">loop</tt> parameter is now deprecated for most of <tt class="docutils literal">asyncio</tt>’s
+high-level API</p>
+</li>
+<li><p class="first">Explicitly passing coroutines to <tt class="docutils literal">wait()</tt> is now deprecated</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">datetime</tt> module: New <tt class="docutils literal">date</tt> and <tt class="docutils literal">datetime</tt> method:
@@ -1107,13 +1510,19 @@ added</p>
 <li><p class="first"><tt class="docutils literal">json.tool</tt> command-line interface: <tt class="docutils literal"><span class="pre">--json-lines</span></tt> option added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">math</tt> module:</p>
-<ul class="simple">
-<li><tt class="docutils literal">dist()</tt> added</li>
-<li><tt class="docutils literal">hypot()</tt> can now take multiple arguments</li>
-<li><tt class="docutils literal">isqrt()</tt> added</li>
-<li><tt class="docutils literal">perm()</tt> added</li>
-<li><tt class="docutils literal">comb()</tt> added</li>
-<li><tt class="docutils literal">prod()</tt> added</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">dist()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">hypot()</tt> can now take multiple arguments</p>
+</li>
+<li><p class="first"><tt class="docutils literal">isqrt()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">perm()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">comb()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">prod()</tt> added</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">pathlib</tt> module: <tt class="docutils literal">Path.link_to()</tt> added</p>
@@ -1131,27 +1540,35 @@ Windows systems in addition to POSIX</p>
 <tt class="docutils literal">Protocol</tt>, <tt class="docutils literal">SupportsIndex</tt>, <tt class="docutils literal">get_origin()</tt>, and <tt class="docutils literal">get_args()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">unicodedata</tt> module:</p>
-<ul class="simple">
-<li>Updated to Unicode 12.1.0</li>
-<li><tt class="docutils literal">is_normalized()</tt> added</li>
+<ul>
+<li><p class="first">Updated to Unicode 12.1.0</p>
+</li>
+<li><p class="first"><tt class="docutils literal">is_normalized()</tt> added</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">unittest.mock</tt> module:</p>
-<ul class="simple">
-<li><tt class="docutils literal">AsyncMock</tt> added</li>
-<li><tt class="docutils literal">call</tt> objects now have <tt class="docutils literal">args</tt> and <tt class="docutils literal">kwargs</tt> properties</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">AsyncMock</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">call</tt> objects now have <tt class="docutils literal">args</tt> and <tt class="docutils literal">kwargs</tt> properties</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">zipfile</tt> module: <tt class="docutils literal">Path</tt> added</p>
 </li>
 <li><p class="first">Removed:</p>
-<ul class="simple">
-<li><tt class="docutils literal">macpath</tt> module (deprecated since Python 3.7)</li>
-<li><tt class="docutils literal">time.clock()</tt> (deprecated since Python 3.3)</li>
-<li>the <tt class="docutils literal">pyvenv</tt> script for creating venvs (Use <tt class="docutils literal">pythonX.Y <span class="pre">-m</span> venv</tt>
-instead)</li>
-<li><tt class="docutils literal">sys.set_coroutine_wrapper()</tt> and <tt class="docutils literal">sys.get_coroutine_wrapper()</tt>
-(deprecated since Python 3.7)</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">macpath</tt> module (deprecated since Python 3.7)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">time.clock()</tt> (deprecated since Python 3.3)</p>
+</li>
+<li><p class="first">the <tt class="docutils literal">pyvenv</tt> script for creating venvs (Use <tt class="docutils literal">pythonX.Y <span class="pre">-m</span> venv</tt>
+instead)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">sys.set_coroutine_wrapper()</tt> and <tt class="docutils literal">sys.get_coroutine_wrapper()</tt>
+(deprecated since Python 3.7)</p>
+</li>
 </ul>
 </li>
 <li><p class="first">Using <tt class="docutils literal">is</tt> or <tt class="docutils literal">is not</tt> with strings, numbers, and certain other literals
@@ -1162,53 +1579,79 @@ now produces a <tt class="docutils literal">SyntaxWarning</tt></p>
 <div class="section" id="python-3-9-2020-10-05">
 <h2><a class="toc-backref" href="#contents">Python 3.9 (2020-10-05)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3/whatsnew/3.9.html">[link]</a></p>
-<ul class="simple">
-<li><tt class="docutils literal">dict</tt>s can now be merged &amp; updated using the <tt class="docutils literal">|</tt> and <tt class="docutils literal">|=</tt> operators</li>
-<li>Any valid expression can now be used as a decorator</li>
-<li>New <tt class="docutils literal">str</tt>, <tt class="docutils literal">bytes</tt>, and <tt class="docutils literal">bytearray</tt> methods: <tt class="docutils literal">removeprefix()</tt> and
-<tt class="docutils literal">removesuffix()</tt></li>
-<li>Built-in collection types like <tt class="docutils literal">list</tt> and <tt class="docutils literal">dict</tt> can now be used as
-generic types; e.g., <tt class="docutils literal">List[str]</tt> can now be written <tt class="docutils literal">list[str]</tt><ul>
-<li>This also applies to collections ABCs; e.g., <tt class="docutils literal">typing.Sequence[str]</tt> can
-now be written <tt class="docutils literal">collections.abc.Sequence[str]</tt>.</li>
-<li>Importing the old <tt class="docutils literal">List</tt>, <tt class="docutils literal">Sequence</tt>, etc. types from <tt class="docutils literal">typing</tt> is now
+<ul>
+<li><p class="first"><tt class="docutils literal">dict</tt>s can now be merged &amp; updated using the <tt class="docutils literal">|</tt> and <tt class="docutils literal">|=</tt> operators</p>
+</li>
+<li><p class="first">Any valid expression can now be used as a decorator</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">str</tt>, <tt class="docutils literal">bytes</tt>, and <tt class="docutils literal">bytearray</tt> methods: <tt class="docutils literal">removeprefix()</tt> and
+<tt class="docutils literal">removesuffix()</tt></p>
+</li>
+<li><p class="first">Built-in collection types like <tt class="docutils literal">list</tt> and <tt class="docutils literal">dict</tt> can now be used as
+generic types; e.g., <tt class="docutils literal">List[str]</tt> can now be written <tt class="docutils literal">list[str]</tt></p>
+<ul>
+<li><p class="first">This also applies to collections ABCs; e.g., <tt class="docutils literal">typing.Sequence[str]</tt> can
+now be written <tt class="docutils literal">collections.abc.Sequence[str]</tt>.</p>
+</li>
+<li><p class="first">Importing the old <tt class="docutils literal">List</tt>, <tt class="docutils literal">Sequence</tt>, etc. types from <tt class="docutils literal">typing</tt> is now
 deprecated but does not generate <tt class="docutils literal">DeprecationWarnings</tt>s at this time.
 The deprecated names will be removed from <tt class="docutils literal">typing</tt> in the first Python
-release five years after 3.9.</li>
+release five years after 3.9.</p>
+</li>
 </ul>
 </li>
-<li>New modules: <tt class="docutils literal">graphlib</tt> and <tt class="docutils literal">zoneinfo</tt></li>
-<li><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">cache()</tt> added</li>
-<li><tt class="docutils literal">importlib.resources</tt> module: <tt class="docutils literal">files()</tt> added (introduced in
-<tt class="docutils literal"><span class="pre">importlib-resources</span></tt> v1.1.0)</li>
-<li>Aligned <tt class="docutils literal">importlib.metadata</tt> with <tt class="docutils literal"><span class="pre">importlib-metadata</span></tt> v1.6.1</li>
-<li><tt class="docutils literal">ipaddress</tt> module now supports IPv6 scoped addresses</li>
-<li><tt class="docutils literal">math</tt> module:<ul>
-<li><tt class="docutils literal">gcd()</tt> can now take multiple arguments</li>
-<li><tt class="docutils literal">lcm()</tt>, <tt class="docutils literal">nextafter()</tt>, and <tt class="docutils literal">ulp()</tt> added</li>
+<li><p class="first">New modules: <tt class="docutils literal">graphlib</tt> and <tt class="docutils literal">zoneinfo</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">cache()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib.resources</tt> module: <tt class="docutils literal">files()</tt> added (introduced in
+<tt class="docutils literal"><span class="pre">importlib-resources</span></tt> v1.1.0)</p>
+</li>
+<li><p class="first">Aligned <tt class="docutils literal">importlib.metadata</tt> with <tt class="docutils literal"><span class="pre">importlib-metadata</span></tt> v1.6.1</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ipaddress</tt> module now supports IPv6 scoped addresses</p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">gcd()</tt> can now take multiple arguments</p>
+</li>
+<li><p class="first"><tt class="docutils literal">lcm()</tt>, <tt class="docutils literal">nextafter()</tt>, and <tt class="docutils literal">ulp()</tt> added</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">pathlib</tt> module: <tt class="docutils literal">Path.readlink()</tt> added</li>
-<li><tt class="docutils literal">random</tt> module: <tt class="docutils literal">randbytes()</tt> added</li>
-<li><tt class="docutils literal">typing</tt> module: <tt class="docutils literal">Annotated</tt> added</li>
-<li>The <tt class="docutils literal">binhex</tt>, <tt class="docutils literal">parser</tt>, and <tt class="docutils literal">symbol</tt> modules are now deprecated</li>
-<li>Using <tt class="docutils literal">NotImplemented</tt> in a boolean context is now deprecated and will
-produce a <tt class="docutils literal">TypeError</tt> in a future version of Python</li>
-<li>Removed:<ul>
-<li><tt class="docutils literal">fractions.gcd()</tt> (deprecated since Python 3.5)</li>
-<li><tt class="docutils literal">encoding</tt> parameter of <tt class="docutils literal">json.loads()</tt> (deprecated &amp; ignored since
-Python 3.1)</li>
-<li><tt class="docutils literal">asyncio.Task.current_task()</tt> and <tt class="docutils literal">asyncio.Task.all_tasks()</tt>
+<li><p class="first"><tt class="docutils literal">pathlib</tt> module: <tt class="docutils literal">Path.readlink()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">random</tt> module: <tt class="docutils literal">randbytes()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">typing</tt> module: <tt class="docutils literal">Annotated</tt> added</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">binhex</tt>, <tt class="docutils literal">parser</tt>, and <tt class="docutils literal">symbol</tt> modules are now deprecated</p>
+</li>
+<li><p class="first">Using <tt class="docutils literal">NotImplemented</tt> in a boolean context is now deprecated and will
+produce a <tt class="docutils literal">TypeError</tt> in a future version of Python</p>
+</li>
+<li><p class="first">Removed:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">fractions.gcd()</tt> (deprecated since Python 3.5)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">encoding</tt> parameter of <tt class="docutils literal">json.loads()</tt> (deprecated &amp; ignored since
+Python 3.1)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">asyncio.Task.current_task()</tt> and <tt class="docutils literal">asyncio.Task.all_tasks()</tt>
 (deprecated since Python 3.7); use <tt class="docutils literal">asyncio.current_task()</tt> and
-<tt class="docutils literal">asyncio.all_tasks()</tt> instead</li>
+<tt class="docutils literal">asyncio.all_tasks()</tt> instead</p>
+</li>
 </ul>
 </li>
-<li><tt class="docutils literal">with (await asyncio.lock):</tt> and <tt class="docutils literal">with (yield from asyncio.lock):</tt>
+<li><p class="first"><tt class="docutils literal">with (await asyncio.lock):</tt> and <tt class="docutils literal">with (yield from asyncio.lock):</tt>
 statements are no longer supported; use <tt class="docutils literal">async with lock</tt> instead.
-Likewise for <tt class="docutils literal">asyncio.Condition</tt> and <tt class="docutils literal">asyncio.Semaphore</tt>.</li>
-<li><tt class="docutils literal">lib2to3</tt> now emits a <tt class="docutils literal">PendingDeprecationWarning</tt> and may be removed in a
-future Python version</li>
-<li><tt class="docutils literal">unicodedata</tt> updated to Unicode 13.0.0</li>
+Likewise for <tt class="docutils literal">asyncio.Condition</tt> and <tt class="docutils literal">asyncio.Semaphore</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">lib2to3</tt> now emits a <tt class="docutils literal">PendingDeprecationWarning</tt> and may be removed in a
+future Python version</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 13.0.0</p>
+</li>
 </ul>
 </div>
 <div class="section" id="python-3-10-2021-10-04">
@@ -1279,9 +1722,11 @@ from <tt class="docutils literal">collections.abc</tt> instead</p>
 <li><p class="first"><tt class="docutils literal">contextlib</tt>: <tt class="docutils literal">aclosing()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">dataclasses</tt>:</p>
-<ul class="simple">
-<li>The <tt class="docutils literal">dataclass</tt> decorator now accepts a <tt class="docutils literal">slots</tt> argument</li>
-<li>Fields can now be made keyword-only</li>
+<ul>
+<li><p class="first">The <tt class="docutils literal">dataclass</tt> decorator now accepts a <tt class="docutils literal">slots</tt> argument</p>
+</li>
+<li><p class="first">Fields can now be made keyword-only</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">distutils</tt> is now deprecated and will be removed in Python 3.12</p>
@@ -1290,8 +1735,9 @@ from <tt class="docutils literal">collections.abc</tt> instead</p>
 <tt class="docutils literal">dir_fd</tt> arguments</p>
 </li>
 <li><p class="first">Aligned <tt class="docutils literal">importlib.metadata</tt> with <tt class="docutils literal"><span class="pre">importlib-metadata</span></tt> v4.6</p>
-<ul class="simple">
-<li><tt class="docutils literal">entry_points()</tt> and <tt class="docutils literal">package_distributions()</tt> added</li>
+<ul>
+<li><p class="first"><tt class="docutils literal">entry_points()</tt> and <tt class="docutils literal">package_distributions()</tt> added</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">get_annotations()</tt> added</p>
@@ -1300,12 +1746,15 @@ from <tt class="docutils literal">collections.abc</tt> instead</p>
 path doesn’t exist or a symlink loop is encountered</p>
 </li>
 <li><p class="first"><tt class="docutils literal">pathlib</tt> module:</p>
-<ul class="simple">
-<li>Slice and negative indexing support added to <tt class="docutils literal">Path.parents</tt></li>
-<li><tt class="docutils literal">Path.hardlink_to()</tt> added, superseding <tt class="docutils literal">Path.link_to()</tt>, which is now
-deprecated and will be removed in Python 3.12</li>
-<li><tt class="docutils literal">Path.stat()</tt> and <tt class="docutils literal">Path.chmod()</tt> now have a <tt class="docutils literal">follow_symlinks</tt>
-argument</li>
+<ul>
+<li><p class="first">Slice and negative indexing support added to <tt class="docutils literal">Path.parents</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">Path.hardlink_to()</tt> added, superseding <tt class="docutils literal">Path.link_to()</tt>, which is now
+deprecated and will be removed in Python 3.12</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Path.stat()</tt> and <tt class="docutils literal">Path.chmod()</tt> now have a <tt class="docutils literal">follow_symlinks</tt>
+argument</p>
+</li>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">platform</tt> module: <tt class="docutils literal">freedesktop_os_release()</tt> added</p>
@@ -1333,11 +1782,15 @@ and 3.9, respectively)</p>
 <div class="section" id="python-3-11-2022-10-03">
 <h2><a class="toc-backref" href="#contents">Python 3.11 (2022-10-03)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3.11/whatsnew/3.11.html">[link]</a></p>
-<ul class="simple">
-<li><tt class="docutils literal">math</tt> module: <tt class="docutils literal">cbrt()</tt> added</li>
-<li>Removed:<ul>
-<li><tt class="docutils literal">asyncio.coroutine</tt> (deprecated since 3.8)</li>
-<li><tt class="docutils literal">asyncio.coroutines.CoroWrapper</tt></li>
+<ul>
+<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">cbrt()</tt> added</p>
+</li>
+<li><p class="first">Removed:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">asyncio.coroutine</tt> (deprecated since 3.8)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">asyncio.coroutines.CoroWrapper</tt></p>
+</li>
 </ul>
 </li>
 </ul>

@@ -24,24 +24,39 @@ documentation if your project is structured differently.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#avoiding-general-mistakes" id="id13"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#look-at-your-built-distributions" id="id14"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#installations-are-not-namespaced" id="id15"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#avoiding-general-mistakes" id="id13"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#look-at-your-built-distributions" id="id14"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#installations-are-not-namespaced" id="id15"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#top-level-tests-directory-in-wheel" id="id16"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="id17"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#project-description-doesn-t-render" id="id18"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#project-description-not-included" id="id19"&gt;Project Description Not Included&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#python-package-not-included-in-wheel" id="id20"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#subpackages-not-included-in-wheel" id="id21"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#package-data-not-included-in-wheel" id="id22"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#pyc-files-included-in-wheel" id="id23"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="id24"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="id25"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#conclusion" id="id26"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#footnotes" id="id27"&gt;Footnotes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-tests-directory-in-wheel" id="id16"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="id17"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-doesn-t-render" id="id18"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-not-included" id="id19"&gt;Project Description Not Included&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-package-not-included-in-wheel" id="id20"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#subpackages-not-included-in-wheel" id="id21"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#package-data-not-included-in-wheel" id="id22"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pyc-files-included-in-wheel" id="id23"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="id24"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="id25"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#conclusion" id="id26"&gt;Conclusion&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#footnotes" id="id27"&gt;Footnotes&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="avoiding-general-mistakes"&gt;
@@ -65,19 +80,22 @@ listed with one of these two commands:&lt;/p&gt;
 &lt;p&gt;At time of writing, the exact layout of an sdist has yet to be standardized,
 but if you’re building with a recent version of setuptools, the contents are
 structured as follows:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;Everything in the sdist is inside a top-level directory named
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Everything in the sdist is inside a top-level directory named
 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}/&lt;/span&gt;&lt;/tt&gt;.  This directory contains a copy of your package
 code, the project’s &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;pyproject.toml&lt;/tt&gt; file, and various other
 files from your project directory; see &lt;a class="reference external" href="https://packaging.python.org/guides/using-manifest-in/"&gt;here&lt;/a&gt; for more
-information on what gets included by default.&lt;/li&gt;
-&lt;li&gt;There exists a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt; file containing the project metadata.  For
-historical reasons, this does not include project dependencies.&lt;/li&gt;
-&lt;li&gt;Next to your Python package, there is a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}.egg-info/&lt;/span&gt;&lt;/tt&gt; directory
+information on what gets included by default.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;There exists a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt; file containing the project metadata.  For
+historical reasons, this does not include project dependencies.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Next to your Python package, there is a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}.egg-info/&lt;/span&gt;&lt;/tt&gt; directory
 containing more metadata, including a copy of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt;, a &lt;tt class="docutils literal"&gt;SOURCES.txt&lt;/tt&gt;
 file listing the files in the sdist, and a &lt;tt class="docutils literal"&gt;requires.txt&lt;/tt&gt; file listing your
 project’s dependencies.  Other files may be present depending on what
-features your project uses.&lt;/li&gt;
+features your project uses.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;If your sdist is missing some files from your project directory or contains
 some files that you don’t want in there, then (assuming you’re building your
@@ -97,23 +115,26 @@ wouldn’t commit to version control.&lt;/p&gt;
 &lt;p&gt;Wheels (&lt;tt class="docutils literal"&gt;*.whl&lt;/tt&gt;), meanwhile, are just zipfiles with a funny extension, so you
 can list their contents with &lt;tt class="docutils literal"&gt;zipinfo&lt;/tt&gt;.  The basic layout of a wheel is as
 follows:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;Your Python package is located at the root of the wheel, rather than inside
-a directory.&lt;/li&gt;
-&lt;li&gt;There exists a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}.dist-info/&lt;/span&gt;&lt;/tt&gt; directory containing
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Your Python package is located at the root of the wheel, rather than inside
+a directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;There exists a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}.dist-info/&lt;/span&gt;&lt;/tt&gt; directory containing
 metadata: a &lt;tt class="docutils literal"&gt;METADATA&lt;/tt&gt; file describing the project (similar to an sdist’s
 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;PKG-INFO&lt;/span&gt;&lt;/tt&gt;, but including dependencies), a &lt;tt class="docutils literal"&gt;WHEEL&lt;/tt&gt; file describing the
 wheel version and tags, and a &lt;tt class="docutils literal"&gt;RECORD&lt;/tt&gt; file listing the files in the wheel
 and their hashes.  Licenses included in the wheel with the &lt;tt class="docutils literal"&gt;license_files&lt;/tt&gt;
 setting also end up in this directory.  Other files may also be present
 depending on what features your project uses and the versions of setuptools
-and wheel used to build the wheel.&lt;/li&gt;
-&lt;li&gt;If your project includes any files that are installed outside of
+and wheel used to build the wheel.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If your project includes any files that are installed outside of
 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages&lt;/span&gt;&lt;/tt&gt; — headers, scripts, data files (not to be confused with
 package data), etc. — they are stored in a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}.data/&lt;/span&gt;&lt;/tt&gt;
 directory.  Files in this directory are organized into subdirectories named
 after the the distutils scheme keys (&lt;tt class="docutils literal"&gt;purelib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;platlib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;headers&lt;/tt&gt;,
-&lt;tt class="docutils literal"&gt;scripts&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;data&lt;/tt&gt;) that map to the files’ install locations.&lt;/li&gt;
+&lt;tt class="docutils literal"&gt;scripts&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;data&lt;/tt&gt;) that map to the files’ install locations.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
@@ -283,13 +304,15 @@ with a malformed reStructuredText description (either because it uses
 reStructuredText incorrectly or because it’s actually Markdown that wasn’t
 declared as Markdown) is uploaded to PyPI, PyPI does one of the following two
 things:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;If the project does not declare a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; for its malformed
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;If the project does not declare a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; for its malformed
 description, PyPI will fall back to displaying the source of the description
-as though it were plain text.&lt;/li&gt;
-&lt;li&gt;If the project explicitly declares the malformed description’s
+as though it were plain text.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If the project explicitly declares the malformed description’s
 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Content-Type&lt;/span&gt;&lt;/tt&gt; as reStructuredText (i.e., as the MIME type &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;text/x-rst&lt;/span&gt;&lt;/tt&gt;),
-PyPI will reject the upload.&lt;/li&gt;
+PyPI will reject the upload.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Neither situation is desirable, but at least the latter gives you the chance to
 correct your project description before it’s released on PyPI, while the former
@@ -373,16 +396,18 @@ description by adding the following or similar to your &lt;tt class="docutils li
 is crippling.  With a wheel like this, when people install your project, they
 get nothing!  That’s certainly not what you want, is it?&lt;/p&gt;
 &lt;p&gt;Possible reasons why this can happen include:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;You’re using &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; to autolocate your project’s packages, but
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;You’re using &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; to autolocate your project’s packages, but
 you failed to add an &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file to the top-level package (and
-possibly also some subpackages).  Solution: Add that &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt;.&lt;ul&gt;
-&lt;li&gt;If your intention is to leave out the &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file in order to
+possibly also some subpackages).  Solution: Add that &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;If your intention is to leave out the &lt;tt class="docutils literal"&gt;__init__.py&lt;/tt&gt; file in order to
 create a namespace package, you’ll need to use &lt;a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html#find-namespace-packages"&gt;&lt;tt class="docutils literal"&gt;find_namespace_packages()&lt;/tt&gt;&lt;/a&gt;
-instead.&lt;/li&gt;
+instead.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;Your project’s code is a single Python module (as opposed to a directory of
+&lt;li&gt;&lt;p class="first"&gt;Your project’s code is a single Python module (as opposed to a directory of
 modules) and you’re using the &lt;tt class="docutils literal"&gt;packages&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt; and/or
 &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; in an attempt to declare the module to setuptools.  This
 is wrong.  When your project is a single Python module, instead of the
@@ -390,7 +415,8 @@ is wrong.  When your project is a single Python module, instead of the
 &lt;tt class="docutils literal"&gt;py_modules&lt;/tt&gt; to a list of strings where each string is the name of a
 top-level Python module &lt;em&gt;without&lt;/em&gt; the “&lt;tt class="docutils literal"&gt;.py&lt;/tt&gt;” extension.  (Usually, you’ll
 just have one module to list here.)  You can’t use &lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt; for
-this.&lt;/li&gt;
+this.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p id="pkg-test"&gt;If your project includes any tests (which it should), you can implicitly test
 that your wheel contains your project code by testing against the installed
@@ -522,20 +548,24 @@ to delete it at any time.  In fact, it’s a good idea to delete it before
 running the command to create a wheel, &lt;em&gt;especially&lt;/em&gt; if you’ve moved or renamed
 any files or directories in your code since the last time you built a wheel.&lt;/p&gt;
 &lt;p&gt;Consider the following scenario:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;You build a wheel for your project, and you leave the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory
-lying around afterwards.&lt;/li&gt;
-&lt;li&gt;You move, rename, and/or delete some files in your Python package, perhaps
-even renaming the package itself.&lt;/li&gt;
-&lt;li&gt;You build the wheel again — and when you do so, setuptools copies your new
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;You build a wheel for your project, and you leave the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory
+lying around afterwards.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;You move, rename, and/or delete some files in your Python package, perhaps
+even renaming the package itself.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;You build the wheel again — and when you do so, setuptools copies your new
 package tree into &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;.  Files that existed the last time the wheel was
 built overwrite their old copies in &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; successfully, but any old
-paths that have since been removed remain in &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;.&lt;/li&gt;
-&lt;li&gt;As a result, your wheel ends up containing a mixture of your new and old
+paths that have since been removed remain in &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;As a result, your wheel ends up containing a mixture of your new and old
 code.  In the case where you renamed your package, the wheel will contain
 both the pre-rename package and the post-rename package next to each other in
 their entirety, so you wheel has double the code with half of it under the
-wrong name.&lt;/li&gt;
+wrong name.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;This is clearly not desirable.  The solution is to always delete the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;
 directory before building a wheel, such as by cleaning your repository with

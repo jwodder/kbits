@@ -85,20 +85,29 @@ templates, images, and data.  These files are called <em>package data</em> <a cl
 they are included in &amp; accessed from your project as follows.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
-<ul class="simple">
-<li><a class="reference internal" href="#including-package-data-in-projects" id="id8">Including Package Data in Projects</a><ul>
-<li><a class="reference internal" href="#including-package-data-via-manifest-in" id="id9">Including Package Data via <tt class="docutils literal">MANIFEST.in</tt></a></li>
-<li><a class="reference internal" href="#including-package-data-via-setup-py" id="id10">Including Package Data via <tt class="docutils literal">setup.py</tt></a></li>
-<li><a class="reference internal" href="#excluding-package-data-via-setup-py" id="id11">Excluding Package Data via <tt class="docutils literal">setup.py</tt></a></li>
-<li><a class="reference internal" href="#including-package-data-via-setuptools-plugins" id="id12">Including Package Data via Setuptools Plugins</a></li>
+<ul>
+<li><p class="first"><a class="reference internal" href="#including-package-data-in-projects" id="id8">Including Package Data in Projects</a></p>
+<ul>
+<li><p class="first"><a class="reference internal" href="#including-package-data-via-manifest-in" id="id9">Including Package Data via <tt class="docutils literal">MANIFEST.in</tt></a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#including-package-data-via-setup-py" id="id10">Including Package Data via <tt class="docutils literal">setup.py</tt></a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#excluding-package-data-via-setup-py" id="id11">Excluding Package Data via <tt class="docutils literal">setup.py</tt></a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#including-package-data-via-setuptools-plugins" id="id12">Including Package Data via Setuptools Plugins</a></p>
+</li>
 </ul>
 </li>
-<li><a class="reference internal" href="#accessing-package-data-at-runtime" id="id13">Accessing Package Data at Runtime</a><ul>
-<li><a class="reference internal" href="#installing-importing-importlib-resources" id="id14">Installing &amp; Importing <tt class="docutils literal"><span class="pre">importlib-resources</span></tt></a></li>
-<li><a class="reference internal" href="#the-importlib-resources-api" id="id15">The <tt class="docutils literal"><span class="pre">importlib-resources</span></tt> API</a></li>
+<li><p class="first"><a class="reference internal" href="#accessing-package-data-at-runtime" id="id13">Accessing Package Data at Runtime</a></p>
+<ul>
+<li><p class="first"><a class="reference internal" href="#installing-importing-importlib-resources" id="id14">Installing &amp; Importing <tt class="docutils literal"><span class="pre">importlib-resources</span></tt></a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#the-importlib-resources-api" id="id15">The <tt class="docutils literal"><span class="pre">importlib-resources</span></tt> API</a></p>
+</li>
 </ul>
 </li>
-<li><a class="reference internal" href="#footnotes" id="id16">Footnotes</a></li>
+<li><p class="first"><a class="reference internal" href="#footnotes" id="id16">Footnotes</a></p>
+</li>
 </ul>
 </div>
 <div class="section" id="including-package-data-in-projects">
@@ -243,12 +252,14 @@ package.</p>
 <div class="section" id="installing-importing-importlib-resources">
 <h3><a class="toc-backref" href="#contents">Installing &amp; Importing <tt class="docutils literal"><span class="pre">importlib-resources</span></tt></a></h3>
 <p>There are two versions of <tt class="docutils literal"><span class="pre">importlib-resources</span></tt> available:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://pypi.org/project/importlib-resources/">The one on PyPI</a> that is installed with <tt class="docutils literal">pip install
+<ul>
+<li><p class="first"><a class="reference external" href="https://pypi.org/project/importlib-resources/">The one on PyPI</a> that is installed with <tt class="docutils literal">pip install
 <span class="pre">importlib-resources</span></tt> and imported with <tt class="docutils literal">import importlib_resources</tt> (note
-underscore)</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/importlib.html#module-importlib.resources">The one in the Python standard library</a> starting with Python 3.7 that is
-imported with <tt class="docutils literal">import importlib.resources</tt> (note period)</li>
+underscore)</p>
+</li>
+<li><p class="first"><a class="reference external" href="https://docs.python.org/3/library/importlib.html#module-importlib.resources">The one in the Python standard library</a> starting with Python 3.7 that is
+imported with <tt class="docutils literal">import importlib.resources</tt> (note period)</p>
+</li>
 </ul>
 <p>Development of the PyPI version tends to be ahead of whatever’s in the latest
 Python version.  In particular, the new <tt class="docutils literal">files()</tt>-based API described here

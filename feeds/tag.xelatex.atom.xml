@@ -220,13 +220,15 @@ easy one-size-fits-all answer.&lt;/p&gt;
 &lt;div class="section" id="xetex-engine-xelatex-and-luatex-engine-lualatex"&gt;
 &lt;span id="xetex-and-luatex"&gt;&lt;/span&gt;&lt;h2&gt;XeTeX Engine (XeLaTeX) and LuaTeX Engine (LuaLaTeX)&lt;/h2&gt;
 &lt;p&gt;Besides pdfTeX, LaTeX can also run on two major alternative engines:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://xetex.sourceforge.net"&gt;The XeTeX engine&lt;/a&gt;, on which LaTeX runs as
-XeLaTeX&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://www.luatex.org"&gt;The LuaTeX engine&lt;/a&gt;, on which LaTeX runs as
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="http://xetex.sourceforge.net"&gt;The XeTeX engine&lt;/a&gt;, on which LaTeX runs as
+XeLaTeX&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="http://www.luatex.org"&gt;The LuaTeX engine&lt;/a&gt;, on which LaTeX runs as
 LuaLaTeX.  This is a TeX engine with an embedded interpreter for &lt;a class="reference external" href="http://www.lua.org"&gt;the Lua
 programming language&lt;/a&gt; that allows developers to extend
-the engine by coding in Lua. &lt;a class="footnote-reference" href="#faq-xelua" id="id24"&gt;[12]&lt;/a&gt; &lt;a class="footnote-reference" href="#wiki-luatex" id="id25"&gt;[15]&lt;/a&gt;&lt;/li&gt;
+the engine by coding in Lua. &lt;a class="footnote-reference" href="#faq-xelua" id="id24"&gt;[12]&lt;/a&gt; &lt;a class="footnote-reference" href="#wiki-luatex" id="id25"&gt;[15]&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Both engines fully support Unicode input and support modern font technologies,
 including being able to use fonts from the operating system.  &lt;a class="footnote-reference" href="#xetex" id="id26"&gt;[16]&lt;/a&gt;

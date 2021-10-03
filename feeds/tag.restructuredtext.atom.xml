@@ -10,27 +10,43 @@ in one (hopefully) well-organized place.&lt;/p&gt;
 0.16, the latest version at time of writing.&lt;/p&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#standalone-hyperlinks" id="id4"&gt;Standalone Hyperlinks&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#embedded-uri-hyperlinks" id="id5"&gt;Embedded URI Hyperlinks&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#embedded-alias-hyperlinks-and-hyperlink-targets" id="id6"&gt;Embedded Alias Hyperlinks and Hyperlink Targets&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#named-hyperlink-references" id="id7"&gt;Named Hyperlink References&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#anonymous-hyperlinks" id="id8"&gt;Anonymous Hyperlinks&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#embedded-uri-hyperlinks-and-automatic-reference-names" id="id9"&gt;Embedded URI Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#gotcha-duplicate-link-text" id="id10"&gt;Gotcha: Duplicate Link Text&lt;/a&gt;&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#standalone-hyperlinks" id="id4"&gt;Standalone Hyperlinks&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#embedded-uri-hyperlinks" id="id5"&gt;Embedded URI Hyperlinks&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#embedded-alias-hyperlinks-and-hyperlink-targets" id="id6"&gt;Embedded Alias Hyperlinks and Hyperlink Targets&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#named-hyperlink-references" id="id7"&gt;Named Hyperlink References&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#anonymous-hyperlinks" id="id8"&gt;Anonymous Hyperlinks&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#embedded-uri-hyperlinks-and-automatic-reference-names" id="id9"&gt;Embedded URI Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#gotcha-duplicate-link-text" id="id10"&gt;Gotcha: Duplicate Link Text&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#embedded-alias-hyperlinks-and-automatic-reference-names" id="id11"&gt;Embedded Alias Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#intra-document-links" id="id12"&gt;Intra-Document Links&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#internal-hyperlink-targets" id="id13"&gt;Internal Hyperlink Targets&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#named-directives" id="id14"&gt;Named Directives&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#inline-internal-targets" id="id15"&gt;Inline Internal Targets&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#implicit-hyperlink-targets-for-section-titles" id="id16"&gt;Implicit Hyperlink Targets for Section Titles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#embedded-alias-hyperlinks-and-automatic-reference-names" id="id11"&gt;Embedded Alias Hyperlinks and Automatic Reference Names&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#intra-document-links" id="id12"&gt;Intra-Document Links&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#internal-hyperlink-targets" id="id13"&gt;Internal Hyperlink Targets&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#named-directives" id="id14"&gt;Named Directives&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#inline-internal-targets" id="id15"&gt;Inline Internal Targets&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#implicit-hyperlink-targets-for-section-titles" id="id16"&gt;Implicit Hyperlink Targets for Section Titles&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#chaining-hyperlink-targets" id="id17"&gt;Chaining Hyperlink Targets&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#styling-link-text" id="id18"&gt;Styling Link Text&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#link-text-within-a-word" id="id19"&gt;Link Text within a Word&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#chaining-hyperlink-targets" id="id17"&gt;Chaining Hyperlink Targets&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#styling-link-text" id="id18"&gt;Styling Link Text&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#link-text-within-a-word" id="id19"&gt;Link Text within a Word&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="standalone-hyperlinks"&gt;
@@ -487,10 +503,11 @@ substitution text, and another vertical bar.  Because we also want this to be
 a hyperlink, an underscore is added after the closing vertical bar, causing
 the substitution reference to also be a &lt;a class="reference internal" href="#named-hyperlink-reference"&gt;named hyperlink reference&lt;/a&gt; with the
 substitution text as the reference name.&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;The substitution text can be any text that does not begin or end with
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The substitution text can be any text that does not begin or end with
 whitespace.  Substitution text is matched case-sensitively, but if that
-fails, a case-insensitive match is tried.&lt;/li&gt;
+fails, a case-insensitive match is tried.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Elsewhere in the document, a &lt;em&gt;substitution definition&lt;/em&gt; is given for the

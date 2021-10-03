@@ -216,14 +216,16 @@ this would mean a configuration like the following:</p>
 <p>With this in place, a new job can be added to the workflow containing all the
 steps you want to run after a new release is made.  This new job needs two
 special fields (at the same level as <tt class="docutils literal"><span class="pre">runs-on</span></tt> and <tt class="docutils literal">steps</tt>):</p>
-<ul class="simple">
-<li>A <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds"><tt class="docutils literal">needs</tt> field</a> containing the job ID of the <tt class="docutils literal">auto</tt> job (so <tt class="docutils literal">needs:
-<span class="pre">auto-release</span></tt> for the examples given here) to declare a dependency on it</li>
-<li>An <tt class="docutils literal">if</tt> field containing an expression of the form
+<ul>
+<li><p class="first">A <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds"><tt class="docutils literal">needs</tt> field</a> containing the job ID of the <tt class="docutils literal">auto</tt> job (so <tt class="docutils literal">needs:
+<span class="pre">auto-release</span></tt> for the examples given here) to declare a dependency on it</p>
+</li>
+<li><p class="first">An <tt class="docutils literal">if</tt> field containing an expression of the form
 <tt class="docutils literal">needs.AUTO_JOB_NAME.outputs.AUTO_VERSION_OUTPUT_NAME != ''</tt> (so <tt class="docutils literal">if:
 <span class="pre">needs.auto-release.outputs.auto-version</span> != ''</tt> for the examples given here);
 this causes the job to be skipped if <tt class="docutils literal">auto version</tt> outputs nothing, i.e.,
-if no release is made</li>
+if no release is made</p>
+</li>
 </ul>
 <p>The configuration for this new job would then look like:</p>
 <pre class="code yaml literal-block">
