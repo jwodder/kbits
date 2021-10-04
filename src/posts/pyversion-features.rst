@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2021-10-02
+:Modified: 2021-10-04
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1233,7 +1233,11 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
   - ``comb()`` added
   - ``prod()`` added
 
-- ``pathlib`` module: ``Path.link_to()`` added
+- ``pathlib`` module:
+
+  - ``Path.link_to()`` added
+  - ``Path.rename()`` and ``Path.replace()`` now return the new path
+  - ``Path.unlink()`` now accepts a ``missing_ok`` argument
 
 - ``shlex`` module: ``join()`` added
 
