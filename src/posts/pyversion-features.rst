@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2021-10-04
+:Modified: 2021-10-07
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1222,6 +1222,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
 - ``functools`` module: ``cached_property()`` and ``singledispatchmethod()``
   added
 
+- ``itertools`` module: ``accumulate()`` now accepts an ``initial`` parameter
+
 - ``json.tool`` command-line interface: ``--json-lines`` option added
 
 - ``math`` module:
@@ -1238,6 +1240,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
   - ``Path.link_to()`` added
   - ``Path.rename()`` and ``Path.replace()`` now return the new path
   - ``Path.unlink()`` now accepts a ``missing_ok`` argument
+
+- ``platform`` module: ``dist()`` and ``linux_distribution()`` removed
 
 - ``shlex`` module: ``join()`` added
 
