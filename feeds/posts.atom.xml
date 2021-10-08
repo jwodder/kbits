@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-10-04T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-10-04T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-10-07T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-10-07T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
 introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
@@ -1426,6 +1426,8 @@ high-level API&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;functools&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;cached_property()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;singledispatchmethod()&lt;/tt&gt;
 added&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;itertools&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;accumulate()&lt;/tt&gt; now accepts an &lt;tt class="docutils literal"&gt;initial&lt;/tt&gt; parameter&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;json.tool&lt;/tt&gt; command-line interface: &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--json-lines&lt;/span&gt;&lt;/tt&gt; option added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;math&lt;/tt&gt; module:&lt;/p&gt;
@@ -1453,6 +1455,8 @@ added&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;Path.unlink()&lt;/tt&gt; now accepts a &lt;tt class="docutils literal"&gt;missing_ok&lt;/tt&gt; argument&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;platform&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;dist()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;linux_distribution()&lt;/tt&gt; removed&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;shlex&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;join()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
