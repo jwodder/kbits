@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-10-07T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-10-07T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-10-12T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-10-12T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
 introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
@@ -1383,8 +1383,6 @@ them in the argument list&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;One can now write &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;f&amp;quot;{var=}&amp;quot;&lt;/span&gt;&lt;/tt&gt; to get &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;f&amp;quot;{var}={repr(var)}&amp;quot;&lt;/span&gt;&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;pickle&lt;/tt&gt; module: Protocol 5 (with support for out-of-band buffers) added&lt;/p&gt;
-&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;continue&lt;/tt&gt; is now allowed in &lt;tt class="docutils literal"&gt;finally:&lt;/tt&gt; clauses&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;New &lt;tt class="docutils literal"&gt;int&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;bool&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;fractions.Fraction&lt;/tt&gt; method:
@@ -1426,12 +1424,16 @@ high-level API&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;functools&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;cached_property()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;singledispatchmethod()&lt;/tt&gt;
 added&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;io&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;open_code()&lt;/tt&gt; (the verified open hook) added&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;itertools&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;accumulate()&lt;/tt&gt; now accepts an &lt;tt class="docutils literal"&gt;initial&lt;/tt&gt; parameter&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;json.tool&lt;/tt&gt; command-line interface: &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--json-lines&lt;/span&gt;&lt;/tt&gt; option added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;math&lt;/tt&gt; module:&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;comb()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;dist()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;hypot()&lt;/tt&gt; can now take multiple arguments&lt;/p&gt;
@@ -1439,8 +1441,6 @@ added&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;isqrt()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;perm()&lt;/tt&gt; added&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;comb()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;prod()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
@@ -1456,6 +1456,8 @@ added&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;pickle&lt;/tt&gt; module: Protocol 5 (with support for out-of-band buffers) added&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;platform&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;dist()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;linux_distribution()&lt;/tt&gt; removed&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;shlex&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;join()&lt;/tt&gt; added&lt;/p&gt;
@@ -1466,6 +1468,16 @@ added&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;subprocess&lt;/tt&gt; module: The &lt;tt class="docutils literal"&gt;args&lt;/tt&gt; parameter to &lt;tt class="docutils literal"&gt;Popen&lt;/tt&gt; and the wrappers
 around it can now be a path-like object or sequence of path-like objects on
 Windows systems in addition to POSIX&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;sys&lt;/tt&gt; module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;audit()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;addaudithook()&lt;/tt&gt; (for audit hooks) added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;pycache_prefix&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;unraisablehook()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__unraisablehook__&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;typing&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;TypedDict&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Literal&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Final&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;final()&lt;/tt&gt;,
 &lt;tt class="docutils literal"&gt;Protocol&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;SupportsIndex&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;get_origin()&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;get_args()&lt;/tt&gt; added&lt;/p&gt;
@@ -1672,6 +1684,8 @@ from &lt;tt class="docutils literal"&gt;collections.abc&lt;/tt&gt; instead&lt;/p
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;inspect&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;get_annotations()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;io&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;text_encoding()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;os.path.realpath()&lt;/tt&gt; now has a &lt;tt class="docutils literal"&gt;strict&lt;/tt&gt; parameter for erroring when a
 path doesn’t exist or a symlink loop is encountered&lt;/p&gt;

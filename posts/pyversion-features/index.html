@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2021-10-07T00:00:00-04:00">2021-10-07</time></td>
+                    <td><time datetime="2021-10-12T00:00:00-04:00">2021-10-12</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -1464,8 +1464,6 @@ them in the argument list</p>
 </li>
 <li><p class="first">One can now write <tt class="docutils literal"><span class="pre">f&quot;{var=}&quot;</span></tt> to get <tt class="docutils literal"><span class="pre">f&quot;{var}={repr(var)}&quot;</span></tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal">pickle</tt> module: Protocol 5 (with support for out-of-band buffers) added</p>
-</li>
 <li><p class="first"><tt class="docutils literal">continue</tt> is now allowed in <tt class="docutils literal">finally:</tt> clauses</p>
 </li>
 <li><p class="first">New <tt class="docutils literal">int</tt>, <tt class="docutils literal">bool</tt>, and <tt class="docutils literal">fractions.Fraction</tt> method:
@@ -1507,12 +1505,16 @@ high-level API</p>
 <li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">cached_property()</tt> and <tt class="docutils literal">singledispatchmethod()</tt>
 added</p>
 </li>
+<li><p class="first"><tt class="docutils literal">io</tt> module: <tt class="docutils literal">open_code()</tt> (the verified open hook) added</p>
+</li>
 <li><p class="first"><tt class="docutils literal">itertools</tt> module: <tt class="docutils literal">accumulate()</tt> now accepts an <tt class="docutils literal">initial</tt> parameter</p>
 </li>
 <li><p class="first"><tt class="docutils literal">json.tool</tt> command-line interface: <tt class="docutils literal"><span class="pre">--json-lines</span></tt> option added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">math</tt> module:</p>
 <ul>
+<li><p class="first"><tt class="docutils literal">comb()</tt> added</p>
+</li>
 <li><p class="first"><tt class="docutils literal">dist()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">hypot()</tt> can now take multiple arguments</p>
@@ -1520,8 +1522,6 @@ added</p>
 <li><p class="first"><tt class="docutils literal">isqrt()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">perm()</tt> added</p>
-</li>
-<li><p class="first"><tt class="docutils literal">comb()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">prod()</tt> added</p>
 </li>
@@ -1537,6 +1537,8 @@ added</p>
 </li>
 </ul>
 </li>
+<li><p class="first"><tt class="docutils literal">pickle</tt> module: Protocol 5 (with support for out-of-band buffers) added</p>
+</li>
 <li><p class="first"><tt class="docutils literal">platform</tt> module: <tt class="docutils literal">dist()</tt> and <tt class="docutils literal">linux_distribution()</tt> removed</p>
 </li>
 <li><p class="first"><tt class="docutils literal">shlex</tt> module: <tt class="docutils literal">join()</tt> added</p>
@@ -1547,6 +1549,16 @@ added</p>
 <li><p class="first"><tt class="docutils literal">subprocess</tt> module: The <tt class="docutils literal">args</tt> parameter to <tt class="docutils literal">Popen</tt> and the wrappers
 around it can now be a path-like object or sequence of path-like objects on
 Windows systems in addition to POSIX</p>
+</li>
+<li><p class="first"><tt class="docutils literal">sys</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">audit()</tt> and <tt class="docutils literal">addaudithook()</tt> (for audit hooks) added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pycache_prefix</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unraisablehook()</tt> and <tt class="docutils literal">__unraisablehook__</tt> added</p>
+</li>
+</ul>
 </li>
 <li><p class="first"><tt class="docutils literal">typing</tt> module: <tt class="docutils literal">TypedDict</tt>, <tt class="docutils literal">Literal</tt>, <tt class="docutils literal">Final</tt>, <tt class="docutils literal">final()</tt>,
 <tt class="docutils literal">Protocol</tt>, <tt class="docutils literal">SupportsIndex</tt>, <tt class="docutils literal">get_origin()</tt>, and <tt class="docutils literal">get_args()</tt> added</p>
@@ -1753,6 +1765,8 @@ from <tt class="docutils literal">collections.abc</tt> instead</p>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">get_annotations()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">io</tt> module: <tt class="docutils literal">text_encoding()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">os.path.realpath()</tt> now has a <tt class="docutils literal">strict</tt> parameter for erroring when a
 path doesn’t exist or a symlink loop is encountered</p>
