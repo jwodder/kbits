@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2021-10-07
+:Modified: 2021-10-12
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1183,8 +1183,6 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
 
 - One can now write ``f"{var=}"`` to get ``f"{var}={repr(var)}"``
 
-- ``pickle`` module: Protocol 5 (with support for out-of-band buffers) added
-
 - ``continue`` is now allowed in ``finally:`` clauses
 
 - New ``int``, ``bool``, and ``fractions.Fraction`` method:
@@ -1222,17 +1220,19 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
 - ``functools`` module: ``cached_property()`` and ``singledispatchmethod()``
   added
 
+- ``io`` module: ``open_code()`` (the verified open hook) added
+
 - ``itertools`` module: ``accumulate()`` now accepts an ``initial`` parameter
 
 - ``json.tool`` command-line interface: ``--json-lines`` option added
 
 - ``math`` module:
 
+  - ``comb()`` added
   - ``dist()`` added
   - ``hypot()`` can now take multiple arguments
   - ``isqrt()`` added
   - ``perm()`` added
-  - ``comb()`` added
   - ``prod()`` added
 
 - ``pathlib`` module:
@@ -1240,6 +1240,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
   - ``Path.link_to()`` added
   - ``Path.rename()`` and ``Path.replace()`` now return the new path
   - ``Path.unlink()`` now accepts a ``missing_ok`` argument
+
+- ``pickle`` module: Protocol 5 (with support for out-of-band buffers) added
 
 - ``platform`` module: ``dist()`` and ``linux_distribution()`` removed
 
@@ -1251,6 +1253,12 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
 - ``subprocess`` module: The ``args`` parameter to ``Popen`` and the wrappers
   around it can now be a path-like object or sequence of path-like objects on
   Windows systems in addition to POSIX
+
+- ``sys`` module:
+
+  - ``audit()`` and ``addaudithook()`` (for audit hooks) added
+  - ``pycache_prefix`` added
+  - ``unraisablehook()`` and ``__unraisablehook__`` added
 
 - ``typing`` module: ``TypedDict``, ``Literal``, ``Final``, ``final()``,
   ``Protocol``, ``SupportsIndex``, ``get_origin()``, and ``get_args()`` added
@@ -1434,6 +1442,8 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
   - ``entry_points()`` and ``package_distributions()`` added
 
 - ``inspect`` module: ``get_annotations()`` added
+
+- ``io`` module: ``text_encoding()`` added
 
 - ``os.path.realpath()`` now has a ``strict`` parameter for erroring when a
   path doesn't exist or a symlink loop is encountered
