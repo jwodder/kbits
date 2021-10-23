@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2021-10-12
+:Modified: 2021-10-23
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1327,7 +1327,11 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.9.html>`__
   - ``gcd()`` can now take multiple arguments
   - ``lcm()``, ``nextafter()``, and ``ulp()`` added
 
-- ``pathlib`` module: ``Path.readlink()`` added
+- ``pathlib`` module:
+
+  - ``Path.readlink()`` added
+  - ``PurePath.is_relative_to()`` added
+  - ``PurePath.with_stem()`` added
 
 - ``random`` module: ``randbytes()`` added
 
