@@ -25,37 +25,37 @@ documentation if your project is structured differently.&lt;/p&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#avoiding-general-mistakes" id="id13"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#avoiding-general-mistakes" id="toc-entry-1"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#look-at-your-built-distributions" id="id14"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#look-at-your-built-distributions" id="toc-entry-2"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#installations-are-not-namespaced" id="id15"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#installations-are-not-namespaced" id="toc-entry-3"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-tests-directory-in-wheel" id="id16"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-tests-directory-in-wheel" id="toc-entry-4"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="id17"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="toc-entry-5"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-doesn-t-render" id="id18"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-doesn-t-render" id="toc-entry-6"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-not-included" id="id19"&gt;Project Description Not Included&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-not-included" id="toc-entry-7"&gt;Project Description Not Included&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-package-not-included-in-wheel" id="id20"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-package-not-included-in-wheel" id="toc-entry-8"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#subpackages-not-included-in-wheel" id="id21"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#subpackages-not-included-in-wheel" id="toc-entry-9"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#package-data-not-included-in-wheel" id="id22"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#package-data-not-included-in-wheel" id="toc-entry-10"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pyc-files-included-in-wheel" id="id23"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pyc-files-included-in-wheel" id="toc-entry-11"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="id24"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="toc-entry-12"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="id25"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="toc-entry-13"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#conclusion" id="id26"&gt;Conclusion&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#conclusion" id="toc-entry-14"&gt;Conclusion&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#footnotes" id="id27"&gt;Footnotes&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#footnotes" id="toc-entry-15"&gt;Footnotes&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -569,7 +569,7 @@ wrong name.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;This is clearly not desirable.  The solution is to always delete the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;
 directory before building a wheel, such as by cleaning your repository with
-&lt;tt class="docutils literal"&gt;git clean&lt;/tt&gt; or similar, or by running &lt;tt class="docutils literal"&gt;python setup.py clean &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; &lt;a class="footnote-reference" href="#id10" id="id7"&gt;[1]&lt;/a&gt;.&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;git clean&lt;/tt&gt; or similar, or by running &lt;tt class="docutils literal"&gt;python setup.py clean &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; &lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;An even worse situation occurs if your &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; uses
 &lt;tt class="docutils literal"&gt;find_namespace_packages()&lt;/tt&gt; without any arguments.  In this case, if you
 rebuild your package without first deleting the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory,
@@ -592,12 +592,12 @@ sense when you’re developing a Python application that will be the primary
 project in its environment (in which case you often won’t be uploading it to
 PyPI), but it doesn’t make sense when you’re distributing a library for others
 to use alongside other arbitrary libraries.  For one thing, your library is
-almost certainly going to work just as well with version 1.2.4 of foo &lt;a class="footnote-reference" href="#id11" id="id8"&gt;[2]&lt;/a&gt;, so
+almost certainly going to work just as well with version 1.2.4 of foo &lt;a class="footnote-reference" href="#footnote-2" id="footnote-reference-2"&gt;[2]&lt;/a&gt;, so
 why leave it out?  For another thing, if someone wants to use your library with
 its pinned &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; requirement alongside other libraries, sooner or later
 they’ll run into a situation where they’re installing both it and another
 project that requires a different version of &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; (maybe even differing by
-one micro version!), and then problems ensue &lt;a class="footnote-reference" href="#id12" id="id9"&gt;[3]&lt;/a&gt;.  True, clashes between
+one micro version!), and then problems ensue &lt;a class="footnote-reference" href="#footnote-3" id="footnote-reference-3"&gt;[3]&lt;/a&gt;.  True, clashes between
 version dependencies in disparate projects can’t be avoided 100%, but they can
 be made to occur far less often if projects require generous version ranges
 instead of specific versions.&lt;/p&gt;
@@ -629,26 +629,26 @@ best practices that avoid them.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="footnotes"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Footnotes&lt;/a&gt;&lt;/h2&gt;
-&lt;table class="docutils footnote" frame="void" id="id10" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id7"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Setuptools is currently trying to get people to move away from
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Setuptools is currently trying to get people to move away from
 &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; commands, so &lt;tt class="docutils literal"&gt;setup.py clean&lt;/tt&gt; will be discouraged — and
 probably deprecated — at some indeterminate point in the future.  Until
 that happens, though, don’t feel bad about using it if you need to.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id11" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-2" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id8"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Unless &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; is an unpredictable, compatibility-breaking mess, in
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Unless &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; is an unpredictable, compatibility-breaking mess, in
 which case you should probably reconsider dependending on it.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id12" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-3" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id9"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Currently, pip handles conflicting version requirements with a warning
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Currently, pip handles conflicting version requirements with a warning
 and picking one requirement to follow, but pip’s new dependency resolver
 due out in October 2020 (already available if you pass the right flag to
 pip) will react to such situations by searching for older versions of

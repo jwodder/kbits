@@ -83,7 +83,7 @@
 directories of common version control systems.  This list is useful for, say,
 knowing what files to ignore when traversing a project directory.</p>
 <p>Did I leave anything out?  <a class="reference external" href="https://github.com/jwodder/kbits">Feel free to send a pull request.</a></p>
-<table border="1" class="colwidths-auto docutils align-center">
+<table border="1" class="docutils align-center">
 <thead valign="bottom">
 <tr><th class="head">VCS</th>
 <th class="head">File/Directory</th>
@@ -136,11 +136,11 @@ knowing what files to ignore when traversing a project directory.</p>
 <td>—</td>
 </tr>
 <tr><td><tt class="docutils literal">.binaries</tt></td>
-<td>Lists files to treat as binary <a class="footnote-reference" href="#fn1" id="id2">[1]</a></td>
+<td>Lists files to treat as binary <a class="footnote-reference" href="#fn1" id="footnote-reference-1">[1]</a></td>
 <td><a class="reference external" href="binaries">Manual</a></td>
 </tr>
 <tr><td><tt class="docutils literal">.boring</tt></td>
-<td>Lists files to exclude from version control <a class="footnote-reference" href="#fn1" id="id3">[1]</a></td>
+<td>Lists files to exclude from version control <a class="footnote-reference" href="#fn1" id="footnote-reference-2">[1]</a></td>
 <td><a class="reference external" href="http://darcs.net/manual/Configuring_darcs.html#SECTION00410040000000000000">Manual</a></td>
 </tr>
 <tr><td rowspan="2"><a class="reference external" href="https://bazaar.canonical.com">Bazaar</a></td>
@@ -154,8 +154,8 @@ knowing what files to ignore when traversing a project directory.</p>
 </tr>
 <tr><td><a class="reference external" href="http://subversion.apache.org">Subversion</a></td>
 <td><tt class="docutils literal">.svn/</tt> or
-<tt class="docutils literal">_svn/</tt> <a class="footnote-reference" href="#fn2" id="id4">[2]</a></td>
-<td>Local copy of repository data <a class="footnote-reference" href="#fn3" id="id5">[3]</a></td>
+<tt class="docutils literal">_svn/</tt> <a class="footnote-reference" href="#fn2" id="footnote-reference-3">[2]</a></td>
+<td>Local copy of repository data <a class="footnote-reference" href="#fn3" id="footnote-reference-4">[3]</a></td>
 <td>&nbsp;</td>
 </tr>
 <tr><td><a class="reference external" href="http://cvs.nongnu.org">CVS</a></td>
@@ -177,7 +177,7 @@ knowing what files to ignore when traversing a project directory.</p>
 <table class="docutils footnote" frame="void" id="fn1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>)</em> Darcs normally stores its binaries file and boring file inside the
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#footnote-reference-1">1</a>, <a class="fn-backref" href="#footnote-reference-2">2</a>)</em> Darcs normally stores its binaries file and boring file inside the
 <tt class="docutils literal">_darcs/</tt> directory, but it is possible to use any file under version
 control in their place; the names listed here are the conventional names for
 such files.</td></tr>
@@ -186,7 +186,7 @@ such files.</td></tr>
 <table class="docutils footnote" frame="void" id="fn2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td>For compability with ASP.NET, Subversion will use the name <tt class="docutils literal">_svn</tt>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-3">[2]</a></td><td>For compability with ASP.NET, Subversion will use the name <tt class="docutils literal">_svn</tt>
 instead of <tt class="docutils literal">.svn</tt> if the <tt class="docutils literal">SVN_ASP_DOT_NET_HACK</tt> environment variable is
 defined.</td></tr>
 </tbody>
@@ -194,7 +194,7 @@ defined.</td></tr>
 <table class="docutils footnote" frame="void" id="fn3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[3]</a></td><td>Prior to version 1.7, Subversion placed a <tt class="docutils literal">.svn</tt>/<tt class="docutils literal">_svn</tt> directory
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-4">[3]</a></td><td>Prior to version 1.7, Subversion placed a <tt class="docutils literal">.svn</tt>/<tt class="docutils literal">_svn</tt> directory
 in every subdirectory of the working directory under version control.</td></tr>
 </tbody>
 </table>

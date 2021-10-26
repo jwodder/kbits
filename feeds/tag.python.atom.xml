@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-10-23T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-10-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-10-26T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-10-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
 introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-0-2008-12-03-relative-to-python-2-6" id="id1"&gt;Python 3.0 (2008-12-03), Relative to Python 2.6&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-0-2008-12-03-relative-to-python-2-6" id="toc-entry-1"&gt;Python 3.0 (2008-12-03), Relative to Python 2.6&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-1-2009-06-26" id="id2"&gt;Python 3.1 (2009-06-26)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-1-2009-06-26" id="toc-entry-2"&gt;Python 3.1 (2009-06-26)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-2-2011-02-20" id="id3"&gt;Python 3.2 (2011-02-20)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-2-2011-02-20" id="toc-entry-3"&gt;Python 3.2 (2011-02-20)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-3-2012-09-29" id="id4"&gt;Python 3.3 (2012-09-29)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-3-2012-09-29" id="toc-entry-4"&gt;Python 3.3 (2012-09-29)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-4-2014-03-17" id="id5"&gt;Python 3.4 (2014-03-17)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-4-2014-03-17" id="toc-entry-5"&gt;Python 3.4 (2014-03-17)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-5-2015-09-13" id="id6"&gt;Python 3.5 (2015-09-13)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-5-2015-09-13" id="toc-entry-6"&gt;Python 3.5 (2015-09-13)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-6-2016-12-23" id="id7"&gt;Python 3.6 (2016-12-23)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-6-2016-12-23" id="toc-entry-7"&gt;Python 3.6 (2016-12-23)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-7-2018-06-27" id="id8"&gt;Python 3.7 (2018-06-27)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-7-2018-06-27" id="toc-entry-8"&gt;Python 3.7 (2018-06-27)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-8-2019-10-14" id="id9"&gt;Python 3.8 (2019-10-14)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-8-2019-10-14" id="toc-entry-9"&gt;Python 3.8 (2019-10-14)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-9-2020-10-05" id="id10"&gt;Python 3.9 (2020-10-05)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-9-2020-10-05" id="toc-entry-10"&gt;Python 3.9 (2020-10-05)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-10-2021-10-04" id="id11"&gt;Python 3.10 (2021-10-04)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-10-2021-10-04" id="toc-entry-11"&gt;Python 3.10 (2021-10-04)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-11-2022-10-03" id="id12"&gt;Python 3.11 (2022-10-03)&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-3-11-2022-10-03" id="toc-entry-12"&gt;Python 3.11 (2022-10-03)&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -1748,39 +1748,39 @@ and 3.9, respectively)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="history"></category></entry><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2020-12-29T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
+</content><category term="Programming"></category><category term="Python"></category><category term="history"></category></entry><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2021-10-26T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
 non-Python files in the project that the code can then access at runtime,
 such as templates, images, and data.  These files are called &lt;em&gt;package
 data&lt;/em&gt;, and this article describes how to include them in &amp;amp; access them from
 your project.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;When creating a Python project, you may want to include a number of non-Python
 files in the project that the code can then access at runtime, such as
-templates, images, and data.  These files are called &lt;em&gt;package data&lt;/em&gt; &lt;a class="footnote-reference" href="#f1" id="id1"&gt;[1]&lt;/a&gt;, and
+templates, images, and data.  These files are called &lt;em&gt;package data&lt;/em&gt; &lt;a class="footnote-reference" href="#f1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;, and
 they are included in &amp;amp; accessed from your project as follows.&lt;/p&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-in-projects" id="id8"&gt;Including Package Data in Projects&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-in-projects" id="toc-entry-1"&gt;Including Package Data in Projects&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-via-manifest-in" id="id9"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-via-manifest-in" id="toc-entry-2"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-via-setup-py" id="id10"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-via-setup-py-setup-cfg" id="toc-entry-3"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#excluding-package-data-via-setup-py" id="id11"&gt;Excluding Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#excluding-package-data-via-setup-py-setup-cfg" id="toc-entry-4"&gt;Excluding Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-via-setuptools-plugins" id="id12"&gt;Including Package Data via Setuptools Plugins&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#including-package-data-via-setuptools-plugins" id="toc-entry-5"&gt;Including Package Data via Setuptools Plugins&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#accessing-package-data-at-runtime" id="id13"&gt;Accessing Package Data at Runtime&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#accessing-package-data-at-runtime" id="toc-entry-6"&gt;Accessing Package Data at Runtime&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#installing-importing-importlib-resources" id="id14"&gt;Installing &amp;amp; Importing &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#installing-importing-importlib-resources" id="toc-entry-7"&gt;Installing &amp;amp; Importing &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#the-importlib-resources-api" id="id15"&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; API&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#the-importlib-resources-api" id="toc-entry-8"&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; API&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#footnotes" id="id16"&gt;Footnotes&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#footnotes" id="toc-entry-9"&gt;Footnotes&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -1793,7 +1793,7 @@ Users of flit, Poetry, and other tools must consult their respective
 backend’s documentation to see how to include package data.&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The first requirement for being able to include package data in your &lt;a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#packages"&gt;package&lt;/a&gt;
-&lt;a class="footnote-reference" href="#f2" id="id2"&gt;[2]&lt;/a&gt; is for the files to be located somewhere inside the actual package
+&lt;a class="footnote-reference" href="#f2" id="footnote-reference-2"&gt;[2]&lt;/a&gt; is for the files to be located somewhere inside the actual package
 directory.  If your project is a single-file &lt;tt class="docutils literal"&gt;.py&lt;/tt&gt; module, you must convert
 it to a directory/package layout before you can store package data in it.&lt;/p&gt;
 &lt;p&gt;Once your package data is inside the package, you must tell setuptools to
@@ -1828,8 +1828,8 @@ package that are included in the sdist should also be included in the wheel.&lt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;div class="section" id="including-package-data-via-setup-py"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="section" id="including-package-data-via-setup-py-setup-cfg"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This method allows you to specify package data file patterns on a per-package
 basis through the &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt;.  &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt;
 must be a &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; mapping package or subpackage names (or the empty string, to
@@ -1891,8 +1891,8 @@ specified with &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; will n
 sdists; you must instead list them in your &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="section" id="excluding-package-data-via-setup-py"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Excluding Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="section" id="excluding-package-data-via-setup-py-setup-cfg"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Excluding Package Data via &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;exclude_package_data&lt;/tt&gt; argument to &lt;tt class="docutils literal"&gt;setup()&lt;/tt&gt; can be used in conjunction
 with either of the above methods to prevent one or more files from being
 treated as package data.  &lt;tt class="docutils literal"&gt;exclude_package_data&lt;/tt&gt; takes a &lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; with the
@@ -2023,7 +2023,7 @@ resource’s basename via the &lt;tt class="docutils literal"&gt;name&lt;/tt&gt;
 &lt;table class="docutils footnote" frame="void" id="f1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Specifically, package data files are files that are stored in a Python
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Specifically, package data files are files that are stored in a Python
 project’s package directory next to the Python source files.  An
 alternative to package data is &lt;em&gt;data files&lt;/em&gt;, which are files installed
 elsewhere on the file system.  This article only deals with the
@@ -2033,7 +2033,7 @@ former.&lt;/td&gt;&lt;/tr&gt;
 &lt;table class="docutils footnote" frame="void" id="f2" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Throughout this article, the term “package” is used in the sense of a
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Throughout this article, the term “package” is used in the sense of a
 directory of &lt;tt class="docutils literal"&gt;.py&lt;/tt&gt; files and other packages (a.k.a. an “&lt;a class="reference external" href="https://packaging.python.org/glossary/#term-Import-Package"&gt;import
 package&lt;/a&gt;”), not in the sense of a “&lt;a class="reference external" href="https://packaging.python.org/glossary/#term-Distribution-Package"&gt;distribution package&lt;/a&gt;” (i.e, an
 sdist or wheel).&lt;/td&gt;&lt;/tr&gt;
@@ -2066,37 +2066,37 @@ documentation if your project is structured differently.&lt;/p&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#avoiding-general-mistakes" id="id13"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#avoiding-general-mistakes" id="toc-entry-1"&gt;Avoiding General Mistakes&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#look-at-your-built-distributions" id="id14"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#look-at-your-built-distributions" id="toc-entry-2"&gt;Look at Your Built Distributions&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#installations-are-not-namespaced" id="id15"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#installations-are-not-namespaced" id="toc-entry-3"&gt;Installations are Not Namespaced&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-tests-directory-in-wheel" id="id16"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-tests-directory-in-wheel" id="toc-entry-4"&gt;Top-Level &lt;tt class="docutils literal"&gt;tests/&lt;/tt&gt; Directory in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="id17"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="toc-entry-5"&gt;Top-Level &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; File in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-doesn-t-render" id="id18"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-doesn-t-render" id="toc-entry-6"&gt;Project Description Doesn’t Render&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-not-included" id="id19"&gt;Project Description Not Included&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#project-description-not-included" id="toc-entry-7"&gt;Project Description Not Included&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-package-not-included-in-wheel" id="id20"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#python-package-not-included-in-wheel" id="toc-entry-8"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#subpackages-not-included-in-wheel" id="id21"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#subpackages-not-included-in-wheel" id="toc-entry-9"&gt;Subpackages Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#package-data-not-included-in-wheel" id="id22"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#package-data-not-included-in-wheel" id="toc-entry-10"&gt;Package Data Not Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pyc-files-included-in-wheel" id="id23"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pyc-files-included-in-wheel" id="toc-entry-11"&gt;&lt;tt class="docutils literal"&gt;*.pyc&lt;/tt&gt; Files Included in Wheel&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="id24"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="toc-entry-12"&gt;Rebuilding Wheels without Deleting &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="id25"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="toc-entry-13"&gt;Pinning Project Requirements to Exact Versions&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#conclusion" id="id26"&gt;Conclusion&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#conclusion" id="toc-entry-14"&gt;Conclusion&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#footnotes" id="id27"&gt;Footnotes&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#footnotes" id="toc-entry-15"&gt;Footnotes&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -2610,7 +2610,7 @@ wrong name.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;This is clearly not desirable.  The solution is to always delete the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt;
 directory before building a wheel, such as by cleaning your repository with
-&lt;tt class="docutils literal"&gt;git clean&lt;/tt&gt; or similar, or by running &lt;tt class="docutils literal"&gt;python setup.py clean &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; &lt;a class="footnote-reference" href="#id10" id="id7"&gt;[1]&lt;/a&gt;.&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;git clean&lt;/tt&gt; or similar, or by running &lt;tt class="docutils literal"&gt;python setup.py clean &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; &lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;An even worse situation occurs if your &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; uses
 &lt;tt class="docutils literal"&gt;find_namespace_packages()&lt;/tt&gt; without any arguments.  In this case, if you
 rebuild your package without first deleting the &lt;tt class="docutils literal"&gt;build/&lt;/tt&gt; directory,
@@ -2633,12 +2633,12 @@ sense when you’re developing a Python application that will be the primary
 project in its environment (in which case you often won’t be uploading it to
 PyPI), but it doesn’t make sense when you’re distributing a library for others
 to use alongside other arbitrary libraries.  For one thing, your library is
-almost certainly going to work just as well with version 1.2.4 of foo &lt;a class="footnote-reference" href="#id11" id="id8"&gt;[2]&lt;/a&gt;, so
+almost certainly going to work just as well with version 1.2.4 of foo &lt;a class="footnote-reference" href="#footnote-2" id="footnote-reference-2"&gt;[2]&lt;/a&gt;, so
 why leave it out?  For another thing, if someone wants to use your library with
 its pinned &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; requirement alongside other libraries, sooner or later
 they’ll run into a situation where they’re installing both it and another
 project that requires a different version of &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; (maybe even differing by
-one micro version!), and then problems ensue &lt;a class="footnote-reference" href="#id12" id="id9"&gt;[3]&lt;/a&gt;.  True, clashes between
+one micro version!), and then problems ensue &lt;a class="footnote-reference" href="#footnote-3" id="footnote-reference-3"&gt;[3]&lt;/a&gt;.  True, clashes between
 version dependencies in disparate projects can’t be avoided 100%, but they can
 be made to occur far less often if projects require generous version ranges
 instead of specific versions.&lt;/p&gt;
@@ -2670,26 +2670,26 @@ best practices that avoid them.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="footnotes"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Footnotes&lt;/a&gt;&lt;/h2&gt;
-&lt;table class="docutils footnote" frame="void" id="id10" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id7"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Setuptools is currently trying to get people to move away from
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Setuptools is currently trying to get people to move away from
 &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; commands, so &lt;tt class="docutils literal"&gt;setup.py clean&lt;/tt&gt; will be discouraged — and
 probably deprecated — at some indeterminate point in the future.  Until
 that happens, though, don’t feel bad about using it if you need to.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id11" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-2" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id8"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Unless &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; is an unpredictable, compatibility-breaking mess, in
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Unless &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; is an unpredictable, compatibility-breaking mess, in
 which case you should probably reconsider dependending on it.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id12" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-3" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id9"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Currently, pip handles conflicting version requirements with a warning
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Currently, pip handles conflicting version requirements with a warning
 and picking one requirement to follow, but pip’s new dependency resolver
 due out in October 2020 (already available if you pass the right flag to
 pip) will react to such situations by searching for older versions of

@@ -109,37 +109,37 @@ documentation if your project is structured differently.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul>
-<li><p class="first"><a class="reference internal" href="#avoiding-general-mistakes" id="id13">Avoiding General Mistakes</a></p>
+<li><p class="first"><a class="reference internal" href="#avoiding-general-mistakes" id="toc-entry-1">Avoiding General Mistakes</a></p>
 <ul>
-<li><p class="first"><a class="reference internal" href="#look-at-your-built-distributions" id="id14">Look at Your Built Distributions</a></p>
+<li><p class="first"><a class="reference internal" href="#look-at-your-built-distributions" id="toc-entry-2">Look at Your Built Distributions</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#installations-are-not-namespaced" id="id15">Installations are Not Namespaced</a></p>
+<li><p class="first"><a class="reference internal" href="#installations-are-not-namespaced" id="toc-entry-3">Installations are Not Namespaced</a></p>
 </li>
 </ul>
 </li>
-<li><p class="first"><a class="reference internal" href="#top-level-tests-directory-in-wheel" id="id16">Top-Level <tt class="docutils literal">tests/</tt> Directory in Wheel</a></p>
+<li><p class="first"><a class="reference internal" href="#top-level-tests-directory-in-wheel" id="toc-entry-4">Top-Level <tt class="docutils literal">tests/</tt> Directory in Wheel</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="id17">Top-Level <tt class="docutils literal">README</tt> or <tt class="docutils literal">LICENSE</tt> File in Wheel</a></p>
+<li><p class="first"><a class="reference internal" href="#top-level-readme-or-license-file-in-wheel" id="toc-entry-5">Top-Level <tt class="docutils literal">README</tt> or <tt class="docutils literal">LICENSE</tt> File in Wheel</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#project-description-doesn-t-render" id="id18">Project Description Doesn’t Render</a></p>
+<li><p class="first"><a class="reference internal" href="#project-description-doesn-t-render" id="toc-entry-6">Project Description Doesn’t Render</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#project-description-not-included" id="id19">Project Description Not Included</a></p>
+<li><p class="first"><a class="reference internal" href="#project-description-not-included" id="toc-entry-7">Project Description Not Included</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#python-package-not-included-in-wheel" id="id20">Python Package Not Included in Wheel</a></p>
+<li><p class="first"><a class="reference internal" href="#python-package-not-included-in-wheel" id="toc-entry-8">Python Package Not Included in Wheel</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#subpackages-not-included-in-wheel" id="id21">Subpackages Not Included in Wheel</a></p>
+<li><p class="first"><a class="reference internal" href="#subpackages-not-included-in-wheel" id="toc-entry-9">Subpackages Not Included in Wheel</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#package-data-not-included-in-wheel" id="id22">Package Data Not Included in Wheel</a></p>
+<li><p class="first"><a class="reference internal" href="#package-data-not-included-in-wheel" id="toc-entry-10">Package Data Not Included in Wheel</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#pyc-files-included-in-wheel" id="id23"><tt class="docutils literal">*.pyc</tt> Files Included in Wheel</a></p>
+<li><p class="first"><a class="reference internal" href="#pyc-files-included-in-wheel" id="toc-entry-11"><tt class="docutils literal">*.pyc</tt> Files Included in Wheel</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="id24">Rebuilding Wheels without Deleting <tt class="docutils literal">build/</tt></a></p>
+<li><p class="first"><a class="reference internal" href="#rebuilding-wheels-without-deleting-build" id="toc-entry-12">Rebuilding Wheels without Deleting <tt class="docutils literal">build/</tt></a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="id25">Pinning Project Requirements to Exact Versions</a></p>
+<li><p class="first"><a class="reference internal" href="#pinning-project-requirements-to-exact-versions" id="toc-entry-13">Pinning Project Requirements to Exact Versions</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#conclusion" id="id26">Conclusion</a></p>
+<li><p class="first"><a class="reference internal" href="#conclusion" id="toc-entry-14">Conclusion</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#footnotes" id="id27">Footnotes</a></p>
+<li><p class="first"><a class="reference internal" href="#footnotes" id="toc-entry-15">Footnotes</a></p>
 </li>
 </ul>
 </div>
@@ -653,7 +653,7 @@ wrong name.</p>
 </ul>
 <p>This is clearly not desirable.  The solution is to always delete the <tt class="docutils literal">build/</tt>
 directory before building a wheel, such as by cleaning your repository with
-<tt class="docutils literal">git clean</tt> or similar, or by running <tt class="docutils literal">python setup.py clean <span class="pre">--all</span></tt> <a class="footnote-reference" href="#id10" id="id7">[1]</a>.</p>
+<tt class="docutils literal">git clean</tt> or similar, or by running <tt class="docutils literal">python setup.py clean <span class="pre">--all</span></tt> <a class="footnote-reference" href="#footnote-1" id="footnote-reference-1">[1]</a>.</p>
 <p>An even worse situation occurs if your <tt class="docutils literal">setup.py</tt> uses
 <tt class="docutils literal">find_namespace_packages()</tt> without any arguments.  In this case, if you
 rebuild your package without first deleting the <tt class="docutils literal">build/</tt> directory,
@@ -676,12 +676,12 @@ sense when you’re developing a Python application that will be the primary
 project in its environment (in which case you often won’t be uploading it to
 PyPI), but it doesn’t make sense when you’re distributing a library for others
 to use alongside other arbitrary libraries.  For one thing, your library is
-almost certainly going to work just as well with version 1.2.4 of foo <a class="footnote-reference" href="#id11" id="id8">[2]</a>, so
+almost certainly going to work just as well with version 1.2.4 of foo <a class="footnote-reference" href="#footnote-2" id="footnote-reference-2">[2]</a>, so
 why leave it out?  For another thing, if someone wants to use your library with
 its pinned <tt class="docutils literal">foo</tt> requirement alongside other libraries, sooner or later
 they’ll run into a situation where they’re installing both it and another
 project that requires a different version of <tt class="docutils literal">foo</tt> (maybe even differing by
-one micro version!), and then problems ensue <a class="footnote-reference" href="#id12" id="id9">[3]</a>.  True, clashes between
+one micro version!), and then problems ensue <a class="footnote-reference" href="#footnote-3" id="footnote-reference-3">[3]</a>.  True, clashes between
 version dependencies in disparate projects can’t be avoided 100%, but they can
 be made to occur far less often if projects require generous version ranges
 instead of specific versions.</p>
@@ -713,26 +713,26 @@ best practices that avoid them.</p>
 </div>
 <div class="section" id="footnotes">
 <h2><a class="toc-backref" href="#contents">Footnotes</a></h2>
-<table class="docutils footnote" frame="void" id="id10" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[1]</a></td><td>Setuptools is currently trying to get people to move away from
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-1">[1]</a></td><td>Setuptools is currently trying to get people to move away from
 <tt class="docutils literal">setup.py</tt> commands, so <tt class="docutils literal">setup.py clean</tt> will be discouraged — and
 probably deprecated — at some indeterminate point in the future.  Until
 that happens, though, don’t feel bad about using it if you need to.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id11" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[2]</a></td><td>Unless <tt class="docutils literal">foo</tt> is an unpredictable, compatibility-breaking mess, in
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-2">[2]</a></td><td>Unless <tt class="docutils literal">foo</tt> is an unpredictable, compatibility-breaking mess, in
 which case you should probably reconsider dependending on it.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id12" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[3]</a></td><td>Currently, pip handles conflicting version requirements with a warning
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-3">[3]</a></td><td>Currently, pip handles conflicting version requirements with a warning
 and picking one requirement to follow, but pip’s new dependency resolver
 due out in October 2020 (already available if you pass the right flag to
 pip) will react to such situations by searching for older versions of
