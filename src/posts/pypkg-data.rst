@@ -3,6 +3,7 @@ Using Package Data in Python Projects with Setuptools
 =====================================================
 
 :Date: 2020-12-29
+:Modified: 2021-10-26
 :Category: Programming
 :Tags: Python, Python packaging, setuptools
 :Summary:
@@ -76,8 +77,8 @@ There are two steps to this method:
    package that are included in the sdist should also be included in the wheel.
 
 
-Including Package Data via ``setup.py``
----------------------------------------
+Including Package Data via ``setup.py``/``setup.cfg``
+-----------------------------------------------------
 
 This method allows you to specify package data file patterns on a per-package
 basis through the ``package_data`` argument to ``setup()``.  ``package_data``
@@ -148,8 +149,8 @@ file must be listed in ``package_data`` in the form ``"package.subpackage":
     sdists; you must instead list them in your ``MANIFEST.in``.
 
 
-Excluding Package Data via ``setup.py``
----------------------------------------
+Excluding Package Data via ``setup.py``/``setup.cfg``
+-----------------------------------------------------
 
 The ``exclude_package_data`` argument to ``setup()`` can be used in conjunction
 with either of the above methods to prevent one or more files from being
