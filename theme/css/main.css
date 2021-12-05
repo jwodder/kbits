@@ -165,3 +165,7 @@ h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 .contents li p {
     margin: 0;
 }
+
+table.docutils th.field-name {
+    text-align: left;
+}

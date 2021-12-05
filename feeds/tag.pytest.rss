@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Knowledge Bits - pytest</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Sun, 05 Dec 2021 00:00:00 -0500</lastBuildDate><item><title>Skipping Pytest Tests Unless an Option is Given</title><link>https://jwodder.github.io/kbits/posts/pytest-mark-off/</link><description>&lt;p class="first last"&gt;When testing Python code with &lt;a class="reference external" href="https://docs.pytest.org"&gt;pytest&lt;/a&gt;, you may occasionally write tests
+that you only want to run under special circumstances, such as long-running
+tests that should only be run under continuous integration and not when
+invoking &lt;tt class="docutils literal"&gt;pytest&lt;/tt&gt; locally.  The naïve way to accomplish this is to
+decorate the tests in question with a pytest mark like
+&lt;tt class="docutils literal"&gt;&amp;#64;pytest.mark.slow&lt;/tt&gt; and then specify &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-m&lt;/span&gt; &amp;quot;not slow&amp;quot;&lt;/tt&gt; when running
+pytest locally, but then you have to remember to pass this option every
+time, and if you hardcode it into your &lt;tt class="docutils literal"&gt;tox.ini&lt;/tt&gt; or pytest configuration,
+you’ll need something else to remove it when testing under CI.
+Fortunately, there are better ways to make pytest skip tests by default.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Sun, 05 Dec 2021 00:00:00 -0500</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2021-12-05:/kbits/posts/pytest-mark-off/</guid><category>Programming</category><category>Python</category><category>pytest</category><category>testing</category></item></channel></rss>

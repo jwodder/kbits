@@ -60,6 +60,34 @@ comprehensive standard library.</p>
         <article class="hentry">
         <header>
             <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="bookmark" title="Permalink to Skipping Pytest Tests Unless an Option is Given">
+                    Skipping Pytest Tests Unless an Option is Given
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2021-12-05T00:00:00-05:00">2021-12-05</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/pytest/">pytest</a>, <a href="https://jwodder.github.io/kbits/tags/testing/">testing</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">When testing Python code with <a class="reference external" href="https://docs.pytest.org">pytest</a>, you may occasionally write tests
+that you only want to run under special circumstances, such as long-running
+tests that should only be run under continuous integration and not when
+invoking <tt class="docutils literal">pytest</tt> locally.  The naïve way to accomplish this is to
+decorate the tests in question with a pytest mark like
+<tt class="docutils literal">&#64;pytest.mark.slow</tt> and then specify <tt class="docutils literal"><span class="pre">-m</span> &quot;not slow&quot;</tt> when running
+pytest locally, but then you have to remember to pass this option every
+time, and if you hardcode it into your <tt class="docutils literal">tox.ini</tt> or pytest configuration,
+you’ll need something else to remove it when testing under CI.
+Fortunately, there are better ways to make pytest skip tests by default.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
                 <a href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="bookmark" title="Permalink to Notable Features Introduced in Each Python Version">
                     Notable Features Introduced in Each Python Version
                 </a>

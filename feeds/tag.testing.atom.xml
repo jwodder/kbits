@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - testing</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.testing.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-12-05T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Skipping Pytest Tests Unless an Option is Given</title><link href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="alternate"></link><published>2021-12-05T00:00:00-05:00</published><updated>2021-12-05T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-12-05:/kbits/posts/pytest-mark-off/</id><summary type="html">&lt;p class="first last"&gt;When testing Python code with &lt;a class="reference external" href="https://docs.pytest.org"&gt;pytest&lt;/a&gt;, you may occasionally write tests
+that you only want to run under special circumstances, such as long-running
+tests that should only be run under continuous integration and not when
+invoking &lt;tt class="docutils literal"&gt;pytest&lt;/tt&gt; locally.  The naïve way to accomplish this is to
+decorate the tests in question with a pytest mark like
+&lt;tt class="docutils literal"&gt;&amp;#64;pytest.mark.slow&lt;/tt&gt; and then specify &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-m&lt;/span&gt; &amp;quot;not slow&amp;quot;&lt;/tt&gt; when running
+pytest locally, but then you have to remember to pass this option every
+time, and if you hardcode it into your &lt;tt class="docutils literal"&gt;tox.ini&lt;/tt&gt; or pytest configuration,
+you’ll need something else to remove it when testing under CI.
+Fortunately, there are better ways to make pytest skip tests by default.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;When testing Python code with &lt;a class="reference external" href="https://docs.pytest.org"&gt;pytest&lt;/a&gt;, you may occasionally write tests that
+you only want to run under special circumstances, such as long-running tests
+that should only be run under continuous integration and not when invoking
+&lt;tt class="docutils literal"&gt;pytest&lt;/tt&gt; locally.  The naïve way to accomplish this is to decorate the tests
+in question with a pytest mark like &lt;tt class="docutils literal"&gt;&amp;#64;pytest.mark.slow&lt;/tt&gt; and then specify &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-m&lt;/span&gt;
+&amp;quot;not slow&amp;quot;&lt;/tt&gt; when running pytest locally, but then you have to remember to pass
+this option every time, and if you hardcode it into your &lt;tt class="docutils literal"&gt;tox.ini&lt;/tt&gt; or pytest
+configuration, you’ll need something else to remove it when testing under CI.
+Fortunately, there are better ways to make pytest skip tests by default.&lt;/p&gt;
+&lt;p&gt;In this article, we will add a “&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--run-slow&lt;/span&gt;&lt;/tt&gt;” option to pytest and configure
+selected “slow” tests to be skipped unless this option is given on the command
+line.&lt;/p&gt;
+&lt;div class="section" id="option-1-use-a-hook-to-attach-a-skip-marker-to-marked-tests"&gt;
+&lt;h2&gt;Option 1: Use a Hook to Attach a &lt;tt class="docutils literal"&gt;skip&lt;/tt&gt; Marker to Marked Tests&lt;/h2&gt;
+&lt;p&gt;One way to disable selected tests by default is to give them all some mark and
+then use the &lt;tt class="docutils literal"&gt;pytest_collection_modifyitems&lt;/tt&gt; hook to add an additional
+&lt;tt class="docutils literal"&gt;pytest.mark.skip&lt;/tt&gt; mark if a certain command-line option was not given.  We
+do this by adding the following to our &lt;tt class="docutils literal"&gt;conftest.py&lt;/tt&gt; file:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pytest&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;pytest_addoption&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addoption&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;--run-slow&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;store_true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;help&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Run slow tests&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;pytest_collection_modifyitems&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getoption&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--run-slow&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;skipper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;skip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Only run when --run-slow is given&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;slow&amp;quot;&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keywords&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_marker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;skipper&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;and then decorate all of our slow tests with &lt;tt class="docutils literal"&gt;&amp;#64;pytest.mark.slow&lt;/tt&gt;, like so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pytest&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;slow&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_something_slow&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Now, when we run &lt;tt class="docutils literal"&gt;pytest&lt;/tt&gt;, the marked tests will be skipped unless the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--run-slow&lt;/span&gt;&lt;/tt&gt; option is passed on the command line.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="option-2-use-pytest-mark-skipif"&gt;
+&lt;h2&gt;Option 2: Use &lt;tt class="docutils literal"&gt;&amp;#64;pytest.mark.skipif&lt;/tt&gt;&lt;/h2&gt;
+&lt;p&gt;Did you know?  The condition passed to &lt;tt class="docutils literal"&gt;&amp;#64;pytest.mark.skipif&lt;/tt&gt; doesn’t have to
+be a Python boolean expression; it can instead be a &lt;a class="reference external" href="https://docs.pytest.org/en/6.2.x/historical-notes.html#string-conditions"&gt;condition string&lt;/a&gt;
+containing a Python expression, and condition strings are evaluated in a
+namespace that includes the pytest &lt;tt class="docutils literal"&gt;config&lt;/tt&gt; object.  This lets us write
+&lt;tt class="docutils literal"&gt;skipif&lt;/tt&gt; decorators that skip tests based on whether or not certain
+command-line options were given.&lt;/p&gt;
+&lt;p&gt;We start out by defining a command-line option in &lt;tt class="docutils literal"&gt;conftest.py&lt;/tt&gt; that will be
+used to tell pytest to run otherwise-skipped tests:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;pytest_addoption&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addoption&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;--run-slow&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;store_true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;help&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Run slow tests&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;We then decorate the tests we want to skip by default like so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pytest&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;skipif&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;not config.getoption('--run-slow')&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Only run when --run-slow is given&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_something_slow&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If there are multiple tests to apply this condition to, we can assign the
+&lt;tt class="docutils literal"&gt;skipif&lt;/tt&gt; decorator to a variable that is then used to decorate each one, like
+so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pytest&lt;/span&gt;
+
+&lt;span class="n"&gt;slow_test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;skipif&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;not config.getoption('--run-slow')&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Only run when --run-slow is given&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;slow_test&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_something_slow&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="nd"&gt;&amp;#64;slow_test&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_something_very_slow&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;div class="admonition warning"&gt;
+&lt;p class="first admonition-title"&gt;Warning&lt;/p&gt;
+&lt;p&gt;You may see some old guides on the internet that instead write the
+&lt;tt class="docutils literal"&gt;skipif&lt;/tt&gt; decorator with an actual boolean condition defined in terms of
+&lt;tt class="docutils literal"&gt;pytest.config&lt;/tt&gt;, e.g.:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pytest&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Outdated!&lt;/span&gt;
+&lt;span class="nd"&gt;&amp;#64;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;skipif&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getoption&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--run-slow&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Only run when --run-slow is given&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_something_slow&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p class="last"&gt;However, this no longer works; the &lt;tt class="docutils literal"&gt;pytest.config&lt;/tt&gt; global variable was
+removed from pytest in version 5.1.0.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="option-3-use-a-pre-existing-plugin"&gt;
+&lt;h2&gt;Option 3: Use a Pre-Existing Plugin&lt;/h2&gt;
+&lt;p&gt;As is the case for many, many things in Python, other people have already done
+the job of generalizing the above and publishing it on PyPI.  I am aware of two
+pytest plugin projects for skipping tests unless a command-line option is
+given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
+but if they work as advertized, they should prove helpful.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry></feed>

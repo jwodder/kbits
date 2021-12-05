@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Skipping Pytest Tests Unless an Option is Given</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="When testing Python code with pytest, you may occasionally write tests that you only want to run under special circumstances, such as long-running tests that should only be run under continuous integration and not when invoking pytest locally. The naïve way to accomplish this is to decorate the tests in question with a pytest mark like @pytest.mark.slow and then specify -m &#34;not slow&#34; when running pytest locally, but then you have to remember to pass this option every time, and if you hardcode it into your tox.ini or pytest configuration, you’ll need something else to remove it when testing under CI. Fortunately, there are better ways to make pytest skip tests by default."/>
+        <meta name="tags" content="Python"/>
+        <meta name="tags" content="pytest"/>
+        <meta name="tags" content="testing"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="Python,pytest,testing"/>
+</head>
+
+<body>
+    <div id="kbits-theme-topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d already found</span>
+        </header>
+    </div>
+
+    <div class="mainrow">
+        <div id="kbits-theme-navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav>
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="kbits-theme-content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="bookmark"
+                    title="Permalink to Skipping Pytest Tests Unless an Option is Given">Skipping Pytest Tests Unless an Option is Given</a>
+            </h1>
+        </header>
+        <footer>
+            <table class="docinfo" border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2021-12-05T00:00:00-05:00" pubdate="1">2021-12-05</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<span class="fn">John T. Wodder II</span>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/pytest/">pytest</a>, <a href="https://jwodder.github.io/kbits/tags/testing/">testing</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/pytest-mark-off.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p>When testing Python code with <a class="reference external" href="https://docs.pytest.org">pytest</a>, you may occasionally write tests that
+you only want to run under special circumstances, such as long-running tests
+that should only be run under continuous integration and not when invoking
+<tt class="docutils literal">pytest</tt> locally.  The naïve way to accomplish this is to decorate the tests
+in question with a pytest mark like <tt class="docutils literal">&#64;pytest.mark.slow</tt> and then specify <tt class="docutils literal"><span class="pre">-m</span>
+&quot;not slow&quot;</tt> when running pytest locally, but then you have to remember to pass
+this option every time, and if you hardcode it into your <tt class="docutils literal">tox.ini</tt> or pytest
+configuration, you’ll need something else to remove it when testing under CI.
+Fortunately, there are better ways to make pytest skip tests by default.</p>
+<p>In this article, we will add a “<tt class="docutils literal"><span class="pre">--run-slow</span></tt>” option to pytest and configure
+selected “slow” tests to be skipped unless this option is given on the command
+line.</p>
+<div class="section" id="option-1-use-a-hook-to-attach-a-skip-marker-to-marked-tests">
+<h2>Option 1: Use a Hook to Attach a <tt class="docutils literal">skip</tt> Marker to Marked Tests</h2>
+<p>One way to disable selected tests by default is to give them all some mark and
+then use the <tt class="docutils literal">pytest_collection_modifyitems</tt> hook to add an additional
+<tt class="docutils literal">pytest.mark.skip</tt> mark if a certain command-line option was not given.  We
+do this by adding the following to our <tt class="docutils literal">conftest.py</tt> file:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="k">def</span> <span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
+        <span class="s2">&quot;--run-slow&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run slow tests&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">pytest_collection_modifyitems</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--run-slow&quot;</span><span class="p">):</span>
+        <span class="n">skipper</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;slow&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">skipper</span><span class="p">)</span>
+</pre>
+<p>and then decorate all of our slow tests with <tt class="docutils literal">&#64;pytest.mark.slow</tt>, like so:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">slow</span>
+<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
+    <span class="o">...</span>
+</pre>
+<p>Now, when we run <tt class="docutils literal">pytest</tt>, the marked tests will be skipped unless the
+<tt class="docutils literal"><span class="pre">--run-slow</span></tt> option is passed on the command line.</p>
+</div>
+<div class="section" id="option-2-use-pytest-mark-skipif">
+<h2>Option 2: Use <tt class="docutils literal">&#64;pytest.mark.skipif</tt></h2>
+<p>Did you know?  The condition passed to <tt class="docutils literal">&#64;pytest.mark.skipif</tt> doesn’t have to
+be a Python boolean expression; it can instead be a <a class="reference external" href="https://docs.pytest.org/en/6.2.x/historical-notes.html#string-conditions">condition string</a>
+containing a Python expression, and condition strings are evaluated in a
+namespace that includes the pytest <tt class="docutils literal">config</tt> object.  This lets us write
+<tt class="docutils literal">skipif</tt> decorators that skip tests based on whether or not certain
+command-line options were given.</p>
+<p>We start out by defining a command-line option in <tt class="docutils literal">conftest.py</tt> that will be
+used to tell pytest to run otherwise-skipped tests:</p>
+<pre class="code python literal-block">
+<span class="k">def</span> <span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
+        <span class="s2">&quot;--run-slow&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run slow tests&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre>
+<p>We then decorate the tests we want to skip by default like so:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span>
+    <span class="s2">&quot;not config.getoption('--run-slow')&quot;</span><span class="p">,</span>
+    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
+    <span class="o">...</span>
+</pre>
+<p>If there are multiple tests to apply this condition to, we can assign the
+<tt class="docutils literal">skipif</tt> decorator to a variable that is then used to decorate each one, like
+so:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="n">slow_test</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span>
+    <span class="s2">&quot;not config.getoption('--run-slow')&quot;</span><span class="p">,</span>
+    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nd">&#64;slow_test</span>
+<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
+    <span class="o">...</span>
+
+<span class="nd">&#64;slow_test</span>
+<span class="k">def</span> <span class="nf">test_something_very_slow</span><span class="p">():</span>
+    <span class="o">...</span>
+</pre>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>You may see some old guides on the internet that instead write the
+<tt class="docutils literal">skipif</tt> decorator with an actual boolean condition defined in terms of
+<tt class="docutils literal">pytest.config</tt>, e.g.:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="c1"># Outdated!</span>
+<span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span>
+    <span class="ow">not</span> <span class="n">pytest</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--run-slow&quot;</span><span class="p">),</span>
+    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
+    <span class="o">...</span>
+</pre>
+<p class="last">However, this no longer works; the <tt class="docutils literal">pytest.config</tt> global variable was
+removed from pytest in version 5.1.0.</p>
+</div>
+</div>
+<div class="section" id="option-3-use-a-pre-existing-plugin">
+<h2>Option 3: Use a Pre-Existing Plugin</h2>
+<p>As is the case for many, many things in Python, other people have already done
+the job of generalizing the above and publishing it on PyPI.  I am aware of two
+pytest plugin projects for skipping tests unless a command-line option is
+given: <a class="reference external" href="https://pypi.org/project/pytest-explicit/">pytest-explicit</a> and <a class="reference external" href="https://pypi.org/project/pytest-optional-tests/">pytest-optional-tests</a>.  I have not used either,
+but if they work as advertized, they should prove helpful.</p>
+</div>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="kbits-theme-footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>
