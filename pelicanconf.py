@@ -71,6 +71,7 @@ STATIC_CHECK_IF_MODIFIED = True
 
 DOCUTILS_SETTINGS = {
     "compact_lists": False,
+    "field_name_limit": 0,
     "smart_quotes": True,
     "strip_comments": True,
     "math_output": "mathjax irrelevant.value",
