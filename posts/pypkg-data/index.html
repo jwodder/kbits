@@ -188,17 +188,17 @@ empty string to signify all packages — and the values are comma-separated glob
 patterns.  The above <tt class="docutils literal">setup.py</tt> sample translates to <tt class="docutils literal">setup.cfg</tt> as
 follows:</p>
 <pre class="code ini literal-block">
-<span class="k">[options.package_data]</span>
-<span class="c1"># If any package or subpackage contains *.txt or *.rst files, include them:</span>
-<span class="na">*</span> <span class="o">=</span> <span class="s">*.txt, *.rst</span>
-<span class="c1"># Include any *.msg files found in the &quot;hello&quot; package (but not in its</span>
-<span class="c1"># subpackages):</span>
-<span class="na">hello</span> <span class="o">=</span> <span class="s">*.msg</span>
-<span class="c1"># Include any *.csv files found in the &quot;hello.utils&quot; package:</span>
-<span class="na">hello.utils</span> <span class="o">=</span> <span class="s">*.csv</span>
-<span class="c1"># Include any *.dat files found in the &quot;data&quot; subdirectory of the &quot;mypkg&quot;</span>
-<span class="c1"># package:</span>
-<span class="na">mypkg</span> <span class="o">=</span> <span class="s">data/*.dat</span>
+<span class="k">[options.package_data]</span><span class="w">
+</span><span class="c1"># If any package or subpackage contains *.txt or *.rst files, include them:</span><span class="w">
+</span><span class="na">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">*.txt, *.rst</span><span class="w">
+</span><span class="c1"># Include any *.msg files found in the &quot;hello&quot; package (but not in its</span><span class="w">
+</span><span class="c1"># subpackages):</span><span class="w">
+</span><span class="na">hello</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">*.msg</span><span class="w">
+</span><span class="c1"># Include any *.csv files found in the &quot;hello.utils&quot; package:</span><span class="w">
+</span><span class="na">hello.utils</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">*.csv</span><span class="w">
+</span><span class="c1"># Include any *.dat files found in the &quot;data&quot; subdirectory of the &quot;mypkg&quot;</span><span class="w">
+</span><span class="c1"># package:</span><span class="w">
+</span><span class="na">mypkg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">data/*.dat</span>
 </pre>
 <p>Note that glob patterns only select files located directly within the given
 package (or in the given subdirectory of the package, if the pattern includes a
@@ -381,7 +381,7 @@ sdist or wheel).</td></tr>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

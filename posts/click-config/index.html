@@ -176,11 +176,11 @@ empty, we get the parameters’ built-in default values:</p>
 </pre>
 <p>That’s boring!  Try populating <tt class="docutils literal">example.ini</tt> with the below text:</p>
 <pre class="code ini literal-block">
-<span class="k">[options]</span>
-<span class="na">integer</span> <span class="o">=</span> <span class="s">23</span>
-<span class="na">flag</span> <span class="o">=</span> <span class="s">yes</span>
-<span class="na">str</span> <span class="o">=</span> <span class="s">bar</span>
-<span class="na">choice</span> <span class="o">=</span> <span class="s">green</span>
+<span class="k">[options]</span><span class="w">
+</span><span class="na">integer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">23</span><span class="w">
+</span><span class="na">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">yes</span><span class="w">
+</span><span class="na">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bar</span><span class="w">
+</span><span class="na">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">green</span>
 </pre>
 <p>… and then run with <tt class="docutils literal"><span class="pre">--config</span> example.ini</tt>:</p>
 <pre class="code console literal-block">
@@ -208,8 +208,8 @@ options, no matter where the options occur in relation to <tt class="docutils li
 <p>What if a value in the config file is invalid?  Try saving the following text
 to <tt class="docutils literal">bad.ini</tt>:</p>
 <pre class="code ini literal-block">
-<span class="k">[options]</span>
-<span class="na">choice</span> <span class="o">=</span> <span class="s">mauve</span>
+<span class="k">[options]</span><span class="w">
+</span><span class="na">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">mauve</span>
 </pre>
 <p>The script will then error when passed this config file:</p>
 <pre class="code console literal-block">
@@ -329,20 +329,20 @@ each command prints out the parameters it receives.</p>
 </pre>
 <p>Set <tt class="docutils literal">config.ini</tt> to the following:</p>
 <pre class="code ini literal-block">
-<span class="k">[options]</span>
-<span class="na">integer</span> <span class="o">=</span> <span class="s">23</span>
-<span class="na">flag</span> <span class="o">=</span> <span class="s">yes</span>
-<span class="na">str</span> <span class="o">=</span> <span class="s">bar</span>
-<span class="na">choice</span> <span class="o">=</span> <span class="s">green</span>
+<span class="k">[options]</span><span class="w">
+</span><span class="na">integer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">23</span><span class="w">
+</span><span class="na">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">yes</span><span class="w">
+</span><span class="na">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bar</span><span class="w">
+</span><span class="na">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">green</span><span class="w">
 
-<span class="k">[options.foo]</span>
-<span class="na">speed</span> <span class="o">=</span> <span class="s">high</span>
+</span><span class="k">[options.foo]</span><span class="w">
+</span><span class="na">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">high</span><span class="w">
 
-<span class="k">[options.bar]</span>
-<span class="na">speed</span> <span class="o">=</span> <span class="s">low</span>
+</span><span class="k">[options.bar]</span><span class="w">
+</span><span class="na">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">low</span><span class="w">
 
-<span class="k">[options.bar.baz]</span>
-<span class="na">time</span> <span class="o">=</span> <span class="s">late</span>
+</span><span class="k">[options.bar.baz]</span><span class="w">
+</span><span class="na">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">late</span>
 </pre>
 <p>… and then invoke some commands to see the results:</p>
 <pre class="code console literal-block">
@@ -419,7 +419,7 @@ each command prints out the parameters it receives.</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

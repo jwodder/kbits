@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2021-12-05T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Skipping Pytest Tests Unless an Option is Given</title><link href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="alternate"></link><published>2021-12-05T00:00:00-05:00</published><updated>2021-12-05T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-12-05:/kbits/posts/pytest-mark-off/</id><summary type="html">&lt;p class="first last"&gt;When testing Python code with &lt;a class="reference external" href="https://docs.pytest.org"&gt;pytest&lt;/a&gt;, you may occasionally write tests
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-01-12T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Skipping Pytest Tests Unless an Option is Given</title><link href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="alternate"></link><published>2021-12-05T00:00:00-05:00</published><updated>2021-12-05T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-12-05:/kbits/posts/pytest-mark-off/</id><summary type="html">&lt;p class="first last"&gt;When testing Python code with &lt;a class="reference external" href="https://docs.pytest.org"&gt;pytest&lt;/a&gt;, you may occasionally write tests
 that you only want to run under special circumstances, such as long-running
 tests that should only be run under continuous integration and not when
 invoking &lt;tt class="docutils literal"&gt;pytest&lt;/tt&gt; locally.  The naïve way to accomplish this is to
@@ -133,7 +133,7 @@ pytest plugin projects for skipping tests unless a command-line option is
 given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
 but if they work as advertized, they should prove helpful.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2021-10-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-01-12T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
 introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
@@ -1745,12 +1745,12 @@ future Python version&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;Pattern matching!&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
-&lt;span class="n"&gt;match&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;match&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Bad request&amp;quot;&lt;/span&gt;
-    &lt;span class="n"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;401&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;403&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;404&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;401&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;403&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;404&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Not allowed&amp;quot;&lt;/span&gt;
-    &lt;span class="n"&gt;case&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Something's wrong with the Internet&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;
 &lt;/li&gt;
@@ -1828,6 +1828,8 @@ from &lt;tt class="docutils literal"&gt;collections.abc&lt;/tt&gt; instead&lt;/p
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;inspect&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;get_annotations()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;io&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;text_encoding()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;itertools&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;pairwise()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;os.path.realpath()&lt;/tt&gt; now has a &lt;tt class="docutils literal"&gt;strict&lt;/tt&gt; parameter for erroring when a
 path doesn’t exist or a symlink loop is encountered&lt;/p&gt;
@@ -1992,17 +1994,17 @@ empty string to signify all packages — and the values are comma-separated glob
 patterns.  The above &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; sample translates to &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt; as
 follows:&lt;/p&gt;
 &lt;pre class="code ini literal-block"&gt;
-&lt;span class="k"&gt;[options.package_data]&lt;/span&gt;
-&lt;span class="c1"&gt;# If any package or subpackage contains *.txt or *.rst files, include them:&lt;/span&gt;
-&lt;span class="na"&gt;*&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.txt, *.rst&lt;/span&gt;
-&lt;span class="c1"&gt;# Include any *.msg files found in the &amp;quot;hello&amp;quot; package (but not in its&lt;/span&gt;
-&lt;span class="c1"&gt;# subpackages):&lt;/span&gt;
-&lt;span class="na"&gt;hello&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.msg&lt;/span&gt;
-&lt;span class="c1"&gt;# Include any *.csv files found in the &amp;quot;hello.utils&amp;quot; package:&lt;/span&gt;
-&lt;span class="na"&gt;hello.utils&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.csv&lt;/span&gt;
-&lt;span class="c1"&gt;# Include any *.dat files found in the &amp;quot;data&amp;quot; subdirectory of the &amp;quot;mypkg&amp;quot;&lt;/span&gt;
-&lt;span class="c1"&gt;# package:&lt;/span&gt;
-&lt;span class="na"&gt;mypkg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data/*.dat&lt;/span&gt;
+&lt;span class="k"&gt;[options.package_data]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# If any package or subpackage contains *.txt or *.rst files, include them:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;*.txt, *.rst&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# Include any *.msg files found in the &amp;quot;hello&amp;quot; package (but not in its&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# subpackages):&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;hello&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;*.msg&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# Include any *.csv files found in the &amp;quot;hello.utils&amp;quot; package:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;hello.utils&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;*.csv&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# Include any *.dat files found in the &amp;quot;data&amp;quot; subdirectory of the &amp;quot;mypkg&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# package:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;mypkg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;data/*.dat&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;Note that glob patterns only select files located directly within the given
 package (or in the given subdirectory of the package, if the pattern includes a
@@ -2437,15 +2439,15 @@ at the root of your wheel, as it will collide with the &lt;tt class="docutils li
 adds files directly into both the sdist and wheel.  To include a file in only
 the sdist, one needs to change the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option from this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
-&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
-&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;to this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
-&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
-&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
-    &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sdist&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sdist&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;If you do want to include your &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; in your wheel, the
 correct way is as follows:&lt;/p&gt;
@@ -2928,11 +2930,11 @@ empty, we get the parameters’ built-in default values:&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;That’s boring!  Try populating &lt;tt class="docutils literal"&gt;example.ini&lt;/tt&gt; with the below text:&lt;/p&gt;
 &lt;pre class="code ini literal-block"&gt;
-&lt;span class="k"&gt;[options]&lt;/span&gt;
-&lt;span class="na"&gt;integer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;23&lt;/span&gt;
-&lt;span class="na"&gt;flag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
-&lt;span class="na"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
-&lt;span class="na"&gt;choice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;green&lt;/span&gt;
+&lt;span class="k"&gt;[options]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;integer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;23&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;flag&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;yes&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;str&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;bar&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;choice&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;green&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;… and then run with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--config&lt;/span&gt; example.ini&lt;/tt&gt;:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;
@@ -2960,8 +2962,8 @@ options, no matter where the options occur in relation to &lt;tt class="docutils
 &lt;p&gt;What if a value in the config file is invalid?  Try saving the following text
 to &lt;tt class="docutils literal"&gt;bad.ini&lt;/tt&gt;:&lt;/p&gt;
 &lt;pre class="code ini literal-block"&gt;
-&lt;span class="k"&gt;[options]&lt;/span&gt;
-&lt;span class="na"&gt;choice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;mauve&lt;/span&gt;
+&lt;span class="k"&gt;[options]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;choice&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;mauve&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;The script will then error when passed this config file:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;
@@ -3081,20 +3083,20 @@ each command prints out the parameters it receives.&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;Set &lt;tt class="docutils literal"&gt;config.ini&lt;/tt&gt; to the following:&lt;/p&gt;
 &lt;pre class="code ini literal-block"&gt;
-&lt;span class="k"&gt;[options]&lt;/span&gt;
-&lt;span class="na"&gt;integer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;23&lt;/span&gt;
-&lt;span class="na"&gt;flag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
-&lt;span class="na"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
-&lt;span class="na"&gt;choice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;green&lt;/span&gt;
+&lt;span class="k"&gt;[options]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;integer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;23&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;flag&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;yes&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;str&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;bar&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;choice&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;green&lt;/span&gt;&lt;span class="w"&gt;
 
-&lt;span class="k"&gt;[options.foo]&lt;/span&gt;
-&lt;span class="na"&gt;speed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;high&lt;/span&gt;
+&lt;/span&gt;&lt;span class="k"&gt;[options.foo]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;speed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;high&lt;/span&gt;&lt;span class="w"&gt;
 
-&lt;span class="k"&gt;[options.bar]&lt;/span&gt;
-&lt;span class="na"&gt;speed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;low&lt;/span&gt;
+&lt;/span&gt;&lt;span class="k"&gt;[options.bar]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;speed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;low&lt;/span&gt;&lt;span class="w"&gt;
 
-&lt;span class="k"&gt;[options.bar.baz]&lt;/span&gt;
-&lt;span class="na"&gt;time&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;late&lt;/span&gt;
+&lt;/span&gt;&lt;span class="k"&gt;[options.bar.baz]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;time&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;late&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;… and then invoke some commands to see the results:&lt;/p&gt;
 &lt;pre class="code console literal-block"&gt;

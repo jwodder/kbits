@@ -94,35 +94,35 @@ steps at the right time?  Read on to find out.</p>
 <p>So you’ve got a GitHub Actions workflow for <tt class="docutils literal">auto</tt> already set up.
 Presumably, it looks something liks this:</p>
 <pre class="code yaml literal-block">
-<span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Auto-release on PR merge</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Auto-release on PR merge</span><span class="w">
 
-<span class="nt">on</span><span class="p">:</span>
-  <span class="c1"># This is the closest thing to triggering on a PR merge, as long as you</span>
-  <span class="c1"># don't push directly to master.</span>
-  <span class="nt">push</span><span class="p">:</span>
-    <span class="nt">branches</span><span class="p">:</span>
-      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">master</span>
+</span><span class="nt">on</span><span class="p">:</span><span class="w">
+  </span><span class="c1"># This is the closest thing to triggering on a PR merge, as long as you</span><span class="w">
+  </span><span class="c1"># don't push directly to master.</span><span class="w">
+  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
 
-<span class="nt">jobs</span><span class="p">:</span>
-  <span class="nt">auto-release</span><span class="p">:</span>
-    <span class="nt">runs-on</span><span class="p">:</span> <span class="l-Scalar-Plain">ubuntu-latest</span>
-    <span class="nt">if</span><span class="p">:</span> <span class="s">&quot;!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'skip</span><span class="nv"> </span><span class="s">ci')&quot;</span>
-    <span class="nt">steps</span><span class="p">:</span>
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Checkout source</span>
-        <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/checkout&#64;v2</span>
-        <span class="nt">with</span><span class="p">:</span>
-          <span class="nt">fetch-depth</span><span class="p">:</span> <span class="l-Scalar-Plain">0</span>
+</span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+  </span><span class="nt">auto-release</span><span class="p">:</span><span class="w">
+    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">ubuntu-latest</span><span class="w">
+    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'skip</span><span class="nv"> </span><span class="s">ci')&quot;</span><span class="w">
+    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
+        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span><span class="w">
 
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Download latest auto</span>
-        <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-          <span class="no">auto_download_url=&quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot;</span>
-          <span class="no">wget -O- &quot;$auto_download_url&quot; | gunzip &gt; ~/auto</span>
-          <span class="no">chmod a+x ~/auto</span>
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Download latest auto</span><span class="w">
+        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
+          </span><span class="no">auto_download_url=&quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot;</span><span class="w">
+          </span><span class="no">wget -O- &quot;$auto_download_url&quot; | gunzip &gt; ~/auto</span><span class="w">
+          </span><span class="no">chmod a+x ~/auto</span><span class="w">
 
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Create release</span>
-        <span class="nt">run</span><span class="p">:</span> <span class="l-Scalar-Plain">~/auto shipit</span>
-        <span class="nt">env</span><span class="p">:</span>
-          <span class="nt">GH_TOKEN</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Create release</span><span class="w">
+        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">~/auto shipit</span><span class="w">
+        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+          </span><span class="nt">GH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
 </pre>
 <p>Now you want to insert further steps that will be triggered whenever <tt class="docutils literal">auto
 shipit</tt> successfully creates a new release.</p>
@@ -171,22 +171,22 @@ release level (”<tt class="docutils literal">patch</tt>”, “<tt class="docu
 shipit</tt> would do nothing, <tt class="docutils literal">auto version</tt> just outputs an empty line.</p>
 <p>Hence, insert the following step before the <tt class="docutils literal">auto shipit</tt> step:</p>
 <pre class="code yaml literal-block">
-<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Check whether a release is due</span>
-  <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">auto-version</span>
-  <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-    <span class="no">version=&quot;$(~/auto version)&quot;</span>
-    <span class="no">echo &quot;::set-output name=version::$version&quot;</span>
-  <span class="nt">env</span><span class="p">:</span>
-    <span class="nt">GH_TOKEN</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Check whether a release is due</span><span class="w">
+  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">auto-version</span><span class="w">
+  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
+    </span><span class="no">version=&quot;$(~/auto version)&quot;</span><span class="w">
+    </span><span class="no">echo &quot;::set-output name=version::$version&quot;</span><span class="w">
+  </span><span class="nt">env</span><span class="p">:</span><span class="w">
+    </span><span class="nt">GH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
 </pre>
 <p>Here, we use the <tt class="docutils literal"><span class="pre">set-output</span></tt> <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-commands-for-github-actions">workflow command</a> to make the output from
 <tt class="docutils literal">auto version</tt> available to subsequent steps.  Later steps can then be
 configured to only run if a new release is being made by adding an <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif"><tt class="docutils literal">if</tt> field</a>
 to them, like so:</p>
 <pre class="code yaml literal-block">
-<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Build asset for new release</span>
-  <span class="nt">run</span><span class="p">:</span> <span class="l-Scalar-Plain">...</span>
-  <span class="nt">if</span><span class="p">:</span> <span class="l-Scalar-Plain">steps.auto-version.outputs.version != ''</span>
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Build asset for new release</span><span class="w">
+  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">...</span><span class="w">
+  </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">steps.auto-version.outputs.version != ''</span>
 </pre>
 <p>If you have multiple steps that you want to run after a release, adding an
 <tt class="docutils literal">if</tt> field to all of them can become excessive; isn’t there a way to apply an
@@ -202,16 +202,16 @@ field should contain a YAML object mapping a name for the output value to a
 <tt class="docutils literal">auto version</tt> step.  For the example workflow configurations shown so far,
 this would mean a configuration like the following:</p>
 <pre class="code yaml literal-block">
-<span class="nt">jobs</span><span class="p">:</span>
-  <span class="nt">auto-release</span><span class="p">:</span>
-    <span class="nt">runs-on</span><span class="p">:</span> <span class="l-Scalar-Plain">ubuntu-latest</span>
-    <span class="nt">if</span><span class="p">:</span> <span class="s">&quot;!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'skip</span><span class="nv"> </span><span class="s">ci')&quot;</span>
-    <span class="c1">### vv Add this bit vv ###</span>
-    <span class="nt">outputs</span><span class="p">:</span>
-      <span class="nt">auto-version</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ steps.auto-version.outputs.version }}</span>
-    <span class="c1">### ^^ Add this bit ^^ ###</span>
-    <span class="nt">steps</span><span class="p">:</span>
-      <span class="c1"># ...</span>
+<span class="nt">jobs</span><span class="p">:</span><span class="w">
+  </span><span class="nt">auto-release</span><span class="p">:</span><span class="w">
+    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">ubuntu-latest</span><span class="w">
+    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'skip</span><span class="nv"> </span><span class="s">ci')&quot;</span><span class="w">
+    </span><span class="c1">### vv Add this bit vv ###</span><span class="w">
+    </span><span class="nt">outputs</span><span class="p">:</span><span class="w">
+      </span><span class="nt">auto-version</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ steps.auto-version.outputs.version }}</span><span class="w">
+    </span><span class="c1">### ^^ Add this bit ^^ ###</span><span class="w">
+    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+      </span><span class="c1"># ...</span>
 </pre>
 <p>With this in place, a new job can be added to the workflow containing all the
 steps you want to run after a new release is made.  This new job needs two
@@ -229,17 +229,17 @@ if no release is made</p>
 </ul>
 <p>The configuration for this new job would then look like:</p>
 <pre class="code yaml literal-block">
-<span class="nt">jobs</span><span class="p">:</span>
+<span class="nt">jobs</span><span class="p">:</span><span class="w">
 
-  <span class="c1"># `auto release` job from above omitted</span>
-  <span class="c1"># ...</span>
+  </span><span class="c1"># `auto release` job from above omitted</span><span class="w">
+  </span><span class="c1"># ...</span><span class="w">
 
-  <span class="nt">build-and-publish</span><span class="p">:</span>
-    <span class="nt">runs-on</span><span class="p">:</span> <span class="l-Scalar-Plain">ubuntu-latest</span>
-    <span class="nt">needs</span><span class="p">:</span> <span class="l-Scalar-Plain">auto-release</span>
-    <span class="nt">if</span><span class="p">:</span> <span class="l-Scalar-Plain">needs.auto-release.outputs.auto-version != ''</span>
-    <span class="nt">steps</span><span class="p">:</span>
-      <span class="c1"># ...</span>
+  </span><span class="nt">build-and-publish</span><span class="p">:</span><span class="w">
+    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">ubuntu-latest</span><span class="w">
+    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">auto-release</span><span class="w">
+    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">needs.auto-release.outputs.auto-version != ''</span><span class="w">
+    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+      </span><span class="c1"># ...</span>
 </pre>
 <p>There’s one more thing to be aware of: If you check out your repository in this
 new job, by default the HEAD will be the commit that triggered the workflow
@@ -250,12 +250,12 @@ build time), you can tell the <tt class="docutils literal">actions/checkout</tt>
 latest commit from the repository by passing the default branch as the <tt class="docutils literal">ref</tt>
 input like so:</p>
 <pre class="code yaml literal-block">
-<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Checkout source</span>
-  <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/checkout&#64;v2</span>
-  <span class="nt">with</span><span class="p">:</span>
-    <span class="nt">ref</span><span class="p">:</span> <span class="l-Scalar-Plain">master</span>  <span class="c1"># or `main` or whatever your default branch is</span>
-    <span class="c1"># This setting is needed to fetch tags:</span>
-    <span class="nt">fetch-depth</span><span class="p">:</span> <span class="l-Scalar-Plain">0</span>
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
+  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+  </span><span class="nt">with</span><span class="p">:</span><span class="w">
+    </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">  </span><span class="c1"># or `main` or whatever your default branch is</span><span class="w">
+    </span><span class="c1"># This setting is needed to fetch tags:</span><span class="w">
+    </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span>
 </pre>
 <p>This does come with a caveat, though: in the event that multiple commits or
 merges to the default branch were made in quick succession, you may end up
@@ -263,17 +263,17 @@ checking out a later commit than the tag that <tt class="docutils literal">auto<
 problem, one way to deal with it is to specifically check out the tag for the
 latest GitHub release, like so:</p>
 <pre class="code yaml literal-block">
-<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Get tag of latest release</span>
-  <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">latest-release</span>
-  <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-    <span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span>
-    <span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span>
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Get tag of latest release</span><span class="w">
+  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">latest-release</span><span class="w">
+  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
+    </span><span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span><span class="w">
+    </span><span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span><span class="w">
 
-<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Checkout source</span>
-  <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/checkout&#64;v2</span>
-  <span class="nt">with</span><span class="p">:</span>
-    <span class="nt">ref</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ steps.latest-release.outputs.tag }}</span>
-    <span class="nt">fetch-depth</span><span class="p">:</span> <span class="l-Scalar-Plain">0</span>
+</span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
+  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+  </span><span class="nt">with</span><span class="p">:</span><span class="w">
+    </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ steps.latest-release.outputs.tag }}</span><span class="w">
+    </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span>
 </pre>
 <p>This, of course, fails if <tt class="docutils literal">auto</tt> creates multiple tags in quick succession.
 I’m not aware of a decent way to deal with this eventuality; how about
@@ -282,65 +282,65 @@ place?</p>
 <p>Using all of these tricks, your final workflow configuration should look
 something like this:</p>
 <pre class="code yaml literal-block">
-<span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Auto-release on PR merge</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Auto-release on PR merge</span><span class="w">
 
-<span class="nt">on</span><span class="p">:</span>
-  <span class="c1"># This is the closest thing to triggering on a PR merge, as long as you</span>
-  <span class="c1"># don't push directly to master.</span>
-  <span class="nt">push</span><span class="p">:</span>
-    <span class="nt">branches</span><span class="p">:</span>
-      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">master</span>
+</span><span class="nt">on</span><span class="p">:</span><span class="w">
+  </span><span class="c1"># This is the closest thing to triggering on a PR merge, as long as you</span><span class="w">
+  </span><span class="c1"># don't push directly to master.</span><span class="w">
+  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
 
-<span class="nt">jobs</span><span class="p">:</span>
-  <span class="nt">auto-release</span><span class="p">:</span>
-    <span class="nt">runs-on</span><span class="p">:</span> <span class="l-Scalar-Plain">ubuntu-latest</span>
-    <span class="nt">if</span><span class="p">:</span> <span class="s">&quot;!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'skip</span><span class="nv"> </span><span class="s">ci')&quot;</span>
-    <span class="nt">outputs</span><span class="p">:</span>
-      <span class="nt">auto-version</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ steps.auto-version.outputs.version }}</span>
-    <span class="nt">steps</span><span class="p">:</span>
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Checkout source</span>
-        <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/checkout&#64;v2</span>
-        <span class="nt">with</span><span class="p">:</span>
-          <span class="nt">fetch-depth</span><span class="p">:</span> <span class="l-Scalar-Plain">0</span>
+</span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+  </span><span class="nt">auto-release</span><span class="p">:</span><span class="w">
+    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">ubuntu-latest</span><span class="w">
+    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'skip</span><span class="nv"> </span><span class="s">ci')&quot;</span><span class="w">
+    </span><span class="nt">outputs</span><span class="p">:</span><span class="w">
+      </span><span class="nt">auto-version</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ steps.auto-version.outputs.version }}</span><span class="w">
+    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
+        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span><span class="w">
 
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Download latest auto</span>
-        <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-          <span class="no">auto_download_url=&quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot;</span>
-          <span class="no">wget -O- &quot;$auto_download_url&quot; | gunzip &gt; ~/auto</span>
-          <span class="no">chmod a+x ~/auto</span>
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Download latest auto</span><span class="w">
+        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
+          </span><span class="no">auto_download_url=&quot;$(curl -fsSL https://api.github.com/repos/intuit/auto/releases/latest | jq -r '.assets[] | select(.name == &quot;auto-linux.gz&quot;) | .browser_download_url')&quot;</span><span class="w">
+          </span><span class="no">wget -O- &quot;$auto_download_url&quot; | gunzip &gt; ~/auto</span><span class="w">
+          </span><span class="no">chmod a+x ~/auto</span><span class="w">
 
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Check whether a release is due</span>
-        <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">auto-version</span>
-        <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-          <span class="no">version=&quot;$(~/auto version)&quot;</span>
-          <span class="no">echo &quot;::set-output name=version::$version&quot;</span>
-        <span class="nt">env</span><span class="p">:</span>
-          <span class="nt">GH_TOKEN</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Check whether a release is due</span><span class="w">
+        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">auto-version</span><span class="w">
+        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
+          </span><span class="no">version=&quot;$(~/auto version)&quot;</span><span class="w">
+          </span><span class="no">echo &quot;::set-output name=version::$version&quot;</span><span class="w">
+        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+          </span><span class="nt">GH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
 
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Create release</span>
-        <span class="nt">run</span><span class="p">:</span> <span class="l-Scalar-Plain">~/auto shipit</span>
-        <span class="nt">env</span><span class="p">:</span>
-          <span class="nt">GH_TOKEN</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Create release</span><span class="w">
+        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">~/auto shipit</span><span class="w">
+        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+          </span><span class="nt">GH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
 
-  <span class="nt">build-and-publish</span><span class="p">:</span>
-    <span class="nt">runs-on</span><span class="p">:</span> <span class="l-Scalar-Plain">ubuntu-latest</span>
-    <span class="nt">needs</span><span class="p">:</span> <span class="l-Scalar-Plain">auto-release</span>
-    <span class="nt">if</span><span class="p">:</span> <span class="l-Scalar-Plain">needs.auto-release.outputs.auto-version != ''</span>
-    <span class="nt">steps</span><span class="p">:</span>
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Get tag of latest release</span>
-        <span class="nt">id</span><span class="p">:</span> <span class="l-Scalar-Plain">latest-release</span>
-        <span class="nt">run</span><span class="p">:</span> <span class="p-Indicator">|</span>
-          <span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span>
-          <span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span>
+  </span><span class="nt">build-and-publish</span><span class="p">:</span><span class="w">
+    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">ubuntu-latest</span><span class="w">
+    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">auto-release</span><span class="w">
+    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">needs.auto-release.outputs.auto-version != ''</span><span class="w">
+    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Get tag of latest release</span><span class="w">
+        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">latest-release</span><span class="w">
+        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
+          </span><span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span><span class="w">
+          </span><span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span><span class="w">
 
-      <span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Checkout source</span>
-        <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/checkout&#64;v2</span>
-        <span class="nt">with</span><span class="p">:</span>
-          <span class="nt">ref</span><span class="p">:</span> <span class="l-Scalar-Plain">${{ steps.latest-release.outputs.tag }}</span>
-          <span class="nt">fetch-depth</span><span class="p">:</span> <span class="l-Scalar-Plain">0</span>
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
+        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+          </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ steps.latest-release.outputs.tag }}</span><span class="w">
+          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span><span class="w">
 
-      <span class="c1"># Remaining steps go here</span>
-      <span class="c1"># ...</span>
+      </span><span class="c1"># Remaining steps go here</span><span class="w">
+      </span><span class="c1"># ...</span>
 </pre>
 <p>Enjoy!</p>
 </div>
@@ -354,7 +354,7 @@ something like this:</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

@@ -346,15 +346,15 @@ at the root of your wheel, as it will collide with the <tt class="docutils liter
 adds files directly into both the sdist and wheel.  To include a file in only
 the sdist, one needs to change the <tt class="docutils literal">include</tt> option from this form:</p>
 <pre class="code toml literal-block">
-<span class="k">[tool.poetry]</span>
-<span class="n">include</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;CHANGELOG.md&quot;</span><span class="p">]</span>
+<span class="k">[tool.poetry]</span><span class="w">
+</span><span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;CHANGELOG.md&quot;</span><span class="p">]</span>
 </pre>
 <p>to this form:</p>
 <pre class="code toml literal-block">
-<span class="k">[tool.poetry]</span>
-<span class="n">include</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span> <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;CHANGELOG.md&quot;</span><span class="p">,</span> <span class="n">format</span> <span class="o">=</span> <span class="s">&quot;sdist&quot;</span> <span class="p">}</span>
-<span class="p">]</span>
+<span class="k">[tool.poetry]</span><span class="w">
+</span><span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;CHANGELOG.md&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sdist&quot;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span>
 </pre>
 <p>If you do want to include your <tt class="docutils literal">README</tt> or <tt class="docutils literal">LICENSE</tt> in your wheel, the
 correct way is as follows:</p>
@@ -749,7 +749,7 @@ can’t find any, it errors out without installing anything.</td></tr>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

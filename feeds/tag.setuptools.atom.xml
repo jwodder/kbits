@@ -109,17 +109,17 @@ empty string to signify all packages — and the values are comma-separated glob
 patterns.  The above &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt; sample translates to &lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt; as
 follows:&lt;/p&gt;
 &lt;pre class="code ini literal-block"&gt;
-&lt;span class="k"&gt;[options.package_data]&lt;/span&gt;
-&lt;span class="c1"&gt;# If any package or subpackage contains *.txt or *.rst files, include them:&lt;/span&gt;
-&lt;span class="na"&gt;*&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.txt, *.rst&lt;/span&gt;
-&lt;span class="c1"&gt;# Include any *.msg files found in the &amp;quot;hello&amp;quot; package (but not in its&lt;/span&gt;
-&lt;span class="c1"&gt;# subpackages):&lt;/span&gt;
-&lt;span class="na"&gt;hello&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.msg&lt;/span&gt;
-&lt;span class="c1"&gt;# Include any *.csv files found in the &amp;quot;hello.utils&amp;quot; package:&lt;/span&gt;
-&lt;span class="na"&gt;hello.utils&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;*.csv&lt;/span&gt;
-&lt;span class="c1"&gt;# Include any *.dat files found in the &amp;quot;data&amp;quot; subdirectory of the &amp;quot;mypkg&amp;quot;&lt;/span&gt;
-&lt;span class="c1"&gt;# package:&lt;/span&gt;
-&lt;span class="na"&gt;mypkg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;data/*.dat&lt;/span&gt;
+&lt;span class="k"&gt;[options.package_data]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# If any package or subpackage contains *.txt or *.rst files, include them:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;*.txt, *.rst&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# Include any *.msg files found in the &amp;quot;hello&amp;quot; package (but not in its&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# subpackages):&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;hello&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;*.msg&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# Include any *.csv files found in the &amp;quot;hello.utils&amp;quot; package:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;hello.utils&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;*.csv&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# Include any *.dat files found in the &amp;quot;data&amp;quot; subdirectory of the &amp;quot;mypkg&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="c1"&gt;# package:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="na"&gt;mypkg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;data/*.dat&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;Note that glob patterns only select files located directly within the given
 package (or in the given subdirectory of the package, if the pattern includes a
@@ -554,15 +554,15 @@ at the root of your wheel, as it will collide with the &lt;tt class="docutils li
 adds files directly into both the sdist and wheel.  To include a file in only
 the sdist, one needs to change the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option from this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
-&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
-&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;to this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
-&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;
-&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
-    &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sdist&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sdist&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;If you do want to include your &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; in your wheel, the
 correct way is as follows:&lt;/p&gt;

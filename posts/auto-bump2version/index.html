@@ -93,23 +93,23 @@ integrated into <tt class="docutils literal">auto</tt> as follows.</p>
 <p>To make your project’s repository usable with <tt class="docutils literal">bump2version</tt>, create a
 <tt class="docutils literal">.bumpversion.cfg</tt> (no “2”!) file as follows:</p>
 <pre class="code ini literal-block">
-<span class="k">[bumpversion]</span>
-<span class="c1"># Replace the value here with your project's current version number:</span>
-<span class="na">current_version</span> <span class="o">=</span> <span class="s">0.1.0</span>
+<span class="k">[bumpversion]</span><span class="w">
+</span><span class="c1"># Replace the value here with your project's current version number:</span><span class="w">
+</span><span class="na">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.1.0</span><span class="w">
 
-<span class="na">commit</span> <span class="o">=</span> <span class="s">True</span>
+</span><span class="na">commit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span><span class="w">
 
-<span class="c1"># If integrating with GitHub Actions, you'll need to include &quot;[skip ci]&quot; in</span>
-<span class="c1"># the bump2version commit message in order to prevent auto from running</span>
-<span class="c1"># unnecessarily:</span>
-<span class="na">message</span> <span class="o">=</span> <span class="s">[skip ci] Bump version: {current_version} → {new_version}</span>
+</span><span class="c1"># If integrating with GitHub Actions, you'll need to include &quot;[skip ci]&quot; in</span><span class="w">
+</span><span class="c1"># the bump2version commit message in order to prevent auto from running</span><span class="w">
+</span><span class="c1"># unnecessarily:</span><span class="w">
+</span><span class="na">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[skip ci] Bump version: {current_version} → {new_version}</span><span class="w">
 
-<span class="c1"># auto will be taking care of the tagging for us, so set `tag` to False:</span>
-<span class="na">tag</span> <span class="o">=</span> <span class="s">False</span>
+</span><span class="c1"># auto will be taking care of the tagging for us, so set `tag` to False:</span><span class="w">
+</span><span class="na">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">False</span><span class="w">
 
-<span class="c1"># For each file in your code that contains your project's version number,</span>
-<span class="c1"># add a `[bumpversion:file:PATH]` section header, like so:</span>
-<span class="k">[bumpversion:file:src/myproject/__init__.py]</span>
+</span><span class="c1"># For each file in your code that contains your project's version number,</span><span class="w">
+</span><span class="c1"># add a `[bumpversion:file:PATH]` section header, like so:</span><span class="w">
+</span><span class="k">[bumpversion:file:src/myproject/__init__.py]</span>
 </pre>
 <p>With this file in place and <tt class="docutils literal">bump2version</tt> installed, you can automatically
 update your project’s version number by running <tt class="docutils literal">bump2version $PART</tt>, where
@@ -161,13 +161,13 @@ release after populating the changelog, and the commit created by
 addition needed to support <tt class="docutils literal">bump2version</tt> is to install it before running
 <tt class="docutils literal">auto</tt>:</p>
 <pre class="code yaml literal-block">
-<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Set up Python</span>
-  <span class="nt">uses</span><span class="p">:</span> <span class="l-Scalar-Plain">actions/setup-python&#64;v2</span>
-  <span class="nt">with</span><span class="p">:</span>
-    <span class="nt">python-version</span><span class="p">:</span> <span class="s">'^3.6'</span>
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Set up Python</span><span class="w">
+  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/setup-python&#64;v2</span><span class="w">
+  </span><span class="nt">with</span><span class="p">:</span><span class="w">
+    </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">'^3.6'</span><span class="w">
 
-<span class="p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l-Scalar-Plain">Install bump2version</span>
-  <span class="nt">run</span><span class="p">:</span> <span class="l-Scalar-Plain">python -m pip install bump2version</span>
+</span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Install bump2version</span><span class="w">
+  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">python -m pip install bump2version</span>
 </pre>
 </div>
 </div>
@@ -181,7 +181,7 @@ addition needed to support <tt class="docutils literal">bump2version</tt> is to 
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

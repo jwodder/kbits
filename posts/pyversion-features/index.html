@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2021-10-23T00:00:00-04:00">2021-10-23</time></td>
+                    <td><time datetime="2022-01-12T00:00:00-05:00">2022-01-12</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -1692,12 +1692,12 @@ future Python version</p>
 <ul>
 <li><p class="first">Pattern matching!</p>
 <pre class="code python literal-block">
-<span class="n">match</span> <span class="n">status</span><span class="p">:</span>
-    <span class="n">case</span> <span class="mi">400</span><span class="p">:</span>
+<span class="k">match</span> <span class="n">status</span><span class="p">:</span>
+    <span class="k">case</span> <span class="mi">400</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;Bad request&quot;</span>
-    <span class="n">case</span> <span class="mi">401</span> <span class="o">|</span> <span class="mi">403</span> <span class="o">|</span> <span class="mi">404</span><span class="p">:</span>
+    <span class="k">case</span> <span class="mi">401</span> <span class="o">|</span> <span class="mi">403</span> <span class="o">|</span> <span class="mi">404</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;Not allowed&quot;</span>
-    <span class="n">case</span> <span class="n">_</span><span class="p">:</span>
+    <span class="k">case</span> <span class="k">_</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;Something's wrong with the Internet&quot;</span>
 </pre>
 </li>
@@ -1776,6 +1776,8 @@ from <tt class="docutils literal">collections.abc</tt> instead</p>
 </li>
 <li><p class="first"><tt class="docutils literal">io</tt> module: <tt class="docutils literal">text_encoding()</tt> added</p>
 </li>
+<li><p class="first"><tt class="docutils literal">itertools</tt> module: <tt class="docutils literal">pairwise()</tt> added</p>
+</li>
 <li><p class="first"><tt class="docutils literal">os.path.realpath()</tt> now has a <tt class="docutils literal">strict</tt> parameter for erroring when a
 path doesn’t exist or a symlink loop is encountered</p>
 </li>
@@ -1840,7 +1842,7 @@ and 3.9, respectively)</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2021 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
