@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2021-10-23
+:Modified: 2022-01-12
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1448,6 +1448,8 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
 - ``inspect`` module: ``get_annotations()`` added
 
 - ``io`` module: ``text_encoding()`` added
+
+- ``itertools`` module: ``pairwise()`` added
 
 - ``os.path.realpath()`` now has a ``strict`` parameter for erroring when a
   path doesn't exist or a symlink loop is encountered
