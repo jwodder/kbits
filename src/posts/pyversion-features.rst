@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-01-12
+:Modified: 2022-01-14
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1487,6 +1487,9 @@ Python 3.11 (2022-10-03)
 ========================
 
 Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
+
+- ``enum`` module: ``EnumCheck``, ``FlagBoundary``, ``StrEnum``,
+  ``global_enum``, ``property``, and ``verify()`` added
 
 - ``math`` module: ``cbrt()`` added
 
