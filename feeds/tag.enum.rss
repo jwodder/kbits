@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Knowledge Bits - enum</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Fri, 14 Jan 2022 00:00:00 -0500</lastBuildDate><item><title>Creating Multi-Value Enums in Python</title><link>https://jwodder.github.io/kbits/posts/multi-value-enum/</link><description>&lt;p class="first last"&gt;How to create an enum in Python where each member has a “main” value and a
+set of “extra” constant attributes&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Fri, 14 Jan 2022 00:00:00 -0500</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2022-01-14:/kbits/posts/multi-value-enum/</guid><category>Programming</category><category>Python</category><category>enum</category><category>mypy</category></item></channel></rss>

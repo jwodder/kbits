@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Creating Multi-Value Enums in Python</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="How to create an enum in Python where each member has a “main” value and a set of “extra” constant attributes"/>
+        <meta name="tags" content="Python"/>
+        <meta name="tags" content="enum"/>
+        <meta name="tags" content="mypy"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="Python,enum,mypy"/>
+</head>
+
+<body>
+    <div id="kbits-theme-topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d already found</span>
+        </header>
+    </div>
+
+    <div class="mainrow">
+        <div id="kbits-theme-navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav>
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="kbits-theme-content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/multi-value-enum/" rel="bookmark"
+                    title="Permalink to Creating Multi-Value Enums in Python">Creating Multi-Value Enums in Python</a>
+            </h1>
+        </header>
+        <footer>
+            <table class="docinfo" border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2022-01-14T00:00:00-05:00" pubdate="1">2022-01-14</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<span class="fn">John T. Wodder II</span>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/enum/">enum</a>, <a href="https://jwodder.github.io/kbits/tags/mypy/">mypy</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/multi-value-enum.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p>Say you’re creating an enum type in Python and you want each enum member to
+have one or more additional constant attributes alongside <tt class="docutils literal">value</tt>, but these
+attributes can’t be easily derived from <tt class="docutils literal">value</tt> (and thus don’t make for good
+<tt class="docutils literal">&#64;property</tt>s).  The Python docs provide <a class="reference external" href="https://docs.python.org/3.10/library/enum.html#planet">an example involving planets</a>
+similar to what you want, but on closer inspection, you see it won’t do — the
+example code produces an enum whose members’ <tt class="docutils literal">value</tt>s are tuples of the
+other attributes, whereas you want or need <tt class="docutils literal">value</tt> to be something else.  Is
+there a way to define enum members with a combination of a “main” value and a
+set of “extra” values?</p>
+<p>Yes.  Yes, there is.</p>
+<p>For a specific example, let’s say you want to define an enum for cardinal and
+ordinal directions where the members’ <tt class="docutils literal">value</tt>s are human-readable names
+used in some data source you have to parse and each member should additionally
+have <tt class="docutils literal">x</tt> and <tt class="docutils literal">y</tt> attributes giving the deltas to add to a coordinate’s
+components in order to move a step in the respective direction.  That is, you
+want the following to evaluate as shown:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; Direction(&quot;north-west&quot;)
+&lt;Direction.NORTH_WEST: 'north-west'&gt;
+&gt;&gt;&gt; Direction.NORTH_WEST.value
+'north-west'
+&gt;&gt;&gt; Direction.NORTH_WEST.x
+-1
+&gt;&gt;&gt; Direction.NORTH_WEST.y
+1
+</pre>
+<p>The solution is to define each enum member with a tuple of the <tt class="docutils literal">value</tt> and
+extra attributes, and then write a <tt class="docutils literal">__new__</tt> method that assigns the elements
+of the tuple (which are passed as arguments to <tt class="docutils literal">__new__</tt>) appropriately, like
+so:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">NORTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">EAST</span>       <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">SOUTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south-east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">SOUTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">SOUTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">WEST</span>       <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_value_</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+<span class="c1"># Check that `value` and other attributes are what they're supposed to be:</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">Direction</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">d</span><span class="si">!r}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">value</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">x</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Member access by value uses only the &quot;main&quot; value:</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Direction</span><span class="p">(</span><span class="s1">'north'</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre>
+<p>Output from the above script:</p>
+<pre class="literal-block">
+&lt;Direction.NORTH: 'north'&gt; d.name='NORTH' d.value='north' d.x=0 d.y=1
+&lt;Direction.NORTH_EAST: 'north-east'&gt; d.name='NORTH_EAST' d.value='north-east' d.x=1 d.y=1
+&lt;Direction.EAST: 'east'&gt; d.name='EAST' d.value='east' d.x=1 d.y=0
+&lt;Direction.SOUTH_EAST: 'south-east'&gt; d.name='SOUTH_EAST' d.value='south-east' d.x=1 d.y=-1
+&lt;Direction.SOUTH: 'south'&gt; d.name='SOUTH' d.value='south' d.x=0 d.y=-1
+&lt;Direction.SOUTH_WEST: 'south-west'&gt; d.name='SOUTH_WEST' d.value='south-west' d.x=-1 d.y=-1
+&lt;Direction.WEST: 'west'&gt; d.name='WEST' d.value='west' d.x=-1 d.y=0
+&lt;Direction.NORTH_WEST: 'north-west'&gt; d.name='NORTH_WEST' d.value='north-west' d.x=-1 d.y=1
+Direction('north')=&lt;Direction.NORTH: 'north'&gt;
+</pre>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you’re inheriting a concrete non-<tt class="docutils literal">Enum</tt> type in addition to <tt class="docutils literal">Enum</tt>
+(whether explicitly or via <tt class="docutils literal">IntEnum</tt> or <tt class="docutils literal">StrEnum</tt>), you may need to
+replace the <tt class="docutils literal">obj = object.__new__(cls)</tt> line in the <tt class="docutils literal">__new__</tt> method
+with an invocation of the concrete type’s <tt class="docutils literal">__new__</tt>.  For example, if
+inheriting from <tt class="docutils literal">(str, Enum)</tt> or Python 3.11’s <tt class="docutils literal">StrEnum</tt>, this line
+should become <tt class="docutils literal">obj = str.__new__(cls, value)</tt>.</p>
+</div>
+<p>Now, if you’re type-checking with <a class="reference external" href="http://www.mypy-lang.org">mypy</a> (and you really should be), you’ll
+likely hit some errors on the above code, even after adding annotations to
+<tt class="docutils literal">__new__</tt>.  Specifically, as of mypy 0.931, there are two outstanding mypy
+issues that affect the above snippet:</p>
+<ul>
+<li><p class="first"><a class="reference external" href="https://github.com/python/mypy/issues/1021">Issue #1021</a> means that mypy ignores attribute assignments in <tt class="docutils literal">__new__</tt>,
+so it won’t recognize <tt class="docutils literal">x</tt> and <tt class="docutils literal">y</tt> as attributes of <tt class="docutils literal">Direction</tt>, leading
+to <tt class="docutils literal">print(f&quot;… {d.x=} <span class="pre">{d.y=}&quot;)</span></tt> being seen as erroneous.  There are two ways
+to make mypy aware of the extra-value attributes: either add annotations for
+them in the main body of the class, like so:</p>
+<pre class="code python literal-block">
+<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># [snip]</span>
+    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Add these two lines:</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Direction</span><span class="p">:</span>
+        <span class="o">...</span>
+</pre>
+<p>… or else move the extra-value assignments to an <tt class="docutils literal">__init__</tt> method, like
+so:</p>
+<pre class="code python literal-block">
+<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># [snip]</span>
+    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Direction</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_value_</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</pre>
+</li>
+<li><p class="first">The second mypy problem is <a class="reference external" href="https://github.com/python/mypy/issues/10573">issue #10573</a>: mypy is not aware of the <tt class="docutils literal">Enum</tt>
+class’s trickery with its constructor, so when it sees <tt class="docutils literal"><span class="pre">Direction('north')</span></tt>
+on the last line, having already seen a <tt class="docutils literal">Direction.__new__</tt> that takes
+three arguments, it thinks there are two arguments missing from the
+<tt class="docutils literal">Direction()</tt> call.  Unfortunately, at time of writing, there does not seem
+to be a way around this other than just slapping a “<tt class="docutils literal"># type:
+<span class="pre">ignore[call-arg]</span></tt>” comment on each call to a multi-value enum type.</p>
+</li>
+</ul>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="kbits-theme-footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>

@@ -1,5 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-01-12T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Skipping Pytest Tests Unless an Option is Given</title><link href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="alternate"></link><published>2021-12-05T00:00:00-05:00</published><updated>2021-12-05T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-12-05:/kbits/posts/pytest-mark-off/</id><summary type="html">&lt;p class="first last"&gt;When testing Python code with &lt;a class="reference external" href="https://docs.pytest.org"&gt;pytest&lt;/a&gt;, you may occasionally write tests
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-01-14T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Creating Multi-Value Enums in Python</title><link href="https://jwodder.github.io/kbits/posts/multi-value-enum/" rel="alternate"></link><published>2022-01-14T00:00:00-05:00</published><updated>2022-01-14T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-01-14:/kbits/posts/multi-value-enum/</id><summary type="html">&lt;p class="first last"&gt;How to create an enum in Python where each member has a “main” value and a
+set of “extra” constant attributes&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Say you’re creating an enum type in Python and you want each enum member to
+have one or more additional constant attributes alongside &lt;tt class="docutils literal"&gt;value&lt;/tt&gt;, but these
+attributes can’t be easily derived from &lt;tt class="docutils literal"&gt;value&lt;/tt&gt; (and thus don’t make for good
+&lt;tt class="docutils literal"&gt;&amp;#64;property&lt;/tt&gt;s).  The Python docs provide &lt;a class="reference external" href="https://docs.python.org/3.10/library/enum.html#planet"&gt;an example involving planets&lt;/a&gt;
+similar to what you want, but on closer inspection, you see it won’t do — the
+example code produces an enum whose members’ &lt;tt class="docutils literal"&gt;value&lt;/tt&gt;s are tuples of the
+other attributes, whereas you want or need &lt;tt class="docutils literal"&gt;value&lt;/tt&gt; to be something else.  Is
+there a way to define enum members with a combination of a “main” value and a
+set of “extra” values?&lt;/p&gt;
+&lt;p&gt;Yes.  Yes, there is.&lt;/p&gt;
+&lt;p&gt;For a specific example, let’s say you want to define an enum for cardinal and
+ordinal directions where the members’ &lt;tt class="docutils literal"&gt;value&lt;/tt&gt;s are human-readable names
+used in some data source you have to parse and each member should additionally
+have &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;y&lt;/tt&gt; attributes giving the deltas to add to a coordinate’s
+components in order to move a step in the respective direction.  That is, you
+want the following to evaluate as shown:&lt;/p&gt;
+&lt;pre class="doctest-block"&gt;
+&amp;gt;&amp;gt;&amp;gt; Direction(&amp;quot;north-west&amp;quot;)
+&amp;lt;Direction.NORTH_WEST: 'north-west'&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; Direction.NORTH_WEST.value
+'north-west'
+&amp;gt;&amp;gt;&amp;gt; Direction.NORTH_WEST.x
+-1
+&amp;gt;&amp;gt;&amp;gt; Direction.NORTH_WEST.y
+1
+&lt;/pre&gt;
+&lt;p&gt;The solution is to define each enum member with a tuple of the &lt;tt class="docutils literal"&gt;value&lt;/tt&gt; and
+extra attributes, and then write a &lt;tt class="docutils literal"&gt;__new__&lt;/tt&gt; method that assigns the elements
+of the tuple (which are passed as arguments to &lt;tt class="docutils literal"&gt;__new__&lt;/tt&gt;) appropriately, like
+so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;enum&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Enum&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Direction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Enum&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;NORTH&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;north&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;NORTH_EAST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;north-east&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;EAST&lt;/span&gt;       &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;east&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;SOUTH_EAST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;south-east&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;SOUTH&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;south&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;SOUTH_WEST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;south-west&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;WEST&lt;/span&gt;       &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;west&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;NORTH_WEST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;north-west&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_value_&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;
+        &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;
+        &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Check that `value` and other attributes are what they're supposed to be:&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;Direction&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="si"&gt;!r}&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Member access by value uses only the &amp;quot;main&amp;quot; value:&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;Direction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'north'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Output from the above script:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;Direction.NORTH: 'north'&amp;gt; d.name='NORTH' d.value='north' d.x=0 d.y=1
+&amp;lt;Direction.NORTH_EAST: 'north-east'&amp;gt; d.name='NORTH_EAST' d.value='north-east' d.x=1 d.y=1
+&amp;lt;Direction.EAST: 'east'&amp;gt; d.name='EAST' d.value='east' d.x=1 d.y=0
+&amp;lt;Direction.SOUTH_EAST: 'south-east'&amp;gt; d.name='SOUTH_EAST' d.value='south-east' d.x=1 d.y=-1
+&amp;lt;Direction.SOUTH: 'south'&amp;gt; d.name='SOUTH' d.value='south' d.x=0 d.y=-1
+&amp;lt;Direction.SOUTH_WEST: 'south-west'&amp;gt; d.name='SOUTH_WEST' d.value='south-west' d.x=-1 d.y=-1
+&amp;lt;Direction.WEST: 'west'&amp;gt; d.name='WEST' d.value='west' d.x=-1 d.y=0
+&amp;lt;Direction.NORTH_WEST: 'north-west'&amp;gt; d.name='NORTH_WEST' d.value='north-west' d.x=-1 d.y=1
+Direction('north')=&amp;lt;Direction.NORTH: 'north'&amp;gt;
+&lt;/pre&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;If you’re inheriting a concrete non-&lt;tt class="docutils literal"&gt;Enum&lt;/tt&gt; type in addition to &lt;tt class="docutils literal"&gt;Enum&lt;/tt&gt;
+(whether explicitly or via &lt;tt class="docutils literal"&gt;IntEnum&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;StrEnum&lt;/tt&gt;), you may need to
+replace the &lt;tt class="docutils literal"&gt;obj = object.__new__(cls)&lt;/tt&gt; line in the &lt;tt class="docutils literal"&gt;__new__&lt;/tt&gt; method
+with an invocation of the concrete type’s &lt;tt class="docutils literal"&gt;__new__&lt;/tt&gt;.  For example, if
+inheriting from &lt;tt class="docutils literal"&gt;(str, Enum)&lt;/tt&gt; or Python 3.11’s &lt;tt class="docutils literal"&gt;StrEnum&lt;/tt&gt;, this line
+should become &lt;tt class="docutils literal"&gt;obj = str.__new__(cls, value)&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now, if you’re type-checking with &lt;a class="reference external" href="http://www.mypy-lang.org"&gt;mypy&lt;/a&gt; (and you really should be), you’ll
+likely hit some errors on the above code, even after adding annotations to
+&lt;tt class="docutils literal"&gt;__new__&lt;/tt&gt;.  Specifically, as of mypy 0.931, there are two outstanding mypy
+issues that affect the above snippet:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="https://github.com/python/mypy/issues/1021"&gt;Issue #1021&lt;/a&gt; means that mypy ignores attribute assignments in &lt;tt class="docutils literal"&gt;__new__&lt;/tt&gt;,
+so it won’t recognize &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;y&lt;/tt&gt; as attributes of &lt;tt class="docutils literal"&gt;Direction&lt;/tt&gt;, leading
+to &lt;tt class="docutils literal"&gt;print(f&amp;quot;… {d.x=} &lt;span class="pre"&gt;{d.y=}&amp;quot;)&lt;/span&gt;&lt;/tt&gt; being seen as erroneous.  There are two ways
+to make mypy aware of the extra-value attributes: either add annotations for
+them in the main body of the class, like so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Direction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Enum&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;NORTH&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;north&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;# [snip]&lt;/span&gt;
+    &lt;span class="n"&gt;NORTH_WEST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;north-west&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Add these two lines:&lt;/span&gt;
+    &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Direction&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;… or else move the extra-value assignments to an &lt;tt class="docutils literal"&gt;__init__&lt;/tt&gt; method, like
+so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Direction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Enum&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;NORTH&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;north&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;# [snip]&lt;/span&gt;
+    &lt;span class="n"&gt;NORTH_WEST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;north-west&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Direction&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__new__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_value_&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The second mypy problem is &lt;a class="reference external" href="https://github.com/python/mypy/issues/10573"&gt;issue #10573&lt;/a&gt;: mypy is not aware of the &lt;tt class="docutils literal"&gt;Enum&lt;/tt&gt;
+class’s trickery with its constructor, so when it sees &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Direction('north')&lt;/span&gt;&lt;/tt&gt;
+on the last line, having already seen a &lt;tt class="docutils literal"&gt;Direction.__new__&lt;/tt&gt; that takes
+three arguments, it thinks there are two arguments missing from the
+&lt;tt class="docutils literal"&gt;Direction()&lt;/tt&gt; call.  Unfortunately, at time of writing, there does not seem
+to be a way around this other than just slapping a “&lt;tt class="docutils literal"&gt;# type:
+&lt;span class="pre"&gt;ignore[call-arg]&lt;/span&gt;&lt;/tt&gt;” comment on each call to a multi-value enum type.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content><category term="Programming"></category><category term="Python"></category><category term="enum"></category><category term="mypy"></category></entry><entry><title>Skipping Pytest Tests Unless an Option is Given</title><link href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="alternate"></link><published>2021-12-05T00:00:00-05:00</published><updated>2021-12-05T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-12-05:/kbits/posts/pytest-mark-off/</id><summary type="html">&lt;p class="first last"&gt;When testing Python code with &lt;a class="reference external" href="https://docs.pytest.org"&gt;pytest&lt;/a&gt;, you may occasionally write tests
 that you only want to run under special circumstances, such as long-running
 tests that should only be run under continuous integration and not when
 invoking &lt;tt class="docutils literal"&gt;pytest&lt;/tt&gt; locally.  The naïve way to accomplish this is to
@@ -133,7 +263,7 @@ pytest plugin projects for skipping tests unless a command-line option is
 given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
 but if they work as advertized, they should prove helpful.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-01-12T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-01-14T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
 introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
@@ -1872,6 +2002,9 @@ and 3.9, respectively)&lt;/p&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Python 3.11 (2022-10-03)&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Release notes: &lt;a class="reference external" href="https://docs.python.org/3.11/whatsnew/3.11.html"&gt;[link]&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;enum&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;EnumCheck&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;FlagBoundary&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;StrEnum&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;global_enum&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;property&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;verify()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;math&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;cbrt()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Removed:&lt;/p&gt;
