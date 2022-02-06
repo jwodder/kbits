@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2022-01-14T00:00:00-05:00">2022-01-14</time></td>
+                    <td><time datetime="2022-02-06T00:00:00-05:00">2022-02-06</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -543,6 +543,8 @@ parameter</p>
 <li><p class="first">New <tt class="docutils literal">range</tt> methods: <tt class="docutils literal">index()</tt> and <tt class="docutils literal">count()</tt></p>
 </li>
 <li><p class="first"><tt class="docutils literal">callable()</tt> function from Python 2 restored</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ResourceWarning</tt> warning type added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">abc</tt> module: <tt class="docutils literal">abstractclassmethod()</tt> and <tt class="docutils literal">abstractstaticmethod()</tt>
 added</p>
@@ -1101,8 +1103,6 @@ unpackings (as appropriate)</p>
 </li>
 <li><p class="first">New modules: <tt class="docutils literal">typing</tt> and <tt class="docutils literal">zipapp</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal">os</tt> module: <tt class="docutils literal">scandir()</tt> added</p>
-</li>
 <li><p class="first">System calls are now retried when interrupted by a signal</p>
 </li>
 <li><p class="first"><tt class="docutils literal">from __future__ import generator_stop</tt> added to cause <tt class="docutils literal">StopIteration</tt>
@@ -1114,7 +1114,7 @@ exceptions raised inside generators to be transformed into
 </li>
 </ul>
 </li>
-<li><p class="first"><tt class="docutils literal">cmath</tt> module: <tt class="docutils literal">isclose()</tt> added</p>
+<li><p class="first"><tt class="docutils literal">RecursionError</tt> exception type (a subclass of <tt class="docutils literal">RuntimeError</tt>) added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">.pyo</tt> files eliminated; optimized bytecode is now stored in <tt class="docutils literal">.pyc</tt> files
 with <tt class="docutils literal">opt-</tt> tags in their name</p>
@@ -1122,6 +1122,8 @@ with <tt class="docutils literal">opt-</tt> tags in their name</p>
 <li><p class="first"><tt class="docutils literal">&quot;namereplace&quot;</tt> error handler added</p>
 </li>
 <li><p class="first">Various additions &amp; improvements to the <tt class="docutils literal">asyncio</tt> module</p>
+</li>
+<li><p class="first"><tt class="docutils literal">cmath</tt> module: <tt class="docutils literal">isclose()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">collections</tt> module:</p>
 <ul>
@@ -1188,6 +1190,8 @@ preserved on output; the <tt class="docutils literal"><span class="pre">--sort-k
 <li><p class="first"><tt class="docutils literal">fractions</tt> module: <tt class="docutils literal">gcd()</tt> is now deprecated</p>
 </li>
 <li><p class="first"><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">matmul()</tt> and <tt class="docutils literal">imatmul()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">os</tt> module: <tt class="docutils literal">scandir()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">os.path</tt> module: <tt class="docutils literal">commonpath()</tt> added</p>
 </li>
@@ -1270,6 +1274,8 @@ generator expressions</p>
 <li><p class="first">Relevant file functions now accept <tt class="docutils literal">os.PathLike</tt> objects</p>
 </li>
 </ul>
+</li>
+<li><p class="first"><tt class="docutils literal">ModuleNotFoundError</tt> exception type (a subclass of <tt class="docutils literal">ImportError</tt>) added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">datetime</tt> module:</p>
 <ul>
@@ -1430,6 +1436,8 @@ offsets containing colons as well as a timezone specifier of “<tt class="docut
 <li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">remainder()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">pathlib</tt> module: <tt class="docutils literal">Path.is_mount()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">queue</tt> module: <tt class="docutils literal">SimpleQueue</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">subprocess</tt> module:</p>
 <ul>
@@ -1739,6 +1747,8 @@ iterables have the same length</p>
 </li>
 <li><p class="first">New builtin functions: <tt class="docutils literal">aiter()</tt> and <tt class="docutils literal">anext()</tt></p>
 </li>
+<li><p class="first"><tt class="docutils literal">EncodingWarning</tt> warning type added</p>
+</li>
 <li><p class="first">The <tt class="docutils literal">loop</tt> parameter (deprecated in Python 3.8) is now removed from most of
 <tt class="docutils literal">asyncio</tt>’s high-level API</p>
 </li>
@@ -1750,6 +1760,8 @@ iterables have the same length</p>
 </li>
 <li><p class="first">Collections ABCs can no longer be imported from <tt class="docutils literal">collections</tt>; import them
 from <tt class="docutils literal">collections.abc</tt> instead</p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections</tt> module: <tt class="docutils literal">Counter.total()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">contextlib</tt>: <tt class="docutils literal">aclosing()</tt> added</p>
 </li>
