@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-01-14
+:Modified: 2022-02-06
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -390,6 +390,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.2.html>`__
 - New ``range`` methods: ``index()`` and ``count()``
 
 - ``callable()`` function from Python 2 restored
+
+- ``ResourceWarning`` warning type added
 
 - ``abc`` module: ``abstractclassmethod()`` and ``abstractstaticmethod()``
   added
@@ -860,8 +862,6 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.5.html>`__
 
 - New modules: ``typing`` and ``zipapp``
 
-- ``os`` module: ``scandir()`` added
-
 - System calls are now retried when interrupted by a signal
 
 - ``from __future__ import generator_stop`` added to cause ``StopIteration``
@@ -871,7 +871,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.5.html>`__
   - Without the ``__future__`` import, such exceptions generate
     ``PendingDeprecationWarning``\s.
 
-- ``cmath`` module: ``isclose()`` added
+- ``RecursionError`` exception type (a subclass of ``RuntimeError``) added
 
 - ``.pyo`` files eliminated; optimized bytecode is now stored in ``.pyc`` files
   with ``opt-`` tags in their name
@@ -879,6 +879,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.5.html>`__
 - ``"namereplace"`` error handler added
 
 - Various additions & improvements to the ``asyncio`` module
+
+- ``cmath`` module: ``isclose()`` added
 
 - ``collections`` module:
 
@@ -934,6 +936,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.5.html>`__
 - ``fractions`` module: ``gcd()`` is now deprecated
 
 - ``operator`` module: ``matmul()`` and ``imatmul()`` added
+
+- ``os`` module: ``scandir()`` added
 
 - ``os.path`` module: ``commonpath()`` added
 
@@ -1010,6 +1014,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.6.html>`__
 - ``os.PathLike``, the ``__fspath__()`` method, and ``os.fspath()`` added
 
   - Relevant file functions now accept ``os.PathLike`` objects
+
+- ``ModuleNotFoundError`` exception type (a subclass of ``ImportError``) added
 
 - ``datetime`` module:
 
@@ -1151,6 +1157,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.7.html>`__
 - ``math`` module: ``remainder()`` added
 
 - ``pathlib`` module: ``Path.is_mount()`` added
+
+- ``queue`` module: ``SimpleQueue`` added
 
 - ``subprocess`` module:
 
@@ -1375,7 +1383,7 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
               return "Bad request"
           case 401 | 403 | 404:
               return "Not allowed"
-	  case _:
+          case _:
               return "Something's wrong with the Internet"
 
 - Context managers in ``with`` statements can now be enclosed in parentheses,
@@ -1417,6 +1425,8 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
 
 - New builtin functions: ``aiter()`` and ``anext()``
 
+- ``EncodingWarning`` warning type added
+
 - The ``loop`` parameter (deprecated in Python 3.8) is now removed from most of
   ``asyncio``'s high-level API
 
@@ -1428,6 +1438,8 @@ Release notes: `[link] <https://docs.python.org/3.10/whatsnew/3.10.html>`__
 
 - Collections ABCs can no longer be imported from ``collections``; import them
   from ``collections.abc`` instead
+
+- ``collections`` module: ``Counter.total()`` added
 
 - ``contextlib``: ``aclosing()`` added
 
