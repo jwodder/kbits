@@ -1,13 +1,14 @@
-=================
-Special VCS Files
-=================
+=============================
+Special Version Control Files
+=============================
 
 :Date: 2021-06-22
+:Modified: 2022-02-06
 :Category: Software
-:Tags: Git, VCS, dotfiles
+:Tags: Git, version control, dotfiles
 :Summary:
-    A list of VCS-specific files that one may find in the working directories
-    of common version control systems
+    A list of version control system-specific files that one may find in the
+    working directories of common version control systems
 
 The following is a list of VCS-specific files that one may find in the working
 directories of common version control systems.  This list is useful for, say,
