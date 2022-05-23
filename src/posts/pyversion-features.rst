@@ -205,7 +205,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.0.html>`__
   ``sha``, ``sre``, ``statvfs``, ``stringold``, ``sunaudio``, ``sv``,
   ``test.testall``, ``thread``, ``timing``, ``toaiff``, ``user``, ``UserDict``
   (moved to ``collections``), ``UserList`` (moved to ``collections``), and
-  ``UserString`` (moved to ``collections``),
+  ``UserString`` (moved to ``collections``)
 
 - All IRIX-specific, Mac-specific, and Solaris-specific modules removed
 
@@ -332,7 +332,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.1.html>`__
 
 - The ``repr()``\s of ``float``\s are now shorter
 
-- New ``int`` method: ``bit_length``
+- New ``int`` method: ``bit_length()``
 
 - The fields in strings formatted with ``str.format()`` can now omit numbering
   in order to be automatically numbered, as in ``'Sir {} of
@@ -1500,12 +1500,90 @@ Python 3.11 (2022-10-03)
 
 Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 
-- ``enum`` module: ``EnumCheck``, ``FlagBoundary``, ``StrEnum``,
-  ``global_enum``, ``property``, and ``verify()`` added
+- Exception groups
 
-- ``math`` module: ``cbrt()`` added
+  - ``ExceptionGroup`` and ``BaseExceptionGroup`` exception types added
+  - ``try: ... except* ...: ...`` syntax (note asterisk) for matching exception
+    groups
 
-- Removed:
+- Traceback messages now highlight the exact expression that caused the error
 
-  - ``asyncio.coroutine`` (deprecated since 3.8)
-  - ``asyncio.coroutines.CoroWrapper``
+- Starred expressions can now be used in ``for`` statements (e.g., ``for x in
+  *lst1, *lst2:``)
+
+  - This was enabled by the grammar rewrite in Python 3.9 but was not noticed
+    or documented until 3.11.
+
+- The various "open" functions no longer accept the ``U`` mode
+
+- New ``object`` method: ``__getstate__()``
+
+- New ``BaseException`` method: ``add_note()``
+
+- Chaining ``@classmethod`` decorators and using them to wrap other decorators
+  (such as ``@property``) is now deprecated
+
+- New modules: ``tomllib`` and ``wsgiref.types``
+
+- ``asyncio`` module: ``@coroutine`` (deprecated since 3.8) and
+  ``asyncio.coroutines.CoroWrapper`` removed
+
+- ``binascii`` module: ``a2b_hqx()``, ``b2a_hqx()``, ``rlecode_hqx()``, and
+  ``rledecode_hqx()`` removed
+
+- ``binhex`` module removed
+
+- ``datetime`` module:
+
+  - ``UTC`` added
+  - The ``fromisoformat()`` methods now accept most ISO 8601 strings
+
+- ``enum`` module: ``EnumCheck``, ``FlagBoundary``, ``StrEnum``, ``@member()``,
+  ``@nonmember()``, ``@property``, and ``@verify`` added
+
+- ``functools`` module: ``singledispatch`` now supports union types
+
+- ``inspect`` module:
+
+  - ``getmembers_static()`` and ``ismethodwrapper()`` added
+  - ``formatargspec()`` and ``getargspec()`` removed
+  - Frame-related functions now return objects instead of tuples (though the
+    new objects are backwards-compatible with the tuple interface)
+
+- ``locale`` module:
+  - ``getdefaultlocale()`` is now deprecated
+  - ``getencoding()`` added
+
+- ``math`` module: ``cbrt()`` and ``exp2()`` added
+
+- ``operator`` module: ``call()`` added
+
+- ``pathlib`` module: The ``glob()`` and ``rglob()`` methods now return only
+  directories if given a pattern ending with the pathname separator
+
+- ``re`` module:
+
+  - ``(?>...)``, ``*+``, ``++``, ``?+``, and ``{m,n}+`` can now be used in
+    regular expressions
+  - ``NOFLAG`` added
+
+- ``sys`` module: ``exception()`` added
+
+- ``typing`` module:
+
+  - ``LiteralString``, ``Never``, ``Self``, ``TypeVarTuple``,
+    ``assert_never()``, ``assert_type()``, ``clear_overloads()``,
+    ``get_overloads()``, ``@dataclass_transform``, and ``reveal_type()`` added
+  - ``Text`` is now deprecated
+  - Individual fields in a ``TypedDict`` may now be annotated as ``Required``
+    or ``NotRequired``
+  - The keyword-argument syntax for constructing ``TypedDict`` types is now
+    deprecated and will be removed in Python 3.13
+
+- ``unicodedata`` updated to Unicode 14.0.0
+
+- The following modules are now deprecated and are planned to be removed in
+  Python 3.13: ``aifc``, ``audioop``, ``cgi``, ``cgitb``, ``chunk``, ``crypt``,
+  ``imghdr``, ``mailcap``, ``msilib``, ``nis``, ``nntplib``, ``ossaudiodev``,
+  ``pipes``, ``sndhdr``, ``spwd``, ``sunau``, ``telnetlib``, ``uu``, and
+  ``xdrlib``
