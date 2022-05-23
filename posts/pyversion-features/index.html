@@ -312,7 +312,7 @@ treated as absolute imports</p>
 <tt class="docutils literal">sha</tt>, <tt class="docutils literal">sre</tt>, <tt class="docutils literal">statvfs</tt>, <tt class="docutils literal">stringold</tt>, <tt class="docutils literal">sunaudio</tt>, <tt class="docutils literal">sv</tt>,
 <tt class="docutils literal">test.testall</tt>, <tt class="docutils literal">thread</tt>, <tt class="docutils literal">timing</tt>, <tt class="docutils literal">toaiff</tt>, <tt class="docutils literal">user</tt>, <tt class="docutils literal">UserDict</tt>
 (moved to <tt class="docutils literal">collections</tt>), <tt class="docutils literal">UserList</tt> (moved to <tt class="docutils literal">collections</tt>), and
-<tt class="docutils literal">UserString</tt> (moved to <tt class="docutils literal">collections</tt>),</p>
+<tt class="docutils literal">UserString</tt> (moved to <tt class="docutils literal">collections</tt>)</p>
 </li>
 <li><p class="first">All IRIX-specific, Mac-specific, and Solaris-specific modules removed</p>
 </li>
@@ -479,7 +479,7 @@ by passing their path to the interpreter</p>
 </li>
 <li><p class="first">The <tt class="docutils literal">repr()</tt>s of <tt class="docutils literal">float</tt>s are now shorter</p>
 </li>
-<li><p class="first">New <tt class="docutils literal">int</tt> method: <tt class="docutils literal">bit_length</tt></p>
+<li><p class="first">New <tt class="docutils literal">int</tt> method: <tt class="docutils literal">bit_length()</tt></p>
 </li>
 <li><p class="first">The fields in strings formatted with <tt class="docutils literal">str.format()</tt> can now omit numbering
 in order to be automatically numbered, as in <tt class="docutils literal">'Sir {} of
@@ -1831,18 +1831,113 @@ and 3.9, respectively)</p>
 <h2><a class="toc-backref" href="#contents">Python 3.11 (2022-10-03)</a></h2>
 <p>Release notes: <a class="reference external" href="https://docs.python.org/3.11/whatsnew/3.11.html">[link]</a></p>
 <ul>
-<li><p class="first"><tt class="docutils literal">enum</tt> module: <tt class="docutils literal">EnumCheck</tt>, <tt class="docutils literal">FlagBoundary</tt>, <tt class="docutils literal">StrEnum</tt>,
-<tt class="docutils literal">global_enum</tt>, <tt class="docutils literal">property</tt>, and <tt class="docutils literal">verify()</tt> added</p>
-</li>
-<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">cbrt()</tt> added</p>
-</li>
-<li><p class="first">Removed:</p>
+<li><p class="first">Exception groups</p>
 <ul>
-<li><p class="first"><tt class="docutils literal">asyncio.coroutine</tt> (deprecated since 3.8)</p>
+<li><p class="first"><tt class="docutils literal">ExceptionGroup</tt> and <tt class="docutils literal">BaseExceptionGroup</tt> exception types added</p>
 </li>
-<li><p class="first"><tt class="docutils literal">asyncio.coroutines.CoroWrapper</tt></p>
+<li><p class="first"><tt class="docutils literal">try: ... except* <span class="pre">...:</span> ...</tt> syntax (note asterisk) for matching exception
+groups</p>
 </li>
 </ul>
+</li>
+<li><p class="first">Traceback messages now highlight the exact expression that caused the error</p>
+</li>
+<li><p class="first">Starred expressions can now be used in <tt class="docutils literal">for</tt> statements (e.g., <tt class="docutils literal">for x in
+*lst1, *lst2:</tt>)</p>
+<ul>
+<li><p class="first">This was enabled by the grammar rewrite in Python 3.9 but was not noticed
+or documented until 3.11.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">The various “open” functions no longer accept the <tt class="docutils literal">U</tt> mode</p>
+</li>
+<li><p class="first">New <tt class="docutils literal">object</tt> method: <tt class="docutils literal">__getstate__()</tt></p>
+</li>
+<li><p class="first">New <tt class="docutils literal">BaseException</tt> method: <tt class="docutils literal">add_note()</tt></p>
+</li>
+<li><p class="first">Chaining <tt class="docutils literal">&#64;classmethod</tt> decorators and using them to wrap other decorators
+(such as <tt class="docutils literal">&#64;property</tt>) is now deprecated</p>
+</li>
+<li><p class="first">New modules: <tt class="docutils literal">tomllib</tt> and <tt class="docutils literal">wsgiref.types</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">asyncio</tt> module: <tt class="docutils literal">&#64;coroutine</tt> (deprecated since 3.8) and
+<tt class="docutils literal">asyncio.coroutines.CoroWrapper</tt> removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">binascii</tt> module: <tt class="docutils literal">a2b_hqx()</tt>, <tt class="docutils literal">b2a_hqx()</tt>, <tt class="docutils literal">rlecode_hqx()</tt>, and
+<tt class="docutils literal">rledecode_hqx()</tt> removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">binhex</tt> module removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">datetime</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">UTC</tt> added</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">fromisoformat()</tt> methods now accept most ISO 8601 strings</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">enum</tt> module: <tt class="docutils literal">EnumCheck</tt>, <tt class="docutils literal">FlagBoundary</tt>, <tt class="docutils literal">StrEnum</tt>, <tt class="docutils literal">&#64;member()</tt>,
+<tt class="docutils literal">&#64;nonmember()</tt>, <tt class="docutils literal">&#64;property</tt>, and <tt class="docutils literal">&#64;verify</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">singledispatch</tt> now supports union types</p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">getmembers_static()</tt> and <tt class="docutils literal">ismethodwrapper()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">formatargspec()</tt> and <tt class="docutils literal">getargspec()</tt> removed</p>
+</li>
+<li><p class="first">Frame-related functions now return objects instead of tuples (though the
+new objects are backwards-compatible with the tuple interface)</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">locale</tt> module:
+- <tt class="docutils literal">getdefaultlocale()</tt> is now deprecated
+- <tt class="docutils literal">getencoding()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">cbrt()</tt> and <tt class="docutils literal">exp2()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">call()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pathlib</tt> module: The <tt class="docutils literal">glob()</tt> and <tt class="docutils literal">rglob()</tt> methods now return only
+directories if given a pattern ending with the pathname separator</p>
+</li>
+<li><p class="first"><tt class="docutils literal">re</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">(?&gt;...)</span></tt>, <tt class="docutils literal">*+</tt>, <tt class="docutils literal">++</tt>, <tt class="docutils literal"><span class="pre">?+</span></tt>, and <tt class="docutils literal">{m,n}+</tt> can now be used in
+regular expressions</p>
+</li>
+<li><p class="first"><tt class="docutils literal">NOFLAG</tt> added</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">exception()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">typing</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">LiteralString</tt>, <tt class="docutils literal">Never</tt>, <tt class="docutils literal">Self</tt>, <tt class="docutils literal">TypeVarTuple</tt>,
+<tt class="docutils literal">assert_never()</tt>, <tt class="docutils literal">assert_type()</tt>, <tt class="docutils literal">clear_overloads()</tt>,
+<tt class="docutils literal">get_overloads()</tt>, <tt class="docutils literal">&#64;dataclass_transform</tt>, and <tt class="docutils literal">reveal_type()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Text</tt> is now deprecated</p>
+</li>
+<li><p class="first">Individual fields in a <tt class="docutils literal">TypedDict</tt> may now be annotated as <tt class="docutils literal">Required</tt>
+or <tt class="docutils literal">NotRequired</tt></p>
+</li>
+<li><p class="first">The keyword-argument syntax for constructing <tt class="docutils literal">TypedDict</tt> types is now
+deprecated and will be removed in Python 3.13</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 14.0.0</p>
+</li>
+<li><p class="first">The following modules are now deprecated and are planned to be removed in
+Python 3.13: <tt class="docutils literal">aifc</tt>, <tt class="docutils literal">audioop</tt>, <tt class="docutils literal">cgi</tt>, <tt class="docutils literal">cgitb</tt>, <tt class="docutils literal">chunk</tt>, <tt class="docutils literal">crypt</tt>,
+<tt class="docutils literal">imghdr</tt>, <tt class="docutils literal">mailcap</tt>, <tt class="docutils literal">msilib</tt>, <tt class="docutils literal">nis</tt>, <tt class="docutils literal">nntplib</tt>, <tt class="docutils literal">ossaudiodev</tt>,
+<tt class="docutils literal">pipes</tt>, <tt class="docutils literal">sndhdr</tt>, <tt class="docutils literal">spwd</tt>, <tt class="docutils literal">sunau</tt>, <tt class="docutils literal">telnetlib</tt>, <tt class="docutils literal">uu</tt>, and
+<tt class="docutils literal">xdrlib</tt></p>
 </li>
 </ul>
 </div>

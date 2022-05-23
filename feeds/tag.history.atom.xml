@@ -231,7 +231,7 @@ treated as absolute imports&lt;/p&gt;
 &lt;tt class="docutils literal"&gt;sha&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;sre&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;statvfs&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;stringold&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;sunaudio&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;sv&lt;/tt&gt;,
 &lt;tt class="docutils literal"&gt;test.testall&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;thread&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;timing&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;toaiff&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;user&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;UserDict&lt;/tt&gt;
 (moved to &lt;tt class="docutils literal"&gt;collections&lt;/tt&gt;), &lt;tt class="docutils literal"&gt;UserList&lt;/tt&gt; (moved to &lt;tt class="docutils literal"&gt;collections&lt;/tt&gt;), and
-&lt;tt class="docutils literal"&gt;UserString&lt;/tt&gt; (moved to &lt;tt class="docutils literal"&gt;collections&lt;/tt&gt;),&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;UserString&lt;/tt&gt; (moved to &lt;tt class="docutils literal"&gt;collections&lt;/tt&gt;)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;All IRIX-specific, Mac-specific, and Solaris-specific modules removed&lt;/p&gt;
 &lt;/li&gt;
@@ -398,7 +398,7 @@ by passing their path to the interpreter&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;repr()&lt;/tt&gt;s of &lt;tt class="docutils literal"&gt;float&lt;/tt&gt;s are now shorter&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;New &lt;tt class="docutils literal"&gt;int&lt;/tt&gt; method: &lt;tt class="docutils literal"&gt;bit_length&lt;/tt&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;New &lt;tt class="docutils literal"&gt;int&lt;/tt&gt; method: &lt;tt class="docutils literal"&gt;bit_length()&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;The fields in strings formatted with &lt;tt class="docutils literal"&gt;str.format()&lt;/tt&gt; can now omit numbering
 in order to be automatically numbered, as in &lt;tt class="docutils literal"&gt;'Sir {} of
@@ -1750,18 +1750,113 @@ and 3.9, respectively)&lt;/p&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Python 3.11 (2022-10-03)&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Release notes: &lt;a class="reference external" href="https://docs.python.org/3.11/whatsnew/3.11.html"&gt;[link]&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;enum&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;EnumCheck&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;FlagBoundary&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;StrEnum&lt;/tt&gt;,
-&lt;tt class="docutils literal"&gt;global_enum&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;property&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;verify()&lt;/tt&gt; added&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;math&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;cbrt()&lt;/tt&gt; added&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Removed:&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;Exception groups&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.coroutine&lt;/tt&gt; (deprecated since 3.8)&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;ExceptionGroup&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;BaseExceptionGroup&lt;/tt&gt; exception types added&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.coroutines.CoroWrapper&lt;/tt&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;try: ... except* &lt;span class="pre"&gt;...:&lt;/span&gt; ...&lt;/tt&gt; syntax (note asterisk) for matching exception
+groups&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Traceback messages now highlight the exact expression that caused the error&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Starred expressions can now be used in &lt;tt class="docutils literal"&gt;for&lt;/tt&gt; statements (e.g., &lt;tt class="docutils literal"&gt;for x in
+*lst1, *lst2:&lt;/tt&gt;)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;This was enabled by the grammar rewrite in Python 3.9 but was not noticed
+or documented until 3.11.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The various “open” functions no longer accept the &lt;tt class="docutils literal"&gt;U&lt;/tt&gt; mode&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;New &lt;tt class="docutils literal"&gt;object&lt;/tt&gt; method: &lt;tt class="docutils literal"&gt;__getstate__()&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;New &lt;tt class="docutils literal"&gt;BaseException&lt;/tt&gt; method: &lt;tt class="docutils literal"&gt;add_note()&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Chaining &lt;tt class="docutils literal"&gt;&amp;#64;classmethod&lt;/tt&gt; decorators and using them to wrap other decorators
+(such as &lt;tt class="docutils literal"&gt;&amp;#64;property&lt;/tt&gt;) is now deprecated&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;New modules: &lt;tt class="docutils literal"&gt;tomllib&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;wsgiref.types&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;&amp;#64;coroutine&lt;/tt&gt; (deprecated since 3.8) and
+&lt;tt class="docutils literal"&gt;asyncio.coroutines.CoroWrapper&lt;/tt&gt; removed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;binascii&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;a2b_hqx()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;b2a_hqx()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;rlecode_hqx()&lt;/tt&gt;, and
+&lt;tt class="docutils literal"&gt;rledecode_hqx()&lt;/tt&gt; removed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;binhex&lt;/tt&gt; module removed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;datetime&lt;/tt&gt; module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;UTC&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;fromisoformat()&lt;/tt&gt; methods now accept most ISO 8601 strings&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;enum&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;EnumCheck&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;FlagBoundary&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;StrEnum&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;member()&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;&amp;#64;nonmember()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;property&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;&amp;#64;verify&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;functools&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;singledispatch&lt;/tt&gt; now supports union types&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;inspect&lt;/tt&gt; module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;getmembers_static()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;ismethodwrapper()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;formatargspec()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;getargspec()&lt;/tt&gt; removed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Frame-related functions now return objects instead of tuples (though the
+new objects are backwards-compatible with the tuple interface)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;locale&lt;/tt&gt; module:
+- &lt;tt class="docutils literal"&gt;getdefaultlocale()&lt;/tt&gt; is now deprecated
+- &lt;tt class="docutils literal"&gt;getencoding()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;math&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;cbrt()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;exp2()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;operator&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;call()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;pathlib&lt;/tt&gt; module: The &lt;tt class="docutils literal"&gt;glob()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;rglob()&lt;/tt&gt; methods now return only
+directories if given a pattern ending with the pathname separator&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;re&lt;/tt&gt; module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;(?&amp;gt;...)&lt;/span&gt;&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;*+&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;++&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;?+&lt;/span&gt;&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;{m,n}+&lt;/tt&gt; can now be used in
+regular expressions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;NOFLAG&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;sys&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;exception()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;typing&lt;/tt&gt; module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;LiteralString&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Never&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Self&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;TypeVarTuple&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;assert_never()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;assert_type()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;clear_overloads()&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;get_overloads()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;dataclass_transform&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;reveal_type()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;Text&lt;/tt&gt; is now deprecated&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Individual fields in a &lt;tt class="docutils literal"&gt;TypedDict&lt;/tt&gt; may now be annotated as &lt;tt class="docutils literal"&gt;Required&lt;/tt&gt;
+or &lt;tt class="docutils literal"&gt;NotRequired&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The keyword-argument syntax for constructing &lt;tt class="docutils literal"&gt;TypedDict&lt;/tt&gt; types is now
+deprecated and will be removed in Python 3.13&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;unicodedata&lt;/tt&gt; updated to Unicode 14.0.0&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The following modules are now deprecated and are planned to be removed in
+Python 3.13: &lt;tt class="docutils literal"&gt;aifc&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;audioop&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;cgi&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;cgitb&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;chunk&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;crypt&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;imghdr&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;mailcap&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;msilib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;nis&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;nntplib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;ossaudiodev&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;pipes&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;sndhdr&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;spwd&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;sunau&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;telnetlib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;uu&lt;/tt&gt;, and
+&lt;tt class="docutils literal"&gt;xdrlib&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
