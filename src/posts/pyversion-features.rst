@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-02-06
+:Modified: 2022-05-23
 :Category: Programming
 :Tags: Python, history
 :Summary:
