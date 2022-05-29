@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - history</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.history.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-23T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-05-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - history</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.history.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-29T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-05-29T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
-introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The following is a list of all of the notable or interesting (in my biased
+opinion) features introduced in each major release of Python, starting with
+Python 3.0.&lt;/p&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul&gt;
@@ -1313,6 +1314,8 @@ of annotations, which will become the default in Python 3.11&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;The interpreter now coerces ASCII locales to UTF-8 under certain
 circumstances on non-Windows OSes&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt; methods can no longer be asynchronous&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;__getattr__()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__dir__()&lt;/tt&gt; can now be defined on modules&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;time&lt;/tt&gt; module: variants of the timer functions added that return a number
@@ -1327,6 +1330,10 @@ of nanoseconds as an integer&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;argparse&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;ArgumentParser.parser_intermixed_args()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Various additions &amp;amp; improvements to the &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;collections&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;defaults&lt;/tt&gt; argument added to &lt;tt class="docutils literal"&gt;namedtuple()&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
@@ -1417,6 +1424,9 @@ modular multiplicative inverse (or a power thereof) is calculated&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module:&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;CancelledError&lt;/tt&gt; now inherits directly from &lt;tt class="docutils literal"&gt;BaseException&lt;/tt&gt; instead of
+&lt;tt class="docutils literal"&gt;Exception&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;coroutine()&lt;/tt&gt; is now deprecated&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Passing a &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter is now deprecated for most of &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s

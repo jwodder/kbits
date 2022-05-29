@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Knowledge Bits - async</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Sun, 29 May 2022 00:00:00 -0400</lastBuildDate><item><title>Python Asynchronous Programming Fundamentals</title><link>https://jwodder.github.io/kbits/posts/pyasync-fundam/</link><description>&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
+2014, with further notable improvements in almost every minor version
+since.  However, to many Python programmers, this area of the language
+remains esoteric, misunderstood, and underutilized.  This article aims to
+elucidate the fundamental concepts of asynchronous programming as part of
+the first step towards mastery.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Sun, 29 May 2022 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</guid><category>Programming</category><category>Python</category><category>async</category></item></channel></rss>

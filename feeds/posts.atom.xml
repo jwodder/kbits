@@ -1,5 +1,539 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-23T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Creating Multi-Value Enums in Python</title><link href="https://jwodder.github.io/kbits/posts/multi-value-enum/" rel="alternate"></link><published>2022-01-14T00:00:00-05:00</published><updated>2022-01-14T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-01-14:/kbits/posts/multi-value-enum/</id><summary type="html">&lt;p class="first last"&gt;How to create an enum in Python where each member has a “main” value and a
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-29T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-05-29T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
+2014, with further notable improvements in almost every minor version
+since.  However, to many Python programmers, this area of the language
+remains esoteric, misunderstood, and underutilized.  This article aims to
+elucidate the fundamental concepts of asynchronous programming as part of
+the first step towards mastery.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Python introduced asynchronous programming capabilities in version 3.4 in 2014,
+with further notable improvements in almost every minor version since.
+However, to many Python programmers, this area of the language remains
+esoteric, misunderstood, and underutilized.  This article aims to elucidate the
+fundamental concepts of asynchronous programming as part of the first step
+towards mastery.&lt;/p&gt;
+&lt;p&gt;There won’t be many code samples in this article, but reading it should make it
+easier to grok &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio.html"&gt;the asyncio documentation&lt;/a&gt; and figure out how to piece things
+together.&lt;/p&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title"&gt;Contents&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#high-level-overview" id="toc-entry-1"&gt;High-Level Overview&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#definitions" id="toc-entry-2"&gt;Definitions&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#syntax" id="toc-entry-3"&gt;Syntax&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#type-annotations" id="toc-entry-4"&gt;Type Annotations&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#special-methods" id="toc-entry-5"&gt;Special Methods&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#historical-note-generator-based-coroutines" id="toc-entry-6"&gt;Historical Note: Generator-Based Coroutines&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#exception-handling" id="toc-entry-7"&gt;Exception Handling&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#example-code" id="toc-entry-8"&gt;Example Code&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#asynchronous-programming-vs-threads" id="toc-entry-9"&gt;Asynchronous Programming vs. Threads&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#async-version-history" id="toc-entry-10"&gt;Async Version History&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#alternative-async-implementations" id="toc-entry-11"&gt;Alternative Async Implementations&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="high-level-overview"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;High-Level Overview&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Asynchronous programming provides a way to interleave execution of multiple
+functions (&lt;a class="reference internal" href="#coroutines"&gt;coroutines&lt;/a&gt;) at once; at any given point, only one of the functions
+is actually doing operations, while the others are waiting for things like
+blocking I/O to complete (or, if the I/O has already completed, they’re waiting
+for the current coroutine to be suspended so that they get a chance to resume).&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;In the Python standard library and all third-party async libraries that I
+am aware of, the kinds of low-level operations that one can ultimately
+suspend execution waiting for are almost exclusively I/O-related.  If
+you’re seeking to add concurrency to CPU-bound code (e.g., anything
+involving number crunching), you are likely to be better off using
+multiprocessing instead.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Specifically, whenever execution of a currently-running coroutine reaches an
+&lt;tt class="docutils literal"&gt;await&lt;/tt&gt; expression, the coroutine may be suspended, and another
+previously-suspended coroutine may resume execution if what it was suspended on
+has since returned a value.  Suspension can also happen when an &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt;
+block requests the next value from an asynchronous iterator or when an &lt;tt class="docutils literal"&gt;async
+with&lt;/tt&gt; block is entered or exited, as these operations use &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; under the
+hood.&lt;/p&gt;
+&lt;p&gt;Note that, although multiple coroutines can be processed at once, effectively
+finishing in any order, operations within a single coroutine continue to be
+executed in the order they’re written.  For example, given the following code:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;f&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;g&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;amain&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;amain&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;When &lt;tt class="docutils literal"&gt;await f()&lt;/tt&gt; is reached, &lt;tt class="docutils literal"&gt;amain()&lt;/tt&gt; will be suspended until &lt;tt class="docutils literal"&gt;f()&lt;/tt&gt; is
+finished, and only after that will execution proceed to the next line, starting
+coroutine &lt;tt class="docutils literal"&gt;g()&lt;/tt&gt;.  If you want to execute &lt;tt class="docutils literal"&gt;f()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;g()&lt;/tt&gt; concurrently,
+you need to use &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task"&gt;&lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt;&lt;/a&gt;, &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"&gt;&lt;tt class="docutils literal"&gt;asyncio.gather()&lt;/tt&gt;&lt;/a&gt;, or similar.  See
+&lt;a class="reference external" href="https://hynek.me/articles/waiting-in-asyncio/"&gt;this article&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;p&gt;In general, coroutines can only be called or scheduled by other coroutines.  To
+run a “top-level” coroutine from inside synchronous code (i.e., either inside a
+non-coroutine function or at module level), the simplest &amp;amp; preferred way is to
+use the &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt; function introduced in Python 3.7.  Code meant to run on
+older Pythons must use the lower-level &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_until_complete"&gt;&lt;tt class="docutils literal"&gt;loop.run_until_complete()&lt;/tt&gt;&lt;/a&gt; instead,
+along with other loop methods for cleanup.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="definitions"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Definitions&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Asynchronous programming&lt;/em&gt; features the execution of multiple tasks
+concurrently, with one task being run while waiting for others to complete.
+Asynchronous programming in Python is an example of &lt;em&gt;cooperative multitasking&lt;/em&gt;
+[&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Cooperative_multitasking"&gt;wiki&lt;/a&gt;], as it requires the running coroutines to cooperate and yield control
+on their own; if the current coroutine goes for a long time without calling
+&lt;tt class="docutils literal"&gt;await&lt;/tt&gt;, execution will remain on that coroutine all the while, and all other
+coroutines in the thread will remain in a suspended state.  This is contrast to
+the &lt;em&gt;preemptive multitasking&lt;/em&gt; [&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Preemption_(computing)"&gt;wiki&lt;/a&gt;] of multithreaded and multiprocess
+programs, where the Python interpreter or OS scheduler decides on its own when
+to switch between running contexts, with the points at which switches can occur
+being difficult or impossible to predict in general.&lt;/p&gt;
+&lt;p id="coroutines"&gt;A &lt;em&gt;coroutine function&lt;/em&gt; is a function defined with &lt;tt class="docutils literal"&gt;async def&lt;/tt&gt; instead of just
+&lt;tt class="docutils literal"&gt;def&lt;/tt&gt;.  (In the context of asynchronous programming, a function defined with
+just &lt;tt class="docutils literal"&gt;def&lt;/tt&gt; is called a &lt;em&gt;synchronous function&lt;/em&gt;.)  Only coroutine functions can
+contain &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;async with&lt;/tt&gt; constructs, and, as of
+Python 3.10, they cannot contain &lt;tt class="docutils literal"&gt;yield from&lt;/tt&gt; constructs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Note that just calling a coroutine function does not cause it to start
+running; you need to either schedule it for concurrent execution with
+&lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task"&gt;&lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt;&lt;/a&gt; or similar or else &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; on it directly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A &lt;em&gt;coroutine object&lt;/em&gt; is the result of calling a coroutine function.  This is
+not the value &lt;tt class="docutils literal"&gt;return&lt;/tt&gt;ed (or &lt;tt class="docutils literal"&gt;raise&lt;/tt&gt;d) by the function; rather, it is a
+pending computation that can be suspended &amp;amp; resumed at any point that the
+coroutine function uses &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;async with&lt;/tt&gt;.  The
+actual &lt;tt class="docutils literal"&gt;return&lt;/tt&gt; value or exception is obtained either by awaiting on the
+coroutine object (possibly wrapped in a task and/or something like
+&lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"&gt;&lt;tt class="docutils literal"&gt;asyncio.gather()&lt;/tt&gt;&lt;/a&gt;) from within another coroutine function or by running it as a
+“top-level” entry point using &lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt; within synchronous code.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Asynchronous generators — coroutine functions that use &lt;tt class="docutils literal"&gt;yield&lt;/tt&gt; — are a bit
+of an exception.  You do not &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; the result of the function; instead,
+you iterate through it using either &lt;tt class="docutils literal"&gt;async for ... in &lt;span class="pre"&gt;...:&lt;/span&gt;&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;await
+&lt;span class="pre"&gt;anext(...)&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Confusingly, both coroutine functions and coroutine objects can be referred
+to as just “coroutines.”&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The actual scheduling of coroutine execution is managed by an &lt;em&gt;event loop&lt;/em&gt;.  An
+event loop is created by &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt; or &lt;tt class="docutils literal"&gt;asyncio.new_event_loop()&lt;/tt&gt;, handed
+one or more coroutines and/or synchronous callbacks, and then set off to run
+either forever or until completion of a “top-level” coroutine.  It’s the event
+loop’s job to execute the current coroutine until it suspends on an &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;,
+after which it looks to see if any suspended coroutines are now done with their
+suspension and either picks one to resume or, if none are ready, waits until
+one is.&lt;/p&gt;
+&lt;p id="awaitable"&gt;An &lt;em&gt;awaitable&lt;/em&gt; is any value that the &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; keyword can be applied to; this
+includes coroutine objects, futures, future-likes, and tasks (see below).
+Awaiting on an awaitable causes the current coroutine to be suspended until the
+awaitable is ready to provide a value or raise an exception.&lt;/p&gt;
+&lt;p&gt;A &lt;em&gt;future&lt;/em&gt; (class &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future"&gt;&lt;tt class="docutils literal"&gt;asyncio.Future&lt;/tt&gt;&lt;/a&gt;) is a low-level container for the result of
+a computation (a value or exception) that starts out empty and is assigned a
+value or exception later.  Awaiting on a future will suspend the current
+coroutine until something else either stores a result in the future or cancels
+it.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;You may already be familiar with futures in the form of the &lt;tt class="docutils literal"&gt;Future&lt;/tt&gt; class
+from the &lt;a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html"&gt;&lt;tt class="docutils literal"&gt;concurrent.futures&lt;/tt&gt;&lt;/a&gt; module, which provides access to the results
+of operations evaluated in other threads or processes.  The
+&lt;tt class="docutils literal"&gt;asyncio.Future&lt;/tt&gt; class is similar in spirit, but has a different API.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A &lt;em&gt;future-like&lt;/em&gt; is an object with an &lt;tt class="docutils literal"&gt;__await__()&lt;/tt&gt; method, which must return
+an iterator.  Awaiting on a future-like causes the current coroutine to be
+suspended until the iterator is exhausted, at which point the &lt;tt class="docutils literal"&gt;value&lt;/tt&gt;
+attribute of the terminating &lt;tt class="docutils literal"&gt;StopIteration&lt;/tt&gt; exception is returned as the
+result of the &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; expression.&lt;/p&gt;
+&lt;p&gt;A &lt;em&gt;task&lt;/em&gt; (class &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task"&gt;&lt;tt class="docutils literal"&gt;asyncio.Task&lt;/tt&gt;&lt;/a&gt;) represents a running coroutine.  Creating a
+task from a coroutine object with &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task"&gt;&lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt;&lt;/a&gt; will cause the
+coroutine to be scheduled for execution concurrently with other running
+coroutines.  The task instance can later be awaited on to suspend the current
+coroutine until the wrapped coroutine finishes executing, returning its result.&lt;/p&gt;
+&lt;p&gt;A running task can be &lt;em&gt;cancelled&lt;/em&gt; by calling its &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task.cancel"&gt;&lt;tt class="docutils literal"&gt;Task.cancel()&lt;/tt&gt;&lt;/a&gt; method.  This
+will cause the underlying coroutine to receive an &lt;tt class="docutils literal"&gt;asyncio.CancelledError&lt;/tt&gt;
+exception the next time it &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;s, likely putting an end to the task’s
+execution.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="syntax"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Syntax&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Asynchronous programming in Python takes place inside &lt;a class="reference internal" href="#coroutines"&gt;coroutines&lt;/a&gt;, functions
+defined using &lt;tt class="docutils literal"&gt;async def&lt;/tt&gt; instead of just &lt;tt class="docutils literal"&gt;def&lt;/tt&gt;.  Within a coroutine, the
+&lt;tt class="docutils literal"&gt;await&lt;/tt&gt; keyword can be applied to any &lt;a class="reference internal" href="#awaitable"&gt;awaitable&lt;/a&gt; expression (such as a call
+to another coroutine) to suspend execution of the coroutine until the awaitable
+has a value or exception ready, at which point the coroutine is resumed and the
+&lt;tt class="docutils literal"&gt;await&lt;/tt&gt; expression returns that value or raises that exception.&lt;/p&gt;
+&lt;p&gt;Here’s a basic example you’ve seen in all the tutorials:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;waiter&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Before sleep&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;After sleep&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;waiter&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This code prints a message, waits for a five-second sleep to elapse, and then
+prints another message.  As written, it’s rather pointless; we’re only running
+one coroutine at once, so there’s no advantage over using a synchronous
+function with &lt;tt class="docutils literal"&gt;time.sleep()&lt;/tt&gt;.  Here’s something slightly more involved:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;operate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Spending &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; seconds doing operations ...&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Operations done after &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; seconds!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;amain&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gather&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;operate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;operate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Got &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="si"&gt;=}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;42&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;23&lt;/span&gt;
+
+&lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;amain&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This code mocks spending time on two blocking operations in parallel.  If you
+run the script (Python 3.8+ required) and time it, you’ll see that it only
+takes about 5 seconds in total, and the 2-second task completes three seconds
+before the 5-second one.  After both tasks are done, the final “Got x=42, y=23”
+message is printed.&lt;/p&gt;
+&lt;p&gt;Besides &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;, there are two other syntactical constructs specific to
+coroutines: &lt;tt class="docutils literal"&gt;async for ... in &lt;span class="pre"&gt;...:&lt;/span&gt;&lt;/tt&gt; (for iterating over asynchronous
+iterables) and &lt;tt class="docutils literal"&gt;async with &lt;span class="pre"&gt;...:&lt;/span&gt;&lt;/tt&gt; (for entering &amp;amp; exiting asynchronous context
+managers).  These work the same way as their non-&lt;tt class="docutils literal"&gt;async&lt;/tt&gt; counterparts, except
+that the iterables and context managers in question need to support
+asynchronous usage; for example, an &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; cannot iterate over a
+&lt;tt class="docutils literal"&gt;list&lt;/tt&gt;, and an &lt;tt class="docutils literal"&gt;async with&lt;/tt&gt; cannot operate on an ordinary filehandle.
+Similarly, a regular &lt;tt class="docutils literal"&gt;for&lt;/tt&gt; cannot be applied to an asynchronous iterator, and
+a regular &lt;tt class="docutils literal"&gt;with&lt;/tt&gt; cannot be applied to, say, &lt;tt class="docutils literal"&gt;asyncio.Lock&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Speaking of asynchronous iteration, this works pretty much how you’d expect: by
+using &lt;tt class="docutils literal"&gt;yield&lt;/tt&gt; inside a coroutine, it becomes an asynchronous generator that
+can be iterated over with &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;await &lt;span class="pre"&gt;anext(...)&lt;/span&gt;&lt;/tt&gt;.  Note that, in
+contrast to non-generator coroutines, you do not apply &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; to an
+asynchronous generator.  For example, given this function:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;aiterator&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;you use it like this:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;aiterator&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;No &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; anywhere.&lt;/p&gt;
+&lt;p&gt;Note that there is no way to get a value out of a coroutine without awaiting on
+it (either directly or via something like &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"&gt;&lt;tt class="docutils literal"&gt;asyncio.gather()&lt;/tt&gt;&lt;/a&gt;); if a coroutine is
+never awaited, &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; will complain when it is garbage-collected.
+Moreover, &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; (and &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;async with&lt;/tt&gt;) cannot be used
+outside of a coroutine; in order to start the awaiting on a “top-level”
+coroutine, you need to use &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Note that the body of a coroutine isn’t required to contain any &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;s or
+similar, though if it doesn’t, there often isn’t much point in making it a
+coroutine in the first place.  An exception is the &lt;tt class="docutils literal"&gt;__aenter__()&lt;/tt&gt; special
+method of asynchronous context managers; usually, the body will just be
+&lt;tt class="docutils literal"&gt;return self&lt;/tt&gt;, but it’s still required to define the method with &lt;tt class="docutils literal"&gt;async
+def&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="section" id="type-annotations"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Type Annotations&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Adding type annotations to asynchronous code works the same way as for
+synchronous code.  If an asynchronous &lt;tt class="docutils literal"&gt;func()&lt;/tt&gt; take an integer &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; and
+returns a string, you write its annotated signature as &lt;tt class="docutils literal"&gt;async def func(x: int)
+&lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; str&lt;/tt&gt;.  However, if you pass around an unawaited coroutine object (not
+always the best idea), you annotate it as &lt;tt class="docutils literal"&gt;Awaitable[T]&lt;/tt&gt;, where &lt;tt class="docutils literal"&gt;T&lt;/tt&gt; is the
+return type of the coroutine.&lt;/p&gt;
+&lt;p&gt;Asynchronous iterators, iterables, and context managers get their own types as
+well: &lt;tt class="docutils literal"&gt;AsyncIterator&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;AsyncIterable&lt;/tt&gt;, and
+&lt;tt class="docutils literal"&gt;typing.AsyncContextManager&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;contextlib.AbstractAsyncContextManager&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="special-methods"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Special Methods&lt;/a&gt;&lt;/h3&gt;
+&lt;p class="rubric"&gt;&lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__anext__()&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;These methods are used to implement asynchronous iterator &amp;amp; iterable classes as
+an alternative to writing asynchronous generator functions, analogously to how
+a class can be defined with &lt;tt class="docutils literal"&gt;__iter__()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__next__()&lt;/tt&gt; methods to
+implement a synchronous iterator as an alternative to writing a generator
+function.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt; must be a synchronous function that returns an object with
+&lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__anext__()&lt;/tt&gt; methods.  &lt;tt class="docutils literal"&gt;__anext__()&lt;/tt&gt; must be a
+coroutine that either returns a value or raises a &lt;tt class="docutils literal"&gt;StopAsyncIteration&lt;/tt&gt;
+exception.&lt;/p&gt;
+&lt;p class="rubric"&gt;&lt;tt class="docutils literal"&gt;__aenter__()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__aexit__()&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;These methods are used to implement asynchronous context managers.  They are
+defined the same way as the &lt;tt class="docutils literal"&gt;__enter__()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__exit__()&lt;/tt&gt; methods of
+synchronous context managers, except that the asynchronous versions must be
+coroutines.&lt;/p&gt;
+&lt;p class="rubric"&gt;&lt;tt class="docutils literal"&gt;__await__()&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;This method is used to create a future-like class that can be awaited directly.
+There is generally very little need to implement this, but we include it here
+for completeness.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;__await__()&lt;/tt&gt; must be a synchronous function that returns an iterator.  This
+iterator will be advanced each time the event loop checks to see if the
+future-like is ready to return a value.  If the future-like is not ready, the
+iterator must yield a special value (see below).  If the future-like is ready,
+it must either &lt;tt class="docutils literal"&gt;return&lt;/tt&gt; a result or raise an exception; this result or
+exception will then be the result of the &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; expression acting on the
+future-like.&lt;/p&gt;
+&lt;p&gt;The values that the iterator yields depend on what async implementation the
+code is running under (See “&lt;a class="reference internal" href="#alternative-async-implementations"&gt;Alternative Async Implementations&lt;/a&gt;” below).  When
+using the Python standard library’s &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;, you generally want to yield
+&lt;tt class="docutils literal"&gt;None&lt;/tt&gt;.  When using trio, you need to yield an instance of one of several
+private classes internal to trio.  When using curio, you need to yield a
+&lt;tt class="docutils literal"&gt;(&amp;quot;trap_name&amp;quot;, *trap_args)&lt;/tt&gt; tuple instructing the kernel to invoke a special
+“trap” function; yielding &lt;tt class="docutils literal"&gt;(&amp;quot;trap_sleep&amp;quot;, 0)&lt;/tt&gt; instructs the kernel to do
+nothing special.&lt;/p&gt;
+&lt;p&gt;For example, if you want to implement your own &lt;tt class="docutils literal"&gt;Future&lt;/tt&gt; class for use with
+&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;, you might start out writing it like so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyFuture&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_set&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;set_value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;valuse&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_set&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__await__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_set&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;yield&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="historical-note-generator-based-coroutines"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Historical Note: Generator-Based Coroutines&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;When &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; was first introduced in Python 3.4, the &lt;tt class="docutils literal"&gt;async&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;await&lt;/tt&gt; keywords were not yet present.  Instead, coroutine functions were
+created by applying the &lt;tt class="docutils literal"&gt;&amp;#64;asyncio.coroutine&lt;/tt&gt; decorator to a normal generator
+function, and awaiting was done using &lt;tt class="docutils literal"&gt;yield from&lt;/tt&gt;.  There were no
+asynchronous iterators or asynchronous context managers in 3.4, either.  Even
+after &lt;tt class="docutils literal"&gt;async&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; were introduced in Python 3.5, the older
+generator-based coroutines could not use them.&lt;/p&gt;
+&lt;p&gt;This style of writing coroutines was deprecated in Python 3.8 and removed
+entirely in Python 3.11.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exception-handling"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Exception Handling&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Whenever an exception occurs inside a coroutine, it propagates upwards to
+whatever’s awaiting on it; if unhandled, it will propagate all the way out
+through the &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt; call, at which point all still-running tasks are
+cancelled.  If there is no chain of &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;s leading to the “top-level”
+coroutine (say, because you did &lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt; and then didn’t await
+on the result, letting it run in the background), &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; will end up
+complaining when the coroutine is eventually garbage-collected.&lt;/p&gt;
+&lt;p&gt;For the specific case of &lt;tt class="docutils literal"&gt;KeyboardInterrupt&lt;/tt&gt;, the exception is raised in
+whatever coroutine the main thread is currently running at the time.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="example-code"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Example Code&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://gist.github.com/jwodder/c0ad1a5a0b6fda18c15dbdb405e1e549"&gt;This gist&lt;/a&gt; provides an example of using asynchronous programming in Python
+to download assets for one or more releases of a GitHub repository in parallel.
+Try it out with an invocation like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+python download-assets.py --download-dir jq stedolan/jq jq-1.5 jq-1.6
+&lt;/pre&gt;
+&lt;p&gt;The script requires Python 3.8 or higher and the &lt;a class="reference external" href="https://github.com/jwodder/ghrepo"&gt;ghrepo&lt;/a&gt; and &lt;a class="reference external" href="https://www.python-httpx.org"&gt;httpx&lt;/a&gt; packages on
+PyPI to run.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="asynchronous-programming-vs-threads"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Asynchronous Programming vs. Threads&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Asynchronous programming does not use threads; by default, all coroutines and
+their operations are run in whichever thread called &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt;; the
+exception is when &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor"&gt;&lt;tt class="docutils literal"&gt;loop.run_in_executor()&lt;/tt&gt;&lt;/a&gt; is used to run a synchronous function
+in a separate thread (or even a separate process), returning a future that can
+be awaited on to receive the function’s result.  If multiple threads call
+&lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt; separately, each thread will get its own event loop and
+collection of coroutines.&lt;/p&gt;
+&lt;p&gt;Note that each thread in a Python process has at most one event loop at a time,
+and an event loop can only belong to one thread.  An important consequence of
+this is that, if you have a synchronous function &lt;tt class="docutils literal"&gt;foo()&lt;/tt&gt; that calls
+&lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt; on some coroutine, then &lt;tt class="docutils literal"&gt;foo()&lt;/tt&gt; cannot be called by another
+coroutine, because that would lead to two event loops in the same thread, which
+doesn’t work.&lt;/p&gt;
+&lt;p&gt;Compared to threads, asynchronous programming provides the following
+advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;In asynchronous programming, the coroutine being executed can only change
+when the current coroutine uses &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; or similar.  This allows the
+programmer to be assured that, between &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;s in the same coroutine,
+operations will not be interfered with and data will not be modified by other
+coroutines.&lt;/p&gt;
+&lt;p&gt;When using threads, on the other hand, the running thread &lt;a class="footnote-reference" href="#gil" id="footnote-reference-1"&gt;[1]&lt;/a&gt; can change
+at almost any point as chosen by the interpreter, which necessitates careful
+programming and copious use of locks in order to ensure that variables are
+not modified by one thread “behind the back of” another thread that’s also
+using them.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If you’ve done serious work with threads, you’ve likely encountered the fact
+that one thread cannot “kill” another thread in the middle of its execution
+unless the “killable” thread is deliberately programmed to allow for this by,
+say, regularly checking some flag and exiting if it’s true.  Asynchronous
+programming, on the other hand, makes it possible to &lt;em&gt;cancel&lt;/em&gt; a running
+coroutine via the &lt;tt class="docutils literal"&gt;asyncio.Task.cancel()&lt;/tt&gt; method; once a coroutine is
+cancelled, the next time the event loop checks on it while it’s suspended on
+an &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; or similar, the coroutine will be resumed, but instead of
+receiving the value it was awaiting for, an &lt;tt class="docutils literal"&gt;asyncio.CancelledError&lt;/tt&gt; will
+be raised at the &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; expression, likely putting an end to the
+coroutine’s execution.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table class="docutils footnote" frame="void" id="gil" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Recall that, due to Python’s global interpreter lock (GIL),
+regardless of how many threads a Python program uses or how many cores your
+machine has, only one thread will be executing Python bytecode at any
+moment.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class="section" id="async-version-history"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Async Version History&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Here follows a list of the notable developments &amp;amp; changes in asynchronous
+programming across Python versions.&lt;/p&gt;
+&lt;p class="rubric"&gt;Python 3.4&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module is added, implementing &lt;a class="reference external" href="http://www.python.org/dev/peps/pep-3156"&gt;PEP 3156&lt;/a&gt;.  This enables the
+creation of coroutines via the &lt;tt class="docutils literal"&gt;&amp;#64;asyncio.coroutine&lt;/tt&gt; decorator; within a
+coroutine, awaiting is performed with &lt;tt class="docutils literal"&gt;yield from&lt;/tt&gt;.  (Support for creating
+coroutines in this way would later be deprecated in Python 3.8 and removed in
+Python 3.11.)&lt;/p&gt;
+&lt;p&gt;Most of the functionality added in this version is now categorized as the “low
+level” part of &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;.&lt;/p&gt;
+&lt;p class="rubric"&gt;Python 3.5&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.python.org/dev/peps/pep-0492"&gt;PEP 492&lt;/a&gt; implemented:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;It is now possible to define coroutines via &lt;tt class="docutils literal"&gt;async def&lt;/tt&gt; and await with
+&lt;tt class="docutils literal"&gt;await&lt;/tt&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;In Python 3.5, &lt;tt class="docutils literal"&gt;yield&lt;/tt&gt; cannot be used inside the body of an &lt;tt class="docutils literal"&gt;async def&lt;/tt&gt;
+coroutine function.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Asynchronous iteration with &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; is now possible.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Asynchronous context managers are now supported via &lt;tt class="docutils literal"&gt;async with&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;__await__()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;__anext__()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;__aenter__()&lt;/tt&gt;, and
+&lt;tt class="docutils literal"&gt;__aexit__()&lt;/tt&gt; special methods added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Originally, &lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt; methods were expected to be coroutines (or
+anything else returning an awaitable) resolving to asynchronous iterators.
+This was changed in 3.5.2 to have &lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt; instead return an
+asynchronous iterator directly.  Returning an awaitable from &lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt;
+produces a &lt;tt class="docutils literal"&gt;PendingDeprecationWarning&lt;/tt&gt; starting in 3.5.2, a
+&lt;tt class="docutils literal"&gt;DeprecationWarning&lt;/tt&gt; starting in 3.6, and a &lt;tt class="docutils literal"&gt;RuntimeError&lt;/tt&gt; starting in
+3.7.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="rubric"&gt;Python 3.6&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;yield&lt;/tt&gt; can now be used in the body of an &lt;tt class="docutils literal"&gt;async def&lt;/tt&gt; coroutine function,
+thereby enabling asynchronous generators (&lt;a class="reference external" href="http://www.python.org/dev/peps/pep-0525"&gt;PEP 525&lt;/a&gt;).  (&lt;tt class="docutils literal"&gt;yield from&lt;/tt&gt;
+remains prohibited, though.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; can now be used in list, set, &amp;amp; dict comprehensions and in
+generator expressions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;await&lt;/tt&gt; expressions can now be used in any comprehension&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Using &lt;tt class="docutils literal"&gt;async&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; as an identifier now generates a
+&lt;tt class="docutils literal"&gt;DeprecationWarning&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="rubric"&gt;Python 3.7&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;async&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; are now reserved keywords&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="rubric"&gt;Python 3.8&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Running &lt;tt class="docutils literal"&gt;python &lt;span class="pre"&gt;-m&lt;/span&gt; asyncio&lt;/tt&gt; now starts an async REPL&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;&amp;#64;asyncio.coroutine()&lt;/tt&gt; is now deprecated&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Passing a &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter is now deprecated for most of &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s
+high-level API&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;CancelledError&lt;/tt&gt; now inherits directly from &lt;tt class="docutils literal"&gt;BaseException&lt;/tt&gt; instead of
+&lt;tt class="docutils literal"&gt;Exception&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="rubric"&gt;Python 3.10&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter (deprecated in Python 3.8) is now removed from most of
+&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s high-level API&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="rubric"&gt;Python 3.11&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;&amp;#64;asyncio.coroutine&lt;/tt&gt; (deprecated in Python 3.8) is now removed&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="alternative-async-implementations"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Alternative Async Implementations&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;While all the code we’ve shown so far uses the Python standard library’s
+&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module, it’s not required to use this to work with coroutines.
+Alternative async library implementations exist that define their own event
+loops and primitive operations.  The more notable implementations include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="https://github.com/python-trio/trio"&gt;trio&lt;/a&gt; seeks to enable &lt;em&gt;structured
+concurrency&lt;/em&gt; [&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Structured_concurrency"&gt;wiki&lt;/a&gt;] in asynchronous code.  In trio, a collection of tasks
+are run concurrently by grouping them together under a &lt;em&gt;nursery&lt;/em&gt; (also known
+as a &lt;em&gt;task group&lt;/em&gt;); if one of the tasks in a nursery raises an error, all
+the other tasks in the same nursery are automatically cancelled.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="https://github.com/dabeaz/curio"&gt;curio&lt;/a&gt; is an &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; alternative
+featuring a more streamlined API and intended to be easier to reason about&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In general, different async implementations are incompatible, and features from
+different implementations cannot be used in the same code unless you make
+careful use of whatever compatibility facilities they may provide.&lt;/p&gt;
+&lt;p&gt;In fact, just being able to use the same code unmodified regardless of whether
+using implementation A or implementation B is tricky, as all implementations
+use different primitives.  Libraries to help you with that include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="https://github.com/python-trio/sniffio"&gt;sniffio&lt;/a&gt; can be used to detect
+which async library is in use&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="https://github.com/agronholm/anyio"&gt;anyio&lt;/a&gt; provides a common API (based on
+trio) that can be used to run the same code under both asyncio and trio (and
+previously curio, until it &amp;amp; anyio &lt;a class="reference external" href="https://github.com/agronholm/anyio/issues/185"&gt;parted ways&lt;/a&gt; in anyio 3.0)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="Python"></category><category term="async"></category></entry><entry><title>Creating Multi-Value Enums in Python</title><link href="https://jwodder.github.io/kbits/posts/multi-value-enum/" rel="alternate"></link><published>2022-01-14T00:00:00-05:00</published><updated>2022-01-14T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-01-14:/kbits/posts/multi-value-enum/</id><summary type="html">&lt;p class="first last"&gt;How to create an enum in Python where each member has a “main” value and a
 set of “extra” constant attributes&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;Say you’re creating an enum type in Python and you want each enum member to
 have one or more additional constant attributes alongside &lt;tt class="docutils literal"&gt;value&lt;/tt&gt;, but these
@@ -263,10 +797,11 @@ pytest plugin projects for skipping tests unless a command-line option is
 given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
 but if they work as advertized, they should prove helpful.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-05-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-05-29T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;The following is a list of all of the notable (in my biased opinion) features
-introduced in each major release of Python, starting with Python 3.0.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The following is a list of all of the notable or interesting (in my biased
+opinion) features introduced in each major release of Python, starting with
+Python 3.0.&lt;/p&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul&gt;
@@ -1577,6 +2112,8 @@ of annotations, which will become the default in Python 3.11&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;The interpreter now coerces ASCII locales to UTF-8 under certain
 circumstances on non-Windows OSes&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;__aiter__()&lt;/tt&gt; methods can no longer be asynchronous&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;__getattr__()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;__dir__()&lt;/tt&gt; can now be defined on modules&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;time&lt;/tt&gt; module: variants of the timer functions added that return a number
@@ -1591,6 +2128,10 @@ of nanoseconds as an integer&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;argparse&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;ArgumentParser.parser_intermixed_args()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Various additions &amp;amp; improvements to the &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;collections&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;defaults&lt;/tt&gt; argument added to &lt;tt class="docutils literal"&gt;namedtuple()&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
@@ -1681,6 +2222,9 @@ modular multiplicative inverse (or a power thereof) is calculated&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module:&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;CancelledError&lt;/tt&gt; now inherits directly from &lt;tt class="docutils literal"&gt;BaseException&lt;/tt&gt; instead of
+&lt;tt class="docutils literal"&gt;Exception&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;coroutine()&lt;/tt&gt; is now deprecated&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Passing a &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter is now deprecated for most of &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s
