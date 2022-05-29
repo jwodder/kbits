@@ -3,15 +3,16 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-05-23
+:Modified: 2022-05-29
 :Category: Programming
 :Tags: Python, history
 :Summary:
     Notable features introduced in each major release of Python, from Python
     3.0 forwards
 
-The following is a list of all of the notable (in my biased opinion) features
-introduced in each major release of Python, starting with Python 3.0.
+The following is a list of all of the notable or interesting (in my biased
+opinion) features introduced in each major release of Python, starting with
+Python 3.0.
 
 .. contents::
 
@@ -1118,6 +1119,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.7.html>`__
 - The interpreter now coerces ASCII locales to UTF-8 under certain
   circumstances on non-Windows OSes
 
+- ``__aiter__()`` methods can no longer be asynchronous
+
 - ``__getattr__()`` and ``__dir__()`` can now be defined on modules
 
 - ``time`` module: variants of the timer functions added that return a number
@@ -1132,6 +1135,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.7.html>`__
 - ``argparse`` module: ``ArgumentParser.parser_intermixed_args()`` added
 
 - Various additions & improvements to the ``asyncio`` module
+
+  - ``asyncio.run()`` added
 
 - ``collections`` module: ``defaults`` argument added to ``namedtuple()``
 
@@ -1217,6 +1222,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
 
 - ``asyncio`` module:
 
+  - ``CancelledError`` now inherits directly from ``BaseException`` instead of
+    ``Exception``
   - ``coroutine()`` is now deprecated
   - Passing a ``loop`` parameter is now deprecated for most of ``asyncio``'s
     high-level API
