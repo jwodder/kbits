@@ -59,6 +59,10 @@
                     <td><time datetime="2022-05-29T00:00:00-04:00" pubdate="1">2022-05-29</time></td>
                 </tr>
                 <tr>
+                    <th>Modified:</th>
+                    <td><time datetime="2022-05-30T00:00:00-04:00">2022-05-30</time></td>
+                </tr>
+                <tr>
                     <th>Author:</th>
                     <td>
 <span class="fn">John T. Wodder II</span>                    </td>
@@ -104,15 +108,17 @@ together.</p>
 </li>
 </ul>
 </li>
-<li><p class="first"><a class="reference internal" href="#exception-handling" id="toc-entry-7">Exception Handling</a></p>
+<li><p class="first"><a class="reference internal" href="#running-more-than-one-coroutine-at-once" id="toc-entry-7">Running More than One Coroutine at Once</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#example-code" id="toc-entry-8">Example Code</a></p>
+<li><p class="first"><a class="reference internal" href="#exception-handling" id="toc-entry-8">Exception Handling</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#asynchronous-programming-vs-threads" id="toc-entry-9">Asynchronous Programming vs. Threads</a></p>
+<li><p class="first"><a class="reference internal" href="#example-code" id="toc-entry-9">Example Code</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#async-version-history" id="toc-entry-10">Async Version History</a></p>
+<li><p class="first"><a class="reference internal" href="#asynchronous-programming-vs-threads" id="toc-entry-10">Asynchronous Programming vs. Threads</a></p>
 </li>
-<li><p class="first"><a class="reference internal" href="#alternative-async-implementations" id="toc-entry-11">Alternative Async Implementations</a></p>
+<li><p class="first"><a class="reference internal" href="#async-version-history" id="toc-entry-11">Async Version History</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#alternative-async-implementations" id="toc-entry-12">Alternative Async Implementations</a></p>
 </li>
 </ul>
 </div>
@@ -230,7 +236,7 @@ it.</p>
 <li><p class="first">You may already be familiar with futures in the form of the <tt class="docutils literal">Future</tt> class
 from the <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html"><tt class="docutils literal">concurrent.futures</tt></a> module, which provides access to the results
 of operations evaluated in other threads or processes.  The
-<tt class="docutils literal">asyncio.Future</tt> class is similar in spirit, but has a different API.</p>
+<a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future"><tt class="docutils literal">asyncio.Future</tt></a> class is similar in spirit, but has a different API.</p>
 </li>
 </ul>
 <p>A <em>future-like</em> is an object with an <tt class="docutils literal">__await__()</tt> method, which must return
@@ -310,7 +316,7 @@ asynchronous generator.  For example, given this function:</p>
 <pre class="code python literal-block">
 <span class="k">async</span> <span class="k">def</span> <span class="nf">aiterator</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-        <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">i</span>
 </pre>
 <p>you use it like this:</p>
@@ -318,13 +324,13 @@ asynchronous generator.  For example, given this function:</p>
 <span class="k">async</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">aiterator</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre>
-<p>No <tt class="docutils literal">await</tt> anywhere.</p>
+<p>No <tt class="docutils literal">await</tt> anywhere in the <tt class="docutils literal">async for</tt> loop.</p>
 <p>Note that there is no way to get a value out of a coroutine without awaiting on
 it (either directly or via something like <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"><tt class="docutils literal">asyncio.gather()</tt></a>); if a coroutine is
-never awaited, <tt class="docutils literal">asyncio</tt> will complain when it is garbage-collected.
-Moreover, <tt class="docutils literal">await</tt> (and <tt class="docutils literal">async for</tt> and <tt class="docutils literal">async with</tt>) cannot be used
-outside of a coroutine; in order to start the awaiting on a “top-level”
-coroutine, you need to use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"><tt class="docutils literal">asyncio.run()</tt></a>.</p>
+never awaited and never converted into a task, <tt class="docutils literal">asyncio</tt> will complain when
+it is garbage-collected.  Moreover, <tt class="docutils literal">await</tt> (and <tt class="docutils literal">async for</tt> and <tt class="docutils literal">async
+with</tt>) cannot be used outside of a coroutine; in order to start the awaiting
+on a “top-level” coroutine, you need to use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"><tt class="docutils literal">asyncio.run()</tt></a>.</p>
 <p>Note that the body of a coroutine isn’t required to contain any <tt class="docutils literal">await</tt>s or
 similar, though if it doesn’t, there often isn’t much point in making it a
 coroutine in the first place.  An exception is the <tt class="docutils literal">__aenter__()</tt> special
@@ -410,6 +416,104 @@ generator-based coroutines could not use them.</p>
 entirely in Python 3.11.</p>
 </div>
 </div>
+<div class="section" id="running-more-than-one-coroutine-at-once">
+<h2><a class="toc-backref" href="#contents">Running More than One Coroutine at Once</a></h2>
+<p>Now for the part you’ve been waiting for, and the part that makes asynchronous
+programming worth it: actually running multiple functions concurrently.</p>
+<p>The simplest way to start running another coroutine concurrently is to pass a
+coroutine object to <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task"><tt class="docutils literal">asyncio.create_task()</tt></a>; this schedules the coroutine for
+execution, but it won’t actually start running until the next time the current
+coroutine calls <tt class="docutils literal">await</tt> (and maybe not even then).  <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task"><tt class="docutils literal">asyncio.create_task()</tt></a>
+returns an <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task"><tt class="docutils literal">asyncio.Task</tt></a> object that can be used to query the state of the
+coroutine or cancel it; awaiting on the task object will cause the current
+coroutine to be suspended until the task is complete, at which point the return
+value of the task’s underlying coroutine is returned.</p>
+<p>If you create multiple tasks and then <tt class="docutils literal">await</tt> on them one by one, a given
+<tt class="docutils literal">await</tt> will not return a result until the task in question is done; if task
+B finishes running while you’re still awaiting on task A, the coroutine doing
+the awaiting will continue to be suspended until A is done, and when it then
+later awaits on B, it will get back B’s return value immediately, because B is
+already done.  For example, the following code:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span>
+
+<span class="k">def</span> <span class="nf">hms</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">operate</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Spending </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2"> seconds doing operations ...&quot;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Operations done after </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2"> seconds!&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">amain</span><span class="p">():</span>
+    <span class="n">task1</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">operate</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">42</span><span class="p">))</span>
+    <span class="n">task2</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">operate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">23</span><span class="p">))</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="k">await</span> <span class="n">task1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: task1 returned </span><span class="si">{</span><span class="n">r1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="k">await</span> <span class="n">task2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: task2 returned </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">amain</span><span class="p">())</span>
+</pre>
+<p>outputs something like the following:</p>
+<pre class="literal-block">
+17:12:56: Spending 5 seconds doing operations ...
+17:12:56: Spending 2 seconds doing operations ...
+17:12:58: Operations done after 2 seconds!
+17:13:01: Operations done after 5 seconds!
+17:13:01: task1 returned 42
+17:13:01: task2 returned 23
+</pre>
+<p>If you need to await on multiple coroutines but don’t care about the exact
+order in which they finish, you can use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"><tt class="docutils literal">asyncio.gather()</tt></a>,
+<a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.as_completed"><tt class="docutils literal">asyncio.as_completed()</tt></a>, or <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait"><tt class="docutils literal">asyncio.wait()</tt></a> to await on them together; <a class="reference external" href="https://hynek.me/articles/waiting-in-asyncio/">this
+article</a> gives a good overview and explanation of the differences
+between the functions.</p>
+<p id="bgerr">You don’t have to await on a task if you don’t need its return value or don’t
+need to be assured that it ever finishes, but if such a “background task”
+raises an uncaught exception, <tt class="docutils literal">asyncio</tt> will complain.  One way to address
+this is to attach a synchronous callback function to the task with
+<tt class="docutils literal">Task.add_done_callback()</tt> that retrieves any uncaught exceptions with
+<tt class="docutils literal">Task.exception()</tt>, like so:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span>
+
+<span class="k">def</span> <span class="nf">hms</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">bg_task</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: In the background&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Ouch&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">done_callback</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span> <span class="o">:=</span> <span class="n">task</span><span class="o">.</span><span class="n">exception</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Task &lt;</span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&gt; raised an error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Task &lt;</span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&gt; finished successfully&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Task &lt;</span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&gt; was cancelled!&quot;</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">fg_task</span><span class="p">():</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">bg_task</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bg_task&quot;</span><span class="p">)</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">done_callback</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Now we sleep and let bg_task do its thing&quot;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: I'm awake!&quot;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">fg_task</span><span class="p">())</span>
+</pre>
+<p>The output from the above will look like:</p>
+<pre class="literal-block">
+17:16:33: Now we sleep and let bg_task do its thing
+17:16:33: In the background
+17:16:33: Task &lt;bg_task&gt; raised an error: Ouch
+17:16:35: I'm awake!
+</pre>
+</div>
 <div class="section" id="exception-handling">
 <h2><a class="toc-backref" href="#contents">Exception Handling</a></h2>
 <p>Whenever an exception occurs inside a coroutine, it propagates upwards to
@@ -418,7 +522,9 @@ through the <a class="reference external" href="https://docs.python.org/3/librar
 cancelled.  If there is no chain of <tt class="docutils literal">await</tt>s leading to the “top-level”
 coroutine (say, because you did <tt class="docutils literal">asyncio.create_task()</tt> and then didn’t await
 on the result, letting it run in the background), <tt class="docutils literal">asyncio</tt> will end up
-complaining when the coroutine is eventually garbage-collected.</p>
+complaining when the coroutine is eventually garbage-collected.  See <a class="reference internal" href="#bgerr">the
+passage above</a> on using <tt class="docutils literal">Task.add_done_callback()</tt> to handle such
+errors.</p>
 <p>For the specific case of <tt class="docutils literal">KeyboardInterrupt</tt>, the exception is raised in
 whatever coroutine the main thread is currently running at the time.</p>
 </div>
@@ -436,12 +542,13 @@ PyPI to run.</p>
 <div class="section" id="asynchronous-programming-vs-threads">
 <h2><a class="toc-backref" href="#contents">Asynchronous Programming vs. Threads</a></h2>
 <p>Asynchronous programming does not use threads; by default, all coroutines and
-their operations are run in whichever thread called <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"><tt class="docutils literal">asyncio.run()</tt></a>; the
-exception is when <a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor"><tt class="docutils literal">loop.run_in_executor()</tt></a> is used to run a synchronous function
-in a separate thread (or even a separate process), returning a future that can
-be awaited on to receive the function’s result.  If multiple threads call
-<a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"><tt class="docutils literal">asyncio.run()</tt></a> separately, each thread will get its own event loop and
-collection of coroutines.</p>
+their operations are run in whichever thread called <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"><tt class="docutils literal">asyncio.run()</tt></a>.  The
+exception is when <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.to_thread"><tt class="docutils literal">asyncio.to_thread()</tt></a> or <a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor"><tt class="docutils literal">loop.run_in_executor()</tt></a> is used to
+run a synchronous function in a separate thread (or, with the latter function,
+even a separate process), returning an object that can be awaited on to receive
+the function’s result.</p>
+<p>If multiple threads call <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"><tt class="docutils literal">asyncio.run()</tt></a> separately, each thread will get its
+own event loop and collection of coroutines.</p>
 <p>Note that each thread in a Python process has at most one event loop at a time,
 and an event loop can only belong to one thread.  An important consequence of
 this is that, if you have a synchronous function <tt class="docutils literal">foo()</tt> that calls
@@ -463,9 +570,9 @@ not modified by one thread “behind the back of” another thread that’s also
 using them.</p>
 </li>
 <li><p class="first">If you’ve done serious work with threads, you’ve likely encountered the fact
-that one thread cannot “kill” another thread in the middle of its execution
-unless the “killable” thread is deliberately programmed to allow for this by,
-say, regularly checking some flag and exiting if it’s true.  Asynchronous
+that you cannot “kill” a thread in the middle of its execution unless the
+“killable” thread is deliberately programmed to allow for this by, say,
+regularly checking some flag and exiting if it’s true.  Asynchronous
 programming, on the other hand, makes it possible to <em>cancel</em> a running
 coroutine via the <tt class="docutils literal">asyncio.Task.cancel()</tt> method; once a coroutine is
 cancelled, the next time the event loop checks on it while it’s suspended on
@@ -557,12 +664,19 @@ generator expressions</p>
 <li><p class="first">Passing a <tt class="docutils literal">loop</tt> parameter is now deprecated for most of <tt class="docutils literal">asyncio</tt>’s
 high-level API</p>
 </li>
-<li><p class="first"><tt class="docutils literal">CancelledError</tt> now inherits directly from <tt class="docutils literal">BaseException</tt> instead of
-<tt class="docutils literal">Exception</tt></p>
+<li><p class="first"><tt class="docutils literal">asyncio.CancelledError</tt> now inherits directly from <tt class="docutils literal">BaseException</tt>
+instead of <tt class="docutils literal">Exception</tt></p>
+</li>
+</ul>
+<p class="rubric">Python 3.9</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">asyncio.to_thread()</tt> added</p>
 </li>
 </ul>
 <p class="rubric">Python 3.10</p>
 <ul>
+<li><p class="first"><tt class="docutils literal">aiter()</tt> and <tt class="docutils literal">anext()</tt> functions added</p>
+</li>
 <li><p class="first">The <tt class="docutils literal">loop</tt> parameter (deprecated in Python 3.8) is now removed from most of
 <tt class="docutils literal">asyncio</tt>’s high-level API</p>
 </li>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - async</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.async.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-29T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-05-29T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - async</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.async.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-30T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-05-30T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
 2014, with further notable improvements in almost every minor version
 since.  However, to many Python programmers, this area of the language
 remains esoteric, misunderstood, and underutilized.  This article aims to
@@ -31,15 +31,17 @@ together.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#exception-handling" id="toc-entry-7"&gt;Exception Handling&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#running-more-than-one-coroutine-at-once" id="toc-entry-7"&gt;Running More than One Coroutine at Once&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#example-code" id="toc-entry-8"&gt;Example Code&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#exception-handling" id="toc-entry-8"&gt;Exception Handling&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#asynchronous-programming-vs-threads" id="toc-entry-9"&gt;Asynchronous Programming vs. Threads&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#example-code" id="toc-entry-9"&gt;Example Code&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#async-version-history" id="toc-entry-10"&gt;Async Version History&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#asynchronous-programming-vs-threads" id="toc-entry-10"&gt;Asynchronous Programming vs. Threads&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#alternative-async-implementations" id="toc-entry-11"&gt;Alternative Async Implementations&lt;/a&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#async-version-history" id="toc-entry-11"&gt;Async Version History&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#alternative-async-implementations" id="toc-entry-12"&gt;Alternative Async Implementations&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -157,7 +159,7 @@ it.&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;You may already be familiar with futures in the form of the &lt;tt class="docutils literal"&gt;Future&lt;/tt&gt; class
 from the &lt;a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html"&gt;&lt;tt class="docutils literal"&gt;concurrent.futures&lt;/tt&gt;&lt;/a&gt; module, which provides access to the results
 of operations evaluated in other threads or processes.  The
-&lt;tt class="docutils literal"&gt;asyncio.Future&lt;/tt&gt; class is similar in spirit, but has a different API.&lt;/p&gt;
+&lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future"&gt;&lt;tt class="docutils literal"&gt;asyncio.Future&lt;/tt&gt;&lt;/a&gt; class is similar in spirit, but has a different API.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;A &lt;em&gt;future-like&lt;/em&gt; is an object with an &lt;tt class="docutils literal"&gt;__await__()&lt;/tt&gt; method, which must return
@@ -237,7 +239,7 @@ asynchronous generator.  For example, given this function:&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
 &lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;aiterator&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;you use it like this:&lt;/p&gt;
@@ -245,13 +247,13 @@ asynchronous generator.  For example, given this function:&lt;/p&gt;
 &lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;aiterator&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;No &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; anywhere.&lt;/p&gt;
+&lt;p&gt;No &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; anywhere in the &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; loop.&lt;/p&gt;
 &lt;p&gt;Note that there is no way to get a value out of a coroutine without awaiting on
 it (either directly or via something like &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"&gt;&lt;tt class="docutils literal"&gt;asyncio.gather()&lt;/tt&gt;&lt;/a&gt;); if a coroutine is
-never awaited, &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; will complain when it is garbage-collected.
-Moreover, &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; (and &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;async with&lt;/tt&gt;) cannot be used
-outside of a coroutine; in order to start the awaiting on a “top-level”
-coroutine, you need to use &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt;.&lt;/p&gt;
+never awaited and never converted into a task, &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; will complain when
+it is garbage-collected.  Moreover, &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; (and &lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;async
+with&lt;/tt&gt;) cannot be used outside of a coroutine; in order to start the awaiting
+on a “top-level” coroutine, you need to use &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Note that the body of a coroutine isn’t required to contain any &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;s or
 similar, though if it doesn’t, there often isn’t much point in making it a
 coroutine in the first place.  An exception is the &lt;tt class="docutils literal"&gt;__aenter__()&lt;/tt&gt; special
@@ -337,6 +339,104 @@ generator-based coroutines could not use them.&lt;/p&gt;
 entirely in Python 3.11.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div class="section" id="running-more-than-one-coroutine-at-once"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Running More than One Coroutine at Once&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Now for the part you’ve been waiting for, and the part that makes asynchronous
+programming worth it: actually running multiple functions concurrently.&lt;/p&gt;
+&lt;p&gt;The simplest way to start running another coroutine concurrently is to pass a
+coroutine object to &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task"&gt;&lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt;&lt;/a&gt;; this schedules the coroutine for
+execution, but it won’t actually start running until the next time the current
+coroutine calls &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; (and maybe not even then).  &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task"&gt;&lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt;&lt;/a&gt;
+returns an &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task"&gt;&lt;tt class="docutils literal"&gt;asyncio.Task&lt;/tt&gt;&lt;/a&gt; object that can be used to query the state of the
+coroutine or cancel it; awaiting on the task object will cause the current
+coroutine to be suspended until the task is complete, at which point the return
+value of the task’s underlying coroutine is returned.&lt;/p&gt;
+&lt;p&gt;If you create multiple tasks and then &lt;tt class="docutils literal"&gt;await&lt;/tt&gt; on them one by one, a given
+&lt;tt class="docutils literal"&gt;await&lt;/tt&gt; will not return a result until the task in question is done; if task
+B finishes running while you’re still awaiting on task A, the coroutine doing
+the awaiting will continue to be suspended until A is done, and when it then
+later awaits on B, it will get back B’s return value immediately, because B is
+already done.  For example, the following code:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;strftime&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;strftime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;%H:%M:%S&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;operate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: Spending &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; seconds doing operations ...&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: Operations done after &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; seconds!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;amain&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;task1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;operate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;task2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;operate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;r1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;task1&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: task1 returned &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;r1&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;r2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;task2&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: task2 returned &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;r2&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;amain&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;outputs something like the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+17:12:56: Spending 5 seconds doing operations ...
+17:12:56: Spending 2 seconds doing operations ...
+17:12:58: Operations done after 2 seconds!
+17:13:01: Operations done after 5 seconds!
+17:13:01: task1 returned 42
+17:13:01: task2 returned 23
+&lt;/pre&gt;
+&lt;p&gt;If you need to await on multiple coroutines but don’t care about the exact
+order in which they finish, you can use &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"&gt;&lt;tt class="docutils literal"&gt;asyncio.gather()&lt;/tt&gt;&lt;/a&gt;,
+&lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.as_completed"&gt;&lt;tt class="docutils literal"&gt;asyncio.as_completed()&lt;/tt&gt;&lt;/a&gt;, or &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait"&gt;&lt;tt class="docutils literal"&gt;asyncio.wait()&lt;/tt&gt;&lt;/a&gt; to await on them together; &lt;a class="reference external" href="https://hynek.me/articles/waiting-in-asyncio/"&gt;this
+article&lt;/a&gt; gives a good overview and explanation of the differences
+between the functions.&lt;/p&gt;
+&lt;p id="bgerr"&gt;You don’t have to await on a task if you don’t need its return value or don’t
+need to be assured that it ever finishes, but if such a “background task”
+raises an uncaught exception, &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; will complain.  One way to address
+this is to attach a synchronous callback function to the task with
+&lt;tt class="docutils literal"&gt;Task.add_done_callback()&lt;/tt&gt; that retrieves any uncaught exceptions with
+&lt;tt class="docutils literal"&gt;Task.exception()&lt;/tt&gt;, like so:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;strftime&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;strftime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;%H:%M:%S&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bg_task&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: In the background&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Ouch&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;done_callback&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exception&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: Task &amp;lt;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_name&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;gt; raised an error: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: Task &amp;lt;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_name&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;gt; finished successfully&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CancelledError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: Task &amp;lt;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_name&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;gt; was cancelled!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fg_task&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;task&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bg_task&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;bg_task&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_done_callback&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;done_callback&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: Now we sleep and let bg_task do its thing&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;hms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;: I'm awake!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fg_task&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The output from the above will look like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+17:16:33: Now we sleep and let bg_task do its thing
+17:16:33: In the background
+17:16:33: Task &amp;lt;bg_task&amp;gt; raised an error: Ouch
+17:16:35: I'm awake!
+&lt;/pre&gt;
+&lt;/div&gt;
 &lt;div class="section" id="exception-handling"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Exception Handling&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Whenever an exception occurs inside a coroutine, it propagates upwards to
@@ -345,7 +445,9 @@ through the &lt;a class="reference external" href="https://docs.python.org/3/lib
 cancelled.  If there is no chain of &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;s leading to the “top-level”
 coroutine (say, because you did &lt;tt class="docutils literal"&gt;asyncio.create_task()&lt;/tt&gt; and then didn’t await
 on the result, letting it run in the background), &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; will end up
-complaining when the coroutine is eventually garbage-collected.&lt;/p&gt;
+complaining when the coroutine is eventually garbage-collected.  See &lt;a class="reference internal" href="#bgerr"&gt;the
+passage above&lt;/a&gt; on using &lt;tt class="docutils literal"&gt;Task.add_done_callback()&lt;/tt&gt; to handle such
+errors.&lt;/p&gt;
 &lt;p&gt;For the specific case of &lt;tt class="docutils literal"&gt;KeyboardInterrupt&lt;/tt&gt;, the exception is raised in
 whatever coroutine the main thread is currently running at the time.&lt;/p&gt;
 &lt;/div&gt;
@@ -363,12 +465,13 @@ PyPI to run.&lt;/p&gt;
 &lt;div class="section" id="asynchronous-programming-vs-threads"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Asynchronous Programming vs. Threads&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Asynchronous programming does not use threads; by default, all coroutines and
-their operations are run in whichever thread called &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt;; the
-exception is when &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor"&gt;&lt;tt class="docutils literal"&gt;loop.run_in_executor()&lt;/tt&gt;&lt;/a&gt; is used to run a synchronous function
-in a separate thread (or even a separate process), returning a future that can
-be awaited on to receive the function’s result.  If multiple threads call
-&lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt; separately, each thread will get its own event loop and
-collection of coroutines.&lt;/p&gt;
+their operations are run in whichever thread called &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt;.  The
+exception is when &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.to_thread"&gt;&lt;tt class="docutils literal"&gt;asyncio.to_thread()&lt;/tt&gt;&lt;/a&gt; or &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor"&gt;&lt;tt class="docutils literal"&gt;loop.run_in_executor()&lt;/tt&gt;&lt;/a&gt; is used to
+run a synchronous function in a separate thread (or, with the latter function,
+even a separate process), returning an object that can be awaited on to receive
+the function’s result.&lt;/p&gt;
+&lt;p&gt;If multiple threads call &lt;a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run"&gt;&lt;tt class="docutils literal"&gt;asyncio.run()&lt;/tt&gt;&lt;/a&gt; separately, each thread will get its
+own event loop and collection of coroutines.&lt;/p&gt;
 &lt;p&gt;Note that each thread in a Python process has at most one event loop at a time,
 and an event loop can only belong to one thread.  An important consequence of
 this is that, if you have a synchronous function &lt;tt class="docutils literal"&gt;foo()&lt;/tt&gt; that calls
@@ -390,9 +493,9 @@ not modified by one thread “behind the back of” another thread that’s also
 using them.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;If you’ve done serious work with threads, you’ve likely encountered the fact
-that one thread cannot “kill” another thread in the middle of its execution
-unless the “killable” thread is deliberately programmed to allow for this by,
-say, regularly checking some flag and exiting if it’s true.  Asynchronous
+that you cannot “kill” a thread in the middle of its execution unless the
+“killable” thread is deliberately programmed to allow for this by, say,
+regularly checking some flag and exiting if it’s true.  Asynchronous
 programming, on the other hand, makes it possible to &lt;em&gt;cancel&lt;/em&gt; a running
 coroutine via the &lt;tt class="docutils literal"&gt;asyncio.Task.cancel()&lt;/tt&gt; method; once a coroutine is
 cancelled, the next time the event loop checks on it while it’s suspended on
@@ -484,12 +587,19 @@ generator expressions&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;Passing a &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter is now deprecated for most of &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s
 high-level API&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;CancelledError&lt;/tt&gt; now inherits directly from &lt;tt class="docutils literal"&gt;BaseException&lt;/tt&gt; instead of
-&lt;tt class="docutils literal"&gt;Exception&lt;/tt&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.CancelledError&lt;/tt&gt; now inherits directly from &lt;tt class="docutils literal"&gt;BaseException&lt;/tt&gt;
+instead of &lt;tt class="docutils literal"&gt;Exception&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="rubric"&gt;Python 3.9&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.to_thread()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p class="rubric"&gt;Python 3.10&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;aiter()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;anext()&lt;/tt&gt; functions added&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;The &lt;tt class="docutils literal"&gt;loop&lt;/tt&gt; parameter (deprecated in Python 3.8) is now removed from most of
 &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;’s high-level API&lt;/p&gt;
 &lt;/li&gt;
