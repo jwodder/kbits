@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-05-29
+:Modified: 2022-05-30
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1327,6 +1327,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.9.html>`__
     release five years after 3.9.
 
 - New modules: ``graphlib`` and ``zoneinfo``
+
+- ``asyncio`` module: ``to_thread()`` added
 
 - ``functools`` module: ``cache()`` added
 
