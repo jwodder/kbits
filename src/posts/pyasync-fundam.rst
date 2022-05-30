@@ -3,6 +3,7 @@ Python Asynchronous Programming Fundamentals
 ============================================
 
 :Date: 2022-05-29
+:Modified: 2022-05-30
 :Category: Programming
 :Tags: Python, async
 :Summary:
@@ -76,7 +77,7 @@ When ``await f()`` is reached, ``amain()`` will be suspended until ``f()`` is
 finished, and only after that will execution proceed to the next line, starting
 coroutine ``g()``.  If you want to execute ``f()`` and ``g()`` concurrently,
 you need to use |asyncio.create_task|_, |asyncio.gather|_, or similar.  See
-`this article`__ for more details.
+`this article <hynek_>`_ for more details.
 
 .. |asyncio.create_task| replace:: ``asyncio.create_task()``
 .. _asyncio.create_task:
@@ -86,7 +87,7 @@ you need to use |asyncio.create_task|_, |asyncio.gather|_, or similar.  See
 .. _asyncio.gather:
    https://docs.python.org/3/library/asyncio-task.html#asyncio.gather
 
-__ https://hynek.me/articles/waiting-in-asyncio/
+.. _hynek: https://hynek.me/articles/waiting-in-asyncio/
 
 In general, coroutines can only be called or scheduled by other coroutines.  To
 run a "top-level" coroutine from inside synchronous code (i.e., either inside a
@@ -176,7 +177,7 @@ it.
 - You may already be familiar with futures in the form of the ``Future`` class
   from the |concurrent.futures|_ module, which provides access to the results
   of operations evaluated in other threads or processes.  The
-  ``asyncio.Future`` class is similar in spirit, but has a different API.
+  |asyncio.Future|_ class is similar in spirit, but has a different API.
 
 .. |asyncio.Future| replace:: ``asyncio.Future``
 .. _asyncio.Future:
@@ -284,7 +285,7 @@ asynchronous generator.  For example, given this function:
 
     async def aiterator():
         for i in range(5):
-            asyncio.sleep(i)
+            await asyncio.sleep(i)
             yield i
 
 you use it like this:
@@ -294,14 +295,14 @@ you use it like this:
     async for x in aiterator():
         print(x)
 
-No ``await`` anywhere.
+No ``await`` anywhere in the ``async for`` loop.
 
 Note that there is no way to get a value out of a coroutine without awaiting on
 it (either directly or via something like |asyncio.gather|_); if a coroutine is
-never awaited, ``asyncio`` will complain when it is garbage-collected.
-Moreover, ``await`` (and ``async for`` and ``async with``) cannot be used
-outside of a coroutine; in order to start the awaiting on a "top-level"
-coroutine, you need to use |asyncio.run|_.
+never awaited and never converted into a task, ``asyncio`` will complain when
+it is garbage-collected.  Moreover, ``await`` (and ``async for`` and ``async
+with``) cannot be used outside of a coroutine; in order to start the awaiting
+on a "top-level" coroutine, you need to use |asyncio.run|_.
 
 Note that the body of a coroutine isn't required to contain any ``await``\s or
 similar, though if it doesn't, there often isn't much point in making it a
@@ -407,6 +408,122 @@ This style of writing coroutines was deprecated in Python 3.8 and removed
 entirely in Python 3.11.
 
 
+Running More than One Coroutine at Once
+=======================================
+
+Now for the part you've been waiting for, and the part that makes asynchronous
+programming worth it: actually running multiple functions concurrently.
+
+The simplest way to start running another coroutine concurrently is to pass a
+coroutine object to |asyncio.create_task|_; this schedules the coroutine for
+execution, but it won't actually start running until the next time the current
+coroutine calls ``await`` (and maybe not even then).  |asyncio.create_task|_
+returns an |asyncio.Task|_ object that can be used to query the state of the
+coroutine or cancel it; awaiting on the task object will cause the current
+coroutine to be suspended until the task is complete, at which point the return
+value of the task's underlying coroutine is returned.
+
+If you create multiple tasks and then ``await`` on them one by one, a given
+``await`` will not return a result until the task in question is done; if task
+B finishes running while you're still awaiting on task A, the coroutine doing
+the awaiting will continue to be suspended until A is done, and when it then
+later awaits on B, it will get back B's return value immediately, because B is
+already done.  For example, the following code:
+
+.. code:: python
+
+    import asyncio
+    from time import strftime
+
+    def hms():
+        return strftime("%H:%M:%S")
+
+    async def operate(time, result):
+        print(f"{hms()}: Spending {time} seconds doing operations ...")
+        await asyncio.sleep(time)
+        print(f"{hms()}: Operations done after {time} seconds!")
+        return result
+
+    async def amain():
+        task1 = asyncio.create_task(operate(5, 42))
+        task2 = asyncio.create_task(operate(2, 23))
+        r1 = await task1
+        print(f"{hms()}: task1 returned {r1}")
+        r2 = await task2
+        print(f"{hms()}: task2 returned {r2}")
+
+    asyncio.run(amain())
+
+outputs something like the following::
+
+    17:12:56: Spending 5 seconds doing operations ...
+    17:12:56: Spending 2 seconds doing operations ...
+    17:12:58: Operations done after 2 seconds!
+    17:13:01: Operations done after 5 seconds!
+    17:13:01: task1 returned 42
+    17:13:01: task2 returned 23
+
+If you need to await on multiple coroutines but don't care about the exact
+order in which they finish, you can use |asyncio.gather|_,
+|asyncio.as_completed|_, or |asyncio.wait|_ to await on them together; `this
+article <hynek_>`_ gives a good overview and explanation of the differences
+between the functions.
+
+.. |asyncio.as_completed| replace:: ``asyncio.as_completed()``
+.. _asyncio.as_completed:
+   https://docs.python.org/3/library/asyncio-task.html#asyncio.as_completed
+
+.. |asyncio.wait| replace:: ``asyncio.wait()``
+.. _asyncio.wait:
+   https://docs.python.org/3/library/asyncio-task.html#asyncio.wait
+
+.. _bgerr:
+
+You don't have to await on a task if you don't need its return value or don't
+need to be assured that it ever finishes, but if such a "background task"
+raises an uncaught exception, ``asyncio`` will complain.  One way to address
+this is to attach a synchronous callback function to the task with
+``Task.add_done_callback()`` that retrieves any uncaught exceptions with
+``Task.exception()``, like so:
+
+.. code:: python
+
+    import asyncio
+    from time import strftime
+
+    def hms():
+        return strftime("%H:%M:%S")
+
+    async def bg_task():
+        print(f"{hms()}: In the background")
+        raise RuntimeError("Ouch")
+
+    def done_callback(task):
+        try:
+            if e := task.exception():
+                print(f"{hms()}: Task <{task.get_name()}> raised an error: {e}")
+            else:
+                print(f"{hms()}: Task <{task.get_name()}> finished successfully")
+        except asyncio.CancelledError:
+            print(f"{hms()}: Task <{task.get_name()}> was cancelled!")
+
+    async def fg_task():
+        task = asyncio.create_task(bg_task(), name="bg_task")
+        task.add_done_callback(done_callback)
+        print(f"{hms()}: Now we sleep and let bg_task do its thing")
+        await asyncio.sleep(2)
+        print(f"{hms()}: I'm awake!")
+
+    asyncio.run(fg_task())
+
+The output from the above will look like::
+
+    17:16:33: Now we sleep and let bg_task do its thing
+    17:16:33: In the background
+    17:16:33: Task <bg_task> raised an error: Ouch
+    17:16:35: I'm awake!
+
+
 Exception Handling
 ==================
 
@@ -416,7 +533,9 @@ through the |asyncio.run|_ call, at which point all still-running tasks are
 cancelled.  If there is no chain of ``await``\s leading to the "top-level"
 coroutine (say, because you did ``asyncio.create_task()`` and then didn't await
 on the result, letting it run in the background), ``asyncio`` will end up
-complaining when the coroutine is eventually garbage-collected.
+complaining when the coroutine is eventually garbage-collected.  See `the
+passage above <bgerr_>`_ on using ``Task.add_done_callback()`` to handle such
+errors.
 
 For the specific case of ``KeyboardInterrupt``, the exception is raised in
 whatever coroutine the main thread is currently running at the time.
@@ -444,17 +563,23 @@ Asynchronous Programming vs. Threads
 ====================================
 
 Asynchronous programming does not use threads; by default, all coroutines and
-their operations are run in whichever thread called |asyncio.run|_; the
-exception is when |loop.run_in_executor|_ is used to run a synchronous function
-in a separate thread (or even a separate process), returning a future that can
-be awaited on to receive the function's result.  If multiple threads call
-|asyncio.run|_ separately, each thread will get its own event loop and
-collection of coroutines.
+their operations are run in whichever thread called |asyncio.run|_.  The
+exception is when |asyncio.to_thread|_ or |loop.run_in_executor|_ is used to
+run a synchronous function in a separate thread (or, with the latter function,
+even a separate process), returning an object that can be awaited on to receive
+the function's result.
+
+.. |asyncio.to_thread| replace:: ``asyncio.to_thread()``
+.. _asyncio.to_thread:
+   https://docs.python.org/3/library/asyncio-task.html#asyncio.to_thread
 
 .. |loop.run_in_executor| replace:: ``loop.run_in_executor()``
 .. _loop.run_in_executor:
    https://docs.python.org/3/library/asyncio-eventloop.html
    #asyncio.loop.run_in_executor
+
+If multiple threads call |asyncio.run|_ separately, each thread will get its
+own event loop and collection of coroutines.
 
 Note that each thread in a Python process has at most one event loop at a time,
 and an event loop can only belong to one thread.  An important consequence of
@@ -479,9 +604,9 @@ advantages:
   using them.
 
 - If you've done serious work with threads, you've likely encountered the fact
-  that one thread cannot "kill" another thread in the middle of its execution
-  unless the "killable" thread is deliberately programmed to allow for this by,
-  say, regularly checking some flag and exiting if it's true.  Asynchronous
+  that you cannot "kill" a thread in the middle of its execution unless the
+  "killable" thread is deliberately programmed to allow for this by, say,
+  regularly checking some flag and exiting if it's true.  Asynchronous
   programming, on the other hand, makes it possible to *cancel* a running
   coroutine via the ``asyncio.Task.cancel()`` method; once a coroutine is
   cancelled, the next time the event loop checks on it while it's suspended on
@@ -569,10 +694,16 @@ level" part of ``asyncio``.
 - Passing a ``loop`` parameter is now deprecated for most of ``asyncio``'s
   high-level API
 
-- ``CancelledError`` now inherits directly from ``BaseException`` instead of
-  ``Exception``
+- ``asyncio.CancelledError`` now inherits directly from ``BaseException``
+  instead of ``Exception``
+
+.. rubric:: Python 3.9
+
+- ``asyncio.to_thread()`` added
 
 .. rubric:: Python 3.10
+
+- ``aiter()`` and ``anext()`` functions added
 
 - The ``loop`` parameter (deprecated in Python 3.8) is now removed from most of
   ``asyncio``'s high-level API
