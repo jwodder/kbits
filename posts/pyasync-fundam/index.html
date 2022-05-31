@@ -345,8 +345,11 @@ returns a string, you write its annotated signature as <tt class="docutils liter
 <span class="pre">-&gt;</span> str</tt>.  However, if you pass around an unawaited coroutine object (not
 always the best idea), you annotate it as <tt class="docutils literal">Awaitable[T]</tt>, where <tt class="docutils literal">T</tt> is the
 return type of the coroutine.</p>
-<p>Asynchronous iterators, iterables, and context managers get their own types as
-well: <tt class="docutils literal">AsyncIterator</tt>, <tt class="docutils literal">AsyncIterable</tt>, and
+<p>Async callables do not have their own type; they are instead annotated as
+<tt class="docutils literal"><span class="pre">Callable[...,</span> Awaitable[T]]</tt>, where <tt class="docutils literal">T</tt> is the return type of the
+coroutine function.</p>
+<p>Asynchronous iterators, iterables, and context managers, though, do get their
+own types: <tt class="docutils literal">AsyncIterator</tt>, <tt class="docutils literal">AsyncIterable</tt>, and
 <tt class="docutils literal">typing.AsyncContextManager</tt>/<tt class="docutils literal">contextlib.AbstractAsyncContextManager</tt>.</p>
 </div>
 <div class="section" id="special-methods">

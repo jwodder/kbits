@@ -268,8 +268,11 @@ returns a string, you write its annotated signature as &lt;tt class="docutils li
 &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; str&lt;/tt&gt;.  However, if you pass around an unawaited coroutine object (not
 always the best idea), you annotate it as &lt;tt class="docutils literal"&gt;Awaitable[T]&lt;/tt&gt;, where &lt;tt class="docutils literal"&gt;T&lt;/tt&gt; is the
 return type of the coroutine.&lt;/p&gt;
-&lt;p&gt;Asynchronous iterators, iterables, and context managers get their own types as
-well: &lt;tt class="docutils literal"&gt;AsyncIterator&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;AsyncIterable&lt;/tt&gt;, and
+&lt;p&gt;Async callables do not have their own type; they are instead annotated as
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Callable[...,&lt;/span&gt; Awaitable[T]]&lt;/tt&gt;, where &lt;tt class="docutils literal"&gt;T&lt;/tt&gt; is the return type of the
+coroutine function.&lt;/p&gt;
+&lt;p&gt;Asynchronous iterators, iterables, and context managers, though, do get their
+own types: &lt;tt class="docutils literal"&gt;AsyncIterator&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;AsyncIterable&lt;/tt&gt;, and
 &lt;tt class="docutils literal"&gt;typing.AsyncContextManager&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;contextlib.AbstractAsyncContextManager&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="special-methods"&gt;
