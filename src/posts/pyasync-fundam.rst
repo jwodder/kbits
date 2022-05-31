@@ -322,8 +322,12 @@ returns a string, you write its annotated signature as ``async def func(x: int)
 always the best idea), you annotate it as ``Awaitable[T]``, where ``T`` is the
 return type of the coroutine.
 
-Asynchronous iterators, iterables, and context managers get their own types as
-well: ``AsyncIterator``, ``AsyncIterable``, and
+Async callables do not have their own type; they are instead annotated as
+``Callable[..., Awaitable[T]]``, where ``T`` is the return type of the
+coroutine function.
+
+Asynchronous iterators, iterables, and context managers, though, do get their
+own types: ``AsyncIterator``, ``AsyncIterable``, and
 ``typing.AsyncContextManager``/``contextlib.AbstractAsyncContextManager``.
 
 
