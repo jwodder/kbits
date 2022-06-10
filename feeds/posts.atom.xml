@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-30T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-05-30T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-06-10T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-05-30T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
 2014, with further notable improvements in almost every minor version
 since.  However, to many Python programmers, this area of the language
 remains esoteric, misunderstood, and underutilized.  This article aims to
@@ -3002,7 +3002,7 @@ addition needed to support &lt;tt class="docutils literal"&gt;bump2version&lt;/t
   &lt;/span&gt;&lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;python -m pip install bump2version&lt;/span&gt;
 &lt;/pre&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="GitHub Actions"></category><category term="auto"></category><category term="bump2version"></category><category term="continuous integration"></category></entry><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2021-10-26T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
+</content><category term="Programming"></category><category term="GitHub Actions"></category><category term="auto"></category><category term="bump2version"></category><category term="continuous integration"></category></entry><entry><title>Using Package Data in Python Projects with Setuptools</title><link href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="alternate"></link><published>2020-12-29T00:00:00-05:00</published><updated>2022-06-10T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2020-12-29:/kbits/posts/pypkg-data/</id><summary type="html">&lt;p class="first last"&gt;When creating a Python project, you may want to include a number of
 non-Python files in the project that the code can then access at runtime,
 such as templates, images, and data.  These files are called &lt;em&gt;package
 data&lt;/em&gt;, and this article describes how to include them in &amp;amp; access them from
@@ -3057,6 +3057,17 @@ included in the wheel when building from an sdist).  There are two different
 major ways to do this: a blanket “include all” method that uses a
 &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; file and a fine-grained method that configures one package &amp;amp;
 subpackage at time via the &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt; file.&lt;/p&gt;
+&lt;div class="admonition important"&gt;
+&lt;p class="first admonition-title"&gt;Important&lt;/p&gt;
+&lt;p class="last"&gt;In addition to the configurations described here, you also need to ensure
+that all folders within your package that contain package data (even if
+they contain no Python source code) are listed in the &lt;tt class="docutils literal"&gt;packages&lt;/tt&gt; option
+in &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;setup.cfg&lt;/tt&gt;.  This can be done automatically by using the
+&lt;tt class="docutils literal"&gt;setuptools.find_namespace_packages()&lt;/tt&gt; function instead of
+&lt;tt class="docutils literal"&gt;find_packages()&lt;/tt&gt;.  If you don’t do this, setuptools will emit a
+warning message starting in version 62.3.0, and later versions will cease
+to include such packages in your distribution at all.&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class="section" id="including-package-data-via-manifest-in"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data via &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;There are two steps to this method:&lt;/p&gt;

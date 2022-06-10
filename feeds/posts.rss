@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Knowledge Bits</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Mon, 30 May 2022 00:00:00 -0400</lastBuildDate><item><title>Python Asynchronous Programming Fundamentals</title><link>https://jwodder.github.io/kbits/posts/pyasync-fundam/</link><description>&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
+<rss version="2.0"><channel><title>Knowledge Bits</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Fri, 10 Jun 2022 00:00:00 -0400</lastBuildDate><item><title>Python Asynchronous Programming Fundamentals</title><link>https://jwodder.github.io/kbits/posts/pyasync-fundam/</link><description>&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
 2014, with further notable improvements in almost every minor version
 since.  However, to many Python programmers, this area of the language
 remains esoteric, misunderstood, and underutilized.  This article aims to

@@ -61,7 +61,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2021-10-26T00:00:00-04:00">2021-10-26</time></td>
+                    <td><time datetime="2022-06-10T00:00:00-04:00">2022-06-10</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -133,6 +133,17 @@ included in the wheel when building from an sdist).  There are two different
 major ways to do this: a blanket “include all” method that uses a
 <tt class="docutils literal">MANIFEST.in</tt> file and a fine-grained method that configures one package &amp;
 subpackage at time via the <tt class="docutils literal">setup.py</tt>/<tt class="docutils literal">setup.cfg</tt> file.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">In addition to the configurations described here, you also need to ensure
+that all folders within your package that contain package data (even if
+they contain no Python source code) are listed in the <tt class="docutils literal">packages</tt> option
+in <tt class="docutils literal">setup.py</tt>/<tt class="docutils literal">setup.cfg</tt>.  This can be done automatically by using the
+<tt class="docutils literal">setuptools.find_namespace_packages()</tt> function instead of
+<tt class="docutils literal">find_packages()</tt>.  If you don’t do this, setuptools will emit a
+warning message starting in version 62.3.0, and later versions will cease
+to include such packages in your distribution at all.</p>
+</div>
 <div class="section" id="including-package-data-via-manifest-in">
 <h3><a class="toc-backref" href="#contents">Including Package Data via <tt class="docutils literal">MANIFEST.in</tt></a></h3>
 <p>There are two steps to this method:</p>
