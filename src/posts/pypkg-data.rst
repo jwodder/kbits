@@ -3,7 +3,7 @@ Using Package Data in Python Projects with Setuptools
 =====================================================
 
 :Date: 2020-12-29
-:Modified: 2021-10-26
+:Modified: 2022-06-10
 :Category: Programming
 :Tags: Python, Python packaging, setuptools
 :Summary:
@@ -43,6 +43,17 @@ included in the wheel when building from an sdist).  There are two different
 major ways to do this: a blanket "include all" method that uses a
 ``MANIFEST.in`` file and a fine-grained method that configures one package &
 subpackage at time via the ``setup.py``/``setup.cfg`` file.
+
+.. important::
+
+    In addition to the configurations described here, you also need to ensure
+    that all folders within your package that contain package data (even if
+    they contain no Python source code) are listed in the ``packages`` option
+    in ``setup.py``/``setup.cfg``.  This can be done automatically by using the
+    ``setuptools.find_namespace_packages()`` function instead of
+    ``find_packages()``.  If you don't do this, setuptools will emit a
+    warning message starting in version 62.3.0, and later versions will cease
+    to include such packages in your distribution at all.
 
 
 Including Package Data via ``MANIFEST.in``
