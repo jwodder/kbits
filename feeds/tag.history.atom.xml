@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - history</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.history.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-05-30T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-05-30T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - history</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.history.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-06-15T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-06-15T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable or interesting (in my biased
 opinion) features introduced in each major release of Python, starting with
@@ -1301,7 +1301,7 @@ path-like object or sequence of path-like objects on POSIX systems&lt;/p&gt;
 &lt;p&gt;Release notes: &lt;a class="reference external" href="https://docs.python.org/3/whatsnew/3.7.html"&gt;[link]&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;from __future__ import annotations&lt;/tt&gt; added to enable postponed evaluation
-of annotations, which will become the default in Python 3.11&lt;/p&gt;
+of annotations&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;dict&lt;/tt&gt;s are now guaranteed to preserve insertion order&lt;/p&gt;
 &lt;/li&gt;
