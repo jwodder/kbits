@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-05-30
+:Modified: 2022-06-15
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1106,7 +1106,7 @@ Python 3.7 (2018-06-27)
 Release notes: `[link] <https://docs.python.org/3/whatsnew/3.7.html>`__
 
 - ``from __future__ import annotations`` added to enable postponed evaluation
-  of annotations, which will become the default in Python 3.11
+  of annotations
 
 - ``dict``\s are now guaranteed to preserve insertion order
 
