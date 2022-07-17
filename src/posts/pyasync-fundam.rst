@@ -3,7 +3,7 @@ Python Asynchronous Programming Fundamentals
 ============================================
 
 :Date: 2022-05-29
-:Modified: 2022-05-30
+:Modified: 2022-07-17
 :Category: Programming
 :Tags: Python, async
 :Summary:
@@ -713,6 +713,8 @@ level" part of ``asyncio``.
   ``asyncio``'s high-level API
 
 .. rubric:: Python 3.11
+
+- ``asyncio.TaskGroup`` added
 
 - ``@asyncio.coroutine`` (deprecated in Python 3.8) is now removed
 

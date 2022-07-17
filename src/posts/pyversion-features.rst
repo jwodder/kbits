@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-06-15
+:Modified: 2022-07-17
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1532,10 +1532,17 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 - Chaining ``@classmethod`` decorators and using them to wrap other decorators
   (such as ``@property``) is now deprecated
 
+- Format specification mini-language: A ``z`` option can now be used with
+  floating-point types in order to coerce negative zero to "regular" zero after
+  rounding.
+
 - New modules: ``tomllib`` and ``wsgiref.types``
 
-- ``asyncio`` module: ``@coroutine`` (deprecated since 3.8) and
-  ``asyncio.coroutines.CoroWrapper`` removed
+- ``asyncio`` module:
+
+  - ``@coroutine`` (deprecated since 3.8) and
+    ``asyncio.coroutines.CoroWrapper`` removed
+  - ``Barrier`` and ``TaskGroup`` added
 
 - ``binascii`` module: ``a2b_hqx()``, ``b2a_hqx()``, ``rlecode_hqx()``, and
   ``rledecode_hqx()`` removed
