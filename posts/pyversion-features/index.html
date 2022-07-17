@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2022-06-15T00:00:00-04:00">2022-06-15</time></td>
+                    <td><time datetime="2022-07-17T00:00:00-04:00">2022-07-17</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -1871,10 +1871,20 @@ or documented until 3.11.</p>
 <li><p class="first">Chaining <tt class="docutils literal">&#64;classmethod</tt> decorators and using them to wrap other decorators
 (such as <tt class="docutils literal">&#64;property</tt>) is now deprecated</p>
 </li>
+<li><p class="first">Format specification mini-language: A <tt class="docutils literal">z</tt> option can now be used with
+floating-point types in order to coerce negative zero to “regular” zero after
+rounding.</p>
+</li>
 <li><p class="first">New modules: <tt class="docutils literal">tomllib</tt> and <tt class="docutils literal">wsgiref.types</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal">asyncio</tt> module: <tt class="docutils literal">&#64;coroutine</tt> (deprecated since 3.8) and
+<li><p class="first"><tt class="docutils literal">asyncio</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">&#64;coroutine</tt> (deprecated since 3.8) and
 <tt class="docutils literal">asyncio.coroutines.CoroWrapper</tt> removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Barrier</tt> and <tt class="docutils literal">TaskGroup</tt> added</p>
+</li>
+</ul>
 </li>
 <li><p class="first"><tt class="docutils literal">binascii</tt> module: <tt class="docutils literal">a2b_hqx()</tt>, <tt class="docutils literal">b2a_hqx()</tt>, <tt class="docutils literal">rlecode_hqx()</tt>, and
 <tt class="docutils literal">rledecode_hqx()</tt> removed</p>

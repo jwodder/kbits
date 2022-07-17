@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-06-15T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-05-30T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-07-17T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
 2014, with further notable improvements in almost every minor version
 since.  However, to many Python programmers, this area of the language
 remains esoteric, misunderstood, and underutilized.  This article aims to
@@ -523,7 +523,7 @@ moment.&lt;/td&gt;&lt;/tr&gt;
 &lt;p&gt;Here follows a list of the notable developments &amp;amp; changes in asynchronous
 programming across Python versions.&lt;/p&gt;
 &lt;p class="rubric"&gt;Python 3.4&lt;/p&gt;
-&lt;p&gt;The &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module is added, implementing &lt;a class="reference external" href="http://www.python.org/dev/peps/pep-3156"&gt;PEP 3156&lt;/a&gt;.  This enables the
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module is added, implementing &lt;a class="reference external" href="https://peps.python.org/pep-3156"&gt;PEP 3156&lt;/a&gt;.  This enables the
 creation of coroutines via the &lt;tt class="docutils literal"&gt;&amp;#64;asyncio.coroutine&lt;/tt&gt; decorator; within a
 coroutine, awaiting is performed with &lt;tt class="docutils literal"&gt;yield from&lt;/tt&gt;.  (Support for creating
 coroutines in this way would later be deprecated in Python 3.8 and removed in
@@ -531,7 +531,7 @@ Python 3.11.)&lt;/p&gt;
 &lt;p&gt;Most of the functionality added in this version is now categorized as the “low
 level” part of &lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt;.&lt;/p&gt;
 &lt;p class="rubric"&gt;Python 3.5&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://www.python.org/dev/peps/pep-0492"&gt;PEP 492&lt;/a&gt; implemented:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://peps.python.org/pep-0492"&gt;PEP 492&lt;/a&gt; implemented:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;It is now possible to define coroutines via &lt;tt class="docutils literal"&gt;async def&lt;/tt&gt; and await with
 &lt;tt class="docutils literal"&gt;await&lt;/tt&gt;.&lt;/p&gt;
@@ -560,7 +560,7 @@ produces a &lt;tt class="docutils literal"&gt;PendingDeprecationWarning&lt;/tt&g
 &lt;p class="rubric"&gt;Python 3.6&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;yield&lt;/tt&gt; can now be used in the body of an &lt;tt class="docutils literal"&gt;async def&lt;/tt&gt; coroutine function,
-thereby enabling asynchronous generators (&lt;a class="reference external" href="http://www.python.org/dev/peps/pep-0525"&gt;PEP 525&lt;/a&gt;).  (&lt;tt class="docutils literal"&gt;yield from&lt;/tt&gt;
+thereby enabling asynchronous generators (&lt;a class="reference external" href="https://peps.python.org/pep-0525"&gt;PEP 525&lt;/a&gt;).  (&lt;tt class="docutils literal"&gt;yield from&lt;/tt&gt;
 remains prohibited, though.)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;async for&lt;/tt&gt; can now be used in list, set, &amp;amp; dict comprehensions and in
@@ -609,6 +609,8 @@ instead of &lt;tt class="docutils literal"&gt;Exception&lt;/tt&gt;&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p class="rubric"&gt;Python 3.11&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio.TaskGroup&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;&amp;#64;asyncio.coroutine&lt;/tt&gt; (deprecated in Python 3.8) is now removed&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -910,7 +912,7 @@ pytest plugin projects for skipping tests unless a command-line option is
 given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
 but if they work as advertized, they should prove helpful.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-06-15T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable or interesting (in my biased
 opinion) features introduced in each major release of Python, starting with
@@ -2701,10 +2703,20 @@ or documented until 3.11.&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;Chaining &lt;tt class="docutils literal"&gt;&amp;#64;classmethod&lt;/tt&gt; decorators and using them to wrap other decorators
 (such as &lt;tt class="docutils literal"&gt;&amp;#64;property&lt;/tt&gt;) is now deprecated&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Format specification mini-language: A &lt;tt class="docutils literal"&gt;z&lt;/tt&gt; option can now be used with
+floating-point types in order to coerce negative zero to “regular” zero after
+rounding.&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;New modules: &lt;tt class="docutils literal"&gt;tomllib&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;wsgiref.types&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;&amp;#64;coroutine&lt;/tt&gt; (deprecated since 3.8) and
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;asyncio&lt;/tt&gt; module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;&amp;#64;coroutine&lt;/tt&gt; (deprecated since 3.8) and
 &lt;tt class="docutils literal"&gt;asyncio.coroutines.CoroWrapper&lt;/tt&gt; removed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;Barrier&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;TaskGroup&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;binascii&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;a2b_hqx()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;b2a_hqx()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;rlecode_hqx()&lt;/tt&gt;, and
 &lt;tt class="docutils literal"&gt;rledecode_hqx()&lt;/tt&gt; removed&lt;/p&gt;

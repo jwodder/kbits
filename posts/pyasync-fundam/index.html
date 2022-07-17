@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2022-05-30T00:00:00-04:00">2022-05-30</time></td>
+                    <td><time datetime="2022-07-17T00:00:00-04:00">2022-07-17</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -600,7 +600,7 @@ moment.</td></tr>
 <p>Here follows a list of the notable developments &amp; changes in asynchronous
 programming across Python versions.</p>
 <p class="rubric">Python 3.4</p>
-<p>The <tt class="docutils literal">asyncio</tt> module is added, implementing <a class="reference external" href="http://www.python.org/dev/peps/pep-3156">PEP 3156</a>.  This enables the
+<p>The <tt class="docutils literal">asyncio</tt> module is added, implementing <a class="reference external" href="https://peps.python.org/pep-3156">PEP 3156</a>.  This enables the
 creation of coroutines via the <tt class="docutils literal">&#64;asyncio.coroutine</tt> decorator; within a
 coroutine, awaiting is performed with <tt class="docutils literal">yield from</tt>.  (Support for creating
 coroutines in this way would later be deprecated in Python 3.8 and removed in
@@ -608,7 +608,7 @@ Python 3.11.)</p>
 <p>Most of the functionality added in this version is now categorized as the “low
 level” part of <tt class="docutils literal">asyncio</tt>.</p>
 <p class="rubric">Python 3.5</p>
-<p><a class="reference external" href="http://www.python.org/dev/peps/pep-0492">PEP 492</a> implemented:</p>
+<p><a class="reference external" href="https://peps.python.org/pep-0492">PEP 492</a> implemented:</p>
 <ul>
 <li><p class="first">It is now possible to define coroutines via <tt class="docutils literal">async def</tt> and await with
 <tt class="docutils literal">await</tt>.</p>
@@ -637,7 +637,7 @@ produces a <tt class="docutils literal">PendingDeprecationWarning</tt> starting 
 <p class="rubric">Python 3.6</p>
 <ul>
 <li><p class="first"><tt class="docutils literal">yield</tt> can now be used in the body of an <tt class="docutils literal">async def</tt> coroutine function,
-thereby enabling asynchronous generators (<a class="reference external" href="http://www.python.org/dev/peps/pep-0525">PEP 525</a>).  (<tt class="docutils literal">yield from</tt>
+thereby enabling asynchronous generators (<a class="reference external" href="https://peps.python.org/pep-0525">PEP 525</a>).  (<tt class="docutils literal">yield from</tt>
 remains prohibited, though.)</p>
 </li>
 <li><p class="first"><tt class="docutils literal">async for</tt> can now be used in list, set, &amp; dict comprehensions and in
@@ -686,6 +686,8 @@ instead of <tt class="docutils literal">Exception</tt></p>
 </ul>
 <p class="rubric">Python 3.11</p>
 <ul>
+<li><p class="first"><tt class="docutils literal">asyncio.TaskGroup</tt> added</p>
+</li>
 <li><p class="first"><tt class="docutils literal">&#64;asyncio.coroutine</tt> (deprecated in Python 3.8) is now removed</p>
 </li>
 </ul>
