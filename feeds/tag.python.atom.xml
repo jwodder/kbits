@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-07-17T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Python</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.python.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-10-09T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Python Asynchronous Programming Fundamentals</title><link href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="alternate"></link><published>2022-05-29T00:00:00-04:00</published><updated>2022-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-05-29:/kbits/posts/pyasync-fundam/</id><summary type="html">&lt;p class="first last"&gt;Python introduced asynchronous programming capabilities in version 3.4 in
 2014, with further notable improvements in almost every minor version
 since.  However, to many Python programmers, this area of the language
 remains esoteric, misunderstood, and underutilized.  This article aims to
@@ -912,7 +912,7 @@ pytest plugin projects for skipping tests unless a command-line option is
 given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
 but if they work as advertized, they should prove helpful.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-07-17T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
+</content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2022-10-09T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of all of the notable or interesting (in my biased
 opinion) features introduced in each major release of Python, starting with
@@ -2714,7 +2714,7 @@ rounding.&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;&amp;#64;coroutine&lt;/tt&gt; (deprecated since 3.8) and
 &lt;tt class="docutils literal"&gt;asyncio.coroutines.CoroWrapper&lt;/tt&gt; removed&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;Barrier&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;TaskGroup&lt;/tt&gt; added&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;Barrier&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Runner&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;TaskGroup&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;timeout()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -2722,6 +2722,8 @@ rounding.&lt;/p&gt;
 &lt;tt class="docutils literal"&gt;rledecode_hqx()&lt;/tt&gt; removed&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;binhex&lt;/tt&gt; module removed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;contextlib&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;chdir()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;datetime&lt;/tt&gt; module:&lt;/p&gt;
 &lt;ul&gt;
@@ -2731,10 +2733,19 @@ rounding.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;enum&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;EnumCheck&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;FlagBoundary&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;StrEnum&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;member()&lt;/tt&gt;,
-&lt;tt class="docutils literal"&gt;&amp;#64;nonmember()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;property&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;&amp;#64;verify&lt;/tt&gt; added&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;enum&lt;/tt&gt; module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;EnumCheck&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;FlagBoundary&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;ReprEnum&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;StrEnum&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;&amp;#64;global_enum()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;member()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;nonmember()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;#64;property&lt;/tt&gt;, and
+&lt;tt class="docutils literal"&gt;&amp;#64;verify&lt;/tt&gt; added&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;EnumMeta&lt;/tt&gt; renamed to &lt;tt class="docutils literal"&gt;EnumType&lt;/tt&gt;; the old name is currently as an alias&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;functools&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;singledispatch&lt;/tt&gt; now supports union types&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;hashlib&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;file_digest()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;inspect&lt;/tt&gt; module:&lt;/p&gt;
 &lt;ul&gt;

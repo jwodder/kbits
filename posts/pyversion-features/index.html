@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2022-07-17T00:00:00-04:00">2022-07-17</time></td>
+                    <td><time datetime="2022-10-09T00:00:00-04:00">2022-10-09</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -1882,7 +1882,7 @@ rounding.</p>
 <li><p class="first"><tt class="docutils literal">&#64;coroutine</tt> (deprecated since 3.8) and
 <tt class="docutils literal">asyncio.coroutines.CoroWrapper</tt> removed</p>
 </li>
-<li><p class="first"><tt class="docutils literal">Barrier</tt> and <tt class="docutils literal">TaskGroup</tt> added</p>
+<li><p class="first"><tt class="docutils literal">Barrier</tt>, <tt class="docutils literal">Runner</tt>, <tt class="docutils literal">TaskGroup</tt>, and <tt class="docutils literal">timeout()</tt> added</p>
 </li>
 </ul>
 </li>
@@ -1890,6 +1890,8 @@ rounding.</p>
 <tt class="docutils literal">rledecode_hqx()</tt> removed</p>
 </li>
 <li><p class="first"><tt class="docutils literal">binhex</tt> module removed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">contextlib</tt> module: <tt class="docutils literal">chdir()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">datetime</tt> module:</p>
 <ul>
@@ -1899,10 +1901,19 @@ rounding.</p>
 </li>
 </ul>
 </li>
-<li><p class="first"><tt class="docutils literal">enum</tt> module: <tt class="docutils literal">EnumCheck</tt>, <tt class="docutils literal">FlagBoundary</tt>, <tt class="docutils literal">StrEnum</tt>, <tt class="docutils literal">&#64;member()</tt>,
-<tt class="docutils literal">&#64;nonmember()</tt>, <tt class="docutils literal">&#64;property</tt>, and <tt class="docutils literal">&#64;verify</tt> added</p>
+<li><p class="first"><tt class="docutils literal">enum</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">EnumCheck</tt>, <tt class="docutils literal">FlagBoundary</tt>, <tt class="docutils literal">ReprEnum</tt>, <tt class="docutils literal">StrEnum</tt>,
+<tt class="docutils literal">&#64;global_enum()</tt>, <tt class="docutils literal">&#64;member()</tt>, <tt class="docutils literal">&#64;nonmember()</tt>, <tt class="docutils literal">&#64;property</tt>, and
+<tt class="docutils literal">&#64;verify</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">EnumMeta</tt> renamed to <tt class="docutils literal">EnumType</tt>; the old name is currently as an alias</p>
+</li>
+</ul>
 </li>
 <li><p class="first"><tt class="docutils literal">functools</tt> module: <tt class="docutils literal">singledispatch</tt> now supports union types</p>
+</li>
+<li><p class="first"><tt class="docutils literal">hashlib</tt> module: <tt class="docutils literal">file_digest()</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">inspect</tt> module:</p>
 <ul>
