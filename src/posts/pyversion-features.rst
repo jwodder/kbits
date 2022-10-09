@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-07-17
+:Modified: 2022-10-09
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1542,22 +1542,30 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 
   - ``@coroutine`` (deprecated since 3.8) and
     ``asyncio.coroutines.CoroWrapper`` removed
-  - ``Barrier`` and ``TaskGroup`` added
+  - ``Barrier``, ``Runner``, ``TaskGroup``, and ``timeout()`` added
 
 - ``binascii`` module: ``a2b_hqx()``, ``b2a_hqx()``, ``rlecode_hqx()``, and
   ``rledecode_hqx()`` removed
 
 - ``binhex`` module removed
 
+- ``contextlib`` module: ``chdir()`` added
+
 - ``datetime`` module:
 
   - ``UTC`` added
   - The ``fromisoformat()`` methods now accept most ISO 8601 strings
 
-- ``enum`` module: ``EnumCheck``, ``FlagBoundary``, ``StrEnum``, ``@member()``,
-  ``@nonmember()``, ``@property``, and ``@verify`` added
+- ``enum`` module:
+
+  - ``EnumCheck``, ``FlagBoundary``, ``ReprEnum``, ``StrEnum``,
+    ``@global_enum()``, ``@member()``, ``@nonmember()``, ``@property``, and
+    ``@verify`` added
+  - ``EnumMeta`` renamed to ``EnumType``; the old name is currently as an alias
 
 - ``functools`` module: ``singledispatch`` now supports union types
+
+- ``hashlib`` module: ``file_digest()`` added
 
 - ``inspect`` module:
 
