@@ -125,8 +125,10 @@ Commons Attribution 4.0 International License</a>.
 '''
 
 DISPLAY_CATEGORIES_ON_MENU = False
+DISPLAY_PAGES_ON_MENU = False
 
 MENUITEMS = [
+    ('About This Site', 'about/'),
     ('Categories', 'categories/'),
     ('Tags', 'tags/'),
     ('Site Repository', 'https://github.com/jwodder/kbits'),
