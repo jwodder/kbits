@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Implementing Boolean Negation Flags with Clap</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="How to use Rust’s clap library to implement boolean --foo and --no-foo flags that undo each other"/>
+        <meta name="tags" content="Rust"/>
+        <meta name="tags" content="clap"/>
+        <meta name="tags" content="command-line parsing"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="Rust,clap,command-line parsing"/>
+</head>
+
+<body>
+    <div id="kbits-theme-topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d already found</span>
+        </header>
+    </div>
+
+    <div class="mainrow">
+        <div id="kbits-theme-navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/about/">About This Site</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav>
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="kbits-theme-content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/clap-bool-negate/" rel="bookmark"
+                    title="Permalink to Implementing Boolean Negation Flags with Clap">Implementing Boolean Negation Flags with Clap</a>
+            </h1>
+        </header>
+        <footer>
+            <table class="docinfo" border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2022-10-23T00:00:00-04:00" pubdate="1">2022-10-23</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<span class="fn">John T. Wodder II</span>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/rust/">Rust</a>, <a href="https://jwodder.github.io/kbits/tags/clap/">clap</a>, <a href="https://jwodder.github.io/kbits/tags/command-line-parsing/">command-line parsing</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/clap-bool-negate.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p>Rust’s <a class="reference external" href="https://github.com/clap-rs/clap">clap</a> library is the language’s <em>de facto</em> standard crate for parsing
+command-line arguments.  Though it has many useful features, programmers used
+to libraries like Python’s <a class="reference external" href="https://palletsprojects.com/p/click/">Click</a> may find themselves struggling to implement
+one certain CLI convention: boolean flags <tt class="docutils literal"><span class="pre">--foo</span></tt> and <tt class="docutils literal"><span class="pre">--no-foo</span></tt> that undo
+each other.  This article will show you how to implement such flags using
+clap’s <tt class="docutils literal">Parser</tt> derivation mode — no need to dig into the far more verbose
+“builder” mode!</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The code in this article was tested with clap 4.0.18 on Rust 1.64.0.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">There is currently <a class="reference external" href="https://github.com/clap-rs/clap/issues/815">an open issue</a> on clap’s repository asking for an
+easier way to implement negation flags, but it doesn’t seem that it’ll be
+resolved any time soon.</p>
+</div>
+<p>To implement two boolean flags <tt class="docutils literal"><span class="pre">--foo</span></tt> and <tt class="docutils literal"><span class="pre">--no-foo</span></tt> such that the field
+<tt class="docutils literal">foo</tt> is true when <tt class="docutils literal"><span class="pre">--foo</span></tt> is given last and false when either no arguments
+are given or when <tt class="docutils literal"><span class="pre">--no-foo</span></tt> is given last, simply declare a <tt class="docutils literal"><span class="pre">--foo</span></tt>
+boolean option as usual, then add a separate <tt class="docutils literal"><span class="pre">--no-foo</span></tt> option, and declare
+that they override each other using <a class="reference external" href="https://docs.rs/clap/4.0/clap/builder/struct.Arg.html#method.overrides_with">overrides_with</a>.  The <tt class="docutils literal"><span class="pre">--foo</span></tt> option
+field will then end up holding the final boolean value, and the <tt class="docutils literal"><span class="pre">--no-foo</span></tt>
+field will be unused, so put an underscore at the start of its name so that
+clippy doesn’t complain.  (If you don’t want any unused fields in your
+arguments struct, I’m afraid your only option is to turn to the more verbose
+builder mode.)</p>
+<p>A minimal example of such code would look like this:</p>
+<pre class="code rust literal-block">
+<span class="k">use</span><span class="w"> </span><span class="n">clap</span>::<span class="n">Parser</span><span class="p">;</span><span class="w">
+
+</span><span class="cp">#[derive(Debug, Parser)]</span><span class="w">
+</span><span class="k">struct</span> <span class="nc">Arguments</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="sd">/// Foo all the bars
+</span><span class="w">    </span><span class="cp">#[clap(long, overrides_with = </span><span class="s">&quot;_no_foo&quot;</span><span class="cp">)]</span><span class="w">
+    </span><span class="n">foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+
+    </span><span class="sd">/// Don't foo any bars [default]
+</span><span class="w">    </span><span class="cp">#[clap(long = </span><span class="s">&quot;no-foo&quot;</span><span class="cp">)]</span><span class="w">
+    </span><span class="n">_no_foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="k">for</span><span class="w"> </span><span class="n">opts</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
+    </span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arguments</span>::<span class="n">parse_from</span><span class="p">(</span><span class="o">&amp;</span><span class="n">opts</span><span class="p">);</span><span class="w">
+        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{opts:?} -&gt; {args:?}&quot;</span><span class="p">);</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+<p><a class="reference external" href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=1ca92e953973e4e2649ec1c522957455">[Link to the code on the Rust Playground]</a></p>
+<p>The output from the above code is:</p>
+<pre class="literal-block">
+[&quot;arg0&quot;] -&gt; Arguments { foo: false, _no_foo: false }
+[&quot;arg0&quot;, &quot;--foo&quot;] -&gt; Arguments { foo: true, _no_foo: false }
+[&quot;arg0&quot;, &quot;--no-foo&quot;] -&gt; Arguments { foo: false, _no_foo: true }
+[&quot;arg0&quot;, &quot;--no-foo&quot;, &quot;--foo&quot;] -&gt; Arguments { foo: true, _no_foo: false }
+[&quot;arg0&quot;, &quot;--foo&quot;, &quot;--no-foo&quot;] -&gt; Arguments { foo: false, _no_foo: true }
+[&quot;arg0&quot;, &quot;--no-foo&quot;, &quot;--foo&quot;, &quot;--no-foo&quot;] -&gt; Arguments { foo: false, _no_foo: true }
+[&quot;arg0&quot;, &quot;--foo&quot;, &quot;--no-foo&quot;, &quot;--foo&quot;] -&gt; Arguments { foo: true, _no_foo: false }
+</pre>
+<p>As you can see, the value of the <tt class="docutils literal">foo</tt> field is true when <tt class="docutils literal"><span class="pre">--foo</span></tt> is the
+last <tt class="docutils literal"><span class="pre">--foo/--no-foo</span></tt> option given and false otherwise.</p>
+<p>What if you want a pair of boolean flags where the default is <tt class="docutils literal"><span class="pre">--foo</span></tt>/true
+rather than <tt class="docutils literal"><span class="pre">--no-foo</span></tt>/false?  This is doable, but the code can look quite a
+bit confusing.  Starting with the setup above, add <tt class="docutils literal">action =
+<span class="pre">clap::builder::ArgAction::SetFalse</span></tt> to the <tt class="docutils literal"><span class="pre">--no-foo</span></tt> option; this will
+invert the values of the <tt class="docutils literal"><span class="pre">--no-foo</span></tt> field, causing it to be true whenever
+<tt class="docutils literal"><span class="pre">--foo</span></tt> is the option in effect and false otherwise.  But wait — that’s what
+we want for the <tt class="docutils literal"><span class="pre">--foo</span></tt> field, isn’t it?  So we then swap the names of the
+fields (along with any documentation comments) while preserving their <tt class="docutils literal">long</tt>
+and/or <tt class="docutils literal">short</tt> attributes (which must now be given explicit values), so that
+the field named <tt class="docutils literal">foo</tt>, now corresponding to the <tt class="docutils literal"><span class="pre">--no-foo</span></tt> option, will be
+true when <tt class="docutils literal"><span class="pre">--foo</span></tt> is given last and also when no options are given.</p>
+<p>Sample code:</p>
+<pre class="code rust literal-block">
+<span class="k">use</span><span class="w"> </span><span class="n">clap</span>::<span class="n">builder</span>::<span class="n">ArgAction</span><span class="p">;</span><span class="w">
+</span><span class="k">use</span><span class="w"> </span><span class="n">clap</span>::<span class="n">Parser</span><span class="p">;</span><span class="w">
+
+</span><span class="cp">#[derive(Debug, Parser)]</span><span class="w">
+</span><span class="k">struct</span> <span class="nc">Arguments</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="sd">/// Don't foo any bars
+</span><span class="w">    </span><span class="cp">#[clap(long = </span><span class="s">&quot;no-foo&quot;</span><span class="cp">, action = ArgAction::SetFalse)]</span><span class="w">
+    </span><span class="n">foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+
+    </span><span class="sd">/// Foo all the bars [default]
+</span><span class="w">    </span><span class="cp">#[clap(long = </span><span class="s">&quot;foo&quot;</span><span class="cp">, overrides_with = </span><span class="s">&quot;foo&quot;</span><span class="cp">)]</span><span class="w">
+    </span><span class="n">_no_foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="k">for</span><span class="w"> </span><span class="n">opts</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
+        </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
+    </span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arguments</span>::<span class="n">parse_from</span><span class="p">(</span><span class="o">&amp;</span><span class="n">opts</span><span class="p">);</span><span class="w">
+        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{opts:?} -&gt; {args:?}&quot;</span><span class="p">);</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+<p><a class="reference external" href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=07852c0f651919961b4653b10be521a2">[Link to the code on the Rust Playground]</a></p>
+<p>Output:</p>
+<pre class="literal-block">
+[&quot;arg0&quot;] -&gt; Arguments { foo: true, _no_foo: false }
+[&quot;arg0&quot;, &quot;--foo&quot;] -&gt; Arguments { foo: true, _no_foo: true }
+[&quot;arg0&quot;, &quot;--no-foo&quot;] -&gt; Arguments { foo: false, _no_foo: false }
+[&quot;arg0&quot;, &quot;--no-foo&quot;, &quot;--foo&quot;] -&gt; Arguments { foo: true, _no_foo: true }
+[&quot;arg0&quot;, &quot;--foo&quot;, &quot;--no-foo&quot;] -&gt; Arguments { foo: false, _no_foo: false }
+[&quot;arg0&quot;, &quot;--no-foo&quot;, &quot;--foo&quot;, &quot;--no-foo&quot;] -&gt; Arguments { foo: false, _no_foo: false }
+[&quot;arg0&quot;, &quot;--foo&quot;, &quot;--no-foo&quot;, &quot;--foo&quot;] -&gt; Arguments { foo: true, _no_foo: true }
+</pre>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="kbits-theme-footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>

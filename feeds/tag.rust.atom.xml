@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Rust</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.rust.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-10-23T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Implementing Boolean Negation Flags with Clap</title><link href="https://jwodder.github.io/kbits/posts/clap-bool-negate/" rel="alternate"></link><published>2022-10-23T00:00:00-04:00</published><updated>2022-10-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-10-23:/kbits/posts/clap-bool-negate/</id><summary type="html">&lt;p class="first last"&gt;How to use Rust’s clap library to implement boolean &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; flags that undo each other&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Rust’s &lt;a class="reference external" href="https://github.com/clap-rs/clap"&gt;clap&lt;/a&gt; library is the language’s &lt;em&gt;de facto&lt;/em&gt; standard crate for parsing
+command-line arguments.  Though it has many useful features, programmers used
+to libraries like Python’s &lt;a class="reference external" href="https://palletsprojects.com/p/click/"&gt;Click&lt;/a&gt; may find themselves struggling to implement
+one certain CLI convention: boolean flags &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; that undo
+each other.  This article will show you how to implement such flags using
+clap’s &lt;tt class="docutils literal"&gt;Parser&lt;/tt&gt; derivation mode — no need to dig into the far more verbose
+“builder” mode!&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;The code in this article was tested with clap 4.0.18 on Rust 1.64.0.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="first admonition-title"&gt;Tip&lt;/p&gt;
+&lt;p class="last"&gt;There is currently &lt;a class="reference external" href="https://github.com/clap-rs/clap/issues/815"&gt;an open issue&lt;/a&gt; on clap’s repository asking for an
+easier way to implement negation flags, but it doesn’t seem that it’ll be
+resolved any time soon.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;To implement two boolean flags &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; such that the field
+&lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; is true when &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; is given last and false when either no arguments
+are given or when &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; is given last, simply declare a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt;
+boolean option as usual, then add a separate &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; option, and declare
+that they override each other using &lt;a class="reference external" href="https://docs.rs/clap/4.0/clap/builder/struct.Arg.html#method.overrides_with"&gt;overrides_with&lt;/a&gt;.  The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; option
+field will then end up holding the final boolean value, and the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt;
+field will be unused, so put an underscore at the start of its name so that
+clippy doesn’t complain.  (If you don’t want any unused fields in your
+arguments struct, I’m afraid your only option is to turn to the more verbose
+builder mode.)&lt;/p&gt;
+&lt;p&gt;A minimal example of such code would look like this:&lt;/p&gt;
+&lt;pre class="code rust literal-block"&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;clap&lt;/span&gt;::&lt;span class="n"&gt;Parser&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="cp"&gt;#[derive(Debug, Parser)]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;Arguments&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="sd"&gt;/// Foo all the bars
+&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cp"&gt;#[clap(long, overrides_with = &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_no_foo&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;)]&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;: &lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+
+    &lt;/span&gt;&lt;span class="sd"&gt;/// Don't foo any bars [default]
+&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cp"&gt;#[clap(long = &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;no-foo&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;)]&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="n"&gt;_no_foo&lt;/span&gt;: &lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;opts&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Arguments&lt;/span&gt;::&lt;span class="n"&gt;parse_from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;opts&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{opts:?} -&amp;gt; {args:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://play.rust-lang.org/?version=stable&amp;amp;mode=debug&amp;amp;edition=2021&amp;amp;gist=1ca92e953973e4e2649ec1c522957455"&gt;[Link to the code on the Rust Playground]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The output from the above code is:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[&amp;quot;arg0&amp;quot;] -&amp;gt; Arguments { foo: false, _no_foo: false }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--foo&amp;quot;] -&amp;gt; Arguments { foo: true, _no_foo: false }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--no-foo&amp;quot;] -&amp;gt; Arguments { foo: false, _no_foo: true }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--no-foo&amp;quot;, &amp;quot;--foo&amp;quot;] -&amp;gt; Arguments { foo: true, _no_foo: false }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--foo&amp;quot;, &amp;quot;--no-foo&amp;quot;] -&amp;gt; Arguments { foo: false, _no_foo: true }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--no-foo&amp;quot;, &amp;quot;--foo&amp;quot;, &amp;quot;--no-foo&amp;quot;] -&amp;gt; Arguments { foo: false, _no_foo: true }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--foo&amp;quot;, &amp;quot;--no-foo&amp;quot;, &amp;quot;--foo&amp;quot;] -&amp;gt; Arguments { foo: true, _no_foo: false }
+&lt;/pre&gt;
+&lt;p&gt;As you can see, the value of the &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; field is true when &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; is the
+last &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo/--no-foo&lt;/span&gt;&lt;/tt&gt; option given and false otherwise.&lt;/p&gt;
+&lt;p&gt;What if you want a pair of boolean flags where the default is &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt;/true
+rather than &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt;/false?  This is doable, but the code can look quite a
+bit confusing.  Starting with the setup above, add &lt;tt class="docutils literal"&gt;action =
+&lt;span class="pre"&gt;clap::builder::ArgAction::SetFalse&lt;/span&gt;&lt;/tt&gt; to the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; option; this will
+invert the values of the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; field, causing it to be true whenever
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; is the option in effect and false otherwise.  But wait — that’s what
+we want for the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; field, isn’t it?  So we then swap the names of the
+fields (along with any documentation comments) while preserving their &lt;tt class="docutils literal"&gt;long&lt;/tt&gt;
+and/or &lt;tt class="docutils literal"&gt;short&lt;/tt&gt; attributes (which must now be given explicit values), so that
+the field named &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt;, now corresponding to the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; option, will be
+true when &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; is given last and also when no options are given.&lt;/p&gt;
+&lt;p&gt;Sample code:&lt;/p&gt;
+&lt;pre class="code rust literal-block"&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;clap&lt;/span&gt;::&lt;span class="n"&gt;builder&lt;/span&gt;::&lt;span class="n"&gt;ArgAction&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;clap&lt;/span&gt;::&lt;span class="n"&gt;Parser&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="cp"&gt;#[derive(Debug, Parser)]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;Arguments&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="sd"&gt;/// Don't foo any bars
+&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cp"&gt;#[clap(long = &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;no-foo&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;, action = ArgAction::SetFalse)]&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;: &lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+
+    &lt;/span&gt;&lt;span class="sd"&gt;/// Foo all the bars [default]
+&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cp"&gt;#[clap(long = &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;, overrides_with = &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;)]&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="n"&gt;_no_foo&lt;/span&gt;: &lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;opts&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;arg0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Arguments&lt;/span&gt;::&lt;span class="n"&gt;parse_from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;opts&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{opts:?} -&amp;gt; {args:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://play.rust-lang.org/?version=stable&amp;amp;mode=debug&amp;amp;edition=2021&amp;amp;gist=07852c0f651919961b4653b10be521a2"&gt;[Link to the code on the Rust Playground]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[&amp;quot;arg0&amp;quot;] -&amp;gt; Arguments { foo: true, _no_foo: false }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--foo&amp;quot;] -&amp;gt; Arguments { foo: true, _no_foo: true }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--no-foo&amp;quot;] -&amp;gt; Arguments { foo: false, _no_foo: false }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--no-foo&amp;quot;, &amp;quot;--foo&amp;quot;] -&amp;gt; Arguments { foo: true, _no_foo: true }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--foo&amp;quot;, &amp;quot;--no-foo&amp;quot;] -&amp;gt; Arguments { foo: false, _no_foo: false }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--no-foo&amp;quot;, &amp;quot;--foo&amp;quot;, &amp;quot;--no-foo&amp;quot;] -&amp;gt; Arguments { foo: false, _no_foo: false }
+[&amp;quot;arg0&amp;quot;, &amp;quot;--foo&amp;quot;, &amp;quot;--no-foo&amp;quot;, &amp;quot;--foo&amp;quot;] -&amp;gt; Arguments { foo: true, _no_foo: true }
+&lt;/pre&gt;
+</content><category term="Programming"></category><category term="Rust"></category><category term="clap"></category><category term="command-line parsing"></category></entry></feed>
