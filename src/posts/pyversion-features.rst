@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-10-09
+:Modified: 2022-10-25
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -1559,8 +1559,8 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 - ``enum`` module:
 
   - ``EnumCheck``, ``FlagBoundary``, ``ReprEnum``, ``StrEnum``,
-    ``@global_enum()``, ``@member()``, ``@nonmember()``, ``@property``, and
-    ``@verify`` added
+    ``@global_enum()``, ``@member()``, ``@nonmember()``, ``@property``,
+    ``show_flag_values()``, and ``@verify`` added
   - ``EnumMeta`` renamed to ``EnumType``; the old name is currently as an alias
 
 - ``functools`` module: ``singledispatch`` now supports union types
@@ -1575,8 +1575,14 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
     new objects are backwards-compatible with the tuple interface)
 
 - ``locale`` module:
+
   - ``getdefaultlocale()`` is now deprecated
   - ``getencoding()`` added
+
+- ``logging`` module:
+
+  - ``getLevelNamesMapping()`` added
+  - ``createSocket()`` method added to ``logging.handlers.SysLogHandler``
 
 - ``math`` module: ``cbrt()`` and ``exp2()`` added
 
@@ -1590,6 +1596,9 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
   - ``(?>...)``, ``*+``, ``++``, ``?+``, and ``{m,n}+`` can now be used in
     regular expressions
   - ``NOFLAG`` added
+
+- ``string`` module: ``get_identifiers()`` and ``is_valid()`` methods added to
+  ``string.Template``
 
 - ``sys`` module: ``exception()`` added
 
@@ -1605,6 +1614,12 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
     deprecated and will be removed in Python 3.13
 
 - ``unicodedata`` updated to Unicode 14.0.0
+
+- ``zipfile`` module:
+
+  - ``metadata_encoding`` argument added to ``ZipFile`` constructor
+  - ``ZipFile.mkdir()`` added
+  - ``step``, ``suffix``, and ``suffixes`` attributes added to ``zipfile.Path``
 
 - The following modules are now deprecated and are planned to be removed in
   Python 3.13: ``aifc``, ``audioop``, ``cgi``, ``cgitb``, ``chunk``, ``crypt``,
