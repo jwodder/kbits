@@ -61,7 +61,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2022-10-09T00:00:00-04:00">2022-10-09</time></td>
+                    <td><time datetime="2022-10-25T00:00:00-04:00">2022-10-25</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -1905,8 +1905,8 @@ rounding.</p>
 <li><p class="first"><tt class="docutils literal">enum</tt> module:</p>
 <ul>
 <li><p class="first"><tt class="docutils literal">EnumCheck</tt>, <tt class="docutils literal">FlagBoundary</tt>, <tt class="docutils literal">ReprEnum</tt>, <tt class="docutils literal">StrEnum</tt>,
-<tt class="docutils literal">&#64;global_enum()</tt>, <tt class="docutils literal">&#64;member()</tt>, <tt class="docutils literal">&#64;nonmember()</tt>, <tt class="docutils literal">&#64;property</tt>, and
-<tt class="docutils literal">&#64;verify</tt> added</p>
+<tt class="docutils literal">&#64;global_enum()</tt>, <tt class="docutils literal">&#64;member()</tt>, <tt class="docutils literal">&#64;nonmember()</tt>, <tt class="docutils literal">&#64;property</tt>,
+<tt class="docutils literal">show_flag_values()</tt>, and <tt class="docutils literal">&#64;verify</tt> added</p>
 </li>
 <li><p class="first"><tt class="docutils literal">EnumMeta</tt> renamed to <tt class="docutils literal">EnumType</tt>; the old name is currently as an alias</p>
 </li>
@@ -1927,9 +1927,21 @@ new objects are backwards-compatible with the tuple interface)</p>
 </li>
 </ul>
 </li>
-<li><p class="first"><tt class="docutils literal">locale</tt> module:
-- <tt class="docutils literal">getdefaultlocale()</tt> is now deprecated
-- <tt class="docutils literal">getencoding()</tt> added</p>
+<li><p class="first"><tt class="docutils literal">locale</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">getdefaultlocale()</tt> is now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">getencoding()</tt> added</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">logging</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">getLevelNamesMapping()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">createSocket()</tt> method added to <tt class="docutils literal">logging.handlers.SysLogHandler</tt></p>
+</li>
+</ul>
 </li>
 <li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">cbrt()</tt> and <tt class="docutils literal">exp2()</tt> added</p>
 </li>
@@ -1946,6 +1958,9 @@ regular expressions</p>
 <li><p class="first"><tt class="docutils literal">NOFLAG</tt> added</p>
 </li>
 </ul>
+</li>
+<li><p class="first"><tt class="docutils literal">string</tt> module: <tt class="docutils literal">get_identifiers()</tt> and <tt class="docutils literal">is_valid()</tt> methods added to
+<tt class="docutils literal">string.Template</tt></p>
 </li>
 <li><p class="first"><tt class="docutils literal">sys</tt> module: <tt class="docutils literal">exception()</tt> added</p>
 </li>
@@ -1966,6 +1981,16 @@ deprecated and will be removed in Python 3.13</p>
 </ul>
 </li>
 <li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 14.0.0</p>
+</li>
+<li><p class="first"><tt class="docutils literal">zipfile</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">metadata_encoding</tt> argument added to <tt class="docutils literal">ZipFile</tt> constructor</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ZipFile.mkdir()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">step</tt>, <tt class="docutils literal">suffix</tt>, and <tt class="docutils literal">suffixes</tt> attributes added to <tt class="docutils literal">zipfile.Path</tt></p>
+</li>
+</ul>
 </li>
 <li><p class="first">The following modules are now deprecated and are planned to be removed in
 Python 3.13: <tt class="docutils literal">aifc</tt>, <tt class="docutils literal">audioop</tt>, <tt class="docutils literal">cgi</tt>, <tt class="docutils literal">cgitb</tt>, <tt class="docutils literal">chunk</tt>, <tt class="docutils literal">crypt</tt>,
