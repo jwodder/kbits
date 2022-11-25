@@ -1,5 +1,542 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Software</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.software.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-02-06T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Special Version Control Files</title><link href="https://jwodder.github.io/kbits/posts/vcs-files/" rel="alternate"></link><published>2021-06-22T00:00:00-04:00</published><updated>2022-02-06T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-06-22:/kbits/posts/vcs-files/</id><summary type="html">&lt;p class="first last"&gt;A list of version control system-specific files that one may find in the
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Software</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.software.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-11-24T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Basics of Writing Unix Man Pages</title><link href="https://jwodder.github.io/kbits/posts/writing-manpages/" rel="alternate"></link><published>2022-11-24T00:00:00-05:00</published><updated>2022-11-24T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-11-24:/kbits/posts/writing-manpages/</id><summary type="html">&lt;p class="first last"&gt;A guide to the basic syntax &amp;amp; commands of Unix man pages&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;On Unix-like systems, the documents that one views with the &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; command
+(known as “man pages”) are written in a markup language called “roff” (short
+for “run off”) that dates back to the pre-Unix days in the 1960’s.  roff is
+technically a full-blown programming language with numerous features, but you
+only need to know a very small subset in order to produce most man pages.  This
+article will describe that subset so that you can go on to write man pages for
+your own software.&lt;/p&gt;
+&lt;p&gt;Man pages, like most roff documents, use a roff &lt;em&gt;macro package&lt;/em&gt; that defines a
+set of high-level commands.  The macro package used by most man pages is,
+unsurprisingly, the &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; package, and that is what is covered here.  Some
+man pages instead use the &lt;tt class="docutils literal"&gt;mdoc&lt;/tt&gt; package, which originated in BSD.  Modern
+versions of the &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; command use the &lt;tt class="docutils literal"&gt;mandoc&lt;/tt&gt; package for processing man
+pages, which autodetects whether a file is written using &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;mdoc&lt;/tt&gt;
+and processes it accordingly.&lt;/p&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title"&gt;Contents&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#roff-syntax" id="toc-entry-1"&gt;roff Syntax&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#document-structure-commands" id="toc-entry-2"&gt;Document Structure Commands&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#font-commands" id="toc-entry-3"&gt;Font Commands&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#additional-escape-sequences" id="toc-entry-4"&gt;Additional Escape Sequences&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#select-non-ascii-characters" id="toc-entry-5"&gt;Select Non-ASCII Characters&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#special-ascii-characters" id="toc-entry-6"&gt;Special ASCII Characters&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#other" id="toc-entry-7"&gt;Other&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#man-page-conventions" id="toc-entry-8"&gt;Man Page Conventions&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#manual-sections" id="toc-entry-9"&gt;Manual Sections&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#sections-of-a-man-page" id="toc-entry-10"&gt;Sections of a Man Page&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#other-conventions" id="toc-entry-11"&gt;Other Conventions&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#rendering-a-man-page" id="toc-entry-12"&gt;Rendering a Man Page&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#a-sample-man-page" id="toc-entry-13"&gt;A Sample Man Page&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#further-references" id="toc-entry-14"&gt;Further References&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="roff-syntax"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;roff Syntax&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A roff file is composed of a mixture of &lt;em&gt;control lines&lt;/em&gt; — lines that start with
+a &lt;em&gt;control character&lt;/em&gt;, usually a period or single-quote — and &lt;em&gt;text lines&lt;/em&gt; —
+lines that do not.&lt;/p&gt;
+&lt;p&gt;Control lines are commands to roff (also known as &lt;em&gt;requests&lt;/em&gt;).  They consist of
+a control character &amp;amp; a command name followed by some number of space-separated
+(not tab-separated!) arguments.  To include spaces in an argument, either
+escape them with a backslash or enclose the entire argument in double-quotes;
+to use double-quotes inside an argument, write them as &lt;tt class="docutils literal"&gt;\(dq&lt;/tt&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;There may be any number of spaces &amp;amp; tabs (or none at all) between the control
+character and the command name, but the control character must be the first
+character in the line.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;A line with just a period is ignored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Text lines give the text that will be displayed.  They can contain &lt;em&gt;escape
+sequences&lt;/em&gt;, inline commands that start with backslashes.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Whitespace around escape sequences is significant and is not discarded.  The
+syntax of an escape sequence allows roff to automatically determine where it
+ends; for example, escape sequences starting with &lt;tt class="docutils literal"&gt;\(&lt;/tt&gt; are always followed
+by two more characters to complete the sequence, and so an escape sequence
+like &lt;tt class="docutils literal"&gt;\(em&lt;/tt&gt; (em-dash) can be embedded in the middle of a word:
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;foo\(embar&lt;/span&gt;&lt;/tt&gt; becomes “foo—bar”.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;To start a text line with a period, precede the period with either a
+backslash or the escape sequence &lt;tt class="docutils literal"&gt;\&amp;amp;&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;To render a literal backslash in text, use the escape sequence &lt;tt class="docutils literal"&gt;\\&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;\e&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;\(rs&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A comment consists of a backslash and double quote (&lt;tt class="docutils literal"&gt;\&amp;quot;&lt;/tt&gt;) and extends to the
+end of the line.  A full-line comment can be formed by using the command
+&lt;tt class="docutils literal"&gt;.\&amp;quot;&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;A single logical line can be broken across multiple physical lines by placing a
+backslash at the end of each physical line.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="document-structure-commands"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Document Structure Commands&lt;/a&gt;&lt;/h2&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.TH title section &lt;span class="pre"&gt;[footer-middle]&lt;/span&gt; &lt;span class="pre"&gt;[footer-outside]&lt;/span&gt; &lt;span class="pre"&gt;[header-middle]&lt;/span&gt;&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first"&gt;This must be the first non-comment command in a man page, and it must appear
+exactly once.  It sets the page title (which is conventionally in all-caps)
+and section number for the man page (see “&lt;a class="reference internal" href="#manual-sections"&gt;Manual Sections&lt;/a&gt;” below) to the
+given values, to be displayed in the form &lt;tt class="docutils literal"&gt;title(section)&lt;/tt&gt; at the left &amp;amp;
+right sides of the header of the rendered manual page.&lt;/p&gt;
+&lt;p&gt;The remaining three arguments are optional.  To omit an argument but still
+be able to specify an argument after it, write &lt;tt class="docutils literal"&gt;\&amp;amp;&lt;/tt&gt; in place of the
+omitted argument.&lt;/p&gt;
+&lt;ul class="last"&gt;
+&lt;li&gt;&lt;p class="first"&gt;If &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;footer-middle&lt;/span&gt;&lt;/tt&gt; is given, it will be rendered in the middle of the
+footer.  This argument is usually set to the date the man page was
+written.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;footer-outside&lt;/span&gt;&lt;/tt&gt; is given, it will be rendered on the left side of
+the footer.  This is usually set to the version of the software being
+documented.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;If &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;header-middle&lt;/span&gt;&lt;/tt&gt; is given, it will be rendered in the middle of the
+header.  If it is omitted and &lt;tt class="docutils literal"&gt;section&lt;/tt&gt; is a number from 1 to 9,
+certain versions of &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; will supply a default value.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.SH [name]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Start a section with the given name.  If no argument is given, the next
+line will be used as the name.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.SS [name]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Start a subsection with the given name.  If no argument is given, the next
+line will be used as the name.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.LP&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;.PP&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;.P&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Paragraph break, resetting any indentation caused by the &lt;tt class="docutils literal"&gt;.TP&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;.IP&lt;/tt&gt;,
+or &lt;tt class="docutils literal"&gt;.HP&lt;/tt&gt; command&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.TP [n]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Start a labelled, indented paragraph.  The next text line after this
+command is the paragraph label, and any following text lines up to the next
+&lt;tt class="docutils literal"&gt;.PP&lt;/tt&gt; will be indented.  If a numeric argument is given, the paragraph
+will be indented by that many columns.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.IP [text] [n]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first"&gt;Start an indented paragraph.  The text argument, if given, will be used as
+the paragraph’s bullet/”tag”; this is usually the bullet escape sequence
+(&lt;tt class="docutils literal"&gt;\(bu&lt;/tt&gt;), the em-dash escape sequence (&lt;tt class="docutils literal"&gt;\(em&lt;/tt&gt;), or a number followed by
+a period.  If no text argument is supplied, no bullet will be present, but
+the following paragraph will still be indented; this can be used to start a
+new indented paragraph after an initial indented paragraph created by
+&lt;tt class="docutils literal"&gt;.TP&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;.IP&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;.HP&lt;/tt&gt;.&lt;/p&gt;
+&lt;p class="last"&gt;If a numeric second argument is given, the paragraph will be indented by
+that many columns.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.HP [n]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Start an indented paragraph in which the first line is not indented.  If a
+numeric second argument is given, the paragraph will be indented by that
+many columns.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.RS [n]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Increase the amount of indentation until a corresponding &lt;tt class="docutils literal"&gt;.RE&lt;/tt&gt;.  If a
+numeric second argument is given, the indentation will be increased by that
+many columns.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.RE&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Undo the increase in indentation caused by the last &lt;tt class="docutils literal"&gt;.RS&lt;/tt&gt;&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.br&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Insert a line break&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.sp&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Skip a line&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.sp N&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Skip &lt;tt class="docutils literal"&gt;N&lt;/tt&gt; lines&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/div&gt;
+&lt;div class="section" id="font-commands"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Font Commands&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The following escape sequences can be used to change the font within a text
+line:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;\fB&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Change the font to bold&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;\fI&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Change the font to italic (on a terminal, underlined)&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;\fR&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Change the font to roman&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;\fP&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Change back to the previous font&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;The following requests render an argument in a given font:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.B [text]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given text (or the text of the next line if no argument is
+given) in bold with a word break before &amp;amp; after.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.I [text]&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given text (or the text of the next line if no argument is
+given) in italic (on a terminal, underlined) with a word break before &amp;amp;
+after.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;The following commands take multiple arguments and render them in alternating
+fonts.  A word break/whitespace will be inserted before &amp;amp; after the arguments,
+but there will be no words breaks/whitespace inserted between the arguments.
+For example, the following:&lt;/p&gt;
+&lt;pre class="code groff literal-block"&gt;
+This is
+.&lt;span class="k"&gt;BI&lt;/span&gt; &lt;span class="s"&gt;very&lt;/span&gt; &lt;span class="s"&gt;styled&lt;/span&gt;
+text.
+&lt;/pre&gt;
+&lt;p&gt;will render as:&lt;/p&gt;
+&lt;blockquote&gt;
+This is &lt;strong&gt;very&lt;/strong&gt;&lt;em&gt;styled&lt;/em&gt; text.&lt;/blockquote&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.RB text ...&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given arguments in alternating roman and bold, roman first.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.BR text ...&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given arguments in alternating bold and roman, bold first.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.RI text ...&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given arguments in alternating roman and italic/underlined,
+roman first.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.IR text ...&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given arguments in alternating italic/underlined and roman,
+italic/underlined first.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.BI text ...&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given arguments in alternating bold and italic/underlined, bold
+first.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;.IB text ...&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Renders the given arguments in alternating italic/underlined and bold,
+italic/underlined first.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="first admonition-title"&gt;Tip&lt;/p&gt;
+&lt;p class="last"&gt;While modern groff lets you use these commands with any number of
+arguments, traditional implementations limit usage to six arguments; keep
+this in mind if you want to make your man page portable.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="additional-escape-sequences"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Additional Escape Sequences&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="section" id="select-non-ascii-characters"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Select Non-ASCII Characters&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;See &lt;a class="reference external" href="https://man7.org/linux/man-pages/man7/groff_char.7.html"&gt;&lt;tt class="docutils literal"&gt;grof_char(7)&lt;/tt&gt;&lt;/a&gt; for the complete set of available character escape sequences.&lt;/p&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="24%" /&gt;
+&lt;col width="76%" /&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;Escape&lt;/th&gt;
+&lt;th class="head"&gt;Character&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(bu&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;bullet (•)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\*R&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;registration symbol (®)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;\*(Tm&lt;/span&gt;&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;trademark symbol (™)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(co&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;copyright (©)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(em&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;em-dash (—)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(en&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;en-dash (–)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(rq&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;right double-quote (“)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(lq&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;left double-quote (”)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(oq&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;left single-quote (‘)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(cq&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;right single-quote (’)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;When viewing a man page in the terminal, not all installations will display
+Unicode characters.  On systems that display man pages in ASCII (which
+include macOS as of Big Sur), non-ASCII characters will be rendered as the
+visually closest ASCII character where possible.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="special-ascii-characters"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Special ASCII Characters&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Some output devices transform certain ASCII input characters to similar Unicode
+characters, so the following escape sequences can be used to ensure that the
+desired ASCII character appears in the rendered man page:&lt;/p&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="22%" /&gt;
+&lt;col width="78%" /&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;Escape&lt;/th&gt;
+&lt;th class="head"&gt;Character&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(aq&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Apostrophe (‘)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(ga&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Grave accent (`)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(ha&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Caret/circumflex accent (^)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\(ti&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Tilde (~)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;\-&lt;/tt&gt;&lt;/td&gt;
+&lt;td&gt;Hyphen/minus (-)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class="section" id="other"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Other&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;A backslash followed by a space produces a non-breaking space that remains at
+a fixed width when text is justified.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;\~&lt;/tt&gt; produces a non-breaking space that nevertheless stretches like a
+normal inter-word space when justifying text.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;\&amp;amp;&lt;/tt&gt; produces a non-printable, zero-width character.  It can be placed next
+to a token to deprive it of any special meaning; for example, it can be
+placed after a period at the end of an abbreviation to prevent it from being
+treated as the end of a sentence.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="man-page-conventions"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Man Page Conventions&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="section" id="manual-sections"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Manual Sections&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Each man page is traditionally placed into one of nine manual &lt;em&gt;sections&lt;/em&gt; (not
+to be confused with the sections within a man page created by the &lt;tt class="docutils literal"&gt;.SH&lt;/tt&gt;
+command; for that, see below).  The pages for a given section are stored
+together, and the section number is also used as the file extension.  The
+sections are:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Commands for use by general users&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;C system calls&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;C library functions, libraries, &amp;amp; headers&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Devices, special files, and sockets&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;File formats&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Games&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Miscellaneous&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Commands for use by system administrators (including servers/daemons)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;C kernel functions&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="sections-of-a-man-page"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Sections of a Man Page&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The contents of a man page are divided into sections by the &lt;tt class="docutils literal"&gt;.SH&lt;/tt&gt; command.
+Different sources give slightly different lists of the “standard” sections, but
+the most common, in roughly the order they should appear in a man page, are:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;NAME&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first"&gt;Gives the name of the man page and a short description of what it
+documents.  This is usually considered the only mandatory section.&lt;/p&gt;
+&lt;p class="last"&gt;In order for a man page named “foobar” to be properly indexed by &lt;tt class="docutils literal"&gt;whatis&lt;/tt&gt;
+and &lt;tt class="docutils literal"&gt;apropos&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;NAME&lt;/tt&gt; must be the first section in the man page, and
+the &lt;tt class="docutils literal"&gt;.SH NAME&lt;/tt&gt; line must be followed immediately by a line of the form
+&lt;tt class="docutils literal"&gt;foobar \- short description of foobar&lt;/tt&gt;.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;SYNOPSIS&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first"&gt;Shows the syntax for invoking a command or calling a C function.&lt;/p&gt;
+&lt;p&gt;The synopsis for a command usually follows the following conventions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Text that should be entered as-is by the user (e.g., options and the name
+of the command) should be in &lt;strong&gt;bold&lt;/strong&gt;, while placeholder text that should
+be replaced with some value by the user (e.g., command arguments) should
+be in &lt;em&gt;italics/underlined&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Optional syntax elements (e.g., most options) should be enclosed in
+square brackets.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Alternative forms of a syntax element (e.g., the short and long form of
+an option) should be separated by whitespace and a vertical bar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Syntax elements that can be repeated (e.g., arguments that can be given
+multiple times) are indicated by appending three periods (&lt;tt class="docutils literal"&gt;...&lt;/tt&gt;).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="last"&gt;See &lt;a class="reference internal" href="#a-sample-man-page"&gt;A Sample Man Page&lt;/a&gt; below for an example of these rules in action.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;DESCRIPTION&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;An explanation of what the command, function, etc. does&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;OPTIONS&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;A list of any command-line options a program takes and their meanings.
+This list is usually created using &lt;tt class="docutils literal"&gt;.TP&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;.IP&lt;/tt&gt; to produce paragraphs
+labeled with the option they describe, with each option in &lt;strong&gt;bold&lt;/strong&gt; and any
+argument it may take in &lt;em&gt;italics/underlined&lt;/em&gt;.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;EXIT STATUS&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;A list of the possible exit statuses for a command and their meanings&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;ENVIRONMENT&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;A description of any environment variables that affect the command or
+function&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;FILES&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;A description of any files the command uses (configuration files, startup
+files, etc.).  It is recommended that file paths be styled in
+&lt;em&gt;italics/underlined&lt;/em&gt;.&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;NOTES&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Any miscellaneous notes&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;BUGS&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;A list of known shortcomings in the documented software or functionality&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;EXAMPLES&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Examples of how to use the software or functionality&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;AUTHORS&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;A list of the authors of the software and/or man page&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;REPORTING BUGS&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Information on how to report any bugs found in the software&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;COPYRIGHT&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;Copyright/license details&lt;/dd&gt;
+&lt;dt&gt;&lt;tt class="docutils literal"&gt;SEE ALSO&lt;/tt&gt;&lt;/dt&gt;
+&lt;dd&gt;A comma-separated list of related man pages and/or other documents.
+References to other man pages should be formatted with the name in bold and
+the section number in roman enclosed in parentheses.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/div&gt;
+&lt;div class="section" id="other-conventions"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Other Conventions&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Use &lt;tt class="docutils literal"&gt;\-&lt;/tt&gt; instead of plain &lt;tt class="docutils literal"&gt;-&lt;/tt&gt; for ASCII hyphens, e.g., in command-line
+options.  Use plain &lt;tt class="docutils literal"&gt;-&lt;/tt&gt; in hyphenated words.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Blank lines are discouraged, as they may not render correctly in all output
+formats.  Use the &lt;tt class="docutils literal"&gt;.sp&lt;/tt&gt; command instead to produce a blank line, or use
+&lt;tt class="docutils literal"&gt;.PP&lt;/tt&gt; to start a new paragraph.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Each sentence should typically start on a new line.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Use only a single space between words in text; multiple spaces will not be
+collapsed into one when rendering.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rendering-a-man-page"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Rendering a Man Page&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;To render a man page in the terminal the way that &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; would, run &lt;tt class="docutils literal"&gt;man &lt;span class="pre"&gt;-l&lt;/span&gt;
+path/to/man/page&lt;/tt&gt;.  (On macOS, you have to instead run &lt;tt class="docutils literal"&gt;mandoc &lt;span class="pre"&gt;-a&lt;/span&gt;
+path/to/man/page&lt;/tt&gt;).  You may also want to pass the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--warnings&lt;/span&gt;&lt;/tt&gt; option
+(&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-Wall&lt;/span&gt;&lt;/tt&gt; for &lt;tt class="docutils literal"&gt;mandoc&lt;/tt&gt;) in order to catch any problematic syntax.&lt;/p&gt;
+&lt;p&gt;If your version of &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; does not support the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-l&lt;/span&gt;&lt;/tt&gt; option, you can instead
+run &lt;tt class="docutils literal"&gt;groff&lt;/tt&gt; (GNU roff, the typical roff implementation on nearly all Unix
+machines nowadays) directly with &lt;tt class="docutils literal"&gt;groff &lt;span class="pre"&gt;-man&lt;/span&gt; &lt;span class="pre"&gt;-Tutf8&lt;/span&gt; path/to/man/page | less
+&lt;span class="pre"&gt;-is&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Of course, groff can render to more than just terminals by changing the value
+passed to the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-T&lt;/span&gt;&lt;/tt&gt; option in the &lt;tt class="docutils literal"&gt;groff&lt;/tt&gt; command.  Values of interest
+include &lt;tt class="docutils literal"&gt;pdf&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;ps&lt;/tt&gt; (for PostScript), and &lt;tt class="docutils literal"&gt;html&lt;/tt&gt;; these require the
+&lt;tt class="docutils literal"&gt;gropdf&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;grops&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;grohtml&lt;/tt&gt; commands, respectively, to be installed
+in order to work.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-sample-man-page"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;A Sample Man Page&lt;/a&gt;&lt;/h2&gt;
+&lt;pre class="code groff literal-block"&gt;
+.&lt;span class="k"&gt;TH&lt;/span&gt; &lt;span class="s"&gt;FOOBAR&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="m"&gt;2022&lt;/span&gt;&lt;span class="s"&gt;-11-24&lt;/span&gt; &lt;span class="s"&gt;v1.0&lt;/span&gt;
+.&lt;span class="k"&gt;SH&lt;/span&gt; &lt;span class="s"&gt;NAME&lt;/span&gt;
+foobar &lt;span class="se"&gt;\-&lt;/span&gt; foo all your bars
+.&lt;span class="k"&gt;SH&lt;/span&gt; &lt;span class="s"&gt;SYNOPSIS&lt;/span&gt;
+.&lt;span class="k"&gt;B&lt;/span&gt; &lt;span class="s"&gt;foobar&lt;/span&gt;
+[&lt;span class="se"&gt;\fB\-&lt;/span&gt;a&lt;span class="se"&gt;\fR&lt;/span&gt; &lt;span class="se"&gt;\fI&lt;/span&gt;arg&lt;span class="se"&gt;\fP&lt;/span&gt;]
+.&lt;span class="k"&gt;RB&lt;/span&gt; &lt;span class="s"&gt;[&lt;/span&gt; &lt;span class="se"&gt;\-&lt;/span&gt;&lt;span class="s"&gt;f&lt;/span&gt; &lt;span class="s"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\-\-&lt;/span&gt;&lt;span class="s"&gt;fu&lt;/span&gt; &lt;span class="s"&gt;]&lt;/span&gt;
+.&lt;span class="k"&gt;RB&lt;/span&gt; &lt;span class="s"&gt;[&lt;/span&gt; &lt;span class="se"&gt;\-&lt;/span&gt;&lt;span class="s"&gt;xyz&lt;/span&gt; &lt;span class="s"&gt;]&lt;/span&gt;
+.&lt;span class="k"&gt;IR&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;bar &amp;quot;&lt;/span&gt; &lt;span class="s"&gt;...&lt;/span&gt;
+.&lt;span class="k"&gt;SH&lt;/span&gt; &lt;span class="s"&gt;DESCRIPTION&lt;/span&gt;
+.&lt;span class="k"&gt;B&lt;/span&gt; &lt;span class="s"&gt;foobar&lt;/span&gt;
+takes a list of one or more
+.&lt;span class="k"&gt;IR&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt; &lt;span class="s"&gt;s&lt;/span&gt;
+and foos each of them.
+.&lt;span class="k"&gt;PP&lt;/span&gt;
+In detail, lorem ipsum dolor sit amet, consectetur adipisicing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum.
+.&lt;span class="k"&gt;SH&lt;/span&gt; &lt;span class="s"&gt;OPTIONS&lt;/span&gt;
+.&lt;span class="k"&gt;TP&lt;/span&gt;
+.&lt;span class="k"&gt;BI&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\-a &amp;quot;&lt;/span&gt; &lt;span class="s"&gt;arg&lt;/span&gt;
+Put the apple at
+.&lt;span class="k"&gt;IR&lt;/span&gt; &lt;span class="s"&gt;arg&lt;/span&gt; &lt;span class="s"&gt;.&lt;/span&gt;
+.&lt;span class="k"&gt;TP&lt;/span&gt;
+.&lt;span class="k"&gt;BR&lt;/span&gt; &lt;span class="se"&gt;\-&lt;/span&gt;&lt;span class="s"&gt;f&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\-\-&lt;/span&gt;&lt;span class="s"&gt;fu&lt;/span&gt;
+Do a FUBAR instead.
+.&lt;span class="k"&gt;IP&lt;/span&gt;
+Note that this can permanently destroy your computer.
+.&lt;span class="k"&gt;IP&lt;/span&gt; &lt;span class="se"&gt;\fB\-&lt;/span&gt;&lt;span class="s"&gt;x\fR&lt;/span&gt;
+Be exact about it.
+.&lt;span class="k"&gt;TP&lt;/span&gt;
+.&lt;span class="k"&gt;B&lt;/span&gt; &lt;span class="s"&gt;-y&lt;/span&gt;
+Be yucky about it.
+.&lt;span class="k"&gt;IP&lt;/span&gt; &lt;span class="se"&gt;\fB&lt;/span&gt;&lt;span class="s"&gt;-z\fR&lt;/span&gt;
+Be zucchini about it.
+.&lt;span class="k"&gt;SH&lt;/span&gt; &lt;span class="s"&gt;FILES&lt;/span&gt;
+.&lt;span class="k"&gt;TP&lt;/span&gt;
+.&lt;span class="k"&gt;I&lt;/span&gt; &lt;span class="s"&gt;~/.cache/foo&lt;/span&gt;
+This is where the bars are stored.
+.&lt;span class="k"&gt;SH&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;SEE ALSO&amp;quot;&lt;/span&gt;
+.&lt;span class="k"&gt;BR&lt;/span&gt; &lt;span class="s"&gt;man&lt;/span&gt; &lt;span class="s"&gt;(1),&lt;/span&gt;
+.&lt;span class="k"&gt;BR&lt;/span&gt; &lt;span class="s"&gt;groff&lt;/span&gt; &lt;span class="s"&gt;(7),&lt;/span&gt;
+.&lt;span class="k"&gt;BR&lt;/span&gt; &lt;span class="s"&gt;groff_man&lt;/span&gt; &lt;span class="s"&gt;(7)&lt;/span&gt;
+.&lt;span class="k"&gt;PP&lt;/span&gt;
+.&lt;span class="k"&gt;I&lt;/span&gt; &lt;span class="s"&gt;A&lt;/span&gt; &lt;span class="s"&gt;Brief&lt;/span&gt; &lt;span class="s"&gt;History&lt;/span&gt; &lt;span class="s"&gt;of&lt;/span&gt; &lt;span class="s"&gt;Foo&lt;/span&gt;
+by Fabian Oscar Oh
+.&lt;span class="k"&gt;PP&lt;/span&gt;
+.&lt;span class="k"&gt;RI&lt;/span&gt; &lt;span class="s"&gt;&amp;lt;&lt;/span&gt; &lt;span class="s"&gt;https://www.example.com/foo/bar.html&lt;/span&gt; &lt;span class="s"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;[&lt;a class="reference external" href="https://jwodder.github.io/kbits/posts/writing-manpages/foobar.1"&gt;Download this file&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;Rendered:&lt;/p&gt;
+&lt;script id="asciicast-LtGNGNNqtSYDLi72H6e8Yp1sQ" src="https://asciinema.org/a/LtGNGNNqtSYDLi72H6e8Yp1sQ.js" async data-autoplay="true" data-loop="true"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;div class="section" id="further-references"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Further References&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;groff(7)&lt;/tt&gt; man page: &amp;lt;&lt;a class="reference external" href="https://man7.org/linux/man-pages/man7/groff.7.html"&gt;https://man7.org/linux/man-pages/man7/groff.7.html&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;groff_char(7)&lt;/tt&gt; man page: &amp;lt;&lt;a class="reference external" href="https://man7.org/linux/man-pages/man7/groff_char.7.html"&gt;https://man7.org/linux/man-pages/man7/groff_char.7.html&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;groff_man(7)&lt;/tt&gt; man page: &amp;lt;&lt;a class="reference external" href="https://man7.org/linux/man-pages/man7/groff_man.7.html"&gt;https://man7.org/linux/man-pages/man7/groff_man.7.html&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;man-pages(7)&lt;/span&gt;&lt;/tt&gt; man page: &amp;lt;&lt;a class="reference external" href="https://man7.org/linux/man-pages/man7/man-pages.7.html"&gt;https://man7.org/linux/man-pages/man7/man-pages.7.html&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="Software"></category><category term="documentation"></category><category term="groff"></category><category term="roff"></category><category term="markup"></category><category term="man pages"></category></entry><entry><title>Special Version Control Files</title><link href="https://jwodder.github.io/kbits/posts/vcs-files/" rel="alternate"></link><published>2021-06-22T00:00:00-04:00</published><updated>2022-02-06T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-06-22:/kbits/posts/vcs-files/</id><summary type="html">&lt;p class="first last"&gt;A list of version control system-specific files that one may find in the
 working directories of common version control systems&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The following is a list of VCS-specific files that one may find in the working
 directories of common version control systems.  This list is useful for, say,
