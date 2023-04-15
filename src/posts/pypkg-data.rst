@@ -336,7 +336,7 @@ Footnotes
 
 .. [#f2] Throughout this article, the term "package" is used in the sense of a
          directory of ``.py`` files and other packages (a.k.a. an "`import
-         package`_"), not in the sense of a "`distribution package`_" (i.e, an
+         package`_"), not in the sense of a "`distribution package`_" (i.e., an
          sdist or wheel).
 
 .. _import package: https://packaging.python.org/glossary/#term-Import-Package
