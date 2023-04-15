@@ -72,10 +72,10 @@ a tarball (&lt;tt class="docutils literal"&gt;*.tar.gz&lt;/tt&gt;) or a zipfile 
 listed with one of these two commands:&lt;/p&gt;
 &lt;pre class="code shell literal-block"&gt;
 &lt;span class="c1"&gt;# Tarball
-&lt;/span&gt;$ tar ztf projectname-version.tar.gz
+&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;tar&lt;span class="w"&gt; &lt;/span&gt;ztf&lt;span class="w"&gt; &lt;/span&gt;projectname-version.tar.gz&lt;span class="w"&gt;
 
-&lt;span class="c1"&gt;# Zipfile
-&lt;/span&gt;$ zipinfo projectname-version.zip
+&lt;/span&gt;&lt;span class="c1"&gt;# Zipfile
+&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;zipinfo&lt;span class="w"&gt; &lt;/span&gt;projectname-version.zip
 &lt;/pre&gt;
 &lt;p&gt;At time of writing, the exact layout of an sdist has yet to be standardized,
 but if you’re building with a recent version of setuptools, the contents are
@@ -375,14 +375,14 @@ isn’t ready to be released — and it’s written in reStructuredText, Markdow
 plain text (a safe bet), you can (and should) use it as your project’s long
 description by adding the following or similar to your &lt;tt class="docutils literal"&gt;setup.py&lt;/tt&gt;:&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
-&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;README.extension&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;long_description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;README.extension&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;    &lt;span class="n"&gt;long_description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
 
-&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="o"&gt;...&lt;/span&gt;
-    &lt;span class="n"&gt;long_description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;long_description&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="o"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;    &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;    &lt;span class="n"&gt;long_description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;long_description&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;    &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;If your project isn’t in reStructuredText, you’ll also need to set
 &lt;tt class="docutils literal"&gt;long_description_content_type&lt;/tt&gt; to the appropriate value in &lt;a class="reference internal" href="#set-content-type"&gt;the table above&lt;/a&gt; so that the description renders properly on PyPI.&lt;/p&gt;
@@ -491,9 +491,9 @@ to lists of glob patterns defining what package data files to include in sdists
 pattern is only applied to the corresponding package and not any of its
 subpackages.  This means that, with a &lt;tt class="docutils literal"&gt;package_data&lt;/tt&gt; like this:&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
-&lt;span class="n"&gt;package_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s2"&gt;&amp;quot;package&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;package_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;    &lt;span class="s2"&gt;&amp;quot;package&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;*.txt&lt;/tt&gt; files in &lt;tt class="docutils literal"&gt;package&lt;/tt&gt; will be recognized as package data and included
 in the sdist &amp;amp; wheel, but &lt;tt class="docutils literal"&gt;*.txt&lt;/tt&gt; files in &lt;tt class="docutils literal"&gt;package.subpackage&lt;/tt&gt; will not.

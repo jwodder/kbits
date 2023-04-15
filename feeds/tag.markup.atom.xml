@@ -591,9 +591,9 @@ in one (hopefully) well-organized place.&lt;/p&gt;
 &lt;p&gt;Firstly, reStructuredText supports &lt;em&gt;standalone hyperlinks&lt;/em&gt; — just a bare URI
 (including a scheme) or e-mail address without any link text:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Go to http://www.example.com to see something neat!
+Go to http://www.example.com to see something neat!&lt;span class="w"&gt;
 
-E-mail me at me&amp;#64;example.com.
+&lt;/span&gt;E-mail me at me&amp;#64;example.com.
 &lt;/pre&gt;
 &lt;p&gt;The above renders as:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -658,9 +658,9 @@ specifying the URI next to the link text, you specify a &lt;em&gt;hyperlink refe
 containing a &lt;em&gt;reference name&lt;/em&gt;, and then you specify elsewhere (in a &lt;em&gt;hyperlink
 target&lt;/em&gt;) what URI the reference name points to.  For example:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Here is &lt;span class="s"&gt;`a link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;link_target_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; to somewhere.
+Here is &lt;span class="s"&gt;`a link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;link_target_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; to somewhere.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_link_target:&lt;/span&gt; http://www.example.com
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_link_target:&lt;/span&gt; http://www.example.com
 &lt;/pre&gt;
 &lt;p&gt;Rendered:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -707,14 +707,14 @@ span multiple lines, in which case the lines are concatenated and any
 whitespace in the URI that isn’t escaped is discarded.  For example, the
 following hyperlink targets all map to the same URI:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_one-liner:&lt;/span&gt; http://docutils.sourceforge.net/rst.html
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_one-liner:&lt;/span&gt; http://docutils.sourceforge.net/rst.html&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_starts-on-this-line:&lt;/span&gt; http://
-   docutils.sourceforge.net/rst.html
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_starts-on-this-line:&lt;/span&gt; http://&lt;span class="w"&gt;
+&lt;/span&gt;   docutils.sourceforge.net/rst.html&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_entirely-below:&lt;/span&gt;
-   http://docutils.
-   sourceforge.net/rst.html
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_entirely-below:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;   http://docutils.&lt;span class="w"&gt;
+&lt;/span&gt;   sourceforge.net/rst.html
 &lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;If the same reference name is used for two or more hyperlink targets with
@@ -741,9 +741,9 @@ around this.&lt;/p&gt;
 &lt;p&gt;We can simplify embedded aliases one step further and use the link text as the
 reference name.  Simply omit the part in angle brackets:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Here is &lt;span class="s"&gt;`a link`_&lt;/span&gt; to somewhere.
+Here is &lt;span class="s"&gt;`a link`_&lt;/span&gt; to somewhere.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_a link:&lt;/span&gt; http://www.example.com
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_a link:&lt;/span&gt; http://www.example.com
 &lt;/pre&gt;
 &lt;p&gt;If the link text ends with text inside angle brackets, at least one of the
 angle brackets needs to be escaped — or an escaped space character should be
@@ -756,16 +756,16 @@ end, and with no occurrences of two or more punctuation characters in a row.  A
 simple reference name can be written with just the trailing underscore, no
 backticks:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-This following word_ is a hyperlink.
+This following word_ is a hyperlink.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_word:&lt;/span&gt; https://www.example.com
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_word:&lt;/span&gt; https://www.example.com
 &lt;/pre&gt;
 &lt;p&gt;The same reference name may be used both as a named hyperlink reference and in
 an embedded alias link:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="s"&gt;`This site`_ links to the same location as `these words &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;This site_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;.
+&lt;span class="s"&gt;`This site`_ links to the same location as `these words &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;This site_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_This site:&lt;/span&gt; https://www.example.com
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_This site:&lt;/span&gt; https://www.example.com
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="anonymous-hyperlinks"&gt;
@@ -775,10 +775,10 @@ will only be linked once, you don’t feel like giving it a reference name, and
 the link text is too long to use as an efficient reference name?  The solution:
 &lt;em&gt;anonymous hyperlinks&lt;/em&gt;.&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="s"&gt;`This link`__&lt;/span&gt; goes to a dot-com.  &lt;span class="s"&gt;`This other link`__&lt;/span&gt; goes to a dot-net.
+&lt;span class="s"&gt;`This link`__&lt;/span&gt; goes to a dot-com.  &lt;span class="s"&gt;`This other link`__&lt;/span&gt; goes to a dot-net.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;__:&lt;/span&gt; https://www.example.com
-__ https://www.example.net
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;__:&lt;/span&gt; https://www.example.com&lt;span class="w"&gt;
+&lt;/span&gt;__ https://www.example.net
 &lt;/pre&gt;
 &lt;p&gt;Rendered:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -804,15 +804,15 @@ That means this:&lt;/p&gt;
 &lt;/pre&gt;
 &lt;p&gt;is exactly equivalent to:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="s"&gt;`This website`_&lt;/span&gt; is awesome!
+&lt;span class="s"&gt;`This website`_&lt;/span&gt; is awesome!&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_This website:&lt;/span&gt; https://www.example.com
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_This website:&lt;/span&gt; https://www.example.com
 &lt;/pre&gt;
 &lt;p&gt;As a consequence of this, you can link to the same location as an embedded URI
 link by using its link text as the reference name:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-I changed my mind; &lt;span class="s"&gt;`this website &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; sucks.  Let me
-reiterate: The website at &lt;span class="s"&gt;`this link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;this website_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; is nothing special.
+I changed my mind; &lt;span class="s"&gt;`this website &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; sucks.  Let me&lt;span class="w"&gt;
+&lt;/span&gt;reiterate: The website at &lt;span class="s"&gt;`this link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;this website_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; is nothing special.
 &lt;/pre&gt;
 &lt;div class="section" id="gotcha-duplicate-link-text"&gt;
 &lt;span id="gotcha"&gt;&lt;/span&gt;&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Gotcha: Duplicate Link Text&lt;/a&gt;&lt;/h3&gt;
@@ -821,8 +821,8 @@ rendering the document will produce a warning, and the reference name will be
 unusable in hyperlinks.  So what happens if we define two embedded URI
 hyperlinks with the same link text but different URIs, like so?&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-See &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; and &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.net&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;
-for more information.
+See &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; and &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.net&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;for more information.
 &lt;/pre&gt;
 &lt;p&gt;With the above input, a warning will be produced, but the hyperlinks will still
 point where you want them to, and the reference name &lt;tt class="docutils literal"&gt;here&lt;/tt&gt; will refer to the
@@ -835,8 +835,8 @@ with an unrendered project description.&lt;/p&gt;
 different URIs?  Answer: We add an extra underscore to the end of the link,
 turning it into an &lt;a class="reference internal" href="#anon"&gt;anonymous hyperlink&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-See &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`__&lt;/span&gt; and `here
-&lt;span class="nt"&gt;&amp;lt;https://www.example.net&amp;gt;&lt;/span&gt;`__ for more information.
+See &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`__&lt;/span&gt; and `here&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;https://www.example.net&amp;gt;&lt;/span&gt;`__ for more information.
 &lt;/pre&gt;
 &lt;p&gt;With two underscores, no hyperlink target is created, and so there is no
 conflict.&lt;/p&gt;
@@ -848,12 +848,12 @@ conflict.&lt;/p&gt;
 same location as the hyperlink reference.  The following markup defines four
 hyperlinks that all point to &amp;lt;&lt;a class="reference external" href="https://www.example.com"&gt;https://www.example.com&lt;/a&gt;&amp;gt;:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-See &lt;span class="s"&gt;`this site &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;site_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; for more information.
+See &lt;span class="s"&gt;`this site &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;site_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; for more information.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_site:&lt;/span&gt; https://www.example.com
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_site:&lt;/span&gt; https://www.example.com&lt;span class="w"&gt;
 
-Now that I've written that link, I can write these links: `Click me! &amp;lt;this
-site_&amp;gt;&lt;span class="s"&gt;`_  I link to `this site`_&lt;/span&gt;!  &lt;span class="s"&gt;`Click me!`_&lt;/span&gt;
+&lt;/span&gt;Now that I've written that link, I can write these links: `Click me! &amp;lt;this&lt;span class="w"&gt;
+&lt;/span&gt;site_&amp;gt;&lt;span class="s"&gt;`_  I link to `this site`_&lt;/span&gt;!  &lt;span class="s"&gt;`Click me!`_&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;If you define multiple embedded alias hyperlinks with the same link text but
 different hyperlink references, the document will render without any warnings,
@@ -871,14 +871,14 @@ is defined.&lt;/p&gt;
 &lt;p&gt;A hyperlink target without a URI creates an &lt;em&gt;internal hyperlink target&lt;/em&gt; that
 points to the next element in the document after the target.&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Click &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;After Lorem_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; to skip the next paragraph.
+Click &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;After Lorem_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt; to skip the next paragraph.&lt;span class="w"&gt;
 
-Lorem ipsum dolor sit amet …
+&lt;/span&gt;Lorem ipsum dolor sit amet …&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_After Lorem:&lt;/span&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_After Lorem:&lt;/span&gt;&lt;span class="w"&gt;
 
-This paragraph can be linked to with the reference name &amp;quot;&lt;span class="s"&gt;``After Lorem``&lt;/span&gt;.&amp;quot;
-Aren't you glad you didn't skip the previous paragraph now?
+&lt;/span&gt;This paragraph can be linked to with the reference name &amp;quot;&lt;span class="s"&gt;``After Lorem``&lt;/span&gt;.&amp;quot;&lt;span class="w"&gt;
+&lt;/span&gt;Aren't you glad you didn't skip the previous paragraph now?
 &lt;/pre&gt;
 &lt;p&gt;Rendered:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -891,10 +891,10 @@ Aren’t you glad you didn’t skip the previous paragraph now?&lt;/p&gt;
 be “nested” at the end of an indented block.  This allows us to attach targets
 to individual elements of a list:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="m"&gt;1.&lt;/span&gt; Any following lines that line up with &amp;quot;Any&amp;quot; belong to this list item.
+&lt;span class="m"&gt;1.&lt;/span&gt; Any following lines that line up with &amp;quot;Any&amp;quot; belong to this list item.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;   ..&lt;/span&gt; &lt;span class="nt"&gt;_item2:&lt;/span&gt;
-
+&lt;/span&gt;&lt;span class="p"&gt;   ..&lt;/span&gt; &lt;span class="nt"&gt;_item2:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;
 &lt;span class="m"&gt;2.&lt;/span&gt; This list item can be linked to with the reference name &lt;span class="s"&gt;``item2``&lt;/span&gt;.
 &lt;/pre&gt;
 &lt;p&gt;If the &lt;tt class="docutils literal"&gt;.. _item2:&lt;/tt&gt; line above wasn’t indented, it would split the list into
@@ -909,16 +909,16 @@ string as an argument.  Setting this option allows you to link to the directive
 using that name, equivalent to preceding the directive with an internal
 hyperlink target.&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="ow"&gt;danger&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;
-    &lt;span class="nc"&gt;:name:&lt;/span&gt; dont-or-whatever
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="ow"&gt;danger&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;    &lt;span class="nc"&gt;:name:&lt;/span&gt; dont-or-whatever&lt;span class="w"&gt;
 
-    Don't stick your finger in the— You know what?  Forget it.  I'm not
-    your mother.
+&lt;/span&gt;    Don't stick your finger in the— You know what?  Forget it.  I'm not&lt;span class="w"&gt;
+&lt;/span&gt;    your mother.&lt;span class="w"&gt;
 
-… Text passes …
+&lt;/span&gt;… Text passes …&lt;span class="w"&gt;
 
-Hey, remember &lt;span class="s"&gt;`that admonition from earlier &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;dont-or-whatever_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;?  I was
-serious.
+&lt;/span&gt;Hey, remember &lt;span class="s"&gt;`that admonition from earlier &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;dont-or-whatever_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;?  I was&lt;span class="w"&gt;
+&lt;/span&gt;serious.
 &lt;/pre&gt;
 &lt;p&gt;Rendered:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -944,10 +944,10 @@ cannot be omitted, no matter how simple the phrase is.)  This defines the
 phrase itself as a reference name that points to the phrase’s location in the
 document.&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-They're called &amp;quot;paragraphs,&amp;quot; but I've never seen them _&lt;span class="nv"&gt;`para`&lt;/span&gt;!  Know what I
-mean?
+They're called &amp;quot;paragraphs,&amp;quot; but I've never seen them _&lt;span class="nv"&gt;`para`&lt;/span&gt;!  Know what I&lt;span class="w"&gt;
+&lt;/span&gt;mean?&lt;span class="w"&gt;
 
-(I don't know what I was saying &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;para_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;.)
+&lt;/span&gt;(I don't know what I was saying &lt;span class="s"&gt;`here &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;para_&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;.)
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="implicit-hyperlink-targets-for-section-titles"&gt;
@@ -956,15 +956,15 @@ mean?
 target pointing to that section with the same reference name as the section
 title.&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Go read &amp;quot;&lt;span class="s"&gt;`All About Eels`_&lt;/span&gt;&amp;quot; to learn about our wriggly friends!
+Go read &amp;quot;&lt;span class="s"&gt;`All About Eels`_&lt;/span&gt;&amp;quot; to learn about our wriggly friends!&lt;span class="w"&gt;
 
-Didn't you hear me?  Who wouldn't want to click `this link &amp;lt;All About
-Eels_&amp;gt;`_?
+&lt;/span&gt;Didn't you hear me?  Who wouldn't want to click `this link &amp;lt;All About&lt;span class="w"&gt;
+&lt;/span&gt;Eels_&amp;gt;`_?&lt;span class="w"&gt;
 
-&lt;span class="gh"&gt;All About Eels&lt;/span&gt;
+&lt;/span&gt;&lt;span class="gh"&gt;All About Eels&lt;/span&gt;
 &lt;span class="gh"&gt;==============&lt;/span&gt;
-Did you know?  When you're bit in the heel by a big giant eel, that's a
-moray.
+Did you know?  When you're bit in the heel by a big giant eel, that's a&lt;span class="w"&gt;
+&lt;/span&gt;moray.
 &lt;/pre&gt;
 &lt;p&gt;If a section has the same name as a hyperlink target or a directive, the
 hyperlink target or directive takes precedence, and the section cannot be
@@ -979,30 +979,30 @@ and link to that.&lt;/p&gt;
 &lt;p&gt;It’s possible to define multiple hyperlink targets all pointing to the same
 location by “chaining” the targets together, one after the other:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_bar:&lt;/span&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_baz:&lt;/span&gt; https://www.example.com
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_bar:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_baz:&lt;/span&gt; https://www.example.com&lt;span class="w"&gt;
 
-Now the reference names foo_, bar_, and baz_ all link to the same place.
+&lt;/span&gt;Now the reference names foo_, bar_, and baz_ all link to the same place.
 &lt;/pre&gt;
 &lt;p&gt;Chained hyperlink targets all point to the same location as the last target in
 the chain.  If the last target is an internal hyperlink target, the chained
 targets will all point to the same document element as that last target:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_bar:&lt;/span&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_baz:&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_bar:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_baz:&lt;/span&gt;&lt;span class="w"&gt;
 
-Now the reference names foo_, bar_, and baz_ all link to this paragraph.
+&lt;/span&gt;Now the reference names foo_, bar_, and baz_ all link to this paragraph.
 &lt;/pre&gt;
 &lt;p id="indirect-hyperlink-target"&gt;Alternatively, a hyperlink target &lt;tt class="docutils literal"&gt;A&lt;/tt&gt; can be defined to point to the same
 location as another target &lt;tt class="docutils literal"&gt;B&lt;/tt&gt; by defining the hyperlink target with &lt;tt class="docutils literal"&gt;B&lt;/tt&gt;
 (as a named hyperlink reference) in place of the URI:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_some link:&lt;/span&gt; https://www.example.com
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt; &lt;span class="s"&gt;`some link`_&lt;/span&gt;
+&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_some link:&lt;/span&gt; https://www.example.com&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_foo:&lt;/span&gt; &lt;span class="s"&gt;`some link`_&lt;/span&gt;&lt;span class="w"&gt;
 
-Now &lt;span class="s"&gt;`some link`_&lt;/span&gt; and foo_ go to the same website.
+&lt;/span&gt;Now &lt;span class="s"&gt;`some link`_&lt;/span&gt; and foo_ go to the same website.
 &lt;/pre&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;.. _foo:&lt;/tt&gt; definition is called an &lt;em&gt;indirect hyperlink target&lt;/em&gt;.  As with
 named hyperlink references, the backticks can be dropped when the hyperlink
@@ -1024,10 +1024,10 @@ emphasized.&lt;/p&gt;
 &lt;p&gt;Fortunately, there’s a trick to use inline markup in link text: Define the link
 using a substitution:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Try this recipe for |pie à la mode|_.
+Try this recipe for |pie à la mode|_.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie à la mode|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie à la mode:&lt;/span&gt; https://www.example.com
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie à la mode|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie à la mode:&lt;/span&gt; https://www.example.com
 &lt;/pre&gt;
 &lt;p&gt;Rendered:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1059,29 +1059,29 @@ maps the substitution text to the URI or e-mail address that the substituted
 text should link to.  To link to a location in the document rather than to an
 external URI, either use an &lt;a class="reference internal" href="#indirect-hyperlink-target"&gt;indirect hyperlink target&lt;/a&gt;:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Try this recipe for |pie à la mode|_.
+Try this recipe for |pie à la mode|_.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie à la mode|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie à la mode:&lt;/span&gt; &lt;span class="s"&gt;`pie recipe`_&lt;/span&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie à la mode|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie à la mode:&lt;/span&gt; &lt;span class="s"&gt;`pie recipe`_&lt;/span&gt;&lt;span class="w"&gt;
 
-Some intervening text
+&lt;/span&gt;Some intervening text&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie recipe:&lt;/span&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie recipe:&lt;/span&gt;&lt;span class="w"&gt;
 
-So here's how you make pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;: …
+&lt;/span&gt;So here's how you make pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;: …
 &lt;/pre&gt;
 &lt;p&gt;or else make the substitution text the same as the reference name of the
 internal target:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-Try this recipe for |pie recipe|_.
+Try this recipe for |pie recipe|_.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie recipe|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;|pie recipe|&lt;/span&gt; &lt;span class="ow"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt; pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;&lt;span class="w"&gt;
 
-Some intervening text
+&lt;/span&gt;Some intervening text&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie recipe:&lt;/span&gt;
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_pie recipe:&lt;/span&gt;&lt;span class="w"&gt;
 
-So here's how you make pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;: …
+&lt;/span&gt;So here's how you make pie &lt;span class="ge"&gt;*à la mode*&lt;/span&gt;: …
 &lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1096,10 +1096,10 @@ hyperlink target syntax.&lt;/p&gt;
 link part of a word?  To do so, we must insert a backslash (optionally followed
 by a whitespace character) between the link and the rest of the word:&lt;/p&gt;
 &lt;pre class="code rst literal-block"&gt;
-These &lt;span class="s"&gt;`link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;\s are getting out of control!  Now
-they're in the in\ test_\ ines of our words.
+These &lt;span class="s"&gt;`link &lt;/span&gt;&lt;span class="si"&gt;&amp;lt;https://www.example.com&amp;gt;&lt;/span&gt;&lt;span class="s"&gt;`_&lt;/span&gt;\s are getting out of control!  Now&lt;span class="w"&gt;
+&lt;/span&gt;they're in the in\ test_\ ines of our words.&lt;span class="w"&gt;
 
-&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_test:&lt;/span&gt; https://www.example.net
+&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="nt"&gt;_test:&lt;/span&gt; https://www.example.net
 &lt;/pre&gt;
 &lt;p&gt;This renders as:&lt;/p&gt;
 &lt;blockquote&gt;

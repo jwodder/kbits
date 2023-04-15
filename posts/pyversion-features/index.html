@@ -267,14 +267,14 @@ Python 3.2), <tt class="docutils literal">coerce()</tt>, <tt class="docutils lit
 </li>
 <li><p class="first">The syntax for using a metaclass has changed from:</p>
 <pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
-    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">M</span>
-    <span class="o">...</span>
+<span class="k">class</span> <span class="nc">C</span><span class="p">:</span><span class="w">
+</span>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">M</span><span class="w">
+</span>    <span class="o">...</span>
 </pre>
 <p>to:</p>
 <pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">M</span><span class="p">):</span>
-    <span class="o">...</span>
+<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">M</span><span class="p">):</span><span class="w">
+</span>    <span class="o">...</span>
 </pre>
 </li>
 <li><p class="first">Special method <tt class="docutils literal">__prepare__</tt> on metaclasses added</p>
@@ -1471,8 +1471,8 @@ transformed into <tt class="docutils literal">RuntimeException</tt>s</p>
 <li><p class="first">Assignment expressions: <tt class="docutils literal">:=</tt> (the “walrus operator”) can now be used to
 assign a value to a variable in the middle of an expression, e.g.:</p>
 <pre class="code python literal-block">
-<span class="k">if</span> <span class="n">m</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\d+'</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">if</span> <span class="n">m</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\d+'</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span><span class="w">
+</span>    <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
 </pre>
 </li>
 <li><p class="first">Function parameters can now be made positional-only by placing a <tt class="docutils literal">/</tt> after
@@ -1713,20 +1713,20 @@ future Python version</p>
 <ul>
 <li><p class="first">Pattern matching!</p>
 <pre class="code python literal-block">
-<span class="k">match</span> <span class="n">status</span><span class="p">:</span>
-    <span class="k">case</span> <span class="mi">400</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Bad request&quot;</span>
-    <span class="k">case</span> <span class="mi">401</span> <span class="o">|</span> <span class="mi">403</span> <span class="o">|</span> <span class="mi">404</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Not allowed&quot;</span>
-    <span class="k">case</span> <span class="k">_</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Something's wrong with the Internet&quot;</span>
+<span class="k">match</span> <span class="n">status</span><span class="p">:</span><span class="w">
+</span>    <span class="k">case</span> <span class="mi">400</span><span class="p">:</span><span class="w">
+</span>        <span class="k">return</span> <span class="s2">&quot;Bad request&quot;</span><span class="w">
+</span>    <span class="k">case</span> <span class="mi">401</span> <span class="o">|</span> <span class="mi">403</span> <span class="o">|</span> <span class="mi">404</span><span class="p">:</span><span class="w">
+</span>        <span class="k">return</span> <span class="s2">&quot;Not allowed&quot;</span><span class="w">
+</span>    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span><span class="w">
+</span>        <span class="k">return</span> <span class="s2">&quot;Something's wrong with the Internet&quot;</span>
 </pre>
 </li>
 <li><p class="first">Context managers in <tt class="docutils literal">with</tt> statements can now be enclosed in parentheses,
 e.g.:</p>
 <pre class="code python literal-block">
-<span class="k">with</span> <span class="p">(</span><span class="n">CtxManager1</span><span class="p">()</span> <span class="k">as</span> <span class="n">example</span><span class="p">,</span>
-      <span class="n">CtxManager2</span><span class="p">()):</span>
+<span class="k">with</span> <span class="p">(</span><span class="n">CtxManager1</span><span class="p">()</span> <span class="k">as</span> <span class="n">example</span><span class="p">,</span><span class="w">
+</span>      <span class="n">CtxManager2</span><span class="p">()):</span>
 </pre>
 </li>
 <li><p class="first">Assignment expressions can now be used unparenthesized within set literals,
@@ -2011,7 +2011,7 @@ Python 3.13: <tt class="docutils literal">aifc</tt>, <tt class="docutils literal
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

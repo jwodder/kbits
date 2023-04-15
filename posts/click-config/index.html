@@ -129,47 +129,47 @@ file is given).  The config file must be an INI file, and the values for the
 options are read from the <tt class="docutils literal">[options]</tt> section.  The command callback simply
 dumps out its arguments so you can see what’s being passed to it.</p>
 <pre class="code python literal-block">
-<span class="kn">from</span>   <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">click</span>
+<span class="kn">from</span>   <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span><span class="w">
+</span><span class="kn">import</span> <span class="nn">json</span><span class="w">
+</span><span class="kn">import</span> <span class="nn">click</span><span class="w">
 
-<span class="n">DEFAULT_CFG</span> <span class="o">=</span> <span class="s1">'config.ini'</span>
+</span><span class="n">DEFAULT_CFG</span> <span class="o">=</span> <span class="s1">'config.ini'</span><span class="w">
 
-<span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-    <span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-    <span class="n">cfg</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">'options'</span><span class="p">])</span>
-    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="n">options</span>
+</span><span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span><span class="w">
+</span>    <span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span><span class="w">
+</span>    <span class="n">cfg</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="w">
+</span>    <span class="k">try</span><span class="p">:</span><span class="w">
+</span>        <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">'options'</span><span class="p">])</span><span class="w">
+</span>    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span><span class="w">
+</span>        <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span><span class="w">
+</span>    <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="n">options</span><span class="w">
 
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
-    <span class="s1">'-c'</span><span class="p">,</span> <span class="s1">'--config'</span><span class="p">,</span>
-    <span class="nb">type</span>         <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dir_okay</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">default</span>      <span class="o">=</span> <span class="n">DEFAULT_CFG</span><span class="p">,</span>
-    <span class="n">callback</span>     <span class="o">=</span> <span class="n">configure</span><span class="p">,</span>
-    <span class="n">is_eager</span>     <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">expose_value</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">help</span>         <span class="o">=</span> <span class="s1">'Read option defaults from the specified INI file'</span><span class="p">,</span>
-    <span class="n">show_default</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--integer'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--flag/--no-flag'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--str'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">'foo'</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--choice'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">]))</span>
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">command</span><span class="p">()</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="w">
+</span>    <span class="s1">'-c'</span><span class="p">,</span> <span class="s1">'--config'</span><span class="p">,</span><span class="w">
+</span>    <span class="nb">type</span>         <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dir_okay</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span><span class="w">
+</span>    <span class="n">default</span>      <span class="o">=</span> <span class="n">DEFAULT_CFG</span><span class="p">,</span><span class="w">
+</span>    <span class="n">callback</span>     <span class="o">=</span> <span class="n">configure</span><span class="p">,</span><span class="w">
+</span>    <span class="n">is_eager</span>     <span class="o">=</span> <span class="kc">True</span><span class="p">,</span><span class="w">
+</span>    <span class="n">expose_value</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span><span class="w">
+</span>    <span class="n">help</span>         <span class="o">=</span> <span class="s1">'Read option defaults from the specified INI file'</span><span class="p">,</span><span class="w">
+</span>    <span class="n">show_default</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--integer'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--flag/--no-flag'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--str'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">'foo'</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--choice'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">]))</span><span class="w">
+</span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span><span class="w">
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span><span class="w">
+</span>    <span class="n">main</span><span class="p">()</span>
 </pre>
 <p>If we run this script with no options when <tt class="docutils literal">config.ini</tt> does not exist or is
 empty, we get the parameters’ built-in default values:</p>
 <pre class="code console literal-block">
-<span class="gp">$ </span>python3 config01.py
-<span class="go">{
+<span class="gp">$ </span>python3<span class="w"> </span>config01.py<span class="w">
+</span><span class="go">{
     &quot;choice&quot;: null,
     &quot;flag&quot;: false,
     &quot;integer&quot;: 42,
@@ -186,8 +186,8 @@ empty, we get the parameters’ built-in default values:</p>
 </pre>
 <p>… and then run with <tt class="docutils literal"><span class="pre">--config</span> example.ini</tt>:</p>
 <pre class="code console literal-block">
-<span class="gp">$ </span>python3 config01.py --config example.ini
-<span class="go">{
+<span class="gp">$ </span>python3<span class="w"> </span>config01.py<span class="w"> </span>--config<span class="w"> </span>example.ini<span class="w">
+</span><span class="go">{
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
     &quot;integer&quot;: 23,
@@ -199,8 +199,8 @@ converted to their appropriate types.</p>
 <p>Of course, options set in the config file are overridden by command-line
 options, no matter where the options occur in relation to <tt class="docutils literal"><span class="pre">--config</span></tt>:</p>
 <pre class="code console literal-block">
-<span class="gp">$ </span>python3 config01.py --integer <span class="m">17</span> --config example.ini --str glarch
-<span class="go">{
+<span class="gp">$ </span>python3<span class="w"> </span>config01.py<span class="w"> </span>--integer<span class="w"> </span><span class="m">17</span><span class="w"> </span>--config<span class="w"> </span>example.ini<span class="w"> </span>--str<span class="w"> </span>glarch<span class="w">
+</span><span class="go">{
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
     &quot;integer&quot;: 17,
@@ -215,8 +215,8 @@ to <tt class="docutils literal">bad.ini</tt>:</p>
 </pre>
 <p>The script will then error when passed this config file:</p>
 <pre class="code console literal-block">
-<span class="gp">$ </span>python3 config01.py --config bad.ini
-<span class="go">Usage: config01.py [OPTIONS]
+<span class="gp">$ </span>python3<span class="w"> </span>config01.py<span class="w"> </span>--config<span class="w"> </span>bad.ini<span class="w">
+</span><span class="go">Usage: config01.py [OPTIONS]
 Try 'config01.py --help' for help.
 
 Error: Invalid value for '--choice': invalid choice: mauve. (choose from red, green, blue)</span>
@@ -230,8 +230,8 @@ command callback.  For example, the <tt class="docutils literal"><span class="pr
 file with an invalid spelling will be ignored.  For options with medial hyphens
 on the command line, like <tt class="docutils literal"><span class="pre">--log-level</span></tt>, the hyphens must become underscores
 in the configuration file, like <tt class="docutils literal">log_level</tt>.  If you want to support the
-spelling <tt class="docutils literal"><span class="pre">log-level</span></tt> as well, insert the following line after <code class="py python"><span class="n">cfg</span> <span class="o">=</span>
-<span class="n">ConfigParser</span><span class="p">()</span></code> to make the <tt class="docutils literal">ConfigParser</tt> object convert hyphens in option
+spelling <tt class="docutils literal"><span class="pre">log-level</span></tt> as well, insert the following line after <code class="py python"><span class="n">cfg</span> <span class="o">=</span><span class="w">
+</span><span class="n">ConfigParser</span><span class="p">()</span></code> to make the <tt class="docutils literal">ConfigParser</tt> object convert hyphens in option
 names to underscores:</p>
 <pre class="code python literal-block">
 <span class="n">cfg</span><span class="o">.</span><span class="n">optionxform</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span>
@@ -244,18 +244,18 @@ very simple way: if the main command has a subcommand named “<tt class="docuti
 <code class="py python"><span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]</span></code> can be set to a <code class="py python"><span class="nb">dict</span></code> of parameter names &amp;
 values for <tt class="docutils literal">foo</tt>.  For example, the following assignment:</p>
 <pre class="code python literal-block">
-<span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;baz&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;late&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">},</span>
-<span class="p">}</span>
+<span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="p">{</span><span class="w">
+</span>    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="w">
+</span>    <span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="w">
+</span>        <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span><span class="w">
+</span>    <span class="p">},</span><span class="w">
+</span>    <span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="p">{</span><span class="w">
+</span>        <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span><span class="w">
+</span>        <span class="s2">&quot;baz&quot;</span><span class="p">:</span> <span class="p">{</span><span class="w">
+</span>            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;late&quot;</span><span class="p">,</span><span class="w">
+</span>        <span class="p">},</span><span class="w">
+</span>    <span class="p">},</span><span class="w">
+</span><span class="p">}</span>
 </pre>
 <p>sets the default value for the main command’s <tt class="docutils literal"><span class="pre">--color</span></tt> option to <tt class="docutils literal">red</tt>,
 the default value of the <tt class="docutils literal">foo</tt> subcommand’s <tt class="docutils literal"><span class="pre">--speed</span></tt>  option to <tt class="docutils literal">high</tt>,
@@ -270,64 +270,64 @@ subcommand <tt class="docutils literal">CMD</tt>, settings in <tt class="docutil
 <tt class="docutils literal">CMD2</tt> sub-subcommand of the <tt class="docutils literal">CMD1</tt> subcommand, and so forth.  As above,
 each command prints out the parameters it receives.</p>
 <pre class="code python literal-block">
-<span class="kn">from</span>   <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">click</span>
+<span class="kn">from</span>   <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span><span class="w">
+</span><span class="kn">import</span> <span class="nn">json</span><span class="w">
+</span><span class="kn">import</span> <span class="nn">click</span><span class="w">
 
-<span class="n">DEFAULT_CFG</span> <span class="o">=</span> <span class="s1">'config.ini'</span>
+</span><span class="n">DEFAULT_CFG</span> <span class="o">=</span> <span class="s1">'config.ini'</span><span class="w">
 
-<span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-    <span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-    <span class="n">cfg</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">sect</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
-        <span class="n">command_path</span> <span class="o">=</span> <span class="n">sect</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">command_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'options'</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="n">defaults</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span>
-        <span class="k">for</span> <span class="n">cmdname</span> <span class="ow">in</span> <span class="n">command_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">cmdname</span><span class="p">,</span> <span class="p">{})</span>
-        <span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="n">sect</span><span class="p">])</span>
+</span><span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span><span class="w">
+</span>    <span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span><span class="w">
+</span>    <span class="n">cfg</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="w">
+</span>    <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span> <span class="o">=</span> <span class="p">{}</span><span class="w">
+</span>    <span class="k">for</span> <span class="n">sect</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span><span class="w">
+</span>        <span class="n">command_path</span> <span class="o">=</span> <span class="n">sect</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span><span class="w">
+</span>        <span class="k">if</span> <span class="n">command_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'options'</span><span class="p">:</span><span class="w">
+</span>            <span class="k">continue</span><span class="w">
+</span>        <span class="n">defaults</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">default_map</span><span class="w">
+</span>        <span class="k">for</span> <span class="n">cmdname</span> <span class="ow">in</span> <span class="n">command_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span><span class="w">
+</span>            <span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">cmdname</span><span class="p">,</span> <span class="p">{})</span><span class="w">
+</span>        <span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="n">sect</span><span class="p">])</span><span class="w">
 
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">invoke_without_command</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
-    <span class="s1">'-c'</span><span class="p">,</span> <span class="s1">'--config'</span><span class="p">,</span>
-    <span class="nb">type</span>         <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dir_okay</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">default</span>      <span class="o">=</span> <span class="n">DEFAULT_CFG</span><span class="p">,</span>
-    <span class="n">callback</span>     <span class="o">=</span> <span class="n">configure</span><span class="p">,</span>
-    <span class="n">is_eager</span>     <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">expose_value</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">help</span>         <span class="o">=</span> <span class="s1">'Read option defaults from the specified INI file'</span><span class="p">,</span>
-    <span class="n">show_default</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--integer'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--flag/--no-flag'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--str'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">'foo'</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--choice'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">]))</span>
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'* main'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">invoke_without_command</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="w">
+</span>    <span class="s1">'-c'</span><span class="p">,</span> <span class="s1">'--config'</span><span class="p">,</span><span class="w">
+</span>    <span class="nb">type</span>         <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dir_okay</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span><span class="w">
+</span>    <span class="n">default</span>      <span class="o">=</span> <span class="n">DEFAULT_CFG</span><span class="p">,</span><span class="w">
+</span>    <span class="n">callback</span>     <span class="o">=</span> <span class="n">configure</span><span class="p">,</span><span class="w">
+</span>    <span class="n">is_eager</span>     <span class="o">=</span> <span class="kc">True</span><span class="p">,</span><span class="w">
+</span>    <span class="n">expose_value</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span><span class="w">
+</span>    <span class="n">help</span>         <span class="o">=</span> <span class="s1">'Read option defaults from the specified INI file'</span><span class="p">,</span><span class="w">
+</span>    <span class="n">show_default</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--integer'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--flag/--no-flag'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--str'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">'foo'</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--choice'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">]))</span><span class="w">
+</span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">'* main'</span><span class="p">)</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span><span class="w">
 
-<span class="nd">&#64;main</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--speed'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'medium'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'ludicrous'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'medium'</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'* foo'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</span><span class="nd">&#64;main</span><span class="o">.</span><span class="n">command</span><span class="p">()</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--speed'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'medium'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'ludicrous'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'medium'</span><span class="p">)</span><span class="w">
+</span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">'* foo'</span><span class="p">)</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span><span class="w">
 
-<span class="nd">&#64;main</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">invoke_without_command</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--speed'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'medium'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'ludicrous'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'medium'</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'* bar'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</span><span class="nd">&#64;main</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">invoke_without_command</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--speed'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'medium'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'ludicrous'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'medium'</span><span class="p">)</span><span class="w">
+</span><span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">'* bar'</span><span class="p">)</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span><span class="w">
 
-<span class="nd">&#64;bar</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
-<span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--time'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'early'</span><span class="p">,</span> <span class="s1">'late'</span><span class="p">,</span> <span class="s1">'exact'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'early'</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">baz</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'* baz'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</span><span class="nd">&#64;bar</span><span class="o">.</span><span class="n">command</span><span class="p">()</span><span class="w">
+</span><span class="nd">&#64;click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">'--time'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">'early'</span><span class="p">,</span> <span class="s1">'late'</span><span class="p">,</span> <span class="s1">'exact'</span><span class="p">]),</span> <span class="n">default</span><span class="o">=</span><span class="s1">'early'</span><span class="p">)</span><span class="w">
+</span><span class="k">def</span> <span class="nf">baz</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">'* baz'</span><span class="p">)</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span><span class="w">
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span><span class="w">
+</span>    <span class="n">main</span><span class="p">()</span>
 </pre>
 <p>Set <tt class="docutils literal">config.ini</tt> to the following:</p>
 <pre class="code ini literal-block">
@@ -348,16 +348,16 @@ each command prints out the parameters it receives.</p>
 </pre>
 <p>… and then invoke some commands to see the results:</p>
 <pre class="code console literal-block">
-<span class="gp">$ </span>python3 config02.py
-<span class="go">* main
+<span class="gp">$ </span>python3<span class="w"> </span>config02.py<span class="w">
+</span><span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
     &quot;integer&quot;: 23,
     &quot;str&quot;: &quot;bar&quot;
 }
-</span><span class="gp">$ </span>python3 config02.py foo
-<span class="go">* main
+</span><span class="gp">$ </span>python3<span class="w"> </span>config02.py<span class="w"> </span>foo<span class="w">
+</span><span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
@@ -368,8 +368,8 @@ each command prints out the parameters it receives.</p>
 {
     &quot;speed&quot;: &quot;high&quot;
 }
-</span><span class="gp">$ </span>python3 config02.py bar
-<span class="go">* main
+</span><span class="gp">$ </span>python3<span class="w"> </span>config02.py<span class="w"> </span>bar<span class="w">
+</span><span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
@@ -380,8 +380,8 @@ each command prints out the parameters it receives.</p>
 {
     &quot;speed&quot;: &quot;low&quot;
 }
-</span><span class="gp">$ </span>python3 config02.py bar baz
-<span class="go">* main
+</span><span class="gp">$ </span>python3<span class="w"> </span>config02.py<span class="w"> </span>bar<span class="w"> </span>baz<span class="w">
+</span><span class="go">* main
 {
     &quot;choice&quot;: &quot;green&quot;,
     &quot;flag&quot;: true,
@@ -396,8 +396,8 @@ each command prints out the parameters it receives.</p>
 {
     &quot;time&quot;: &quot;late&quot;
 }
-</span><span class="gp">$ </span>python3 config02.py --choice red foo --speed medium
-<span class="go">* main
+</span><span class="gp">$ </span>python3<span class="w"> </span>config02.py<span class="w"> </span>--choice<span class="w"> </span>red<span class="w"> </span>foo<span class="w"> </span>--speed<span class="w"> </span>medium<span class="w">
+</span><span class="go">* main
 {
     &quot;choice&quot;: &quot;red&quot;,
     &quot;flag&quot;: true,
@@ -421,7 +421,7 @@ each command prints out the parameters it receives.</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

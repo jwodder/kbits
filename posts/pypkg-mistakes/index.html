@@ -157,10 +157,10 @@ a tarball (<tt class="docutils literal">*.tar.gz</tt>) or a zipfile (<tt class="
 listed with one of these two commands:</p>
 <pre class="code shell literal-block">
 <span class="c1"># Tarball
-</span>$ tar ztf projectname-version.tar.gz
+</span>$<span class="w"> </span>tar<span class="w"> </span>ztf<span class="w"> </span>projectname-version.tar.gz<span class="w">
 
-<span class="c1"># Zipfile
-</span>$ zipinfo projectname-version.zip
+</span><span class="c1"># Zipfile
+</span>$<span class="w"> </span>zipinfo<span class="w"> </span>projectname-version.zip
 </pre>
 <p>At time of writing, the exact layout of an sdist has yet to be standardized,
 but if you’re building with a recent version of setuptools, the contents are
@@ -460,14 +460,14 @@ isn’t ready to be released — and it’s written in reStructuredText, Markdow
 plain text (a safe bet), you can (and should) use it as your project’s long
 description by adding the following or similar to your <tt class="docutils literal">setup.py</tt>:</p>
 <pre class="code python literal-block">
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;README.extension&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-    <span class="n">long_description</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;README.extension&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span><span class="w">
+</span>    <span class="n">long_description</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="w">
 
-<span class="n">setup</span><span class="p">(</span>
-    <span class="o">...</span>
-    <span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">)</span>
+</span><span class="n">setup</span><span class="p">(</span><span class="w">
+</span>    <span class="o">...</span><span class="w">
+</span>    <span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span><span class="p">,</span><span class="w">
+</span>    <span class="o">...</span><span class="w">
+</span><span class="p">)</span>
 </pre>
 <p>If your project isn’t in reStructuredText, you’ll also need to set
 <tt class="docutils literal">long_description_content_type</tt> to the appropriate value in <a class="reference internal" href="#set-content-type">the table above</a> so that the description renders properly on PyPI.</p>
@@ -576,9 +576,9 @@ to lists of glob patterns defining what package data files to include in sdists
 pattern is only applied to the corresponding package and not any of its
 subpackages.  This means that, with a <tt class="docutils literal">package_data</tt> like this:</p>
 <pre class="code python literal-block">
-<span class="n">package_data</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;package&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.txt&quot;</span><span class="p">],</span>
-<span class="p">}</span>
+<span class="n">package_data</span><span class="o">=</span><span class="p">{</span><span class="w">
+</span>    <span class="s2">&quot;package&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.txt&quot;</span><span class="p">],</span><span class="w">
+</span><span class="p">}</span>
 </pre>
 <p><tt class="docutils literal">*.txt</tt> files in <tt class="docutils literal">package</tt> will be recognized as package data and included
 in the sdist &amp; wheel, but <tt class="docutils literal">*.txt</tt> files in <tt class="docutils literal">package.subpackage</tt> will not.
@@ -750,7 +750,7 @@ can’t find any, it errors out without installing anything.</td></tr>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

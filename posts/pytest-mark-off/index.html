@@ -99,30 +99,30 @@ then use the <tt class="docutils literal">pytest_collection_modifyitems</tt> hoo
 <tt class="docutils literal">pytest.mark.skip</tt> mark if a certain command-line option was not given.  We
 do this by adding the following to our <tt class="docutils literal">conftest.py</tt> file:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">pytest</span><span class="w">
 
-<span class="k">def</span> <span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
-        <span class="s2">&quot;--run-slow&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run slow tests&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+</span><span class="k">def</span> <span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span><span class="w">
+</span>    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span><span class="w">
+</span>        <span class="s2">&quot;--run-slow&quot;</span><span class="p">,</span><span class="w">
+</span>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span><span class="w">
+</span>        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="w">
+</span>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run slow tests&quot;</span><span class="p">,</span><span class="w">
+</span>    <span class="p">)</span><span class="w">
 
-<span class="k">def</span> <span class="nf">pytest_collection_modifyitems</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--run-slow&quot;</span><span class="p">):</span>
-        <span class="n">skipper</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;slow&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>
-                <span class="n">item</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">skipper</span><span class="p">)</span>
+</span><span class="k">def</span> <span class="nf">pytest_collection_modifyitems</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span><span class="w">
+</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--run-slow&quot;</span><span class="p">):</span><span class="w">
+</span>        <span class="n">skipper</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">)</span><span class="w">
+</span>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span><span class="w">
+</span>            <span class="k">if</span> <span class="s2">&quot;slow&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span><span class="w">
+</span>                <span class="n">item</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">skipper</span><span class="p">)</span>
 </pre>
 <p>and then decorate all of our slow tests with <tt class="docutils literal">&#64;pytest.mark.slow</tt>, like so:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">pytest</span><span class="w">
 
-<span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">slow</span>
-<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
-    <span class="o">...</span>
+</span><span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">slow</span><span class="w">
+</span><span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span><span class="w">
+</span>    <span class="o">...</span>
 </pre>
 <p>Now, when we run <tt class="docutils literal">pytest</tt>, the marked tests will be skipped unless the
 <tt class="docutils literal"><span class="pre">--run-slow</span></tt> option is passed on the command line.</p>
@@ -138,43 +138,43 @@ command-line options were given.</p>
 <p>We start out by defining a command-line option in <tt class="docutils literal">conftest.py</tt> that will be
 used to tell pytest to run otherwise-skipped tests:</p>
 <pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
-        <span class="s2">&quot;--run-slow&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run slow tests&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+<span class="k">def</span> <span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span><span class="w">
+</span>    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span><span class="w">
+</span>        <span class="s2">&quot;--run-slow&quot;</span><span class="p">,</span><span class="w">
+</span>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span><span class="w">
+</span>        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="w">
+</span>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run slow tests&quot;</span><span class="p">,</span><span class="w">
+</span>    <span class="p">)</span>
 </pre>
 <p>We then decorate the tests we want to skip by default like so:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">pytest</span><span class="w">
 
-<span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span>
-    <span class="s2">&quot;not config.getoption('--run-slow')&quot;</span><span class="p">,</span>
-    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
-    <span class="o">...</span>
+</span><span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="w">
+</span>    <span class="s2">&quot;not config.getoption('--run-slow')&quot;</span><span class="p">,</span><span class="w">
+</span>    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span><span class="w">
+</span>    <span class="o">...</span>
 </pre>
 <p>If there are multiple tests to apply this condition to, we can assign the
 <tt class="docutils literal">skipif</tt> decorator to a variable that is then used to decorate each one, like
 so:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">pytest</span><span class="w">
 
-<span class="n">slow_test</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span>
-    <span class="s2">&quot;not config.getoption('--run-slow')&quot;</span><span class="p">,</span>
-    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+</span><span class="n">slow_test</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="w">
+</span>    <span class="s2">&quot;not config.getoption('--run-slow')&quot;</span><span class="p">,</span><span class="w">
+</span>    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span><span class="w">
+</span><span class="p">)</span><span class="w">
 
-<span class="nd">&#64;slow_test</span>
-<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
-    <span class="o">...</span>
+</span><span class="nd">&#64;slow_test</span><span class="w">
+</span><span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span><span class="w">
+</span>    <span class="o">...</span><span class="w">
 
-<span class="nd">&#64;slow_test</span>
-<span class="k">def</span> <span class="nf">test_something_very_slow</span><span class="p">():</span>
-    <span class="o">...</span>
+</span><span class="nd">&#64;slow_test</span><span class="w">
+</span><span class="k">def</span> <span class="nf">test_something_very_slow</span><span class="p">():</span><span class="w">
+</span>    <span class="o">...</span>
 </pre>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -182,15 +182,15 @@ so:</p>
 <tt class="docutils literal">skipif</tt> decorator with an actual boolean condition defined in terms of
 <tt class="docutils literal">pytest.config</tt>, e.g.:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">pytest</span><span class="w">
 
-<span class="c1"># Outdated!</span>
-<span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span>
-    <span class="ow">not</span> <span class="n">pytest</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--run-slow&quot;</span><span class="p">),</span>
-    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span>
-    <span class="o">...</span>
+</span><span class="c1"># Outdated!</span><span class="w">
+</span><span class="nd">&#64;pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="w">
+</span>    <span class="ow">not</span> <span class="n">pytest</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--run-slow&quot;</span><span class="p">),</span><span class="w">
+</span>    <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Only run when --run-slow is given&quot;</span><span class="p">,</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="k">def</span> <span class="nf">test_something_slow</span><span class="p">():</span><span class="w">
+</span>    <span class="o">...</span>
 </pre>
 <p class="last">However, this no longer works; the <tt class="docutils literal">pytest.config</tt> global variable was
 removed from pytest in version 5.1.0.</p>
@@ -215,7 +215,7 @@ but if they work as advertized, they should prove helpful.</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

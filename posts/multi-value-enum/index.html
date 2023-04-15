@@ -111,31 +111,31 @@ extra attributes, and then write a <tt class="docutils literal">__new__</tt> met
 of the tuple (which are passed as arguments to <tt class="docutils literal">__new__</tt>) appropriately, like
 so:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="w">
 
-<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">NORTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">EAST</span>       <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">SOUTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south-east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">SOUTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">SOUTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">WEST</span>       <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span><span class="w">
+</span>    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="w">
+</span>    <span class="n">NORTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="w">
+</span>    <span class="n">EAST</span>       <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="w">
+</span>    <span class="n">SOUTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south-east&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span>    <span class="n">SOUTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span>    <span class="n">SOUTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;south-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span>    <span class="n">WEST</span>       <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="w">
+</span>    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="w">
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">_value_</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
-        <span class="k">return</span> <span class="n">obj</span>
+</span>    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span><span class="w">
+</span>        <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="w">
+</span>        <span class="n">obj</span><span class="o">.</span><span class="n">_value_</span> <span class="o">=</span> <span class="n">value</span><span class="w">
+</span>        <span class="n">obj</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="w">
+</span>        <span class="n">obj</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="w">
+</span>        <span class="k">return</span> <span class="n">obj</span><span class="w">
 
-<span class="c1"># Check that `value` and other attributes are what they're supposed to be:</span>
-<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">Direction</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">d</span><span class="si">!r}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">value</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">x</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class="c1"># Check that `value` and other attributes are what they're supposed to be:</span><span class="w">
+</span><span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">Direction</span><span class="p">:</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">d</span><span class="si">!r}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">value</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">x</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 
-<span class="c1"># Member access by value uses only the &quot;main&quot; value:</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Direction</span><span class="p">(</span><span class="s1">'north'</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class="c1"># Member access by value uses only the &quot;main&quot; value:</span><span class="w">
+</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Direction</span><span class="p">(</span><span class="s1">'north'</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre>
 <p>Output from the above script:</p>
 <pre class="literal-block">
@@ -169,34 +169,34 @@ to <tt class="docutils literal">print(f&quot;… {d.x=} <span class="pre">{d.y=}
 to make mypy aware of the extra-value attributes: either add annotations for
 them in the main body of the class, like so:</p>
 <pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># [snip]</span>
-    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span><span class="w">
+</span>    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="w">
+</span>    <span class="c1"># [snip]</span><span class="w">
+</span>    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="w">
 
-    <span class="c1"># Add these two lines:</span>
-    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">y</span><span class="p">:</span> <span class="nb">int</span>
+</span>    <span class="c1"># Add these two lines:</span><span class="w">
+</span>    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="w">
+</span>    <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="w">
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Direction</span><span class="p">:</span>
-        <span class="o">...</span>
+</span>    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Direction</span><span class="p">:</span><span class="w">
+</span>        <span class="o">...</span>
 </pre>
 <p>… or else move the extra-value assignments to an <tt class="docutils literal">__init__</tt> method, like
 so:</p>
 <pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># [snip]</span>
-    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span><span class="w">
+</span>    <span class="n">NORTH</span>      <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="w">
+</span>    <span class="c1"># [snip]</span><span class="w">
+</span>    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;north-west&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="w">
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Direction</span><span class="p">:</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">_value_</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">return</span> <span class="n">obj</span>
+</span>    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Direction</span><span class="p">:</span><span class="w">
+</span>        <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="w">
+</span>        <span class="n">obj</span><span class="o">.</span><span class="n">_value_</span> <span class="o">=</span> <span class="n">value</span><span class="w">
+</span>        <span class="k">return</span> <span class="n">obj</span><span class="w">
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span><span class="w">
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="w">
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
 </pre>
 </li>
 <li><p class="first">The second mypy problem is <a class="reference external" href="https://github.com/python/mypy/issues/10573">issue #10573</a>: mypy is not aware of the <tt class="docutils literal">Enum</tt>
@@ -219,7 +219,7 @@ to be a way around this other than just slapping a “<tt class="docutils litera
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

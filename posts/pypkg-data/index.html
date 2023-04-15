@@ -179,19 +179,19 @@ specify all packages &amp; subpackages) to lists of glob patterns indicating whi
 files within those packages to include in the sdist and wheel.</p>
 <p>A sample <tt class="docutils literal">package_data</tt> looks like this:</p>
 <pre class="code python literal-block">
-<span class="n">package_data</span><span class="o">=</span><span class="p">{</span>
-    <span class="c1"># If any package or subpackage contains *.txt or *.rst files, include</span>
-    <span class="c1"># them:</span>
-    <span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;*.rst&quot;</span><span class="p">],</span>
-    <span class="c1"># Include any *.msg files found in the &quot;hello&quot; package (but not in its</span>
-    <span class="c1"># subpackages):</span>
-    <span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.msg&quot;</span><span class="p">],</span>
-    <span class="c1"># Include any *.csv files found in the &quot;hello.utils&quot; package:</span>
-    <span class="s2">&quot;hello.utils&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.csv&quot;</span><span class="p">],</span>
-    <span class="c1"># Include any *.dat files found in the &quot;data&quot; subdirectory of the</span>
-    <span class="c1"># &quot;mypkg&quot; package:</span>
-    <span class="s2">&quot;mypkg&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;data/*.dat&quot;</span><span class="p">],</span>
-<span class="p">}</span>
+<span class="n">package_data</span><span class="o">=</span><span class="p">{</span><span class="w">
+</span>    <span class="c1"># If any package or subpackage contains *.txt or *.rst files, include</span><span class="w">
+</span>    <span class="c1"># them:</span><span class="w">
+</span>    <span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;*.rst&quot;</span><span class="p">],</span><span class="w">
+</span>    <span class="c1"># Include any *.msg files found in the &quot;hello&quot; package (but not in its</span><span class="w">
+</span>    <span class="c1"># subpackages):</span><span class="w">
+</span>    <span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.msg&quot;</span><span class="p">],</span><span class="w">
+</span>    <span class="c1"># Include any *.csv files found in the &quot;hello.utils&quot; package:</span><span class="w">
+</span>    <span class="s2">&quot;hello.utils&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.csv&quot;</span><span class="p">],</span><span class="w">
+</span>    <span class="c1"># Include any *.dat files found in the &quot;data&quot; subdirectory of the</span><span class="w">
+</span>    <span class="c1"># &quot;mypkg&quot; package:</span><span class="w">
+</span>    <span class="s2">&quot;mypkg&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;data/*.dat&quot;</span><span class="p">],</span><span class="w">
+</span><span class="p">}</span>
 </pre>
 <p>If you are placing your project configuration in <tt class="docutils literal">setup.cfg</tt>, you must
 instead specify <tt class="docutils literal">package_data</tt> via an <tt class="docutils literal">[options.package_data]</tt> section in
@@ -288,15 +288,15 @@ importlib-resources&gt;=1.1.0; python_version &lt; '3.9'
 </pre>
 <p>and import <tt class="docutils literal"><span class="pre">importlib-resources</span></tt> in your code as follows:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="w">
 
-<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
-    <span class="c1"># importlib.resources either doesn't exist or lacks the files()</span>
-    <span class="c1"># function, so use the PyPI version:</span>
-    <span class="kn">import</span> <span class="nn">importlib_resources</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># importlib.resources has files(), so use that:</span>
-    <span class="kn">import</span> <span class="nn">importlib.resources</span> <span class="k">as</span> <span class="nn">importlib_resources</span>
+</span><span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span><span class="w">
+</span>    <span class="c1"># importlib.resources either doesn't exist or lacks the files()</span><span class="w">
+</span>    <span class="c1"># function, so use the PyPI version:</span><span class="w">
+</span>    <span class="kn">import</span> <span class="nn">importlib_resources</span><span class="w">
+</span><span class="k">else</span><span class="p">:</span><span class="w">
+</span>    <span class="c1"># importlib.resources has files(), so use that:</span><span class="w">
+</span>    <span class="kn">import</span> <span class="nn">importlib.resources</span> <span class="k">as</span> <span class="nn">importlib_resources</span>
 </pre>
 </div>
 <div class="section" id="the-importlib-resources-api">
@@ -304,9 +304,9 @@ importlib-resources&gt;=1.1.0; python_version &lt; '3.9'
 <p>To access a package data file in your project, start by calling
 <tt class="docutils literal">importlib_resources.files()</tt> on the name of your package:</p>
 <pre class="code python literal-block">
-<span class="n">pkg</span> <span class="o">=</span> <span class="n">importlib_resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s2">&quot;packagename&quot;</span><span class="p">)</span>
-<span class="c1"># The argument can optionally refer to a subpackage in the form</span>
-<span class="c1"># &quot;packagename.subpackage&quot;.</span>
+<span class="n">pkg</span> <span class="o">=</span> <span class="n">importlib_resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s2">&quot;packagename&quot;</span><span class="p">)</span><span class="w">
+</span><span class="c1"># The argument can optionally refer to a subpackage in the form</span><span class="w">
+</span><span class="c1"># &quot;packagename.subpackage&quot;.</span>
 </pre>
 <p>This gives you a <a class="reference external" href="https://github.com/python/importlib_resources/blob/eb0554035b499e4a5349dcc56a2bda51835f4fde/importlib_resources/abc.py#L61">Traversable</a> object that acts like a limited <tt class="docutils literal">pathlib.Path</tt>
 object for traversing package data files.  To refer to a <tt class="docutils literal">data.csv</tt> file in a
@@ -319,8 +319,8 @@ anything out of it?</p>
 <ul>
 <li><p class="first">To open the file for reading, call the <tt class="docutils literal">open()</tt> method:</p>
 <pre class="code python literal-block">
-<span class="k">with</span> <span class="n">pkg_data_file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-    <span class="c1"># Do things with fp</span>
+<span class="k">with</span> <span class="n">pkg_data_file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span><span class="w">
+</span>    <span class="c1"># Do things with fp</span>
 </pre>
 </li>
 <li><p class="first">To get the file’s contents as <tt class="docutils literal">bytes</tt>, call the <tt class="docutils literal">read_bytes()</tt> method:</p>
@@ -337,8 +337,8 @@ optionally with an <tt class="docutils literal">encoding</tt> argument:</p>
 <li><p class="first">To get the path to the file, call <tt class="docutils literal">importlib_resources.as_file()</tt> on it and
 use the return value as a context manager:</p>
 <pre class="code python literal-block">
-<span class="k">with</span> <span class="n">importlib_resources</span><span class="o">.</span><span class="n">as_file</span><span class="p">(</span><span class="n">pkg_data_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">path</span><span class="p">:</span>
-    <span class="c1"># Do things with the pathlib.Path object that is `path`</span>
+<span class="k">with</span> <span class="n">importlib_resources</span><span class="o">.</span><span class="n">as_file</span><span class="p">(</span><span class="n">pkg_data_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">path</span><span class="p">:</span><span class="w">
+</span>    <span class="c1"># Do things with the pathlib.Path object that is `path`</span>
 </pre>
 <p>The use of context managers allows <tt class="docutils literal"><span class="pre">importlib-resources</span></tt> to support
 packages stored in zipfiles; when a path is requested for a package data file
@@ -350,11 +350,11 @@ use the <tt class="docutils literal">iterdir()</tt> method.  You can test whethe
 or a file with the <tt class="docutils literal">is_dir()</tt> and <tt class="docutils literal">is_file()</tt> methods, and you can get a
 resource’s basename via the <tt class="docutils literal">name</tt> property:</p>
 <pre class="code python literal-block">
-<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pkg</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;DIR&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;FILE&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pkg</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span><span class="w">
+</span>    <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span><span class="w">
+</span>        <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;DIR&quot;</span><span class="p">)</span><span class="w">
+</span>    <span class="k">else</span><span class="p">:</span><span class="w">
+</span>        <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;FILE&quot;</span><span class="p">)</span>
 </pre>
 </li>
 </ul>
@@ -377,7 +377,7 @@ former.</td></tr>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#footnote-reference-2">[2]</a></td><td>Throughout this article, the term “package” is used in the sense of a
 directory of <tt class="docutils literal">.py</tt> files and other packages (a.k.a. an “<a class="reference external" href="https://packaging.python.org/glossary/#term-Import-Package">import
-package</a>”), not in the sense of a “<a class="reference external" href="https://packaging.python.org/glossary/#term-Distribution-Package">distribution package</a>” (i.e, an
+package</a>”), not in the sense of a “<a class="reference external" href="https://packaging.python.org/glossary/#term-Distribution-Package">distribution package</a>” (i.e., an
 sdist or wheel).</td></tr>
 </tbody>
 </table>
@@ -393,7 +393,7 @@ sdist or wheel).</td></tr>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2022 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
