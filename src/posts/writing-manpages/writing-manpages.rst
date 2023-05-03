@@ -4,7 +4,7 @@ Basics of Writing Unix Man Pages
 
 :Date: 2022-11-24
 :Category: Software
-:Tags: documentation, groff, roff, markup, man pages
+:Tags: documentation, groff, roff, markup, man pages, Unix utilities
 :Summary: A guide to the basic syntax & commands of Unix man pages
 
 On Unix-like systems, the documents that one views with the ``man`` command
