@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Converting Lists to Simple Tables and Back with rs</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="If you have a file that’s just a list of items, one item per line, and you want to turn it into a simple table — one delimited just by whitespace without any border characters — how would you do that? Follow up question: If you have a simple table, and you want to convert it into a list of items, one per line, how would you do that? The answer to both questions is: with the rs command, and this article will show you how."/>
+        <meta name="tags" content="rs"/>
+        <meta name="tags" content="tables"/>
+        <meta name="tags" content="text processing"/>
+        <meta name="tags" content="Unix utilities"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="rs,tables,text processing,Unix utilities"/>
+</head>
+
+<body>
+    <div id="kbits-theme-topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d already found</span>
+        </header>
+    </div>
+
+    <div class="mainrow">
+        <div id="kbits-theme-navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/about/">About This Site</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav>
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="kbits-theme-content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/reshaping/" rel="bookmark"
+                    title="Permalink to Converting Lists to Simple Tables and Back with rs">Converting Lists to Simple Tables and Back with <tt class="docutils literal">rs</tt></a>
+            </h1>
+        </header>
+        <footer>
+            <table class="docinfo" border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2023-05-03T00:00:00-04:00" pubdate="1">2023-05-03</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<span class="fn">John T. Wodder II</span>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/software/">Software</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/rs/">rs</a>, <a href="https://jwodder.github.io/kbits/tags/tables/">tables</a>, <a href="https://jwodder.github.io/kbits/tags/text-processing/">text processing</a>, <a href="https://jwodder.github.io/kbits/tags/unix-utilities/">Unix utilities</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/reshaping.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p>If you have a file that’s just a list of items, one item per line, and you want
+to turn it into a simple table — one delimited just by whitespace without any
+border characters — how would you do that?  Follow up question: If you have a
+simple table, and you want to convert it into a list of items, one per line,
+how would you do <em>that</em>?  The answer to both questions is: with the <tt class="docutils literal">rs</tt>
+command, and this article will show you how.</p>
+<p><tt class="docutils literal">rs</tt> is a Unix command-line program for <strong>r</strong>e<strong>s</strong>haping arrays of
+data.  Most Linux users can get it by installing the <tt class="docutils literal">rs</tt> package, and macOS
+users will find it preinstalled.</p>
+<div class="section" id="converting-a-list-of-lines-to-a-simple-table">
+<h2>Converting a List of Lines to a Simple Table</h2>
+<p>When <tt class="docutils literal">rs</tt> is invoked without any options, it constructs a table from standard
+input, treating each line as its own table entry, and fills in columns before
+rows.  Thus, if we have the following file saved in <tt class="docutils literal">lines.txt</tt>:</p>
+<pre class="literal-block">
+Dapper Drake
+Edgy Eft
+Feisty Fawn
+Gutsy Gibbon
+Hardy Heron
+Intrepid Ibex
+Jaunty Jackalope
+Karmic Koala
+Lucid Lynx
+Maverick Meerkat
+Natty Narwhal
+Oneiric Ocelot
+Precise Pangolin
+Quantal Quetzal
+Raring Ringtail
+Saucy Salamander
+Trusty Tahr
+Utopic Unicorn
+Vivid Vervet
+Wily Werewolf
+Xenial Xerus
+Yakkety Yak
+Zesty Zapus
+</pre>
+<p>Then running <tt class="docutils literal">rs &lt; lines.txt</tt> will produce the following output:</p>
+<pre class="literal-block">
+Dapper Drake      Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft          Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn       Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon      Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron       Natty Narwhal     Trusty Tahr       Zesty Zapus
+Intrepid Ibex     Oneiric Ocelot    Utopic Unicorn
+</pre>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">When <tt class="docutils literal">rs</tt> is run without any arguments, it acts like it was given the
+<tt class="docutils literal"><span class="pre">-e</span></tt> (Read one table entry from each line of input) and <tt class="docutils literal"><span class="pre">-t</span></tt> (Fill in
+columns before rows) options.  If you specify any arguments of your own,
+then <tt class="docutils literal"><span class="pre">-e</span></tt> and <tt class="docutils literal"><span class="pre">-t</span></tt> will not be in effect unless you specify them
+explicitly.</p>
+</div>
+<p><tt class="docutils literal">rs</tt> automatically determines the number of table columns based on what will
+fit in an 80-character line.  To change the line length to, say, 60 characters,
+pass <tt class="docutils literal"><span class="pre">-w60</span></tt> to the command (No space is allowed between the option and its
+argument).  To ask for a specific number of table rows and let <tt class="docutils literal">rs</tt> figure
+out the number of columns, supply the desired number of rows as an argument,
+e.g., <tt class="docutils literal">rs <span class="pre">-e</span> <span class="pre">-t</span> 8 &lt; lines.txt</tt>.  To ask for a specific number of table
+columns instead, pass a <tt class="docutils literal">0</tt> argument (to tell <tt class="docutils literal">rs</tt> “Figure the number of
+rows out yourself”) followed by the desired number of columns, e.g., <tt class="docutils literal">rs <span class="pre">-e</span> <span class="pre">-t</span>
+0 3 &lt; lines.txt</tt>.</p>
+<p>By default, <tt class="docutils literal">rs</tt> will output every column at the same width; in the example
+above, this results in the first column having more padding on the right than
+is strictly necessary.  The <tt class="docutils literal"><span class="pre">-z</span></tt> option will get rid of that padding; thus,
+by running <tt class="docutils literal">rs <span class="pre">-e</span> <span class="pre">-t</span> <span class="pre">-z</span> &lt; lines.txt</tt>, we get the following output:</p>
+<pre class="literal-block">
+Dapper Drake   Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft       Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn    Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon   Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron    Natty Narwhal     Trusty Tahr       Zesty Zapus
+Intrepid Ibex  Oneiric Ocelot    Utopic Unicorn
+</pre>
+<p>One thing you might not have noticed about the output is that the last line,
+having fewer columns than the others, ends in several spaces to make the end
+line up with the start of the last column.  <tt class="docutils literal">rs</tt> doesn’t have an option to
+disable this extra whitespace, but if you really want to get rid of it, you can
+pipe the output through <tt class="docutils literal">sed <span class="pre">-e</span> 's/ <span class="pre">*$//'</span></tt> to strip all trailing spaces.</p>
+<p>Lastly, if you want the rows of the table to be filled in before the columns,
+invoke <tt class="docutils literal">rs</tt> with the <tt class="docutils literal"><span class="pre">-e</span></tt> option and no <tt class="docutils literal"><span class="pre">-t</span></tt> option; thus, <tt class="docutils literal">rs <span class="pre">-e</span> &lt;
+lines.txt</tt> gives us:</p>
+<pre class="literal-block">
+Dapper Drake      Edgy Eft          Feisty Fawn       Gutsy Gibbon
+Hardy Heron       Intrepid Ibex     Jaunty Jackalope  Karmic Koala
+Lucid Lynx        Maverick Meerkat  Natty Narwhal     Oneiric Ocelot
+Precise Pangolin  Quantal Quetzal   Raring Ringtail   Saucy Salamander
+Trusty Tahr       Utopic Unicorn    Vivid Vervet      Wily Werewolf
+Xenial Xerus      Yakkety Yak       Zesty Zapus
+</pre>
+</div>
+<div class="section" id="converting-a-simple-table-to-a-list-of-lines">
+<h2>Converting a Simple Table to a List of Lines</h2>
+<p>Say we have the following text saved in <tt class="docutils literal">table.txt</tt>:</p>
+<pre class="literal-block">
+Dapper Drake      Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft          Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn       Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon      Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron       Natty Narwhal     Trusty Tahr       Zesty Zapus
+Intrepid Ibex     Oneiric Ocelot    Utopic Unicorn    Artful Aardvark
+</pre>
+<p>and we want to convert this into a list of table entries, one per line, column
+by column (i.e., we want <tt class="docutils literal">Intrepid Ibex</tt> to come before <tt class="docutils literal">Jaunty Jackalope</tt>
+in the output).  Because the columns are separated by multiple spaces and the
+table entries also contain spaces, we can’t use <tt class="docutils literal">rs</tt> by itself to accomplish
+this.  Instead, we first use <tt class="docutils literal">sed <span class="pre">-e</span> 's/ <span class="pre">\{2,\}/\t/g'</span></tt> to convert runs of two
+or more spaces to tab characters, and then <tt class="docutils literal">rs</tt> can process the table using
+tabs as the cell delimiter.</p>
+<p>Next, we have to pipe the output of <tt class="docutils literal">sed</tt> through two <tt class="docutils literal">rs</tt> invocations: the
+first invocation transposes the table so that the second invocation will split
+its entries apart in the correct order (For whatever reason, <tt class="docutils literal">rs</tt> can’t do
+all this in a single invocation).  The full command line will look like this:</p>
+<pre class="literal-block">
+sed -e 's/ \{2,\}/\t/g' table.txt | rs -c -C -T | rs -c 0 1
+</pre>
+<p>(The <tt class="docutils literal"><span class="pre">-c</span></tt> and <tt class="docutils literal"><span class="pre">-C</span></tt> options tell <tt class="docutils literal">rs</tt> to use a tab as the input and output
+column delimiters, respectively.)</p>
+<p>This works fine for the table above, but if the last column is short by two or
+more columns, like so:</p>
+<pre class="literal-block">
+Dapper Drake      Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft          Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn       Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon      Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron       Natty Narwhal     Trusty Tahr
+Intrepid Ibex     Oneiric Ocelot    Utopic Unicorn
+</pre>
+<p>then <tt class="docutils literal">rs</tt> will not do what we want by default.  When the <tt class="docutils literal">rs <span class="pre">-c</span> <span class="pre">-C</span> <span class="pre">-T</span></tt> step
+goes to transpose its input, it finds that a direct transposition would result
+in the last two columns of the output being short, which <tt class="docutils literal">rs</tt> dislikes, and
+so it decides to fix things by moving “Intrepid Ibex” (the next cell after
+“Trusty Tahr”) to the cell below “Trusty Tahr” and right of “Yakkety Yak” in
+the output, producing this (with tabs converted to aligned spaces to make it
+easier to read):</p>
+<pre class="literal-block">
+Dapper Drake      Edgy Eft          Feisty Fawn       Gutsy Gibbon      Hardy Heron       Oneiric Ocelot
+Jaunty Jackalope  Karmic Koala      Lucid Lynx        Maverick Meerkat  Natty Narwhal     Utopic Unicorn
+Precise Pangolin  Quantal Quetzal   Raring Ringtail   Saucy Salamander  Trusty Tahr
+Vivid Vervet      Wily Werewolf     Xenial Xerus      Yakkety Yak       Intrepid Ibex
+</pre>
+<p>and then when this table is flattened with <tt class="docutils literal">rs <span class="pre">-c</span> 0 1</tt>, the output will be in
+the wrong order.</p>
+<p>We can tell <tt class="docutils literal">rs</tt> to not do this by passing the <tt class="docutils literal"><span class="pre">-n</span></tt> option to the <tt class="docutils literal">rs <span class="pre">-c</span>
+<span class="pre">-C</span> <span class="pre">-T</span></tt> command, which will make it output an all-blank entry below “Trusty”
+and right of “Yakkety” in the output instead of moving “Intrepid.”  However,
+this blank cell will result in the final <tt class="docutils literal">rs <span class="pre">-c</span> 0 1</tt> command printing blank
+lines at the end of the output; we can avoid this by stripping trailing tabs
+before passing the table on.  Hence, the final command line, that works
+regardless of how short the last column happens to be, is:</p>
+<pre class="literal-block">
+sed -e 's/ \{2,\}/\t/g' table.txt | rs -c -C -T -n | sed -e 's/\t*$//' | rs -c 0 1
+</pre>
+<p>On the other hand, if the table we’re converting to a list happens to be read
+by going across the first row, then the second row, etc. — e.g., if it was
+produced with <tt class="docutils literal">rs <span class="pre">-e</span></tt> without the <tt class="docutils literal"><span class="pre">-t</span></tt> option — instead of being read by
+going down the first, second, etc. column, then the whole business with <tt class="docutils literal">rs <span class="pre">-c</span>
+<span class="pre">-C</span> <span class="pre">-T</span> <span class="pre">-n</span></tt> and stripping trailing tabs is unnecessary, and we can turn this
+table:</p>
+<pre class="literal-block">
+Dapper Drake      Edgy Eft          Feisty Fawn       Gutsy Gibbon
+Hardy Heron       Intrepid Ibex     Jaunty Jackalope  Karmic Koala
+Lucid Lynx        Maverick Meerkat  Natty Narwhal     Oneiric Ocelot
+Precise Pangolin  Quantal Quetzal   Raring Ringtail   Saucy Salamander
+Trusty Tahr       Utopic Unicorn    Vivid Vervet      Wily Werewolf
+Xenial Xerus      Yakkety Yak
+</pre>
+<p>into a list by just running:</p>
+<pre class="literal-block">
+sed -e 's/ \{2,\}/\t/g' table.txt | rs -c 0 1
+</pre>
+</div>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="kbits-theme-footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - tables</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.tables.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2023-05-03T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Converting Lists to Simple Tables and Back with rs</title><link href="https://jwodder.github.io/kbits/posts/reshaping/" rel="alternate"></link><published>2023-05-03T00:00:00-04:00</published><updated>2023-05-03T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2023-05-03:/kbits/posts/reshaping/</id><summary type="html">&lt;p class="first last"&gt;If you have a file that’s just a list of items, one item per line, and you
+want to turn it into a simple table — one delimited just by whitespace
+without any border characters — how would you do that?  Follow up question:
+If you have a simple table, and you want to convert it into a list of
+items, one per line, how would you do &lt;em&gt;that&lt;/em&gt;?  The answer to both questions
+is: with the &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; command, and this article will show you how.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;If you have a file that’s just a list of items, one item per line, and you want
+to turn it into a simple table — one delimited just by whitespace without any
+border characters — how would you do that?  Follow up question: If you have a
+simple table, and you want to convert it into a list of items, one per line,
+how would you do &lt;em&gt;that&lt;/em&gt;?  The answer to both questions is: with the &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt;
+command, and this article will show you how.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; is a Unix command-line program for &lt;strong&gt;r&lt;/strong&gt;e&lt;strong&gt;s&lt;/strong&gt;haping arrays of
+data.  Most Linux users can get it by installing the &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; package, and macOS
+users will find it preinstalled.&lt;/p&gt;
+&lt;div class="section" id="converting-a-list-of-lines-to-a-simple-table"&gt;
+&lt;h2&gt;Converting a List of Lines to a Simple Table&lt;/h2&gt;
+&lt;p&gt;When &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; is invoked without any options, it constructs a table from standard
+input, treating each line as its own table entry, and fills in columns before
+rows.  Thus, if we have the following file saved in &lt;tt class="docutils literal"&gt;lines.txt&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake
+Edgy Eft
+Feisty Fawn
+Gutsy Gibbon
+Hardy Heron
+Intrepid Ibex
+Jaunty Jackalope
+Karmic Koala
+Lucid Lynx
+Maverick Meerkat
+Natty Narwhal
+Oneiric Ocelot
+Precise Pangolin
+Quantal Quetzal
+Raring Ringtail
+Saucy Salamander
+Trusty Tahr
+Utopic Unicorn
+Vivid Vervet
+Wily Werewolf
+Xenial Xerus
+Yakkety Yak
+Zesty Zapus
+&lt;/pre&gt;
+&lt;p&gt;Then running &lt;tt class="docutils literal"&gt;rs &amp;lt; lines.txt&lt;/tt&gt; will produce the following output:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake      Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft          Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn       Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon      Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron       Natty Narwhal     Trusty Tahr       Zesty Zapus
+Intrepid Ibex     Oneiric Ocelot    Utopic Unicorn
+&lt;/pre&gt;
+&lt;div class="admonition important"&gt;
+&lt;p class="first admonition-title"&gt;Important&lt;/p&gt;
+&lt;p class="last"&gt;When &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; is run without any arguments, it acts like it was given the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-e&lt;/span&gt;&lt;/tt&gt; (Read one table entry from each line of input) and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-t&lt;/span&gt;&lt;/tt&gt; (Fill in
+columns before rows) options.  If you specify any arguments of your own,
+then &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-e&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-t&lt;/span&gt;&lt;/tt&gt; will not be in effect unless you specify them
+explicitly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; automatically determines the number of table columns based on what will
+fit in an 80-character line.  To change the line length to, say, 60 characters,
+pass &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-w60&lt;/span&gt;&lt;/tt&gt; to the command (No space is allowed between the option and its
+argument).  To ask for a specific number of table rows and let &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; figure
+out the number of columns, supply the desired number of rows as an argument,
+e.g., &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-e&lt;/span&gt; &lt;span class="pre"&gt;-t&lt;/span&gt; 8 &amp;lt; lines.txt&lt;/tt&gt;.  To ask for a specific number of table
+columns instead, pass a &lt;tt class="docutils literal"&gt;0&lt;/tt&gt; argument (to tell &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; “Figure the number of
+rows out yourself”) followed by the desired number of columns, e.g., &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-e&lt;/span&gt; &lt;span class="pre"&gt;-t&lt;/span&gt;
+0 3 &amp;lt; lines.txt&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;By default, &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; will output every column at the same width; in the example
+above, this results in the first column having more padding on the right than
+is strictly necessary.  The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-z&lt;/span&gt;&lt;/tt&gt; option will get rid of that padding; thus,
+by running &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-e&lt;/span&gt; &lt;span class="pre"&gt;-t&lt;/span&gt; &lt;span class="pre"&gt;-z&lt;/span&gt; &amp;lt; lines.txt&lt;/tt&gt;, we get the following output:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake   Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft       Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn    Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon   Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron    Natty Narwhal     Trusty Tahr       Zesty Zapus
+Intrepid Ibex  Oneiric Ocelot    Utopic Unicorn
+&lt;/pre&gt;
+&lt;p&gt;One thing you might not have noticed about the output is that the last line,
+having fewer columns than the others, ends in several spaces to make the end
+line up with the start of the last column.  &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; doesn’t have an option to
+disable this extra whitespace, but if you really want to get rid of it, you can
+pipe the output through &lt;tt class="docutils literal"&gt;sed &lt;span class="pre"&gt;-e&lt;/span&gt; 's/ &lt;span class="pre"&gt;*$//'&lt;/span&gt;&lt;/tt&gt; to strip all trailing spaces.&lt;/p&gt;
+&lt;p&gt;Lastly, if you want the rows of the table to be filled in before the columns,
+invoke &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-e&lt;/span&gt;&lt;/tt&gt; option and no &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-t&lt;/span&gt;&lt;/tt&gt; option; thus, &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-e&lt;/span&gt; &amp;lt;
+lines.txt&lt;/tt&gt; gives us:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake      Edgy Eft          Feisty Fawn       Gutsy Gibbon
+Hardy Heron       Intrepid Ibex     Jaunty Jackalope  Karmic Koala
+Lucid Lynx        Maverick Meerkat  Natty Narwhal     Oneiric Ocelot
+Precise Pangolin  Quantal Quetzal   Raring Ringtail   Saucy Salamander
+Trusty Tahr       Utopic Unicorn    Vivid Vervet      Wily Werewolf
+Xenial Xerus      Yakkety Yak       Zesty Zapus
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="converting-a-simple-table-to-a-list-of-lines"&gt;
+&lt;h2&gt;Converting a Simple Table to a List of Lines&lt;/h2&gt;
+&lt;p&gt;Say we have the following text saved in &lt;tt class="docutils literal"&gt;table.txt&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake      Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft          Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn       Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon      Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron       Natty Narwhal     Trusty Tahr       Zesty Zapus
+Intrepid Ibex     Oneiric Ocelot    Utopic Unicorn    Artful Aardvark
+&lt;/pre&gt;
+&lt;p&gt;and we want to convert this into a list of table entries, one per line, column
+by column (i.e., we want &lt;tt class="docutils literal"&gt;Intrepid Ibex&lt;/tt&gt; to come before &lt;tt class="docutils literal"&gt;Jaunty Jackalope&lt;/tt&gt;
+in the output).  Because the columns are separated by multiple spaces and the
+table entries also contain spaces, we can’t use &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; by itself to accomplish
+this.  Instead, we first use &lt;tt class="docutils literal"&gt;sed &lt;span class="pre"&gt;-e&lt;/span&gt; 's/ &lt;span class="pre"&gt;\{2,\}/\t/g'&lt;/span&gt;&lt;/tt&gt; to convert runs of two
+or more spaces to tab characters, and then &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; can process the table using
+tabs as the cell delimiter.&lt;/p&gt;
+&lt;p&gt;Next, we have to pipe the output of &lt;tt class="docutils literal"&gt;sed&lt;/tt&gt; through two &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; invocations: the
+first invocation transposes the table so that the second invocation will split
+its entries apart in the correct order (For whatever reason, &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; can’t do
+all this in a single invocation).  The full command line will look like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sed -e 's/ \{2,\}/\t/g' table.txt | rs -c -C -T | rs -c 0 1
+&lt;/pre&gt;
+&lt;p&gt;(The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-c&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-C&lt;/span&gt;&lt;/tt&gt; options tell &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; to use a tab as the input and output
+column delimiters, respectively.)&lt;/p&gt;
+&lt;p&gt;This works fine for the table above, but if the last column is short by two or
+more columns, like so:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake      Jaunty Jackalope  Precise Pangolin  Vivid Vervet
+Edgy Eft          Karmic Koala      Quantal Quetzal   Wily Werewolf
+Feisty Fawn       Lucid Lynx        Raring Ringtail   Xenial Xerus
+Gutsy Gibbon      Maverick Meerkat  Saucy Salamander  Yakkety Yak
+Hardy Heron       Natty Narwhal     Trusty Tahr
+Intrepid Ibex     Oneiric Ocelot    Utopic Unicorn
+&lt;/pre&gt;
+&lt;p&gt;then &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; will not do what we want by default.  When the &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-c&lt;/span&gt; &lt;span class="pre"&gt;-C&lt;/span&gt; &lt;span class="pre"&gt;-T&lt;/span&gt;&lt;/tt&gt; step
+goes to transpose its input, it finds that a direct transposition would result
+in the last two columns of the output being short, which &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; dislikes, and
+so it decides to fix things by moving “Intrepid Ibex” (the next cell after
+“Trusty Tahr”) to the cell below “Trusty Tahr” and right of “Yakkety Yak” in
+the output, producing this (with tabs converted to aligned spaces to make it
+easier to read):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake      Edgy Eft          Feisty Fawn       Gutsy Gibbon      Hardy Heron       Oneiric Ocelot
+Jaunty Jackalope  Karmic Koala      Lucid Lynx        Maverick Meerkat  Natty Narwhal     Utopic Unicorn
+Precise Pangolin  Quantal Quetzal   Raring Ringtail   Saucy Salamander  Trusty Tahr
+Vivid Vervet      Wily Werewolf     Xenial Xerus      Yakkety Yak       Intrepid Ibex
+&lt;/pre&gt;
+&lt;p&gt;and then when this table is flattened with &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-c&lt;/span&gt; 0 1&lt;/tt&gt;, the output will be in
+the wrong order.&lt;/p&gt;
+&lt;p&gt;We can tell &lt;tt class="docutils literal"&gt;rs&lt;/tt&gt; to not do this by passing the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-n&lt;/span&gt;&lt;/tt&gt; option to the &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-c&lt;/span&gt;
+&lt;span class="pre"&gt;-C&lt;/span&gt; &lt;span class="pre"&gt;-T&lt;/span&gt;&lt;/tt&gt; command, which will make it output an all-blank entry below “Trusty”
+and right of “Yakkety” in the output instead of moving “Intrepid.”  However,
+this blank cell will result in the final &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-c&lt;/span&gt; 0 1&lt;/tt&gt; command printing blank
+lines at the end of the output; we can avoid this by stripping trailing tabs
+before passing the table on.  Hence, the final command line, that works
+regardless of how short the last column happens to be, is:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sed -e 's/ \{2,\}/\t/g' table.txt | rs -c -C -T -n | sed -e 's/\t*$//' | rs -c 0 1
+&lt;/pre&gt;
+&lt;p&gt;On the other hand, if the table we’re converting to a list happens to be read
+by going across the first row, then the second row, etc. — e.g., if it was
+produced with &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-e&lt;/span&gt;&lt;/tt&gt; without the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-t&lt;/span&gt;&lt;/tt&gt; option — instead of being read by
+going down the first, second, etc. column, then the whole business with &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-c&lt;/span&gt;
+&lt;span class="pre"&gt;-C&lt;/span&gt; &lt;span class="pre"&gt;-T&lt;/span&gt; &lt;span class="pre"&gt;-n&lt;/span&gt;&lt;/tt&gt; and stripping trailing tabs is unnecessary, and we can turn this
+table:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Dapper Drake      Edgy Eft          Feisty Fawn       Gutsy Gibbon
+Hardy Heron       Intrepid Ibex     Jaunty Jackalope  Karmic Koala
+Lucid Lynx        Maverick Meerkat  Natty Narwhal     Oneiric Ocelot
+Precise Pangolin  Quantal Quetzal   Raring Ringtail   Saucy Salamander
+Trusty Tahr       Utopic Unicorn    Vivid Vervet      Wily Werewolf
+Xenial Xerus      Yakkety Yak
+&lt;/pre&gt;
+&lt;p&gt;into a list by just running:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sed -e 's/ \{2,\}/\t/g' table.txt | rs -c 0 1
+&lt;/pre&gt;
+&lt;/div&gt;
+</content><category term="Software"></category><category term="rs"></category><category term="tables"></category><category term="text processing"></category><category term="Unix utilities"></category></entry></feed>
