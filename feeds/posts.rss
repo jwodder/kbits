@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Knowledge Bits</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Wed, 03 May 2023 00:00:00 -0400</lastBuildDate><item><title>Converting Lists to Simple Tables and Back with rs</title><link>https://jwodder.github.io/kbits/posts/reshaping/</link><description>&lt;p class="first last"&gt;If you have a file that’s just a list of items, one item per line, and you
+<rss version="2.0"><channel><title>Knowledge Bits</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Thu, 28 Sep 2023 00:00:00 -0400</lastBuildDate><item><title>Converting Lists to Simple Tables and Back with rs</title><link>https://jwodder.github.io/kbits/posts/reshaping/</link><description>&lt;p class="first last"&gt;If you have a file that’s just a list of items, one item per line, and you
 want to turn it into a simple table — one delimited just by whitespace
 without any border characters — how would you do that?  Follow up question:
 If you have a simple table, and you want to convert it into a list of

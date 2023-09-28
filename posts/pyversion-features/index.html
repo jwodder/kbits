@@ -61,7 +61,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2022-10-25T00:00:00-04:00">2022-10-25</time></td>
+                    <td><time datetime="2023-09-28T00:00:00-04:00">2023-09-28</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -112,6 +112,8 @@ Python 3.0.</p>
 <li><p class="first"><a class="reference internal" href="#python-3-10-2021-10-04" id="toc-entry-11">Python 3.10 (2021-10-04)</a></p>
 </li>
 <li><p class="first"><a class="reference internal" href="#python-3-11-2022-10-03" id="toc-entry-12">Python 3.11 (2022-10-03)</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#python-3-12-2023-10-02" id="toc-entry-13">Python 3.12 (2023-10-02)</a></p>
 </li>
 </ul>
 </div>
@@ -1075,11 +1077,12 @@ source and destination are the same file</p>
 </li>
 <li><p class="first"><tt class="docutils literal">importlib</tt> module: A number of methods &amp; functions are deprecated</p>
 </li>
-<li><p class="first">The <tt class="docutils literal">imp</tt> module is now pending deprecation</p>
+<li><p class="first">The <tt class="docutils literal">imp</tt> module is now deprecated and will be removed in Python 3.12</p>
 </li>
-<li><p class="first">The <tt class="docutils literal">formatter</tt> module is now deprecated</p>
+<li><p class="first">The <tt class="docutils literal">formatter</tt> module is now deprecated and will be removed in Python 3.10</p>
 </li>
-<li><p class="first">The <tt class="docutils literal">U</tt> mode of various “open” functions is now deprecated</p>
+<li><p class="first">The <tt class="docutils literal">U</tt> mode of various “open” functions is now deprecated and will be
+removed in Python 3.11</p>
 </li>
 </ul>
 </div>
@@ -1189,7 +1192,8 @@ preserved on output; the <tt class="docutils literal"><span class="pre">--sort-k
 </li>
 <li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">isclose()</tt>, <tt class="docutils literal">gcd()</tt>, <tt class="docutils literal">inf</tt>, and <tt class="docutils literal">nan</tt> added</p>
 </li>
-<li><p class="first"><tt class="docutils literal">fractions</tt> module: <tt class="docutils literal">gcd()</tt> is now deprecated</p>
+<li><p class="first"><tt class="docutils literal">fractions</tt> module: <tt class="docutils literal">gcd()</tt> is now deprecated and will be removed in
+Python 3.9</p>
 </li>
 <li><p class="first"><tt class="docutils literal">operator</tt> module: <tt class="docutils literal">matmul()</tt> and <tt class="docutils literal">imatmul()</tt> added</p>
 </li>
@@ -1330,6 +1334,8 @@ regular expressions</p>
 </li>
 <li><p class="first"><tt class="docutils literal">statistics</tt> module: <tt class="docutils literal">harmonic_mean()</tt> added</p>
 </li>
+<li><p class="first">The <tt class="docutils literal">smtpd</tt> module is now deprecated and will be removed in Python 3.12</p>
+</li>
 <li><p class="first"><tt class="docutils literal">subprocess</tt> module:</p>
 <ul>
 <li><p class="first"><tt class="docutils literal">encoding</tt> and <tt class="docutils literal">errors</tt> arguments added to <tt class="docutils literal">Popen</tt> and the wrappers
@@ -1370,9 +1376,11 @@ path-like object or sequence of path-like objects on POSIX systems</p>
 </li>
 <li><p class="first">Invalid escape sequences now generate a <tt class="docutils literal">DeprecationWarning</tt></p>
 </li>
-<li><p class="first">The <tt class="docutils literal">asynchat</tt> and <tt class="docutils literal">asyncore</tt> modules are now deprecated</p>
+<li><p class="first">The <tt class="docutils literal">asynchat</tt> and <tt class="docutils literal">asyncore</tt> modules are now deprecated and will be
+removed in Python 3.12</p>
 </li>
-<li><p class="first">The <tt class="docutils literal">pyvenv</tt> script for creating venvs is now deprecated</p>
+<li><p class="first">The <tt class="docutils literal">pyvenv</tt> script for creating venvs is now deprecated and will be
+removed in Python 3.8</p>
 </li>
 <li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 9.0.0</p>
 </li>
@@ -1440,6 +1448,9 @@ offsets containing colons as well as a timezone specifier of “<tt class="docut
 </li>
 <li><p class="first"><tt class="docutils literal">ipaddress</tt> module: <tt class="docutils literal">subnet_of()</tt> and <tt class="docutils literal">supernet_of()</tt> methods added to
 <tt class="docutils literal">IPv4Network</tt> and <tt class="docutils literal">IPv6Network</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">locale</tt> module: <tt class="docutils literal">format()</tt> is now deprecated and will be removed in
+Python 3.12</p>
 </li>
 <li><p class="first"><tt class="docutils literal">math</tt> module: <tt class="docutils literal">remainder()</tt> added</p>
 </li>
@@ -1509,10 +1520,10 @@ modular multiplicative inverse (or a power thereof) is calculated</p>
 <li><p class="first"><tt class="docutils literal">CancelledError</tt> now inherits directly from <tt class="docutils literal">BaseException</tt> instead of
 <tt class="docutils literal">Exception</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal">coroutine()</tt> is now deprecated</p>
+<li><p class="first"><tt class="docutils literal">coroutine()</tt> is now deprecated and will be removed in Python 3.11</p>
 </li>
 <li><p class="first">Passing a <tt class="docutils literal">loop</tt> parameter is now deprecated for most of <tt class="docutils literal">asyncio</tt>’s
-high-level API</p>
+high-level API; it will be removed entirely in Python 3.10</p>
 </li>
 <li><p class="first">Explicitly passing coroutines to <tt class="docutils literal">wait()</tt> is now deprecated</p>
 </li>
@@ -1700,8 +1711,8 @@ Python 3.1)</p>
 statements are no longer supported; use <tt class="docutils literal">async with lock</tt> instead.
 Likewise for <tt class="docutils literal">asyncio.Condition</tt> and <tt class="docutils literal">asyncio.Semaphore</tt>.</p>
 </li>
-<li><p class="first"><tt class="docutils literal">lib2to3</tt> now emits a <tt class="docutils literal">PendingDeprecationWarning</tt> and may be removed in a
-future Python version</p>
+<li><p class="first"><tt class="docutils literal">lib2to3</tt> now emits a <tt class="docutils literal">PendingDeprecationWarning</tt> and will be removed in
+Python 3.13</p>
 </li>
 <li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 13.0.0</p>
 </li>
@@ -1863,6 +1874,9 @@ or documented until 3.11.</p>
 </li>
 </ul>
 </li>
+<li><p class="first">Octal escapes in string &amp; bytes literals with values greater than 0o377
+(e.g., <tt class="docutils literal">\477</tt>) now generate a <tt class="docutils literal">DeprecationWarning</tt></p>
+</li>
 <li><p class="first">The various “open” functions no longer accept the <tt class="docutils literal">U</tt> mode</p>
 </li>
 <li><p class="first">New <tt class="docutils literal">object</tt> method: <tt class="docutils literal">__getstate__()</tt></p>
@@ -1870,7 +1884,7 @@ or documented until 3.11.</p>
 <li><p class="first">New <tt class="docutils literal">BaseException</tt> method: <tt class="docutils literal">add_note()</tt></p>
 </li>
 <li><p class="first">Chaining <tt class="docutils literal">&#64;classmethod</tt> decorators and using them to wrap other decorators
-(such as <tt class="docutils literal">&#64;property</tt>) is now deprecated</p>
+(such as <tt class="docutils literal">&#64;property</tt>) is now deprecated and will be removed in Python 3.13</p>
 </li>
 <li><p class="first">Format specification mini-language: A <tt class="docutils literal">z</tt> option can now be used with
 floating-point types in order to coerce negative zero to “regular” zero after
@@ -1929,7 +1943,7 @@ new objects are backwards-compatible with the tuple interface)</p>
 </li>
 <li><p class="first"><tt class="docutils literal">locale</tt> module:</p>
 <ul>
-<li><p class="first"><tt class="docutils literal">getdefaultlocale()</tt> is now deprecated</p>
+<li><p class="first"><tt class="docutils literal">getdefaultlocale()</tt> is now deprecated and will be removed in Python 3.13</p>
 </li>
 <li><p class="first"><tt class="docutils literal">getencoding()</tt> added</p>
 </li>
@@ -1966,7 +1980,7 @@ regular expressions</p>
 </li>
 <li><p class="first"><tt class="docutils literal">typing</tt> module:</p>
 <ul>
-<li><p class="first"><tt class="docutils literal">LiteralString</tt>, <tt class="docutils literal">Never</tt>, <tt class="docutils literal">Self</tt>, <tt class="docutils literal">TypeVarTuple</tt>,
+<li><p class="first"><tt class="docutils literal">LiteralString</tt>, <tt class="docutils literal">Never</tt>, <tt class="docutils literal">Self</tt>, <tt class="docutils literal">TypeVarTuple</tt>, <tt class="docutils literal">Unpack</tt>,
 <tt class="docutils literal">assert_never()</tt>, <tt class="docutils literal">assert_type()</tt>, <tt class="docutils literal">clear_overloads()</tt>,
 <tt class="docutils literal">get_overloads()</tt>, <tt class="docutils literal">&#64;dataclass_transform</tt>, and <tt class="docutils literal">reveal_type()</tt> added</p>
 </li>
@@ -1988,7 +2002,7 @@ deprecated and will be removed in Python 3.13</p>
 </li>
 <li><p class="first"><tt class="docutils literal">ZipFile.mkdir()</tt> added</p>
 </li>
-<li><p class="first"><tt class="docutils literal">step</tt>, <tt class="docutils literal">suffix</tt>, and <tt class="docutils literal">suffixes</tt> attributes added to <tt class="docutils literal">zipfile.Path</tt></p>
+<li><p class="first"><tt class="docutils literal">stem</tt>, <tt class="docutils literal">suffix</tt>, and <tt class="docutils literal">suffixes</tt> attributes added to <tt class="docutils literal">zipfile.Path</tt></p>
 </li>
 </ul>
 </li>
@@ -1997,6 +2011,373 @@ Python 3.13: <tt class="docutils literal">aifc</tt>, <tt class="docutils literal
 <tt class="docutils literal">imghdr</tt>, <tt class="docutils literal">mailcap</tt>, <tt class="docutils literal">msilib</tt>, <tt class="docutils literal">nis</tt>, <tt class="docutils literal">nntplib</tt>, <tt class="docutils literal">ossaudiodev</tt>,
 <tt class="docutils literal">pipes</tt>, <tt class="docutils literal">sndhdr</tt>, <tt class="docutils literal">spwd</tt>, <tt class="docutils literal">sunau</tt>, <tt class="docutils literal">telnetlib</tt>, <tt class="docutils literal">uu</tt>, and
 <tt class="docutils literal">xdrlib</tt></p>
+</li>
+</ul>
+</div>
+<div class="section" id="python-3-12-2023-10-02">
+<h2><a class="toc-backref" href="#contents">Python 3.12 (2023-10-02)</a></h2>
+<p>Release notes: <a class="reference external" href="https://docs.python.org/3.12/whatsnew/3.12.html">[link]</a></p>
+<ul>
+<li><p class="first">New syntax for type-annotating generic classes, generic functions, and type
+aliases:</p>
+<ul>
+<li><p class="first">Generic class:</p>
+<ul>
+<li><p class="first">Old syntax:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span><span class="w">
+
+</span><span class="n">T_str</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_str&quot;</span><span class="p">,</span> <span class="n">covariant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span><span class="w">
+
+</span><span class="k">class</span> <span class="nc">ClassA</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T_str</span><span class="p">]):</span><span class="w">
+</span>    <span class="k">def</span> <span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_str</span><span class="p">:</span><span class="w">
+</span>        <span class="o">...</span>
+</pre>
+</li>
+<li><p class="first">New syntax:</p>
+<pre class="code python literal-block">
+<span class="c1"># No Generic or TypeVar</span><span class="w">
+
+</span><span class="k">class</span> <span class="nc">ClassA</span><span class="p">[</span><span class="n">T</span><span class="p">:</span> <span class="nb">str</span><span class="p">]:</span><span class="w">
+</span>    <span class="k">def</span> <span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
+</span>        <span class="o">...</span>
+</pre>
+</li>
+</ul>
+</li>
+<li><p class="first">Generic function:</p>
+<ul>
+<li><p class="first">Old syntax:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="w">
+
+</span><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="w">
+
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
+</span>    <span class="o">...</span>
+</pre>
+</li>
+<li><p class="first">New syntax:</p>
+<pre class="code python literal-block">
+<span class="c1"># No TypeVar</span><span class="w">
+
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">[</span><span class="n">T</span><span class="p">](</span><span class="n">a</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
+</span>    <span class="o">...</span>
+</pre>
+</li>
+</ul>
+</li>
+<li><p class="first">Type alias:</p>
+<ul>
+<li><p class="first">Old syntax:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="w">
+
+</span><span class="n">IntOrStr</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span>
+</pre>
+</li>
+<li><p class="first">New syntax:</p>
+<pre class="code python literal-block">
+<span class="nb">type</span> <span class="n">IntOrStr</span> <span class="o">=</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span>
+</pre>
+</li>
+</ul>
+</li>
+<li><p class="first">Generic type alias:</p>
+<ul>
+<li><p class="first">Old syntax:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="w">
+
+</span><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ListOrSet</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="o">|</span> <span class="nb">set</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
+</pre>
+</li>
+<li><p class="first">New syntax:</p>
+<pre class="code python literal-block">
+<span class="c1"># No TypeVar</span><span class="w">
+
+</span><span class="nb">type</span> <span class="n">ListOrSet</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="o">|</span> <span class="nb">set</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
+</pre>
+</li>
+</ul>
+</li>
+<li><p class="first">Variadic type alias:</p>
+<ul>
+<li><p class="first">Old syntax:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypeVarTuple</span><span class="w">
+
+</span><span class="n">Ts</span> <span class="o">=</span> <span class="n">TypeVarTuple</span><span class="p">(</span><span class="s2">&quot;Ts&quot;</span><span class="p">)</span><span class="w">
+
+</span><span class="n">IntEtc</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">Ts</span><span class="p">]</span>
+</pre>
+</li>
+<li><p class="first">New syntax:</p>
+<pre class="code python literal-block">
+<span class="nb">type</span> <span class="n">IntEtc</span><span class="p">[</span><span class="o">*</span><span class="n">Ts</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">Ts</span><span class="p">]</span>
+</pre>
+</li>
+</ul>
+</li>
+<li><p class="first">Type alias with a parameter spec:</p>
+<ul>
+<li><p class="first">Old syntax:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="w">
+</span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ParamSpec</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="w">
+
+</span><span class="n">P</span> <span class="o">=</span> <span class="n">ParamSpec</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">)</span><span class="w">
+
+</span><span class="n">IntMaker</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+</pre>
+</li>
+<li><p class="first">New syntax:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="w">
+
+</span><span class="nb">type</span> <span class="n">IntMaker</span><span class="p">[</span><span class="o">**</span><span class="n">P</span><span class="p">]</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p class="first">Types of individual fields in a <tt class="docutils literal">**kwargs</tt> function parameter can now be
+annotated with <tt class="docutils literal">typing.Unpack</tt> applied to a <tt class="docutils literal">TypedDict</tt>, like so:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">Unpack</span><span class="w">
+
+</span><span class="k">class</span> <span class="nc">Movie</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span><span class="w">
+</span>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="w">
+</span>    <span class="n">year</span><span class="p">:</span> <span class="nb">int</span><span class="w">
+
+</span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Unpack</span><span class="p">[</span><span class="n">Movie</span><span class="p">]):</span><span class="w">
+</span>    <span class="c1"># kwargs[&quot;name&quot;] must be passed a `str`, and kwargs[&quot;year&quot;] must be</span><span class="w">
+</span>    <span class="c1"># passed an `int`.</span><span class="w">
+</span>    <span class="o">...</span>
+</pre>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">{..}</span></tt> placeholders inside f-strings may now contain any valid Python
+expression</p>
+<ul>
+<li><p class="first">Quotes from the enclosing string may now be reused:</p>
+<pre class="code pycon literal-block">
+<span class="gp">&gt;&gt;&gt; </span><span class="n">songs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Take me back to Eden'</span><span class="p">,</span> <span class="s1">'Alkaline'</span><span class="p">,</span> <span class="s1">'Ascensionism'</span><span class="p">]</span><span class="w">
+</span><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;This is the playlist: </span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">
+</span><span class="go">'This is the playlist: Take me back to Eden, Alkaline, Ascensionism'</span>
+</pre>
+</li>
+<li><p class="first">Expressions inside f-strings may now span multiple lines and contain inline
+comments.</p>
+</li>
+<li><p class="first">Expressions inside f-strings may now contain backslashes.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">The buffer protocol is now accessible in Python code:</p>
+<ul>
+<li><p class="first">Special methods <tt class="docutils literal">__buffer__()</tt> and <tt class="docutils literal">__release_buffer__()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections.abc</tt> module: <tt class="docutils literal">Buffer</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">BufferFlags</tt> added</p>
+</li>
+</ul>
+</li>
+<li><p class="first">Source code containing NUL bytes now results in a <tt class="docutils literal">SyntaxError</tt></p>
+</li>
+<li><p class="first">Invalid escape sequences now generate a <tt class="docutils literal">SyntaxWarning</tt></p>
+</li>
+<li><p class="first">Octal escapes in string &amp; bytes literals with values greater than 0o377
+(e.g., <tt class="docutils literal">\477</tt>) now generate a <tt class="docutils literal">SyntaxWarning</tt></p>
+</li>
+<li><p class="first">Applying <tt class="docutils literal">~</tt> (bitwise inversion) to a <tt class="docutils literal">bool</tt> is now deprecated and will
+become an error in Python 3.14.</p>
+</li>
+<li><p class="first">Removed modules:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">asynchat</tt> (deprecated in Python 3.6)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">asyncore</tt> (deprecated in Python 3.6)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">distutils</tt> (deprecated in Python 3.10)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">imp</tt> (deprecated in Python 3.4)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">smtpd</tt> (deprecated in Python 3.6)</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">array</tt> module: The <tt class="docutils literal">array</tt> class is now subscriptable and thus properly
+generic</p>
+</li>
+<li><p class="first"><tt class="docutils literal">ast</tt> module: Accessing or using any of <tt class="docutils literal">Bytes</tt>, <tt class="docutils literal">Ellipsis</tt>,
+<tt class="docutils literal">NameConstant</tt>, <tt class="docutils literal">Num</tt>, and <tt class="docutils literal">Str</tt> now generates a
+<tt class="docutils literal">DeprecationWarning</tt>.  They are planned to be removed in Python 3.14.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">asyncio</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">as_completed()</tt> and <tt class="docutils literal">wait()</tt> now accept generators yielding tasks</p>
+</li>
+<li><p class="first"><tt class="docutils literal">create_eager_task_factory()</tt> and <tt class="docutils literal">eager_task_factory()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">run()</tt> now takes an optional <tt class="docutils literal">loop_factory</tt> parameter</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">calendar</tt> module: <tt class="docutils literal">Day</tt> and <tt class="docutils literal">Month</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">collections.abc</tt> module: <tt class="docutils literal">ByteString</tt> is now deprecated and will be
+removed in Python 3.14</p>
+</li>
+<li><p class="first"><tt class="docutils literal">configparser</tt> module: <tt class="docutils literal">ConfigParser.readfp()</tt>,
+<tt class="docutils literal">ParsingError.filename</tt>, and <tt class="docutils literal">SafeConfigParser</tt> removed (deprecated in
+Python 3.2)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">datetime</tt> module: <tt class="docutils literal">datetime.utcnow()</tt> and <tt class="docutils literal">datetime.utctimestamp()</tt>
+are now deprecated</p>
+</li>
+<li><p class="first"><tt class="docutils literal">fraction</tt> module: <tt class="docutils literal">Fraction</tt> instances now support float-style
+formatting</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib.abc</tt> module: <tt class="docutils literal">ResourceReader</tt>, <tt class="docutils literal">Traversable</tt>, and
+<tt class="docutils literal">TraversableResources</tt> are now deprecated and will be removed in Python
+3.14</p>
+</li>
+<li><p class="first"><tt class="docutils literal">importlib.resources</tt>: <tt class="docutils literal">as_file()</tt> now supports resource directories</p>
+</li>
+<li><p class="first"><tt class="docutils literal">inspect</tt> module: <tt class="docutils literal">getasyncgenlocals()</tt>, <tt class="docutils literal">getasyncgenstate()</tt>, and
+<tt class="docutils literal">markcoroutinefunction()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">itertools</tt>: <tt class="docutils literal">batched()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">locale</tt> module: <tt class="docutils literal">format()</tt> removed (deprecated in Python 3.7)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">math</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">nextafter()</tt> now takes an optional <tt class="docutils literal">steps</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">sumprod()</tt> added</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">os</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">DirEntry.is_junction()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">listdrives()</tt>, <tt class="docutils literal">listmounts()</tt>, <tt class="docutils literal">listvolumes()</tt>, <tt class="docutils literal">pidfd_open()</tt>,
+<tt class="docutils literal">setns()</tt>, and <tt class="docutils literal">unshare()</tt> added</p>
+</li>
+<li><p class="first">Calling <tt class="docutils literal">fork()</tt> or <tt class="docutils literal">forkpty()</tt> in a multithreaded program now
+generates a <tt class="docutils literal">DeprecationWarning</tt></p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">os.path</tt> module: <tt class="docutils literal">isjunction()</tt> and <tt class="docutils literal">splitroot()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pathlib</tt> module:</p>
+<ul>
+<li><p class="first">Path classes can now be subclassed</p>
+</li>
+<li><p class="first"><tt class="docutils literal">PurePath.with_segments()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Path.is_junction()</tt> and <tt class="docutils literal">Path.walk()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">PurePath.match()</tt>, <tt class="docutils literal">Path.glob()</tt>, and <tt class="docutils literal">Path.rglob()</tt> now take an
+optional <tt class="docutils literal">case_sensitive</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">PurePath.relative_to()</tt> now takes an optional <tt class="docutils literal">walk_up</tt> parameter</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">pkgutil</tt> module: <tt class="docutils literal">find_loader()</tt> and <tt class="docutils literal">get_loader()</tt> are now deprecated
+and will be removed in Python 3.14</p>
+</li>
+<li><p class="first"><tt class="docutils literal">random</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">binomialvariate()</tt> added</p>
+</li>
+<li><p class="first">The <tt class="docutils literal">lambd</tt> argument to <tt class="docutils literal">expovariate()</tt> now defaults to <tt class="docutils literal">1.0</tt></p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">shutil</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">rmtree()</tt> now takes an optional <tt class="docutils literal">onexc</tt> parameter.  The <tt class="docutils literal">onerror</tt>
+parameter is deprecated and will be removed in Python 3.14.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unpack_archive()</tt> now takes an optional <tt class="docutils literal">filter</tt> parameter for
+limiting what gets extracted from tar archives</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">sqlite3</tt> module:</p>
+<ul>
+<li><p class="first">Command-line interface added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">connect()</tt> now takes an optional <tt class="docutils literal">autocommit</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Connection.autocommit</tt>, <tt class="docutils literal">Connection.getconfig()</tt>, and
+<tt class="docutils literal">Connection.setconfig()</tt> added</p>
+</li>
+<li><p class="first">The default adapters and converters are now deprecated</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">ssl</tt> module: <tt class="docutils literal">match_hostname()</tt> and <tt class="docutils literal">wrap_socket()</tt> removed
+(deprecated in Python 3.7)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">statistics</tt> module: <tt class="docutils literal">correlation()</tt> now takes an optional <tt class="docutils literal">method</tt>
+parameter that can be either <tt class="docutils literal">&quot;linear&quot;</tt> (the default) or <tt class="docutils literal">&quot;ranked&quot;</tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal">sys</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">activate_stack_trampoline()</tt>, <tt class="docutils literal">deactivate_stack_trampoline()</tt>,
+<tt class="docutils literal">is_stack_trampoline_active()</tt>, and <tt class="docutils literal">last_exc</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">last_type</tt>, <tt class="docutils literal">last_value</tt>, and <tt class="docutils literal">last_traceback</tt> are now deprecated</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">sys.monitoring</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">tarfile</tt> module: The <tt class="docutils literal">TarFile.extract()</tt> and <tt class="docutils literal">TarFile.extractall()</tt>
+methods now take an optional <tt class="docutils literal">filter</tt> parameter for limiting what
+gets extracted in order to avoid security issues.  Calling one of these
+methods without setting a filter will generate a <tt class="docutils literal">DeprecationWarning</tt> until
+Python 3.14, in which the default filter will become <tt class="docutils literal">&quot;data&quot;</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">tempfile</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">NamedTemporaryFile</tt> now takes an optional <tt class="docutils literal">delete_on_close</tt> parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">mkdtemp()</tt> now always returns an absolute path</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">types</tt> module: <tt class="docutils literal">get_original_bases()</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">typing</tt> module:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">override</tt> added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">dataclass_transform()</tt> now takes an optional <tt class="docutils literal">frozen_default</tt>
+parameter</p>
+</li>
+<li><p class="first"><tt class="docutils literal">Hashable</tt> and <tt class="docutils literal">Sized</tt> are now deprecated</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">unicodedata</tt> updated to Unicode 15.0.0</p>
+</li>
+<li><p class="first"><tt class="docutils literal">unittest</tt> command-line interface: <tt class="docutils literal"><span class="pre">--durations</span></tt> option added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">uuid</tt> module: Command-line interface added</p>
+</li>
+<li><p class="first"><tt class="docutils literal">venv</tt> module: <tt class="docutils literal">setuptools</tt> is no longer automatically installed in
+virtual environments</p>
 </li>
 </ul>
 </div>
