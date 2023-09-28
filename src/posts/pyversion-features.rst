@@ -3,7 +3,7 @@ Notable Features Introduced in Each Python Version
 ==================================================
 
 :Date: 2021-07-11
-:Modified: 2022-10-25
+:Modified: 2023-09-28
 :Category: Programming
 :Tags: Python, history
 :Summary:
@@ -833,11 +833,12 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.4.html>`__
 
 - ``importlib`` module: A number of methods & functions are deprecated
 
-- The ``imp`` module is now pending deprecation
+- The ``imp`` module is now deprecated and will be removed in Python 3.12
 
-- The ``formatter`` module is now deprecated
+- The ``formatter`` module is now deprecated and will be removed in Python 3.10
 
-- The ``U`` mode of various "open" functions is now deprecated
+- The ``U`` mode of various "open" functions is now deprecated and will be
+  removed in Python 3.11
 
 
 Python 3.5 (2015-09-13)
@@ -934,7 +935,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.5.html>`__
 
 - ``math`` module: ``isclose()``, ``gcd()``, ``inf``, and ``nan`` added
 
-- ``fractions`` module: ``gcd()`` is now deprecated
+- ``fractions`` module: ``gcd()`` is now deprecated and will be removed in
+  Python 3.9
 
 - ``operator`` module: ``matmul()`` and ``imatmul()`` added
 
@@ -1062,6 +1064,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.6.html>`__
 
 - ``statistics`` module: ``harmonic_mean()`` added
 
+- The ``smtpd`` module is now deprecated and will be removed in Python 3.12
+
 - ``subprocess`` module:
 
   - ``encoding`` and ``errors`` arguments added to ``Popen`` and the wrappers
@@ -1093,9 +1097,11 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.6.html>`__
 
 - Invalid escape sequences now generate a ``DeprecationWarning``
 
-- The ``asynchat`` and ``asyncore`` modules are now deprecated
+- The ``asynchat`` and ``asyncore`` modules are now deprecated and will be
+  removed in Python 3.12
 
-- The ``pyvenv`` script for creating venvs is now deprecated
+- The ``pyvenv`` script for creating venvs is now deprecated and will be
+  removed in Python 3.8
 
 - ``unicodedata`` updated to Unicode 9.0.0
 
@@ -1158,6 +1164,9 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.7.html>`__
 
 - ``ipaddress`` module: ``subnet_of()`` and ``supernet_of()`` methods added to
   ``IPv4Network`` and ``IPv6Network``
+
+- ``locale`` module: ``format()`` is now deprecated and will be removed in
+  Python 3.12
 
 - ``math`` module: ``remainder()`` added
 
@@ -1224,9 +1233,9 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.8.html>`__
 
   - ``CancelledError`` now inherits directly from ``BaseException`` instead of
     ``Exception``
-  - ``coroutine()`` is now deprecated
+  - ``coroutine()`` is now deprecated and will be removed in Python 3.11
   - Passing a ``loop`` parameter is now deprecated for most of ``asyncio``'s
-    high-level API
+    high-level API; it will be removed entirely in Python 3.10
   - Explicitly passing coroutines to ``wait()`` is now deprecated
 
 - ``datetime`` module: New ``date`` and ``datetime`` method:
@@ -1372,8 +1381,8 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.9.html>`__
   statements are no longer supported; use ``async with lock`` instead.
   Likewise for ``asyncio.Condition`` and ``asyncio.Semaphore``.
 
-- ``lib2to3`` now emits a ``PendingDeprecationWarning`` and may be removed in a
-  future Python version
+- ``lib2to3`` now emits a ``PendingDeprecationWarning`` and will be removed in
+  Python 3.13
 
 - ``unicodedata`` updated to Unicode 13.0.0
 
@@ -1523,6 +1532,9 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
   - This was enabled by the grammar rewrite in Python 3.9 but was not noticed
     or documented until 3.11.
 
+- Octal escapes in string & bytes literals with values greater than 0o377
+  (e.g., ``\477``) now generate a ``DeprecationWarning``
+
 - The various "open" functions no longer accept the ``U`` mode
 
 - New ``object`` method: ``__getstate__()``
@@ -1530,7 +1542,7 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 - New ``BaseException`` method: ``add_note()``
 
 - Chaining ``@classmethod`` decorators and using them to wrap other decorators
-  (such as ``@property``) is now deprecated
+  (such as ``@property``) is now deprecated and will be removed in Python 3.13
 
 - Format specification mini-language: A ``z`` option can now be used with
   floating-point types in order to coerce negative zero to "regular" zero after
@@ -1576,7 +1588,7 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 
 - ``locale`` module:
 
-  - ``getdefaultlocale()`` is now deprecated
+  - ``getdefaultlocale()`` is now deprecated and will be removed in Python 3.13
   - ``getencoding()`` added
 
 - ``logging`` module:
@@ -1604,7 +1616,7 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 
 - ``typing`` module:
 
-  - ``LiteralString``, ``Never``, ``Self``, ``TypeVarTuple``,
+  - ``LiteralString``, ``Never``, ``Self``, ``TypeVarTuple``, ``Unpack``,
     ``assert_never()``, ``assert_type()``, ``clear_overloads()``,
     ``get_overloads()``, ``@dataclass_transform``, and ``reveal_type()`` added
   - ``Text`` is now deprecated
@@ -1619,10 +1631,327 @@ Release notes: `[link] <https://docs.python.org/3.11/whatsnew/3.11.html>`__
 
   - ``metadata_encoding`` argument added to ``ZipFile`` constructor
   - ``ZipFile.mkdir()`` added
-  - ``step``, ``suffix``, and ``suffixes`` attributes added to ``zipfile.Path``
+  - ``stem``, ``suffix``, and ``suffixes`` attributes added to ``zipfile.Path``
 
 - The following modules are now deprecated and are planned to be removed in
   Python 3.13: ``aifc``, ``audioop``, ``cgi``, ``cgitb``, ``chunk``, ``crypt``,
   ``imghdr``, ``mailcap``, ``msilib``, ``nis``, ``nntplib``, ``ossaudiodev``,
   ``pipes``, ``sndhdr``, ``spwd``, ``sunau``, ``telnetlib``, ``uu``, and
   ``xdrlib``
+
+
+Python 3.12 (2023-10-02)
+========================
+
+Release notes: `[link] <https://docs.python.org/3.12/whatsnew/3.12.html>`__
+
+- New syntax for type-annotating generic classes, generic functions, and type
+  aliases:
+
+  - Generic class:
+
+    - Old syntax:
+
+      .. code:: python
+
+        from typing import Generic, TypeVar
+
+        T_str = TypeVar("T_str", covariant=True, bound=str)
+
+        class ClassA(Generic[T_str]):
+            def method1(self) -> T_str:
+                ...
+
+    - New syntax:
+
+      .. code:: python
+
+        # No Generic or TypeVar
+
+        class ClassA[T: str]:
+            def method1(self) -> T:
+                ...
+
+  - Generic function:
+
+    - Old syntax:
+
+      .. code:: python
+
+        from typing import TypeVar
+
+        T = TypeVar("T")
+
+        def func(a: T, b: T) -> T:
+            ...
+
+    - New syntax:
+
+      .. code:: python
+
+        # No TypeVar
+
+        def func[T](a: T, b: T) -> T:
+            ...
+
+  - Type alias:
+
+    - Old syntax:
+
+      .. code:: python
+
+        from typing import TypeAlias
+
+        IntOrStr: TypeAlias = int | str
+
+    - New syntax:
+
+      .. code:: python
+
+        type IntOrStr = int | str
+
+  - Generic type alias:
+
+    - Old syntax:
+
+      .. code:: python
+
+        from typing import TypeAlias
+
+        T = TypeVar("T")
+
+        ListOrSet: TypeAlias = list[T] | set[T]
+
+    - New syntax:
+
+      .. code:: python
+
+        # No TypeVar
+
+        type ListOrSet[T] = list[T] | set[T]
+
+  - Variadic type alias:
+
+    - Old syntax:
+
+      .. code:: python
+
+        from typing import TypeAlias, TypeVarTuple
+
+        Ts = TypeVarTuple("Ts")
+
+        IntEtc: TypeAlias = tuple[int, *Ts]
+
+    - New syntax:
+
+      .. code:: python
+
+        type IntEtc[*Ts] = tuple[int, *Ts]
+
+  - Type alias with a parameter spec:
+
+    - Old syntax:
+
+      .. code:: python
+
+        from collections.abc import Callable
+        from typing import ParamSpec, TypeAlias
+
+        P = ParamSpec("P")
+
+        IntMaker: TypeAlias = Callable[P, int]
+
+    - New syntax:
+
+      .. code:: python
+
+        from collections.abc import Callable
+
+        type IntMaker[**P] = Callable[P, int]
+
+- Types of individual fields in a ``**kwargs`` function parameter can now be
+  annotated with ``typing.Unpack`` applied to a ``TypedDict``, like so:
+
+  .. code:: python
+
+    from typing import TypedDict, Unpack
+
+    class Movie(TypedDict):
+        name: str
+        year: int
+
+    def foo(**kwargs: Unpack[Movie]):
+        # kwargs["name"] must be passed a `str`, and kwargs["year"] must be
+        # passed an `int`.
+        ...
+
+- ``{..}`` placeholders inside f-strings may now contain any valid Python
+  expression
+
+  - Quotes from the enclosing string may now be reused:
+
+    .. code:: pycon
+
+        >>> songs = ['Take me back to Eden', 'Alkaline', 'Ascensionism']
+        >>> f"This is the playlist: {", ".join(songs)}"
+        'This is the playlist: Take me back to Eden, Alkaline, Ascensionism'
+
+  - Expressions inside f-strings may now span multiple lines and contain inline
+    comments.
+
+  - Expressions inside f-strings may now contain backslashes.
+
+- The buffer protocol is now accessible in Python code:
+
+  - Special methods ``__buffer__()`` and ``__release_buffer__()`` added
+  - ``collections.abc`` module: ``Buffer`` added
+  - ``inspect`` module: ``BufferFlags`` added
+
+- Source code containing NUL bytes now results in a ``SyntaxError``
+
+- Invalid escape sequences now generate a ``SyntaxWarning``
+
+- Octal escapes in string & bytes literals with values greater than 0o377
+  (e.g., ``\477``) now generate a ``SyntaxWarning``
+
+- Applying ``~`` (bitwise inversion) to a ``bool`` is now deprecated and will
+  become an error in Python 3.14.
+
+- Removed modules:
+
+  - ``asynchat`` (deprecated in Python 3.6)
+  - ``asyncore`` (deprecated in Python 3.6)
+  - ``distutils`` (deprecated in Python 3.10)
+  - ``imp`` (deprecated in Python 3.4)
+  - ``smtpd`` (deprecated in Python 3.6)
+
+- ``array`` module: The ``array`` class is now subscriptable and thus properly
+  generic
+
+- ``ast`` module: Accessing or using any of ``Bytes``, ``Ellipsis``,
+  ``NameConstant``, ``Num``, and ``Str`` now generates a
+  ``DeprecationWarning``.  They are planned to be removed in Python 3.14.
+
+- ``asyncio`` module:
+
+  - ``as_completed()`` and ``wait()`` now accept generators yielding tasks
+  - ``create_eager_task_factory()`` and ``eager_task_factory()`` added
+  - ``run()`` now takes an optional ``loop_factory`` parameter
+
+- ``calendar`` module: ``Day`` and ``Month`` added
+
+- ``collections.abc`` module: ``ByteString`` is now deprecated and will be
+  removed in Python 3.14
+
+- ``configparser`` module: ``ConfigParser.readfp()``,
+  ``ParsingError.filename``, and ``SafeConfigParser`` removed (deprecated in
+  Python 3.2)
+
+- ``datetime`` module: ``datetime.utcnow()`` and ``datetime.utctimestamp()``
+  are now deprecated
+
+- ``fraction`` module: ``Fraction`` instances now support float-style
+  formatting
+
+- ``importlib.abc`` module: ``ResourceReader``, ``Traversable``, and
+  ``TraversableResources`` are now deprecated and will be removed in Python
+  3.14
+
+- ``importlib.resources``: ``as_file()`` now supports resource directories
+
+- ``inspect`` module: ``getasyncgenlocals()``, ``getasyncgenstate()``, and
+  ``markcoroutinefunction()`` added
+
+- ``itertools``: ``batched()`` added
+
+- ``locale`` module: ``format()`` removed (deprecated in Python 3.7)
+
+- ``math`` module:
+
+  - ``nextafter()`` now takes an optional ``steps`` parameter
+  - ``sumprod()`` added
+
+- ``os`` module:
+
+  - ``DirEntry.is_junction()`` added
+  - ``listdrives()``, ``listmounts()``, ``listvolumes()``, ``pidfd_open()``,
+    ``setns()``, and ``unshare()`` added
+  - Calling ``fork()`` or ``forkpty()`` in a multithreaded program now
+    generates a ``DeprecationWarning``
+
+- ``os.path`` module: ``isjunction()`` and ``splitroot()`` added
+
+- ``pathlib`` module:
+
+  - Path classes can now be subclassed
+  - ``PurePath.with_segments()`` added
+  - ``Path.is_junction()`` and ``Path.walk()`` added
+  - ``PurePath.match()``, ``Path.glob()``, and ``Path.rglob()`` now take an
+    optional ``case_sensitive`` parameter
+  - ``PurePath.relative_to()`` now takes an optional ``walk_up`` parameter
+
+- ``pkgutil`` module: ``find_loader()`` and ``get_loader()`` are now deprecated
+  and will be removed in Python 3.14
+
+- ``random`` module:
+
+  - ``binomialvariate()`` added
+  - The ``lambd`` argument to ``expovariate()`` now defaults to ``1.0``
+
+- ``shutil`` module:
+
+  - ``rmtree()`` now takes an optional ``onexc`` parameter.  The ``onerror``
+    parameter is deprecated and will be removed in Python 3.14.
+  - ``unpack_archive()`` now takes an optional ``filter`` parameter for
+    limiting what gets extracted from tar archives
+
+- ``sqlite3`` module:
+
+  - Command-line interface added
+  - ``connect()`` now takes an optional ``autocommit`` parameter
+  - ``Connection.autocommit``, ``Connection.getconfig()``, and
+    ``Connection.setconfig()`` added
+  - The default adapters and converters are now deprecated
+
+- ``ssl`` module: ``match_hostname()`` and ``wrap_socket()`` removed
+  (deprecated in Python 3.7)
+
+- ``statistics`` module: ``correlation()`` now takes an optional ``method``
+  parameter that can be either ``"linear"`` (the default) or ``"ranked"``
+
+- ``sys`` module:
+
+  - ``activate_stack_trampoline()``, ``deactivate_stack_trampoline()``,
+    ``is_stack_trampoline_active()``, and ``last_exc`` added
+  - ``last_type``, ``last_value``, and ``last_traceback`` are now deprecated
+
+- ``sys.monitoring`` added
+
+- ``tarfile`` module: The ``TarFile.extract()`` and ``TarFile.extractall()``
+  methods now take an optional ``filter`` parameter for limiting what
+  gets extracted in order to avoid security issues.  Calling one of these
+  methods without setting a filter will generate a ``DeprecationWarning`` until
+  Python 3.14, in which the default filter will become ``"data"``.
+
+- ``tempfile`` module:
+
+  - ``NamedTemporaryFile`` now takes an optional ``delete_on_close`` parameter
+  - ``mkdtemp()`` now always returns an absolute path
+
+- ``types`` module: ``get_original_bases()`` added
+
+- ``typing`` module:
+
+  - ``override`` added
+  - ``dataclass_transform()`` now takes an optional ``frozen_default``
+    parameter
+  - ``Hashable`` and ``Sized`` are now deprecated
+
+- ``unicodedata`` updated to Unicode 15.0.0
+
+- ``unittest`` command-line interface: ``--durations`` option added
+
+- ``uuid`` module: Command-line interface added
+
+- ``venv`` module: ``setuptools`` is no longer automatically installed in
+  virtual environments
