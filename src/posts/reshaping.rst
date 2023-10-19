@@ -181,8 +181,8 @@ regardless of how short the last column happens to be, is:
 
     sed -e 's/ \{2,\}/\t/g' table.txt | rs -c -C -T -n | sed -e 's/\t*$//' | rs -c 0 1
 
-On the other hand, if the table we're converting to a list happens to be read
-by going across the first row, then the second row, etc. — e.g., if it was
+On the other hand, if the table we're converting to a list that happens to be
+read by going across the first row, then the second row, etc. — e.g., if it was
 produced with ``rs -e`` without the ``-t`` option — instead of being read by
 going down the first, second, etc. column, then the whole business with ``rs -c
 -C -T -n`` and stripping trailing tabs is unnecessary, and we can turn this

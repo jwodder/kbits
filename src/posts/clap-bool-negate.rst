@@ -6,10 +6,10 @@ Implementing Boolean Negation Flags with Clap
 :Category: Programming
 :Tags: Rust, clap, command-line parsing
 :Summary:
-    How to use Rust's clap library to implement boolean ``--foo`` and
+    How to use Rust's clap_ library to implement boolean ``--foo`` and
     ``--no-foo`` flags that undo each other
 
-Rust's clap_ library is the language's *de facto* standard crate for parsing
+Rust's clap_ library is the language's most popular crate for parsing
 command-line arguments.  Though it has many useful features, programmers used
 to libraries like Python's Click_ may find themselves struggling to implement
 one certain CLI convention: boolean flags ``--foo`` and ``--no-foo`` that undo
