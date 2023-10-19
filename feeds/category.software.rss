@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Knowledge Bits - Software</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Wed, 03 May 2023 00:00:00 -0400</lastBuildDate><item><title>Converting Lists to Simple Tables and Back with rs</title><link>https://jwodder.github.io/kbits/posts/reshaping/</link><description>&lt;p class="first last"&gt;If you have a file that’s just a list of items, one item per line, and you
+<rss version="2.0"><channel><title>Knowledge Bits - Software</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Thu, 19 Oct 2023 00:00:00 -0400</lastBuildDate><item><title>The BitTorrent Encryption Protocol</title><link>https://jwodder.github.io/kbits/posts/bt-encrypt/</link><description>&lt;p class="first last"&gt;The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent_protocol_encryption"&gt;encryption protocol&lt;/a&gt; used by the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent"&gt;BitTorrent&lt;/a&gt; peer-to-peer
+file-sharing protocol — known variously as Message Stream Encryption (MSE),
+Protocol Encryption (PE), or MSE/PE, among other names — is what keeps you
+secure while you download massive amounts of … Linux ISOs.  Here’s how it
+works.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Thu, 19 Oct 2023 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2023-10-19:/kbits/posts/bt-encrypt/</guid><category>Software</category><category>BitTorrent</category><category>encryption</category></item><item><title>Converting Lists to Simple Tables and Back with rs</title><link>https://jwodder.github.io/kbits/posts/reshaping/</link><description>&lt;p class="first last"&gt;If you have a file that’s just a list of items, one item per line, and you
 want to turn it into a simple table — one delimited just by whitespace
 without any border characters — how would you do that?  Follow up question:
 If you have a simple table, and you want to convert it into a list of

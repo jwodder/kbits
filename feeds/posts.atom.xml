@@ -1,5 +1,366 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2023-09-28T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Converting Lists to Simple Tables and Back with rs</title><link href="https://jwodder.github.io/kbits/posts/reshaping/" rel="alternate"></link><published>2023-05-03T00:00:00-04:00</published><updated>2023-05-03T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2023-05-03:/kbits/posts/reshaping/</id><summary type="html">&lt;p class="first last"&gt;If you have a file that’s just a list of items, one item per line, and you
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2023-10-19T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>The BitTorrent Encryption Protocol</title><link href="https://jwodder.github.io/kbits/posts/bt-encrypt/" rel="alternate"></link><published>2023-10-19T00:00:00-04:00</published><updated>2023-10-19T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2023-10-19:/kbits/posts/bt-encrypt/</id><summary type="html">&lt;p class="first last"&gt;The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent_protocol_encryption"&gt;encryption protocol&lt;/a&gt; used by the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent"&gt;BitTorrent&lt;/a&gt; peer-to-peer
+file-sharing protocol — known variously as Message Stream Encryption (MSE),
+Protocol Encryption (PE), or MSE/PE, among other names — is what keeps you
+secure while you download massive amounts of … Linux ISOs.  Here’s how it
+works.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent_protocol_encryption"&gt;encryption protocol&lt;/a&gt; used by the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent"&gt;BitTorrent&lt;/a&gt; peer-to-peer file-sharing
+protocol — known variously as Message Stream Encryption (MSE), Protocol
+Encryption (PE), or MSE/PE, among other names — is what keeps you secure while
+you download massive amounts of … Linux ISOs.  While some (including the
+creator of BitTorrent) have been critical of the protocol, comparing it to mere
+“obfuscation,” it remains highly popular among users distributing perfectly
+legitimate files over the internet that ISPs shouldn’t concern themselves
+about.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;de facto&lt;/em&gt; official specification for the protocol appears to be
+&amp;lt;&lt;a class="reference external" href="https://wiki.vuze.com/w/Message_Stream_Encryption"&gt;https://wiki.vuze.com/w/Message_Stream_Encryption&lt;/a&gt;&amp;gt;, but the page has been down
+whenever I’ve checked recently, and the actual content is not optimally
+presented.  Thus, I’ve written up everything I’ve been able to determine about
+MSE/PE here.&lt;/p&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title"&gt;Contents&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#overview" id="toc-entry-1"&gt;Overview&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#definitions" id="toc-entry-2"&gt;Definitions&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#client-s-handshake" id="toc-entry-3"&gt;Client’s Handshake&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#server-s-handshake" id="toc-entry-4"&gt;Server’s Handshake&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#after-the-handshake" id="toc-entry-5"&gt;After the Handshake&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#bittorrent-specific-aspects" id="toc-entry-6"&gt;BitTorrent-Specific Aspects&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#detecting-encryption" id="toc-entry-7"&gt;Detecting Encryption&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#broadcasting-encryption-support" id="toc-entry-8"&gt;Broadcasting Encryption Support&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference internal" href="#references" id="toc-entry-9"&gt;References&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="overview"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Overview&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;An MSE/PE connection begins with the client and server performing a
+&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Diffie–Hellman_key_exchange"&gt;Diffie–Hellman key exchange&lt;/a&gt; handshake, in which both parties generate
+a pair of public &amp;amp; private keys and then exchange their public keys, after
+which — by the power of mathematics — they independently calculate the same
+number (the &lt;em&gt;shared secret&lt;/em&gt;), which remains unknown to eavesdroppers.  Each
+party then uses the shared secret to initialize two &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Keystream"&gt;keystreams&lt;/a&gt;: infinite
+generators of pseudo-random bytes calculated from an initial value; the bytes
+from one keystream are then used to encrypt &amp;amp; decrypt data sent from the client
+to the server, and the other keystream is used for data sent from the server to
+the client.&lt;/p&gt;
+&lt;p&gt;After the handshake, the parties transmit their data, which is encrypted using
+a method negotiated during the handshake; the only defined options are to keep
+using the keystreams or to stop using encryption entirely.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="definitions"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Definitions&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;MSE/PE encryption uses the following constants and functions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;P&lt;/tt&gt; is the following 96-byte (768-bit) prime, rendered in hexadecimal:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ffffffffffffffff c90fdaa22168c234  c4c6628b80dc1cd1 29024e088a67cc74
+020bbea63b139b22 514a08798e3404dd  ef9519b3cd3a431b 302b0a6df25f1437
+4fe1356d6d51c245 e485b576625e7ec6  f44c42e9a63a3621 0000000000090563
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;G&lt;/tt&gt; is 2 (a &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Primitive_root_modulo_n"&gt;primitive root&lt;/a&gt; &lt;em&gt;modulo&lt;/em&gt; &lt;tt class="docutils literal"&gt;P&lt;/tt&gt;).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;SKEY&lt;/tt&gt; is a shared key — a byte string with a value known or recognizable
+by both parties.  For BitTorrent, this is the 20-byte info hash of the
+torrent the connection is dedicated to.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;len(X)&lt;/tt&gt; is the length of the byte string &lt;tt class="docutils literal"&gt;X&lt;/tt&gt; as a two-byte big-endian
+integer.  The length of &lt;tt class="docutils literal"&gt;X&lt;/tt&gt; cannot exceed 65535.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;HASH(X)&lt;/tt&gt; is the 20-byte SHA1 hash of the byte string &lt;tt class="docutils literal"&gt;X&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="client-s-handshake"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Client’s Handshake&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The peer initiating an MSE/PE connection performs its side of the handshake as
+follows as soon as it opens the connection:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client generates a random integer &lt;tt class="docutils literal"&gt;Xa&lt;/tt&gt; to use as its private key for
+this connection only.  &lt;tt class="docutils literal"&gt;Xa&lt;/tt&gt; must be at least 128 bits long; using more than
+180 bits is not believed to add further security.  160 bits is recommended.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client calculates its public key: &lt;tt class="docutils literal"&gt;Ya = pow(G, Xa) mod P&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client sends packet 1: &lt;tt class="docutils literal"&gt;Ya&lt;/tt&gt; encoded as a 96-byte (768-bit) big-endian
+integer, followed by a string of random bytes with a randomly-chosen length
+from 0 to 512.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client receives packet 2.  Because the length of this packet is not known
+by the client and there is no means for indicating the end of the packet, the
+client must identify the end of the packet by waiting for sufficient time
+(the original spec says 30 seconds) for the entire packet to arrive.  If the
+server sends fewer than 96 bytes in that time (For comparison, the
+unencrypted BitTorrent handshake message is 68 bytes), or the server sends
+more than 608 bytes, then the server is not performing a valid MSE/PE
+handshake.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client extracts &lt;tt class="docutils literal"&gt;Yb&lt;/tt&gt; from the first 96 bytes of packet 2 and computes
+the Diffie-Hellman shared secret: &lt;tt class="docutils literal"&gt;S = pow(Yb, Xa) mod P&lt;/tt&gt;.  &lt;tt class="docutils literal"&gt;Xa&lt;/tt&gt; is then
+securely discarded.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;When used as a byte string in later steps, &lt;tt class="docutils literal"&gt;S&lt;/tt&gt; is encoded as a 96-byte
+(768-bit) big-endian integer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client initializes an outgoing &lt;a class="reference external" href="https://en.wikipedia.org/wiki/RC4"&gt;RC4&lt;/a&gt;
+keystream from the key &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;keyA&amp;quot;&lt;/span&gt; + S + SKEY)&lt;/tt&gt; and an incoming RC4
+keystream from the key &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;keyB&amp;quot;&lt;/span&gt; + S + SKEY)&lt;/tt&gt;.  The first 1024 bytes
+output by each keystream are discarded.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client sends packet 3, constructed as follows:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+HASH(&amp;quot;req1&amp;quot; + S)
++ (HASH(&amp;quot;req2&amp;quot; + SKEY) XOR HASH(&amp;quot;req3&amp;quot; + S))
++ RC4(VC + crypto_provide + len(PadC) + PadC + len(IA) + IA)
+&lt;/pre&gt;
+&lt;p&gt;where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;RC4(X)&lt;/tt&gt; encrypts the byte string &lt;tt class="docutils literal"&gt;X&lt;/tt&gt; by XORing it with bytes produced
+by the outgoing RC4 keystream.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;VC&lt;/tt&gt; is a verification constant of eight zero-valued bytes that is used
+to verify whether the other party knows &lt;tt class="docutils literal"&gt;S&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;SKEY&lt;/tt&gt; and thus defeat
+replay attacks of the &lt;tt class="docutils literal"&gt;SKEY&lt;/tt&gt; hash.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;crypto_provide&lt;/tt&gt; is a 32-bit big-endian integer in which individual bits
+are set to indicate the encryption methods supported by the client.  The
+defined methods are plain text (bit 0x01) and RC4 (bit 0x02).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;PadC&lt;/tt&gt; is arbitrary data with a length of 0 to 512 bytes, reserved for
+extending the crypto handshake in future versions.  Current implementations
+may choose to set it to the empty string.  For padding-only usage in the
+current version, the bytes should be zeroed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;IA&lt;/tt&gt; is the initial (post-handshake) data that the client wishes to send.
+It may be 0 bytes long, and it cannot be more than 65535 bytes long.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The client receives &amp;amp; verifies packet 4:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The first eight bytes are received and decrypted by XORing them with bytes
+from the incoming RC4 keystream.  If the resulting bytes are not all zero,
+the handshake is invalid.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next four bytes are received and decrypted in the same manner to obtain
+&lt;tt class="docutils literal"&gt;crypto_select&lt;/tt&gt;, a big-endian integer in which a bit corresponding to one
+of the methods given in &lt;tt class="docutils literal"&gt;crypto_provide&lt;/tt&gt; has been set in order to
+indicate which encryption method will be used after the handshake.  If
+&lt;tt class="docutils literal"&gt;crypto_select&lt;/tt&gt; does not have exactly one bit set, or if the set bit does
+not correspond to one of the methods in &lt;tt class="docutils literal"&gt;crypto_provide&lt;/tt&gt;, the handshake
+is invalid.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next two bytes are received and decrypted to obtain &lt;tt class="docutils literal"&gt;len(PadD)&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next &lt;tt class="docutils literal"&gt;len(PadD)&lt;/tt&gt; bytes are received and decrypted to obtain &lt;tt class="docutils literal"&gt;PadD&lt;/tt&gt;.
+Note that, although the result of the decryption is unused, the decryption
+must still be performed in order to keep the incoming keystream in sync
+with the server’s outgoing keystream.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="server-s-handshake"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Server’s Handshake&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The peer receiving an MSE/PE connection performs its side of the handshake as
+follows as soon as it accepts the connection:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server generates a private key &lt;tt class="docutils literal"&gt;Xb&lt;/tt&gt; following the same rules as for the
+client’s private key.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server calculates its public key: &lt;tt class="docutils literal"&gt;Yb = pow(G, Xb) mod P&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server sends packet 2: &lt;tt class="docutils literal"&gt;Yb&lt;/tt&gt; encoded as a 96-byte (768-bit) big-endian
+integer, followed by a string of random bytes with a randomly-chosen length
+from 0 to 512.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server receives packet 1.  As with the client’s receipt of packet 2, the
+server must determine the end of packet 1 by waiting for sufficient time (the
+original spec says 30 seconds) for the entire packet to arrive.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server extracts &lt;tt class="docutils literal"&gt;Ya&lt;/tt&gt; from the first 96 bytes of packet 1 and computes
+the Diffie-Hellman shared secret: &lt;tt class="docutils literal"&gt;S = pow(Ya, Xb) mod P&lt;/tt&gt; (This is equal to
+the &lt;tt class="docutils literal"&gt;S&lt;/tt&gt; computed by the client).  &lt;tt class="docutils literal"&gt;Xb&lt;/tt&gt; is then securely discarded.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;When used as a byte string in later steps, &lt;tt class="docutils literal"&gt;S&lt;/tt&gt; is encoded as a 96-byte
+(768-bit) big-endian integer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server receives &amp;amp; verifies packet 3:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The first 20 bytes must equal &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;req1&amp;quot;&lt;/span&gt; + S)&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next 20 bytes are received and XORed with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;req3&amp;quot;&lt;/span&gt; + S)&lt;/tt&gt; to
+obtain &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;req2&amp;quot;&lt;/span&gt; + SKEY)&lt;/tt&gt;.  The server then identifies &lt;tt class="docutils literal"&gt;SKEY&lt;/tt&gt; by
+comparing this hash against &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;req2&amp;quot;&lt;/span&gt; + K)&lt;/tt&gt; for all known/accepted
+shared keys &lt;tt class="docutils literal"&gt;K&lt;/tt&gt;.  (For BitTorrent, this means comparing against
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;req2&amp;quot;&lt;/span&gt; + info_hash)&lt;/tt&gt; for all info hashes of torrents managed by the
+server.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server initializes an outgoing RC4 keystream from the key &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;keyB&amp;quot;&lt;/span&gt;
++ S + SKEY)&lt;/tt&gt; and an incoming RC4 keystream from the key &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;HASH(&amp;quot;keyA&amp;quot;&lt;/span&gt; + S
++ SKEY)&lt;/tt&gt;.  (Note that this is the reverse of the client.)  The first 1024
+bytes output by each keystream are discarded.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next eight bytes are received and decrypted by XORing them with bytes
+from the incoming RC4 keystream.  If the resulting bytes are not all zero,
+the handshake is invalid.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next four bytes are received and decrypted in the same manner to obtain
+&lt;tt class="docutils literal"&gt;crypto_provide&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next two bytes are received and decrypted to obtain &lt;tt class="docutils literal"&gt;len(PadC)&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next &lt;tt class="docutils literal"&gt;len(PadC)&lt;/tt&gt; bytes are received and decrypted to obtain &lt;tt class="docutils literal"&gt;PadC&lt;/tt&gt;.
+Note that, although the result of the decryption is unused, the decryption
+must still be performed in order to keep the incoming keystream in sync
+with the client’s outgoing keystream.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next two bytes are received and decrypted to obtain &lt;tt class="docutils literal"&gt;len(IA)&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The next &lt;tt class="docutils literal"&gt;len(IA)&lt;/tt&gt; bytes are received and decrypted to obtain &lt;tt class="docutils literal"&gt;IA&lt;/tt&gt;, the
+beginning of the actual data being transferred.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server chooses one of the encryption methods given by &lt;tt class="docutils literal"&gt;crypto_provide&lt;/tt&gt;
+to use for the rest of the connection.  Bits with unknown meanings are
+ignored.  If &lt;tt class="docutils literal"&gt;crypto_provide&lt;/tt&gt; does not contain any encryption methods that
+the server supports, the handshake fails.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The server sends packet 4: &lt;tt class="docutils literal"&gt;RC4(VC + crypto_select + len(PadD) + PadD)&lt;/tt&gt;,
+where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;RC4(X)&lt;/tt&gt; encrypts the byte string &lt;tt class="docutils literal"&gt;X&lt;/tt&gt; by XORing it with bytes produced
+by the server’s outgoing RC4 keystream.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;VC&lt;/tt&gt; is eight zero-valued bytes, the same as in packet 3.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;crypto_select&lt;/tt&gt; is a 32-bit big-endian integer with one bit set to
+indicate the encryption method chosen by the server.  The bits have the
+same meanings as for &lt;tt class="docutils literal"&gt;crypto_provide&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;PadD&lt;/tt&gt; is arbitrary data with a length of 0 to 512 bytes, reserved for
+extending the crypto handshake in future versions.  Current implementations
+may choose to set them to 0-length.  For padding-only usage in the current
+version, they should be zeroed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="after-the-handshake"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;After the Handshake&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Once all of the above is carried out, the MSE/PE handshake is complete, and the
+client &amp;amp; server transmit the data they came here to transmit, encrypted using
+the selected encryption method.  If plain text was selected, further data is
+sent &amp;amp; received as-is without encryption.  If RC4 was selected, sent &amp;amp; received
+data will be encrypted using the sender’s outgoing RC4 keystream and decrypted
+using the receiver’s incoming RC4 keystream; these are the same keystreams as
+used during the handshake, i.e., they are not reinitialized.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="bittorrent-specific-aspects"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;BitTorrent-Specific Aspects&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="section" id="detecting-encryption"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Detecting Encryption&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;MSE/PE was introduced into a world where BitTorrent connections were already
+being made without encryption, and many connections still aren’t encrypted, so
+peers need a way to determine whether a fresh connection is encrypted or not.&lt;/p&gt;
+&lt;p&gt;When a BitTorrent peer that supports MSE/PE receives an incoming connection, it
+can determine whether an MSE/PE handshake is being performed by checking
+whether the first 20 bytes received equal the BitTorrent handshake header
+&lt;tt class="docutils literal"&gt;&amp;quot;\x13BitTorrent protocol&amp;quot;&lt;/tt&gt;; if the bytes match, the connection is (almost
+certainly) not using MSE/PE, and the peer can choose to either continue the
+connection unencrypted or else sever the connection.&lt;/p&gt;
+&lt;p&gt;When a BitTorrent peer that supports MSE/PE makes an outgoing connection, it
+has the following options, which it chooses among based on its configuration
+and any broadcasts of encryption support it’s received (see below):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The peer can attempt an MSE/PE handshake; if that fails, it abandons the
+remote peer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The peer can attempt an MSE/PE handshake; if that fails, it severs the
+connection and tries to reconnect without using encryption.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The peer connects without using encryption.  If the remote peer sends a &lt;a class="reference external" href="https://www.bittorrent.org/beps/bep_0010.html"&gt;BEP
+10&lt;/a&gt; extended handshake containing an &lt;tt class="docutils literal"&gt;e&lt;/tt&gt; value of &lt;tt class="docutils literal"&gt;1&lt;/tt&gt;, the local peer
+severs the connection and reconnects using MSE/PE.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The peer connects without using encryption and does not use MSE/PE with the
+remote peer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="broadcasting-encryption-support"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Broadcasting Encryption Support&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;BitTorrent peers can broadcast their support of MSE/PE to other peers via HTTP
+trackers and/or Peer Exchange.  (The UDP tracker protocol and DHT do not appear
+to have any capabilities for broadcasting encryption support.)&lt;/p&gt;
+&lt;p&gt;When a BitTorrent peer that supports MSE/PE makes an announcement to an HTTP
+tracker, it can include one or more of the following URL query parameters:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;supportcrypto=1&lt;/tt&gt; — Indicates that the peer can create &amp;amp; receive MSE/PE
+connections&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;requirecrypto=1&lt;/tt&gt; — Indicates that the peer only creates &amp;amp; accepts MSE/PE
+connections.  If the tracker supports this parameter, then this peer will not
+be returned in responses to peers that do not set &lt;tt class="docutils literal"&gt;supportcrypto=1&lt;/tt&gt; or
+&lt;tt class="docutils literal"&gt;requirecrypto=1&lt;/tt&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;cryptoport=X&lt;/tt&gt; (used in combination with &lt;tt class="docutils literal"&gt;port=0&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;requirecrypto=1&lt;/tt&gt;) — If the tracker supports the &lt;tt class="docutils literal"&gt;cryptoport&lt;/tt&gt; parameter,
+it will provide this peer’s port as &lt;tt class="docutils literal"&gt;X&lt;/tt&gt; in responses to other peers that
+also support MSE/PE and will not provide this peer at all to peers that do
+not support MSE/PE.  If the tracker does not support the &lt;tt class="docutils literal"&gt;cryptoport&lt;/tt&gt;
+parameter, then this peer’s actual port will not be given out to any peers.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When &lt;tt class="docutils literal"&gt;supportcrypto=1&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;requirecrypto=1&lt;/tt&gt; is set in an announcement to a
+supporting HTTP tracker, the response will include a &lt;tt class="docutils literal"&gt;crypto_flags&lt;/tt&gt; field,
+the value of which is a sequence of bytes, one for each peer in &lt;tt class="docutils literal"&gt;peers&lt;/tt&gt; in
+order; a given byte will be &lt;tt class="docutils literal"&gt;1&lt;/tt&gt; if the peer requires MSE/PE and &lt;tt class="docutils literal"&gt;0&lt;/tt&gt;
+otherwise.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Preliminary searching on GitHub indicates that, when an HTTP tracker sends a
+response with “&lt;tt class="docutils literal"&gt;peers&lt;/tt&gt;”, “&lt;tt class="docutils literal"&gt;peers6&lt;/tt&gt;”, and “&lt;tt class="docutils literal"&gt;crypto_flags&lt;/tt&gt;” fields, the
+“&lt;tt class="docutils literal"&gt;crypto_flags&lt;/tt&gt;” only applies to the “&lt;tt class="docutils literal"&gt;peers&lt;/tt&gt;” field and not
+“&lt;tt class="docutils literal"&gt;peers6&lt;/tt&gt;”, though I have yet to encounter a tracker that actually sends
+“&lt;tt class="docutils literal"&gt;crypto_flags&lt;/tt&gt;” in the wild.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If a peer prefers MSE/PE connections to unencrypted, it can indicate this to
+connecting peers by including an &lt;tt class="docutils literal"&gt;e&lt;/tt&gt; field with a value of &lt;tt class="docutils literal"&gt;1&lt;/tt&gt; in the &lt;a class="reference external" href="https://www.bittorrent.org/beps/bep_0010.html"&gt;BEP
+10&lt;/a&gt; extended handshakes it sends.  This &lt;tt class="docutils literal"&gt;e&lt;/tt&gt; value will then be broadcast to
+other peers using Peer Exchange (&lt;a class="reference external" href="https://www.bittorrent.org/beps/bep_0011.html"&gt;BEP 11&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="references"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;References&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&amp;lt;&lt;a class="reference external" href="https://wiki.vuze.com/w/Message_Stream_Encryption"&gt;https://wiki.vuze.com/w/Message_Stream_Encryption&lt;/a&gt;&amp;gt; [&lt;a class="reference external" href="http://web.archive.org/web/20230405235517/https://wiki.vuze.com/w/Message_Stream_Encryption"&gt;Internet Archive Mirror&lt;/a&gt;]&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&amp;lt;&lt;a class="reference external" href="https://css.csail.mit.edu/6.858/2018/projects/bgu-kelvinlu.pdf"&gt;https://css.csail.mit.edu/6.858/2018/projects/bgu-kelvinlu.pdf&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&amp;lt;&lt;a class="reference external" href="https://atomashpolskiy.github.io/bt/encryption/"&gt;https://atomashpolskiy.github.io/bt/encryption/&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="Software"></category><category term="BitTorrent"></category><category term="encryption"></category></entry><entry><title>Converting Lists to Simple Tables and Back with rs</title><link href="https://jwodder.github.io/kbits/posts/reshaping/" rel="alternate"></link><published>2023-05-03T00:00:00-04:00</published><updated>2023-05-03T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2023-05-03:/kbits/posts/reshaping/</id><summary type="html">&lt;p class="first last"&gt;If you have a file that’s just a list of items, one item per line, and you
 want to turn it into a simple table — one delimited just by whitespace
 without any border characters — how would you do that?  Follow up question:
 If you have a simple table, and you want to convert it into a list of
@@ -161,8 +522,8 @@ regardless of how short the last column happens to be, is:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 sed -e 's/ \{2,\}/\t/g' table.txt | rs -c -C -T -n | sed -e 's/\t*$//' | rs -c 0 1
 &lt;/pre&gt;
-&lt;p&gt;On the other hand, if the table we’re converting to a list happens to be read
-by going across the first row, then the second row, etc. — e.g., if it was
+&lt;p&gt;On the other hand, if the table we’re converting to a list that happens to be
+read by going across the first row, then the second row, etc. — e.g., if it was
 produced with &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-e&lt;/span&gt;&lt;/tt&gt; without the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-t&lt;/span&gt;&lt;/tt&gt; option — instead of being read by
 going down the first, second, etc. column, then the whole business with &lt;tt class="docutils literal"&gt;rs &lt;span class="pre"&gt;-c&lt;/span&gt;
 &lt;span class="pre"&gt;-C&lt;/span&gt; &lt;span class="pre"&gt;-T&lt;/span&gt; &lt;span class="pre"&gt;-n&lt;/span&gt;&lt;/tt&gt; and stripping trailing tabs is unnecessary, and we can turn this
@@ -717,9 +1078,9 @@ by Fabian Oscar Oh
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</content><category term="Software"></category><category term="documentation"></category><category term="groff"></category><category term="roff"></category><category term="markup"></category><category term="man pages"></category><category term="Unix utilities"></category></entry><entry><title>Implementing Boolean Negation Flags with Clap</title><link href="https://jwodder.github.io/kbits/posts/clap-bool-negate/" rel="alternate"></link><published>2022-10-23T00:00:00-04:00</published><updated>2022-10-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-10-23:/kbits/posts/clap-bool-negate/</id><summary type="html">&lt;p class="first last"&gt;How to use Rust’s clap library to implement boolean &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; and
+</content><category term="Software"></category><category term="documentation"></category><category term="groff"></category><category term="roff"></category><category term="markup"></category><category term="man pages"></category><category term="Unix utilities"></category></entry><entry><title>Implementing Boolean Negation Flags with Clap</title><link href="https://jwodder.github.io/kbits/posts/clap-bool-negate/" rel="alternate"></link><published>2022-10-23T00:00:00-04:00</published><updated>2022-10-23T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-10-23:/kbits/posts/clap-bool-negate/</id><summary type="html">&lt;p class="first last"&gt;How to use Rust’s &lt;a class="reference external" href="https://github.com/clap-rs/clap"&gt;clap&lt;/a&gt; library to implement boolean &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; and
 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; flags that undo each other&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;Rust’s &lt;a class="reference external" href="https://github.com/clap-rs/clap"&gt;clap&lt;/a&gt; library is the language’s &lt;em&gt;de facto&lt;/em&gt; standard crate for parsing
+</summary><content type="html">&lt;p&gt;Rust’s &lt;a class="reference external" href="https://github.com/clap-rs/clap"&gt;clap&lt;/a&gt; library is the language’s most popular crate for parsing
 command-line arguments.  Though it has many useful features, programmers used
 to libraries like Python’s &lt;a class="reference external" href="https://palletsprojects.com/p/click/"&gt;Click&lt;/a&gt; may find themselves struggling to implement
 one certain CLI convention: boolean flags &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--foo&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-foo&lt;/span&gt;&lt;/tt&gt; that undo

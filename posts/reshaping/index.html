@@ -237,8 +237,8 @@ regardless of how short the last column happens to be, is:</p>
 <pre class="literal-block">
 sed -e 's/ \{2,\}/\t/g' table.txt | rs -c -C -T -n | sed -e 's/\t*$//' | rs -c 0 1
 </pre>
-<p>On the other hand, if the table we’re converting to a list happens to be read
-by going across the first row, then the second row, etc. — e.g., if it was
+<p>On the other hand, if the table we’re converting to a list that happens to be
+read by going across the first row, then the second row, etc. — e.g., if it was
 produced with <tt class="docutils literal">rs <span class="pre">-e</span></tt> without the <tt class="docutils literal"><span class="pre">-t</span></tt> option — instead of being read by
 going down the first, second, etc. column, then the whole business with <tt class="docutils literal">rs <span class="pre">-c</span>
 <span class="pre">-C</span> <span class="pre">-T</span> <span class="pre">-n</span></tt> and stripping trailing tabs is unnecessary, and we can turn this
