@@ -610,7 +610,7 @@ The steps to do this are as follows:
   substitution reference: two periods, a space, a vertical bar, the same
   substitution text as in the substitution reference, another vertical bar,
   whitespace, a ``replace::`` directive (without leading ``..``), whitespace,
-  and then finally the inline markup to display in place of the substiution
+  and then finally the inline markup to display in place of the substitution
   reference in the rendered document.
 
 - Elsewhere in the document, a `hyperlink target <target_>`_ is created that

@@ -388,7 +388,7 @@ For example, if you want to implement your own ``Future`` class for use with
             self.is_set = False
 
         def set_value(self, value):
-            self.value = valuse
+            self.value = value
             self.is_set = True
 
         def __await__(self):

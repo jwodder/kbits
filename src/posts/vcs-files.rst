@@ -58,7 +58,7 @@ __ https://github.com/jwodder/kbits
     +--------------+--------------------+------------------------------------------------------+----------------------------+
     | CVS_         | ``CVS/``           | Local copy of repository data (one per directory)    | `Manual <CVS-dir_>`_       |
     +--------------+--------------------+------------------------------------------------------+----------------------------+
-    | RCS_         | *filename*\ ``,v`` | Verson history for *filename*                        | `Manual <comma-v_>`_       |
+    | RCS_         | *filename*\ ``,v`` | Version history for *filename*                       | `Manual <comma-v_>`_       |
     |              +--------------------+------------------------------------------------------+----------------------------+
     |              | ``RCS/``           | Conventional directory for storing ``*,v`` files     | —                          |
     +--------------+--------------------+------------------------------------------------------+----------------------------+
@@ -95,7 +95,7 @@ __ https://github.com/jwodder/kbits
    control in their place; the names listed here are the conventional names for
    such files.
 
-.. [#fn2] For compability with ASP.NET, Subversion will use the name ``_svn``
+.. [#fn2] For compatibility with ASP.NET, Subversion will use the name ``_svn``
    instead of ``.svn`` if the ``SVN_ASP_DOT_NET_HACK`` environment variable is
    defined.
 

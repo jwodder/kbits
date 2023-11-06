@@ -180,7 +180,7 @@ Including Package Data via Setuptools Plugins
 
 As an alternative to the above methods, you can use a plugin for setuptools
 that automatically recognizes & includes package data in sdists & wheels,
-usually based on what files in the project directory are under verson control.
+usually based on what files in the project directory are under version control.
 One example of such a plugin is setuptools_scm_, which automatically finds all
 files under version control in a Git or Mercurial repository and augments the
 project's ``MANIFEST.in`` (if any) with the found files.  This eliminates the

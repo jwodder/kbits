@@ -49,7 +49,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.0.html>`__
 
 - Python 2's ``unichr`` is Python 3's ``chr``
 
-- ``zip()`` now returns an interator
+- ``zip()`` now returns an iterator
 
 - Order comparison operators now raise ``TypeError`` when given operands of
   different types
@@ -957,7 +957,7 @@ Release notes: `[link] <https://docs.python.org/3/whatsnew/3.5.html>`__
 
 - ``shutil`` module: ``move()`` now accepts a ``copy_function`` argument
 
-- ``signal`` module: ``SIG*`` contants have been converted to enums
+- ``signal`` module: ``SIG*`` constants have been converted to enums
 
 - ``socket`` module: ``socket.sendfile()`` added
 

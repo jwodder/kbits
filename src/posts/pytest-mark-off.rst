@@ -163,7 +163,7 @@ As is the case for many, many things in Python, other people have already done
 the job of generalizing the above and publishing it on PyPI.  I am aware of two
 pytest plugin projects for skipping tests unless a command-line option is
 given: pytest-explicit_ and pytest-optional-tests_.  I have not used either,
-but if they work as advertized, they should prove helpful.
+but if they work as advertised, they should prove helpful.
 
 .. _pytest-explicit: https://pypi.org/project/pytest-explicit/
 .. _pytest-optional-tests: https://pypi.org/project/pytest-optional-tests/

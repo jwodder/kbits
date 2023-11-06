@@ -126,7 +126,7 @@ follows:
   ``site-packages`` — headers, scripts, data files (not to be confused with
   package data), etc. — they are stored in a ``{projectname}-{version}.data/``
   directory.  Files in this directory are organized into subdirectories named
-  after the the distutils scheme keys (``purelib``, ``platlib``, ``headers``,
+  after the distutils scheme keys (``purelib``, ``platlib``, ``headers``,
   ``scripts``, or ``data``) that map to the files' install locations.
 
 .. note::
@@ -401,7 +401,7 @@ description to PyPI:
 Project Description Not Included
 ================================
 
-It's just embarassing when this happens.  A project without a long description
+It's just embarrassing when this happens.  A project without a long description
 just looks completely pointless; how am I supposed to know what it does or how
 to use it?  Sadly, too many projects on PyPI lack long descriptions.  Did the
 developer not care enough to write even a README?  Did the developer forget to
@@ -431,7 +431,7 @@ If your project isn't in reStructuredText, you'll also need to set
 Python Package Not Included in Wheel
 ====================================
 
-If not having a description is embarassing, not having any code in your wheel
+If not having a description is embarrassing, not having any code in your wheel
 is crippling.  With a wheel like this, when people install your project, they
 get nothing!  That's certainly not what you want, is it?
 
@@ -440,7 +440,7 @@ Possible reasons why this can happen include:
 - You're using ``find_packages()`` to autolocate your project's packages, but
   you failed to add an ``__init__.py`` file to the top-level package (and
   possibly also some subpackages).  Solution: Add that ``__init__.py``.
-  
+
   - If your intention is to leave out the ``__init__.py`` file in order to
     create a namespace package, you'll need to use |find_namespace_packages|_
     instead.
@@ -712,7 +712,7 @@ hope this article makes at least one Python package less broken.  (I'd prefer
 it if all broken packages were less broken, but I know not to get my hopes up.)
 
 Admittedly, most of these mistakes are due to users not using or understanding
-setuptools properly (aside from a Poetry antipattern that sneaked in at #2).
+setuptools properly (aside from a Poetry anti-pattern that sneaked in at #2).
 Though flit and Poetry may promise to fix setuptools' usability issues, people
 keep on using setuptools, and it keeps on outsmarting them.  Hopefully sites
 like the `Python Packaging User Guide`_ eventually expand & become mature
@@ -731,7 +731,7 @@ Footnotes
        that happens, though, don't feel bad about using it if you need to.
 
 .. [2] Unless ``foo`` is an unpredictable, compatibility-breaking mess, in
-       which case you should probably reconsider dependending on it.
+       which case you should probably reconsider depending on it.
 
 .. [3] Currently, pip handles conflicting version requirements with a warning
        and picking one requirement to follow, but pip's new dependency resolver
