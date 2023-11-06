@@ -131,6 +131,6 @@ removed from pytest in version 5.1.0.&lt;/p&gt;
 the job of generalizing the above and publishing it on PyPI.  I am aware of two
 pytest plugin projects for skipping tests unless a command-line option is
 given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
-but if they work as advertized, they should prove helpful.&lt;/p&gt;
+but if they work as advertised, they should prove helpful.&lt;/p&gt;
 &lt;/div&gt;
 </content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry></feed>

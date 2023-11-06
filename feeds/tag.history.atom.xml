@@ -68,7 +68,7 @@ is no more&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Python 2’s &lt;tt class="docutils literal"&gt;unichr&lt;/tt&gt; is Python 3’s &lt;tt class="docutils literal"&gt;chr&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;zip()&lt;/tt&gt; now returns an interator&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;zip()&lt;/tt&gt; now returns an iterator&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Order comparison operators now raise &lt;tt class="docutils literal"&gt;TypeError&lt;/tt&gt; when given operands of
 different types&lt;/p&gt;
@@ -1136,7 +1136,7 @@ Python 3.9&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;shutil&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;move()&lt;/tt&gt; now accepts a &lt;tt class="docutils literal"&gt;copy_function&lt;/tt&gt; argument&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;signal&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;SIG*&lt;/tt&gt; contants have been converted to enums&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;signal&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;SIG*&lt;/tt&gt; constants have been converted to enums&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;socket&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;socket.sendfile()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;

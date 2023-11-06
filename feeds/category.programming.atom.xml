@@ -445,7 +445,7 @@ nothing special.&lt;/p&gt;
 &lt;/span&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_set&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="w"&gt;
 
 &lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;set_value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;valuse&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_set&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="w"&gt;
 
 &lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__await__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt;
@@ -1035,7 +1035,7 @@ removed from pytest in version 5.1.0.&lt;/p&gt;
 the job of generalizing the above and publishing it on PyPI.  I am aware of two
 pytest plugin projects for skipping tests unless a command-line option is
 given: &lt;a class="reference external" href="https://pypi.org/project/pytest-explicit/"&gt;pytest-explicit&lt;/a&gt; and &lt;a class="reference external" href="https://pypi.org/project/pytest-optional-tests/"&gt;pytest-optional-tests&lt;/a&gt;.  I have not used either,
-but if they work as advertized, they should prove helpful.&lt;/p&gt;
+but if they work as advertised, they should prove helpful.&lt;/p&gt;
 &lt;/div&gt;
 </content><category term="Programming"></category><category term="Python"></category><category term="pytest"></category><category term="testing"></category></entry><entry><title>Notable Features Introduced in Each Python Version</title><link href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="alternate"></link><published>2021-07-11T00:00:00-04:00</published><updated>2023-09-28T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2021-07-11:/kbits/posts/pyversion-features/</id><summary type="html">&lt;p class="first last"&gt;Notable features introduced in each major release of Python, from Python
 3.0 forwards&lt;/p&gt;
@@ -1106,7 +1106,7 @@ is no more&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Python 2’s &lt;tt class="docutils literal"&gt;unichr&lt;/tt&gt; is Python 3’s &lt;tt class="docutils literal"&gt;chr&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;zip()&lt;/tt&gt; now returns an interator&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;zip()&lt;/tt&gt; now returns an iterator&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Order comparison operators now raise &lt;tt class="docutils literal"&gt;TypeError&lt;/tt&gt; when given operands of
 different types&lt;/p&gt;
@@ -2174,7 +2174,7 @@ Python 3.9&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;shutil&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;move()&lt;/tt&gt; now accepts a &lt;tt class="docutils literal"&gt;copy_function&lt;/tt&gt; argument&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;signal&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;SIG*&lt;/tt&gt; contants have been converted to enums&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;signal&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;SIG*&lt;/tt&gt; constants have been converted to enums&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;socket&lt;/tt&gt; module: &lt;tt class="docutils literal"&gt;socket.sendfile()&lt;/tt&gt; added&lt;/p&gt;
 &lt;/li&gt;
@@ -3605,7 +3605,7 @@ structure as &lt;tt class="docutils literal"&gt;[options.package_data]&lt;/tt&gt
 &lt;h3&gt;&lt;a class="toc-backref" href="#contents"&gt;Including Package Data via Setuptools Plugins&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;As an alternative to the above methods, you can use a plugin for setuptools
 that automatically recognizes &amp;amp; includes package data in sdists &amp;amp; wheels,
-usually based on what files in the project directory are under verson control.
+usually based on what files in the project directory are under version control.
 One example of such a plugin is &lt;a class="reference external" href="https://github.com/pypa/setuptools_scm"&gt;setuptools_scm&lt;/a&gt;, which automatically finds all
 files under version control in a Git or Mercurial repository and augments the
 project’s &lt;tt class="docutils literal"&gt;MANIFEST.in&lt;/tt&gt; (if any) with the found files.  This eliminates the
@@ -4139,7 +4139,7 @@ and wheel used to build the wheel.&lt;/p&gt;
 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;site-packages&lt;/span&gt;&lt;/tt&gt; — headers, scripts, data files (not to be confused with
 package data), etc. — they are stored in a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;{projectname}-{version}.data/&lt;/span&gt;&lt;/tt&gt;
 directory.  Files in this directory are organized into subdirectories named
-after the the distutils scheme keys (&lt;tt class="docutils literal"&gt;purelib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;platlib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;headers&lt;/tt&gt;,
+after the distutils scheme keys (&lt;tt class="docutils literal"&gt;purelib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;platlib&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;headers&lt;/tt&gt;,
 &lt;tt class="docutils literal"&gt;scripts&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;data&lt;/tt&gt;) that map to the files’ install locations.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -4372,7 +4372,7 @@ rendered on PyPI before you actually upload it.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="project-description-not-included"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Project Description Not Included&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;It’s just embarassing when this happens.  A project without a long description
+&lt;p&gt;It’s just embarrassing when this happens.  A project without a long description
 just looks completely pointless; how am I supposed to know what it does or how
 to use it?  Sadly, too many projects on PyPI lack long descriptions.  Did the
 developer not care enough to write even a README?  Did the developer forget to
@@ -4396,7 +4396,7 @@ description by adding the following or similar to your &lt;tt class="docutils li
 &lt;/div&gt;
 &lt;div class="section" id="python-package-not-included-in-wheel"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Python Package Not Included in Wheel&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;If not having a description is embarassing, not having any code in your wheel
+&lt;p&gt;If not having a description is embarrassing, not having any code in your wheel
 is crippling.  With a wheel like this, when people install your project, they
 get nothing!  That’s certainly not what you want, is it?&lt;/p&gt;
 &lt;p&gt;Possible reasons why this can happen include:&lt;/p&gt;
@@ -4624,7 +4624,7 @@ range.&lt;/p&gt;
 hope this article makes at least one Python package less broken.  (I’d prefer
 it if all broken packages were less broken, but I know not to get my hopes up.)&lt;/p&gt;
 &lt;p&gt;Admittedly, most of these mistakes are due to users not using or understanding
-setuptools properly (aside from a Poetry antipattern that sneaked in at #2).
+setuptools properly (aside from a Poetry anti-pattern that sneaked in at #2).
 Though flit and Poetry may promise to fix setuptools’ usability issues, people
 keep on using setuptools, and it keeps on outsmarting them.  Hopefully sites
 like the &lt;a class="reference external" href="https://packaging.python.org"&gt;Python Packaging User Guide&lt;/a&gt; eventually expand &amp;amp; become mature
@@ -4646,7 +4646,7 @@ that happens, though, don’t feel bad about using it if you need to.&lt;/td&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
 &lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Unless &lt;tt class="docutils literal"&gt;foo&lt;/tt&gt; is an unpredictable, compatibility-breaking mess, in
-which case you should probably reconsider dependending on it.&lt;/td&gt;&lt;/tr&gt;
+which case you should probably reconsider depending on it.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;table class="docutils footnote" frame="void" id="footnote-3" rules="none"&gt;

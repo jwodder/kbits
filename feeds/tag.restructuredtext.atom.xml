@@ -514,7 +514,7 @@ fails, a case-insensitive match is tried.&lt;/p&gt;
 substitution reference: two periods, a space, a vertical bar, the same
 substitution text as in the substitution reference, another vertical bar,
 whitespace, a &lt;tt class="docutils literal"&gt;replace::&lt;/tt&gt; directive (without leading &lt;tt class="docutils literal"&gt;..&lt;/tt&gt;), whitespace,
-and then finally the inline markup to display in place of the substiution
+and then finally the inline markup to display in place of the substitution
 reference in the rendered document.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Elsewhere in the document, a &lt;a class="reference internal" href="#target"&gt;hyperlink target&lt;/a&gt; is created that

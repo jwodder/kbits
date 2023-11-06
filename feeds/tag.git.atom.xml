@@ -87,7 +87,7 @@ knowing what files to ignore when traversing a project directory.&lt;/p&gt;
 &lt;/tr&gt;
 &lt;tr&gt;&lt;td rowspan="2"&gt;&lt;a class="reference external" href="https://www.gnu.org/software/rcs/"&gt;RCS&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;filename&lt;/em&gt;&lt;tt class="docutils literal"&gt;,v&lt;/tt&gt;&lt;/td&gt;
-&lt;td&gt;Verson history for &lt;em&gt;filename&lt;/em&gt;&lt;/td&gt;
+&lt;td&gt;Version history for &lt;em&gt;filename&lt;/em&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a class="reference external" href="https://www.gnu.org/software/rcs/manual/html_node/Concepts.html#RCS-file"&gt;Manual&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;&lt;tt class="docutils literal"&gt;RCS/&lt;/tt&gt;&lt;/td&gt;
@@ -108,7 +108,7 @@ such files.&lt;/td&gt;&lt;/tr&gt;
 &lt;table class="docutils footnote" frame="void" id="fn2" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-3"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;For compability with ASP.NET, Subversion will use the name &lt;tt class="docutils literal"&gt;_svn&lt;/tt&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-3"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;For compatibility with ASP.NET, Subversion will use the name &lt;tt class="docutils literal"&gt;_svn&lt;/tt&gt;
 instead of &lt;tt class="docutils literal"&gt;.svn&lt;/tt&gt; if the &lt;tt class="docutils literal"&gt;SVN_ASP_DOT_NET_HACK&lt;/tt&gt; environment variable is
 defined.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
