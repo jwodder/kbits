@@ -75,7 +75,7 @@ The exact effects of these commands are as follows:
   Without this command, older versions of LaTeX will use a "raw" input encoding
   in which each input byte is typeset as the glyph in the same position in the
   current font. [#ltnews28]_
-  
+
   Beginning with the 2018-04-01 release, LaTeX uses UTF-8 as the default
   encoding for source files, making :tx:`\usepackage[utf8]{inputenc}`
   redundant. [#ltnews28]_
@@ -386,7 +386,7 @@ References
    <http://mirrors.ctan.org/language/greek/greek-inputenc/greek-utf8.pdf>
    (accessed 2020 July 27).
 
-.. [#source2e] 
+.. [#source2e]
    Johannes Braams, David Carlisle, Alan Jeffrey, Leslie Lamport, Frank
    Mittelbach, Chris Rowley, and Rainer Schöpf,
    :t:`The LaTeX2e Sources`.
@@ -407,7 +407,7 @@ References
    <https://www.latex-project.org/news/latex2e-news/ltnews28.pdf>
    (accessed 2020 July 27).
 
-.. [#latex2e-unoff] 
+.. [#latex2e-unoff]
    :t:`LaTeX2e unofficial reference manual`.
    Last modified 2018 October,
    <http://tug.org/texinfohtml/latex2e.html>

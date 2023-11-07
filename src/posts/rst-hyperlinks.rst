@@ -268,7 +268,7 @@ the link text is too long to use as an efficient reference name?  The solution:
     __ https://www.example.net
 
 Rendered:
- 
+
     `This link`__ goes to a dot-com.  `This other link`__ goes to a dot-net.
 
     .. __: https://www.example.com
@@ -494,7 +494,7 @@ target pointing to that section with the same reference name as the section
 title.
 
 .. code:: rst
-    
+
     Go read "`All About Eels`_" to learn about our wriggly friends!
 
     Didn't you hear me?  Who wouldn't want to click `this link <All About
