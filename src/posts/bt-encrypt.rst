@@ -3,6 +3,7 @@ The BitTorrent Encryption Protocol
 ==================================
 
 :Date: 2023-10-19
+:Modified: 2023-12-03
 :Category: Software
 :Tags: BitTorrent, encryption
 :Summary:
@@ -18,10 +19,9 @@ Encryption (PE), or MSE/PE, among other names — is what keeps you secure while
 you download massive amounts of … Linux ISOs.  While some (including the
 creator of BitTorrent) have been critical of the protocol, comparing it to mere
 "obfuscation," it remains highly popular among users distributing perfectly
-legitimate files over the internet that ISPs shouldn't concern themselves
-about.
+legitimate files over the internet that ISPs shouldn't concern themselves over.
 
-The *de facto* official specification for the protocol appears to be
+The *de facto* specification for the protocol appears to be
 <https://wiki.vuze.com/w/Message_Stream_Encryption>, but the page has been down
 whenever I've checked recently, and the actual content is not optimally
 presented.  Thus, I've written up everything I've been able to determine about
@@ -37,11 +37,11 @@ Overview
 ========
 
 An MSE/PE connection begins with the client and server performing a
-`Diffie–Hellman key exchange <DH_>`_ handshake, in which both parties generate
-a pair of public & private keys and then exchange their public keys, after
-which — by the power of mathematics — they independently calculate the same
-number (the *shared secret*), which remains unknown to eavesdroppers.  Each
-party then uses the shared secret to initialize two keystreams_: infinite
+`Diffie–Hellman key exchange <DH_>`_ handshake, in which each party generates a
+private key with corresponding public key, the public keys are exchanged, and
+then — by the power of mathematics — both parties independently calculate the
+same number (the *shared secret*), which remains unknown to eavesdroppers.
+Each party then uses the shared secret to initialize two keystreams_: infinite
 generators of pseudo-random bytes calculated from an initial value; the bytes
 from one keystream are then used to encrypt & decrypt data sent from the client
 to the server, and the other keystream is used for data sent from the server to
@@ -53,7 +53,6 @@ using the keystreams or to stop using encryption entirely.
 
 .. _DH: https://en.wikipedia.org/wiki/Diffie–Hellman_key_exchange
 .. _keystreams: https://en.wikipedia.org/wiki/Keystream
-.. _stream ciphers: https://en.wikipedia.org/wiki/Stream_cipher
 
 
 Definitions
@@ -61,7 +60,8 @@ Definitions
 
 MSE/PE encryption uses the following constants and functions:
 
-- ``P`` is the following 96-byte (768-bit) prime, rendered in hexadecimal::
+- ``P`` is the following 96-byte (768-bit) prime, here rendered in
+  hexadecimal::
 
     ffffffffffffffff c90fdaa22168c234  c4c6628b80dc1cd1 29024e088a67cc74
     020bbea63b139b22 514a08798e3404dd  ef9519b3cd3a431b 302b0a6df25f1437
