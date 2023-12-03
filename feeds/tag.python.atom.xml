@@ -3779,13 +3779,13 @@ adds files directly into both the sdist and wheel.  To include a file in only
 the sdist, one needs to change the &lt;tt class="docutils literal"&gt;include&lt;/tt&gt; option from this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
 &lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;to this form:&lt;/p&gt;
 &lt;pre class="code toml literal-block"&gt;
 &lt;span class="k"&gt;[tool.poetry]&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt;
-    &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sdist&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;CHANGELOG.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sdist&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;
 &lt;p&gt;If you do want to include your &lt;tt class="docutils literal"&gt;README&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;LICENSE&lt;/tt&gt; in your wheel, the

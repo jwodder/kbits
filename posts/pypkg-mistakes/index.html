@@ -348,13 +348,13 @@ adds files directly into both the sdist and wheel.  To include a file in only
 the sdist, one needs to change the <tt class="docutils literal">include</tt> option from this form:</p>
 <pre class="code toml literal-block">
 <span class="k">[tool.poetry]</span><span class="w">
-</span><span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;CHANGELOG.md&quot;</span><span class="p">]</span>
+</span><span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">]</span>
 </pre>
 <p>to this form:</p>
 <pre class="code toml literal-block">
 <span class="k">[tool.poetry]</span><span class="w">
 </span><span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;CHANGELOG.md&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sdist&quot;</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;sdist&quot;</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span>
 </pre>
 <p>If you do want to include your <tt class="docutils literal">README</tt> or <tt class="docutils literal">LICENSE</tt> in your wheel, the

@@ -60,6 +60,10 @@
                     <td><time datetime="2023-10-19T00:00:00-04:00" pubdate="1">2023-10-19</time></td>
                 </tr>
                 <tr>
+                    <th>Modified:</th>
+                    <td><time datetime="2023-12-03T00:00:00-05:00">2023-12-03</time></td>
+                </tr>
+                <tr>
                     <th>Author:</th>
                     <td>
 <span class="fn">John T. Wodder II</span>                    </td>
@@ -85,9 +89,8 @@ Encryption (PE), or MSE/PE, among other names — is what keeps you secure while
 you download massive amounts of … Linux ISOs.  While some (including the
 creator of BitTorrent) have been critical of the protocol, comparing it to mere
 “obfuscation,” it remains highly popular among users distributing perfectly
-legitimate files over the internet that ISPs shouldn’t concern themselves
-about.</p>
-<p>The <em>de facto</em> official specification for the protocol appears to be
+legitimate files over the internet that ISPs shouldn’t concern themselves over.</p>
+<p>The <em>de facto</em> specification for the protocol appears to be
 &lt;<a class="reference external" href="https://wiki.vuze.com/w/Message_Stream_Encryption">https://wiki.vuze.com/w/Message_Stream_Encryption</a>&gt;, but the page has been down
 whenever I’ve checked recently, and the actual content is not optimally
 presented.  Thus, I’ve written up everything I’ve been able to determine about
@@ -120,11 +123,11 @@ MSE/PE here.</p>
 <div class="section" id="overview">
 <h2><a class="toc-backref" href="#contents">Overview</a></h2>
 <p>An MSE/PE connection begins with the client and server performing a
-<a class="reference external" href="https://en.wikipedia.org/wiki/Diffie–Hellman_key_exchange">Diffie–Hellman key exchange</a> handshake, in which both parties generate
-a pair of public &amp; private keys and then exchange their public keys, after
-which — by the power of mathematics — they independently calculate the same
-number (the <em>shared secret</em>), which remains unknown to eavesdroppers.  Each
-party then uses the shared secret to initialize two <a class="reference external" href="https://en.wikipedia.org/wiki/Keystream">keystreams</a>: infinite
+<a class="reference external" href="https://en.wikipedia.org/wiki/Diffie–Hellman_key_exchange">Diffie–Hellman key exchange</a> handshake, in which each party generates a
+private key with corresponding public key, the public keys are exchanged, and
+then — by the power of mathematics — both parties independently calculate the
+same number (the <em>shared secret</em>), which remains unknown to eavesdroppers.
+Each party then uses the shared secret to initialize two <a class="reference external" href="https://en.wikipedia.org/wiki/Keystream">keystreams</a>: infinite
 generators of pseudo-random bytes calculated from an initial value; the bytes
 from one keystream are then used to encrypt &amp; decrypt data sent from the client
 to the server, and the other keystream is used for data sent from the server to
@@ -137,7 +140,8 @@ using the keystreams or to stop using encryption entirely.</p>
 <h2><a class="toc-backref" href="#contents">Definitions</a></h2>
 <p>MSE/PE encryption uses the following constants and functions:</p>
 <ul>
-<li><p class="first"><tt class="docutils literal">P</tt> is the following 96-byte (768-bit) prime, rendered in hexadecimal:</p>
+<li><p class="first"><tt class="docutils literal">P</tt> is the following 96-byte (768-bit) prime, here rendered in
+hexadecimal:</p>
 <pre class="literal-block">
 ffffffffffffffff c90fdaa22168c234  c4c6628b80dc1cd1 29024e088a67cc74
 020bbea63b139b22 514a08798e3404dd  ef9519b3cd3a431b 302b0a6df25f1437
