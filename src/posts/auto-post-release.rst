@@ -3,7 +3,7 @@ Running Extra Steps after Releasing with ``auto`` in GitHub Actions
 ===================================================================
 
 :Date: 2020-10-26
-:Modified: 2021-02-05
+:Modified: 2024-05-22
 :Category: Programming
 :Tags: GitHub Actions, auto, continuous integration
 :Summary:
@@ -49,7 +49,7 @@ Presumably, it looks something liks this:
         if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
         steps:
           - name: Checkout source
-            uses: actions/checkout@v2
+            uses: actions/checkout@v4
             with:
               fetch-depth: 0
 
@@ -110,9 +110,8 @@ by passing ``auto`` a personal access token instead of ``GITHUB_TOKEN``, but
 there's a more direct way to make this work instead that also lets you keep
 your release-related workflow steps in a single file.
 
-__ https://docs.github.com/en/free-pro-team@latest/actions/reference/
-   events-that-trigger-workflows#triggering-new-workflows-using-a-personal-
-   access-token
+__ https://docs.github.com/en/actions/using-workflows/triggering-a-workflow
+   #triggering-a-workflow-from-a-workflow
 
 Here's the key trick: By running |auto version|_ before ``auto shipit``, you
 find out whether ``auto`` is about to create a new release, and you can save
@@ -132,20 +131,20 @@ Hence, insert the following step before the ``auto shipit`` step:
             id: auto-version
             run: |
               version="$(~/auto version)"
-              echo "::set-output name=version::$version"
+              echo "version=$version" >> "$GITHUB_OUTPUT"
             env:
               GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-Here, we use the ``set-output`` `workflow command`_ to make the output from
-``auto version`` available to subsequent steps.  Later steps can then be
-configured to only run if a new release is being made by adding an |if field|_
-to them, like so:
+Here, we use a `workflow command`_ to make the output from ``auto version``
+available to subsequent steps.  Later steps can then be configured to only run
+if a new release is being made by adding an |if field|_ to them, like so:
 
-.. _workflow command: https://docs.github.com/en/free-pro-team@latest/actions/
-                      reference/workflow-commands-for-github-actions
+.. _workflow command: https://docs.github.com/en/actions/using-workflows/
+                      workflow-commands-for-github-actions
+                      #setting-an-output-parameter
 
 .. |if field| replace:: ``if`` field
-.. _if field: https://docs.github.com/en/free-pro-team@latest/actions/reference/
+.. _if field: https://docs.github.com/en/actions/using-workflows/
               workflow-syntax-for-github-actions#jobsjob_idstepsif
 
 .. code:: yaml
@@ -170,9 +169,8 @@ field should contain a YAML object mapping a name for the output value to a
 this would mean a configuration like the following:
 
 .. |outputs field| replace:: ``outputs`` field
-.. _outputs field: https://docs.github.com/en/free-pro-team@latest/actions/
-                   reference/workflow-syntax-for-github-actions
-                   #jobsjob_idoutputs
+.. _outputs field: https://docs.github.com/en/actions/using-workflows/
+                   workflow-syntax-for-github-actions#jobsjob_idoutputs
 
 .. code:: yaml
 
@@ -195,8 +193,8 @@ special fields (at the same level as ``runs-on`` and ``steps``):
   auto-release`` for the examples given here) to declare a dependency on it
 
   .. |needs field| replace:: ``needs`` field
-  .. _needs field: https://docs.github.com/en/free-pro-team@latest/actions/
-                   reference/workflow-syntax-for-github-actions#jobsjob_idneeds
+  .. _needs field: https://docs.github.com/en/actions/using-workflows/
+                   workflow-syntax-for-github-actions#jobsjob_idneeds
 
 - An ``if`` field containing an expression of the form
   ``needs.AUTO_JOB_NAME.outputs.AUTO_VERSION_OUTPUT_NAME != ''`` (so ``if:
@@ -235,7 +233,7 @@ input like so:
 .. code:: yaml
 
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: master  # or `main` or whatever your default branch is
           # This setting is needed to fetch tags:
@@ -253,10 +251,10 @@ latest GitHub release, like so:
         id: latest-release
         run: |
           latest_tag="$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)"
-          echo "::set-output name=tag::$latest_tag"
+          echo "tag=$latest_tag" >> "$GITHUB_OUTPUT"
 
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{ steps.latest-release.outputs.tag }}
           fetch-depth: 0
@@ -290,7 +288,7 @@ something like this:
           auto-version: ${{ steps.auto-version.outputs.version }}
         steps:
           - name: Checkout source
-            uses: actions/checkout@v2
+            uses: actions/checkout@v4
             with:
               fetch-depth: 0
 
@@ -304,7 +302,7 @@ something like this:
             id: auto-version
             run: |
               version="$(~/auto version)"
-              echo "::set-output name=version::$version"
+              echo "version=$version" >> "$GITHUB_OUTPUT"
             env:
               GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -322,10 +320,10 @@ something like this:
             id: latest-release
             run: |
               latest_tag="$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)"
-              echo "::set-output name=tag::$latest_tag"
+              echo "tag=$latest_tag" >> "$GITHUB_OUTPUT"
 
           - name: Checkout source
-            uses: actions/checkout@v2
+            uses: actions/checkout@v4
             with:
               ref: ${{ steps.latest-release.outputs.tag }}
               fetch-depth: 0
