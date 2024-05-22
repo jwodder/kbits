@@ -109,20 +109,20 @@ arguments struct, I’m afraid your only option is to turn to the more verbose
 builder mode.)</p>
 <p>A minimal example of such code would look like this:</p>
 <pre class="code rust literal-block">
-<span class="k">use</span><span class="w"> </span><span class="n">clap</span>::<span class="n">Parser</span><span class="p">;</span><span class="w">
+<span class="k">use</span><span class="w"> </span><span class="n">clap</span><span class="p">::</span><span class="n">Parser</span><span class="p">;</span><span class="w">
 
 </span><span class="cp">#[derive(Debug, Parser)]</span><span class="w">
-</span><span class="k">struct</span> <span class="nc">Arguments</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="k">struct</span><span class="w"> </span><span class="nc">Arguments</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="sd">/// Foo all the bars
 </span><span class="w">    </span><span class="cp">#[clap(long, overrides_with = </span><span class="s">&quot;_no_foo&quot;</span><span class="cp">)]</span><span class="w">
-    </span><span class="n">foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+    </span><span class="n">foo</span><span class="p">:</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w">
 
     </span><span class="sd">/// Don't foo any bars [default]
 </span><span class="w">    </span><span class="cp">#[clap(long = </span><span class="s">&quot;no-foo&quot;</span><span class="cp">)]</span><span class="w">
-    </span><span class="n">_no_foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+    </span><span class="n">_no_foo</span><span class="p">:</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="k">for</span><span class="w"> </span><span class="n">opts</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">],</span><span class="w">
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
@@ -132,7 +132,7 @@ builder mode.)</p>
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
     </span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arguments</span>::<span class="n">parse_from</span><span class="p">(</span><span class="o">&amp;</span><span class="n">opts</span><span class="p">);</span><span class="w">
+        </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arguments</span><span class="p">::</span><span class="n">parse_from</span><span class="p">(</span><span class="o">&amp;</span><span class="n">opts</span><span class="p">);</span><span class="w">
         </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{opts:?} -&gt; {args:?}&quot;</span><span class="p">);</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span>
@@ -163,21 +163,21 @@ the field named <tt class="docutils literal">foo</tt>, now corresponding to the 
 true when <tt class="docutils literal"><span class="pre">--foo</span></tt> is given last and also when no options are given.</p>
 <p>Sample code:</p>
 <pre class="code rust literal-block">
-<span class="k">use</span><span class="w"> </span><span class="n">clap</span>::<span class="n">builder</span>::<span class="n">ArgAction</span><span class="p">;</span><span class="w">
-</span><span class="k">use</span><span class="w"> </span><span class="n">clap</span>::<span class="n">Parser</span><span class="p">;</span><span class="w">
+<span class="k">use</span><span class="w"> </span><span class="n">clap</span><span class="p">::</span><span class="n">builder</span><span class="p">::</span><span class="n">ArgAction</span><span class="p">;</span><span class="w">
+</span><span class="k">use</span><span class="w"> </span><span class="n">clap</span><span class="p">::</span><span class="n">Parser</span><span class="p">;</span><span class="w">
 
 </span><span class="cp">#[derive(Debug, Parser)]</span><span class="w">
-</span><span class="k">struct</span> <span class="nc">Arguments</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="k">struct</span><span class="w"> </span><span class="nc">Arguments</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="sd">/// Don't foo any bars
 </span><span class="w">    </span><span class="cp">#[clap(long = </span><span class="s">&quot;no-foo&quot;</span><span class="cp">, action = ArgAction::SetFalse)]</span><span class="w">
-    </span><span class="n">foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+    </span><span class="n">foo</span><span class="p">:</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w">
 
     </span><span class="sd">/// Foo all the bars [default]
 </span><span class="w">    </span><span class="cp">#[clap(long = </span><span class="s">&quot;foo&quot;</span><span class="cp">, overrides_with = </span><span class="s">&quot;foo&quot;</span><span class="cp">)]</span><span class="w">
-    </span><span class="n">_no_foo</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+    </span><span class="n">_no_foo</span><span class="p">:</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="k">for</span><span class="w"> </span><span class="n">opts</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">],</span><span class="w">
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
@@ -187,7 +187,7 @@ true when <tt class="docutils literal"><span class="pre">--foo</span></tt> is gi
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">],</span><span class="w">
         </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;arg0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--no-foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--foo&quot;</span><span class="p">],</span><span class="w">
     </span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arguments</span>::<span class="n">parse_from</span><span class="p">(</span><span class="o">&amp;</span><span class="n">opts</span><span class="p">);</span><span class="w">
+        </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arguments</span><span class="p">::</span><span class="n">parse_from</span><span class="p">(</span><span class="o">&amp;</span><span class="n">opts</span><span class="p">);</span><span class="w">
         </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{opts:?} -&gt; {args:?}&quot;</span><span class="p">);</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span>
@@ -214,7 +214,7 @@ true when <tt class="docutils literal"><span class="pre">--foo</span></tt> is gi
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2024 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

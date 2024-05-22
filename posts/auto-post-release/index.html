@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                     <th>Modified:</th>
-                    <td><time datetime="2021-02-05T00:00:00-05:00">2021-02-05</time></td>
+                    <td><time datetime="2024-05-22T00:00:00-04:00">2024-05-22</time></td>
                 </tr>
                 <tr>
                     <th>Author:</th>
@@ -110,7 +110,7 @@ Presumably, it looks something liks this:</p>
     </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">!contains(github.event.head_commit.message,</span><span class="nv"> </span><span class="s">'skip</span><span class="nv"> </span><span class="s">ci')&quot;</span><span class="w">
     </span><span class="nt">steps</span><span class="p">:</span><span class="w">
       </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
-        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v4</span><span class="w">
         </span><span class="nt">with</span><span class="p">:</span><span class="w">
           </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span><span class="w">
 
@@ -159,7 +159,7 @@ test whether there’s a new release.</p>
 <p>Theoretically, one option would be to create a separate workflow that runs
 whenever a new tag is pushed or a new GitHub release is created, but this won’t
 work with an out-of-the-box setup; <tt class="docutils literal">auto</tt> uses <tt class="docutils literal">GITHUB_TOKEN</tt> to create the
-tag &amp; release, and GitHub Actions workflows <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token">specifically do not trigger</a> on
+tag &amp; release, and GitHub Actions workflows <a class="reference external" href="https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow">specifically do not trigger</a> on
 events performed with a <tt class="docutils literal">GITHUB_TOKEN</tt>.  You could get this approach to work
 by passing <tt class="docutils literal">auto</tt> a personal access token instead of <tt class="docutils literal">GITHUB_TOKEN</tt>, but
 there’s a more direct way to make this work instead that also lets you keep
@@ -176,14 +176,13 @@ shipit</tt> would do nothing, <tt class="docutils literal">auto version</tt> jus
   </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">auto-version</span><span class="w">
   </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
     </span><span class="no">version=&quot;$(~/auto version)&quot;</span><span class="w">
-    </span><span class="no">echo &quot;::set-output name=version::$version&quot;</span><span class="w">
+    </span><span class="no">echo &quot;version=$version&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;</span><span class="w">
   </span><span class="nt">env</span><span class="p">:</span><span class="w">
     </span><span class="nt">GH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
 </pre>
-<p>Here, we use the <tt class="docutils literal"><span class="pre">set-output</span></tt> <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-commands-for-github-actions">workflow command</a> to make the output from
-<tt class="docutils literal">auto version</tt> available to subsequent steps.  Later steps can then be
-configured to only run if a new release is being made by adding an <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif"><tt class="docutils literal">if</tt> field</a>
-to them, like so:</p>
+<p>Here, we use a <a class="reference external" href="https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter">workflow command</a> to make the output from <tt class="docutils literal">auto version</tt>
+available to subsequent steps.  Later steps can then be configured to only run
+if a new release is being made by adding an <a class="reference external" href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsif"><tt class="docutils literal">if</tt> field</a> to them, like so:</p>
 <pre class="code yaml literal-block">
 <span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Build asset for new release</span><span class="w">
   </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">...</span><span class="w">
@@ -195,7 +194,7 @@ to them, like so:</p>
 steps into a separate job in the same workflow and have that entire job be
 guarded by a single <tt class="docutils literal">if</tt>.</p>
 <p>First, in order to make the output from the <tt class="docutils literal">auto version</tt> step available to
-other jobs in the workflow, you need to add an <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idoutputs"><tt class="docutils literal">outputs</tt> field</a> to the original
+other jobs in the workflow, you need to add an <a class="reference external" href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idoutputs"><tt class="docutils literal">outputs</tt> field</a> to the original
 <tt class="docutils literal">auto</tt> job (the one that in the example above is named “<tt class="docutils literal"><span class="pre">auto-release</span></tt>”),
 at the same level as the <tt class="docutils literal"><span class="pre">runs-on</span></tt> and <tt class="docutils literal">steps</tt> keys.  This <tt class="docutils literal">outputs</tt>
 field should contain a YAML object mapping a name for the output value to a
@@ -218,7 +217,7 @@ this would mean a configuration like the following:</p>
 steps you want to run after a new release is made.  This new job needs two
 special fields (at the same level as <tt class="docutils literal"><span class="pre">runs-on</span></tt> and <tt class="docutils literal">steps</tt>):</p>
 <ul>
-<li><p class="first">A <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds"><tt class="docutils literal">needs</tt> field</a> containing the job ID of the <tt class="docutils literal">auto</tt> job (so <tt class="docutils literal">needs:
+<li><p class="first">A <a class="reference external" href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idneeds"><tt class="docutils literal">needs</tt> field</a> containing the job ID of the <tt class="docutils literal">auto</tt> job (so <tt class="docutils literal">needs:
 <span class="pre">auto-release</span></tt> for the examples given here) to declare a dependency on it</p>
 </li>
 <li><p class="first">An <tt class="docutils literal">if</tt> field containing an expression of the form
@@ -252,7 +251,7 @@ latest commit from the repository by passing the default branch as the <tt class
 input like so:</p>
 <pre class="code yaml literal-block">
 <span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
-  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v4</span><span class="w">
   </span><span class="nt">with</span><span class="p">:</span><span class="w">
     </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">  </span><span class="c1"># or `main` or whatever your default branch is</span><span class="w">
     </span><span class="c1"># This setting is needed to fetch tags:</span><span class="w">
@@ -268,10 +267,10 @@ latest GitHub release, like so:</p>
   </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">latest-release</span><span class="w">
   </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
     </span><span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span><span class="w">
-    </span><span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span><span class="w">
+    </span><span class="no">echo &quot;tag=$latest_tag&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;</span><span class="w">
 
 </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
-  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v4</span><span class="w">
   </span><span class="nt">with</span><span class="p">:</span><span class="w">
     </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ steps.latest-release.outputs.tag }}</span><span class="w">
     </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span>
@@ -300,7 +299,7 @@ something like this:</p>
       </span><span class="nt">auto-version</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ steps.auto-version.outputs.version }}</span><span class="w">
     </span><span class="nt">steps</span><span class="p">:</span><span class="w">
       </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
-        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v4</span><span class="w">
         </span><span class="nt">with</span><span class="p">:</span><span class="w">
           </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span><span class="w">
 
@@ -314,7 +313,7 @@ something like this:</p>
         </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">auto-version</span><span class="w">
         </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
           </span><span class="no">version=&quot;$(~/auto version)&quot;</span><span class="w">
-          </span><span class="no">echo &quot;::set-output name=version::$version&quot;</span><span class="w">
+          </span><span class="no">echo &quot;version=$version&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;</span><span class="w">
         </span><span class="nt">env</span><span class="p">:</span><span class="w">
           </span><span class="nt">GH_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
 
@@ -332,10 +331,10 @@ something like this:</p>
         </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">latest-release</span><span class="w">
         </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">|</span><span class="w">
           </span><span class="no">latest_tag=&quot;$(curl -fsSL https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r .tag_name)&quot;</span><span class="w">
-          </span><span class="no">echo &quot;::set-output name=tag::$latest_tag&quot;</span><span class="w">
+          </span><span class="no">echo &quot;tag=$latest_tag&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;</span><span class="w">
 
       </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Checkout source</span><span class="w">
-        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v2</span><span class="w">
+        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">actions/checkout&#64;v4</span><span class="w">
         </span><span class="nt">with</span><span class="p">:</span><span class="w">
           </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">${{ steps.latest-release.outputs.tag }}</span><span class="w">
           </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">0</span><span class="w">
@@ -355,7 +354,7 @@ something like this:</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2023 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2024 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
