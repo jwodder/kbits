@@ -42,12 +42,9 @@ DRAFT_PAGE_SAVE_AS = DRAFT_PAGE_URL + "index.html"
 DRAFT_PAGE_LANG_URL = "drafts/{slug}/{lang}/"
 DRAFT_PAGE_LANG_SAVE_AS = DRAFT_PAGE_LANG_URL + "index.html"
 
-# AUTHOR_URL = 'authors/{slug}/'
-# AUTHOR_SAVE_AS = AUTHOR_URL + 'index.html'
-AUTHOR_URL = ""  # Disable author pages
-AUTHOR_SAVE_AS = ""  # Disable author pages
-# AUTHORS_SAVE_AS = 'authors/index.html'
-AUTHORS_SAVE_AS = ""  # Disable authors listing
+AUTHOR_URL = 'authors/{slug}/'
+AUTHOR_SAVE_AS = AUTHOR_URL + 'index.html'
+AUTHORS_SAVE_AS = 'authors/index.html'
 
 CATEGORY_URL = "categories/{slug}/"
 CATEGORY_SAVE_AS = CATEGORY_URL + "index.html"
