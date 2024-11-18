@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Articles by John T. Wodder II</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+</head>
+
+<body>
+    <div id="kbits-theme-topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d already found</span>
+        </header>
+    </div>
+
+    <div class="mainrow">
+        <div id="kbits-theme-navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/about/">About This Site</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav>
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="kbits-theme-content">
+<section>
+    <h1>About the Author</h1>
+
+    <div id="kbits-theme-preamble-content"><p>John T. Wodder II (<tt class="docutils literal">jwodder</tt> on GitHub and other places) is a computer
+programmer who currently works primarily in Python and Rust but has previously
+also done work in C, Perl, and Haskell, among other languages.  He enjoys
+abstract &amp; discrete mathematics, *nix-based operating systems, sum types,
+static type checking, asynchronous programming, data-driven testing, and large
+properly-formatted data files.</p>
+<p>He dislikes Windows, C++, and floating-point numbers.</p>
+<p>Check out his projects on <a class="reference external" href="https://github.com/jwodder?tab=repositories">GitHub</a>, <a class="reference external" href="https://pypi.org/user/jwodder/">PyPI</a>, and <a class="reference external" href="https://crates.io/users/jwodder">crates.io</a>.</p>
+</div>
+
+<h1>Articles by John T. Wodder II</h1>
+
+
+        <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/bt-encrypt/" rel="bookmark" title="Permalink to The BitTorrent Encryption Protocol">
+                    The BitTorrent Encryption Protocol
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2023-10-19T00:00:00-04:00">2023-10-19</time>
+            <div>
+                <strong>Modified:</strong>
+                <time datetime="2023-12-03T00:00:00-05:00">2023-12-03</time>
+            </div>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/software/">Software</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/bittorrent/">BitTorrent</a>, <a href="https://jwodder.github.io/kbits/tags/encryption/">encryption</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">The <a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent_protocol_encryption">encryption protocol</a> used by the <a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent">BitTorrent</a> peer-to-peer
+file-sharing protocol — known variously as Message Stream Encryption (MSE),
+Protocol Encryption (PE), or MSE/PE, among other names — is what keeps you
+secure while you download massive amounts of … Linux ISOs.  Here’s how it
+works.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/reshaping/" rel="bookmark" title="Permalink to Converting Lists to Simple Tables and Back with rs">
+                    Converting Lists to Simple Tables and Back with <tt class="docutils literal">rs</tt>
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2023-05-03T00:00:00-04:00">2023-05-03</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/software/">Software</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/rs/">rs</a>, <a href="https://jwodder.github.io/kbits/tags/tables/">tables</a>, <a href="https://jwodder.github.io/kbits/tags/text-processing/">text processing</a>, <a href="https://jwodder.github.io/kbits/tags/unix-utilities/">Unix utilities</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">If you have a file that’s just a list of items, one item per line, and you
+want to turn it into a simple table — one delimited just by whitespace
+without any border characters — how would you do that?  Follow up question:
+If you have a simple table, and you want to convert it into a list of
+items, one per line, how would you do <em>that</em>?  The answer to both questions
+is: with the <tt class="docutils literal">rs</tt> command, and this article will show you how.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/writing-manpages/" rel="bookmark" title="Permalink to Basics of Writing Unix Man Pages">
+                    Basics of Writing Unix Man Pages
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2022-11-24T00:00:00-05:00">2022-11-24</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/software/">Software</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/documentation/">documentation</a>, <a href="https://jwodder.github.io/kbits/tags/groff/">groff</a>, <a href="https://jwodder.github.io/kbits/tags/roff/">roff</a>, <a href="https://jwodder.github.io/kbits/tags/markup/">markup</a>, <a href="https://jwodder.github.io/kbits/tags/man-pages/">man pages</a>, <a href="https://jwodder.github.io/kbits/tags/unix-utilities/">Unix utilities</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">A guide to the basic syntax &amp; commands of Unix man pages</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/clap-bool-negate/" rel="bookmark" title="Permalink to Implementing Boolean Negation Flags with Clap">
+                    Implementing Boolean Negation Flags with Clap
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2022-10-23T00:00:00-04:00">2022-10-23</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/rust/">Rust</a>, <a href="https://jwodder.github.io/kbits/tags/clap/">clap</a>, <a href="https://jwodder.github.io/kbits/tags/command-line-parsing/">command-line parsing</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">How to use Rust’s <a class="reference external" href="https://github.com/clap-rs/clap">clap</a> library to implement boolean <tt class="docutils literal"><span class="pre">--foo</span></tt> and
+<tt class="docutils literal"><span class="pre">--no-foo</span></tt> flags that undo each other</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/pyasync-fundam/" rel="bookmark" title="Permalink to Python Asynchronous Programming Fundamentals">
+                    Python Asynchronous Programming Fundamentals
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2022-05-29T00:00:00-04:00">2022-05-29</time>
+            <div>
+                <strong>Modified:</strong>
+                <time datetime="2022-07-17T00:00:00-04:00">2022-07-17</time>
+            </div>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/async/">async</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">Python introduced asynchronous programming capabilities in version 3.4 in
+2014, with further notable improvements in almost every minor version
+since.  However, to many Python programmers, this area of the language
+remains esoteric, misunderstood, and underutilized.  This article aims to
+elucidate the fundamental concepts of asynchronous programming as part of
+the first step towards mastery.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/multi-value-enum/" rel="bookmark" title="Permalink to Creating Multi-Value Enums in Python">
+                    Creating Multi-Value Enums in Python
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2022-01-14T00:00:00-05:00">2022-01-14</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/enum/">enum</a>, <a href="https://jwodder.github.io/kbits/tags/mypy/">mypy</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">How to create an enum in Python where each member has a “main” value and a
+set of “extra” constant attributes</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/pytest-mark-off/" rel="bookmark" title="Permalink to Skipping Pytest Tests Unless an Option is Given">
+                    Skipping Pytest Tests Unless an Option is Given
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2021-12-05T00:00:00-05:00">2021-12-05</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/pytest/">pytest</a>, <a href="https://jwodder.github.io/kbits/tags/testing/">testing</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">When testing Python code with <a class="reference external" href="https://docs.pytest.org">pytest</a>, you may occasionally write tests
+that you only want to run under special circumstances, such as long-running
+tests that should only be run under continuous integration and not when
+invoking <tt class="docutils literal">pytest</tt> locally.  The naïve way to accomplish this is to
+decorate the tests in question with a pytest mark like
+<tt class="docutils literal">&#64;pytest.mark.slow</tt> and then specify <tt class="docutils literal"><span class="pre">-m</span> &quot;not slow&quot;</tt> when running
+pytest locally, but then you have to remember to pass this option every
+time, and if you hardcode it into your <tt class="docutils literal">tox.ini</tt> or pytest configuration,
+you’ll need something else to remove it when testing under CI.
+Fortunately, there are better ways to make pytest skip tests by default.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/pyversion-features/" rel="bookmark" title="Permalink to Notable Features Introduced in Each Python Version">
+                    Notable Features Introduced in Each Python Version
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2021-07-11T00:00:00-04:00">2021-07-11</time>
+            <div>
+                <strong>Modified:</strong>
+                <time datetime="2023-09-28T00:00:00-04:00">2023-09-28</time>
+            </div>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/history/">history</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">Notable features introduced in each major release of Python, from Python
+3.0 forwards</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/vcs-files/" rel="bookmark" title="Permalink to Special Version Control Files">
+                    Special Version Control Files
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2021-06-22T00:00:00-04:00">2021-06-22</time>
+            <div>
+                <strong>Modified:</strong>
+                <time datetime="2022-02-06T00:00:00-05:00">2022-02-06</time>
+            </div>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/software/">Software</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/git/">Git</a>, <a href="https://jwodder.github.io/kbits/tags/version-control/">version control</a>, <a href="https://jwodder.github.io/kbits/tags/dotfiles/">dotfiles</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">A list of version control system-specific files that one may find in the
+working directories of common version control systems</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/auto-bump2version/" rel="bookmark" title="Permalink to Integrating auto with bump2version">
+                    Integrating <tt class="docutils literal">auto</tt> with <tt class="docutils literal">bump2version</tt>
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2021-02-11T00:00:00-05:00">2021-02-11</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/github-actions/">GitHub Actions</a>, <a href="https://jwodder.github.io/kbits/tags/auto/">auto</a>, <a href="https://jwodder.github.io/kbits/tags/bump2version/">bump2version</a>, <a href="https://jwodder.github.io/kbits/tags/continuous-integration/">continuous integration</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last"><a class="reference external" href="https://github.com/intuit/auto"><tt class="docutils literal">auto</tt></a> by Intuit lets you set up automatic creation of tags &amp; releases and
+population of changelogs in a GitHub project.  It takes care of determining
+the version number for new releases, but, by default, it does not set the
+new version number in your code.  This isn’t a problem if your project uses
+something like <a class="reference external" href="https://github.com/pypa/setuptools_scm"><tt class="docutils literal">setuptools_scm</tt></a> or <a class="reference external" href="https://github.com/python-versioneer/python-versioneer"><tt class="docutils literal">versioneer</tt></a> to fetch the version
+number from Git, but if your project’s version number is hardcoded in your
+code, you’ll need another solution.  <a class="reference external" href="https://github.com/c4urself/bump2version"><tt class="docutils literal">bump2version</tt></a> is that solution, and
+it can be integrated into <tt class="docutils literal">auto</tt> as shown here.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/pypkg-data/" rel="bookmark" title="Permalink to Using Package Data in Python Projects with Setuptools">
+                    Using Package Data in Python Projects with Setuptools
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2020-12-29T00:00:00-05:00">2020-12-29</time>
+            <div>
+                <strong>Modified:</strong>
+                <time datetime="2022-06-10T00:00:00-04:00">2022-06-10</time>
+            </div>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/python-packaging/">Python packaging</a>, <a href="https://jwodder.github.io/kbits/tags/setuptools/">setuptools</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">When creating a Python project, you may want to include a number of
+non-Python files in the project that the code can then access at runtime,
+such as templates, images, and data.  These files are called <em>package
+data</em>, and this article describes how to include them in &amp; access them from
+your project.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/auto-post-release/" rel="bookmark" title="Permalink to Running Extra Steps after Releasing with auto in GitHub Actions">
+                    Running Extra Steps after Releasing with <tt class="docutils literal">auto</tt> in GitHub Actions
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2020-10-26T00:00:00-04:00">2020-10-26</time>
+            <div>
+                <strong>Modified:</strong>
+                <time datetime="2024-05-22T00:00:00-04:00">2024-05-22</time>
+            </div>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/github-actions/">GitHub Actions</a>, <a href="https://jwodder.github.io/kbits/tags/auto/">auto</a>, <a href="https://jwodder.github.io/kbits/tags/continuous-integration/">continuous integration</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">Let’s say you’ve set up <a class="reference external" href="https://github.com/intuit/auto"><tt class="docutils literal">auto</tt></a> for your project via a GitHub Actions
+workflow, and now you want that workflow to carry out additional steps —
+such as building &amp; uploading assets — whenever <tt class="docutils literal">auto</tt> creates a new
+release.  Let’s also say that none of the available plugins for <tt class="docutils literal">auto</tt>
+covers your use-case and you’re not a JavaScript programmer, so you won’t
+be writing a new plugin to do what you want.  How do you adjust your GitHub
+Actions workflow to run these extra steps at the right time?  Read to find
+out.</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/pypkg-mistakes/" rel="bookmark" title="Permalink to Common Python Packaging Mistakes">
+                    Common Python Packaging Mistakes
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2020-08-22T00:00:00-04:00">2020-08-22</time>
+            <div>
+                <strong>Modified:</strong>
+                <time datetime="2021-03-22T00:00:00-04:00">2021-03-22</time>
+            </div>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/python-packaging/">Python packaging</a>, <a href="https://jwodder.github.io/kbits/tags/setuptools/">setuptools</a>, <a href="https://jwodder.github.io/kbits/tags/best-practices/">best practices</a>, <a href="https://jwodder.github.io/kbits/tags/advice/">advice</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">An overview of common mistakes made in creating &amp; building a Python package
+and how to avoid them</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/powsum/" rel="bookmark" title="Permalink to The Sum of Raising the First \(n\) Integers to a Given Power">
+                    The Sum of Raising the First <span class="math">\(n\)</span> Integers to a Given Power
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2020-08-13T00:00:00-04:00">2020-08-13</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/mathematics/">Mathematics</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/summations/">summations</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">How to derive the closed-form expression for <span class="math">\(\sum_{i=1}^n i^m\)</span> for a
+given <span class="math">\(m\)</span> using the formulas for all lesser <span class="math">\(m\)</span>’s</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/rst-hyperlinks/" rel="bookmark" title="Permalink to All About reStructuredText Hyperlinks">
+                    All About reStructuredText Hyperlinks
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2020-07-28T00:00:00-04:00">2020-07-28</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/software/">Software</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/markup/">markup</a>, <a href="https://jwodder.github.io/kbits/tags/restructuredtext/">reStructuredText</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">Writing the various hyperlink syntaxes in reStructuredText, along with
+internal hyperlinks and styling link text</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/unicode-latex/" rel="bookmark" title="Permalink to Unicode and LaTeX">
+                    Unicode and LaTeX
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2020-07-27T00:00:00-04:00">2020-07-27</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/software/">Software</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/markup/">markup</a>, <a href="https://jwodder.github.io/kbits/tags/latex/">LaTeX</a>, <a href="https://jwodder.github.io/kbits/tags/xelatex/">XeLaTeX</a>, <a href="https://jwodder.github.io/kbits/tags/lualatex/">LuaLaTeX</a>, <a href="https://jwodder.github.io/kbits/tags/unicode/">Unicode</a>, <a href="https://jwodder.github.io/kbits/tags/utf-8/">UTF-8</a>, <a href="https://jwodder.github.io/kbits/tags/encoding/">encoding</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">How to configure LaTeX to accept UTF-8 input (or just use XeLaTeX/LuaLaTeX
+instead)</p>
+</div>
+    </article>
+    <hr class="listing-break"/>
+    <article class="hentry">
+        <header>
+            <h2 class="listing">
+                <a href="https://jwodder.github.io/kbits/posts/click-config/" rel="bookmark" title="Permalink to Setting Default Option Values from Config Files with Click">
+                    Setting Default Option Values from Config Files with Click
+                </a>
+            </h2>
+        </header>
+        <footer>
+            <strong>Posted:</strong> <time datetime="2020-07-17T00:00:00-04:00">2020-07-17</time>
+            <div>
+                <a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a>
+                ·
+<a href="https://jwodder.github.io/kbits/tags/python/">Python</a>, <a href="https://jwodder.github.io/kbits/tags/click/">Click</a>, <a href="https://jwodder.github.io/kbits/tags/configuration-file/">configuration file</a>, <a href="https://jwodder.github.io/kbits/tags/command-line-parsing/">command-line parsing</a>            </div>
+        </footer>
+        <div class="summary"><p class="first last">How to set up a Click program to read default option values from a config
+file</p>
+</div>
+    </article>
+
+</section>
+        </div>
+    </div>
+
+        <footer id="kbits-theme-footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020–2024 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>
