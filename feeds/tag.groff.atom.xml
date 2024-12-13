@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - groff</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.groff.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2022-11-24T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Basics of Writing Unix Man Pages</title><link href="https://jwodder.github.io/kbits/posts/writing-manpages/" rel="alternate"></link><published>2022-11-24T00:00:00-05:00</published><updated>2022-11-24T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-11-24:/kbits/posts/writing-manpages/</id><summary type="html">&lt;p class="first last"&gt;A guide to the basic syntax &amp;amp; commands of Unix man pages&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - groff</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.groff.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2024-12-12T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Basics of Writing Unix Man Pages</title><link href="https://jwodder.github.io/kbits/posts/writing-manpages/" rel="alternate"></link><published>2022-11-24T00:00:00-05:00</published><updated>2024-12-12T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-11-24:/kbits/posts/writing-manpages/</id><summary type="html">&lt;p class="first last"&gt;A guide to the basic syntax &amp;amp; commands of Unix man pages&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;On Unix-like systems, the documents that one views with the &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; command
 (known as “man pages”) are written in a markup language called “roff” (short
 for “run off”) that dates back to the pre-Unix days in the 1960’s.  roff is
@@ -61,6 +61,18 @@ a control character &amp;amp; a command name followed by some number of space-se
 (not tab-separated!) arguments.  To include spaces in an argument, either
 escape them with a backslash or enclose the entire argument in double-quotes;
 to use double-quotes inside an argument, write them as &lt;tt class="docutils literal"&gt;\(dq&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;For example, the input:&lt;/p&gt;
+&lt;pre class="code groff literal-block"&gt;
+.&lt;span class="k"&gt;B&lt;/span&gt; &lt;span class="s"&gt;Bold&lt;/span&gt;
+and brash?  More like
+.&lt;span class="k"&gt;IR&lt;/span&gt; &lt;span class="s"&gt;Belongs&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; in the &amp;quot;&lt;/span&gt; &lt;span class="s"&gt;Trash.&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;contains the command &lt;tt class="docutils literal"&gt;.B&lt;/tt&gt; (for making text bold) with the argument “Bold” and
+the command &lt;tt class="docutils literal"&gt;.IR&lt;/tt&gt; (for alternating between italic and roman text) with the
+arguments “Belongs” (which will be italic), “ in the ” (which will be roman),
+and “Trash” (which will be italic).  This is all rendered as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;strong&gt;Bold&lt;/strong&gt; and brash?  More like &lt;em&gt;Belongs&lt;/em&gt; in the &lt;em&gt;Trash.&lt;/em&gt;&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;There may be any number of spaces &amp;amp; tabs (or none at all) between the control
 character and the command name, but the control character must be the first
@@ -86,6 +98,11 @@ backslash or the escape sequence &lt;tt class="docutils literal"&gt;\&amp;amp;&l
 &lt;tt class="docutils literal"&gt;\e&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;\(rs&lt;/tt&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;For example, the input from above can be rewritten using escape sequences like
+so:&lt;/p&gt;
+&lt;pre class="code groff literal-block"&gt;
+&lt;span class="se"&gt;\fB&lt;/span&gt;Bold&lt;span class="se"&gt;\fR&lt;/span&gt; and brash?  More like &lt;span class="se"&gt;\fI&lt;/span&gt;Belongs&lt;span class="se"&gt;\fR&lt;/span&gt; in the &lt;span class="se"&gt;\fI&lt;/span&gt;Trash.&lt;span class="se"&gt;\fR&lt;/span&gt;
+&lt;/pre&gt;
 &lt;p&gt;A comment consists of a backslash and double quote (&lt;tt class="docutils literal"&gt;\&amp;quot;&lt;/tt&gt;) and extends to the
 end of the line.  A full-line comment can be formed by using the command
 &lt;tt class="docutils literal"&gt;.\&amp;quot;&lt;/tt&gt;.&lt;/p&gt;
@@ -522,7 +539,8 @@ by Fabian Oscar Oh
 &lt;/pre&gt;
 &lt;p&gt;[&lt;a class="reference external" href="https://jwodder.github.io/kbits/posts/writing-manpages/foobar.1"&gt;Download this file&lt;/a&gt;]&lt;/p&gt;
 &lt;p&gt;Rendered:&lt;/p&gt;
-&lt;script id="asciicast-LtGNGNNqtSYDLi72H6e8Yp1sQ" src="https://asciinema.org/a/LtGNGNNqtSYDLi72H6e8Yp1sQ.js" async data-autoplay="true" data-loop="true"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;script id="asciicast-LtGNGNNqtSYDLi72H6e8Yp1sQ" src="https://asciinema.org/a/LtGNGNNqtSYDLi72H6e8Yp1sQ.js" async data-autoplay="true" data-loop="true"&gt;&lt;/script&gt;&lt;p&gt;[&lt;a class="reference external" href="https://asciinema.org/a/LtGNGNNqtSYDLi72H6e8Yp1sQ"&gt;View animation on asciinema.org&lt;/a&gt;]&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class="section" id="further-references"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#contents"&gt;Further References&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
