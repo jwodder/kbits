@@ -7,9 +7,8 @@ programmer who currently works primarily in Python and Rust but has previously
 also done work in C, Perl, and Haskell, among other languages.  He enjoys
 abstract & discrete mathematics, \*nix-based operating systems, sum types,
 static type checking, asynchronous programming, data-driven testing, and large
-properly-formatted data files.
-
-He dislikes Windows, C++, and floating-point numbers.
+properly-formatted data files.  He dislikes Windows, C++, and floating-point
+numbers.
 
 Check out his projects on GitHub__, PyPI__, and crates.io__.
 
