@@ -3,6 +3,7 @@ Basics of Writing Unix Man Pages
 ================================
 
 :Date: 2022-11-24
+:Modified: 2024-12-12
 :Category: Software
 :Tags: documentation, groff, roff, markup, man pages, Unix utilities
 :Summary: A guide to the basic syntax & commands of Unix man pages
@@ -39,6 +40,21 @@ a control character & a command name followed by some number of space-separated
 escape them with a backslash or enclose the entire argument in double-quotes;
 to use double-quotes inside an argument, write them as ``\(dq``.
 
+For example, the input:
+
+.. code:: groff
+
+    .B Bold
+    and brash?  More like
+    .IR Belongs " in the " Trash.
+
+contains the command ``.B`` (for making text bold) with the argument "Bold" and
+the command ``.IR`` (for alternating between italic and roman text) with the
+arguments "Belongs" (which will be italic), “ in the ” (which will be roman),
+and "Trash" (which will be italic).  This is all rendered as:
+
+    **Bold** and brash?  More like *Belongs* in the *Trash.*
+
 - There may be any number of spaces & tabs (or none at all) between the control
   character and the command name, but the control character must be the first
   character in the line.
@@ -60,6 +76,13 @@ sequences*, inline commands that start with backslashes.
 
 - To render a literal backslash in text, use the escape sequence ``\\``,
   ``\e``, or ``\(rs``.
+
+For example, the input from above can be rewritten using escape sequences like
+so:
+
+.. code:: groff
+
+    \fBBold\fR and brash?  More like \fIBelongs\fR in the \fITrash.\fR
 
 A comment consists of a backslash and double quote (``\"``) and extends to the
 end of the line.  A full-line comment can be formed by using the command
@@ -439,6 +462,10 @@ Rendered:
 .. raw:: html
 
     <script id="asciicast-LtGNGNNqtSYDLi72H6e8Yp1sQ" src="https://asciinema.org/a/LtGNGNNqtSYDLi72H6e8Yp1sQ.js" async data-autoplay="true" data-loop="true"></script>
+
+[`View animation on asciinema.org`__]
+
+__ https://asciinema.org/a/LtGNGNNqtSYDLi72H6e8Yp1sQ
 
 Further References
 ==================
