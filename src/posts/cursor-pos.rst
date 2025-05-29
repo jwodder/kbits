@@ -6,17 +6,17 @@ Getting the Current Cursor Position from a Terminal
 :Category: Programming
 :Tags: terminals, ANSI escape codes
 :Summary:
-    When using `ANSI escape sequences <ansi>`_ to manipulate a compatible
+    When using `ANSI escape sequences <ansi_>`_ to manipulate a compatible
     terminal, you may need to know where the text cursor is currently located
     on the screen, especially if its current location was set by the user or a
     previous program rather than your code.  Fortunately, the ANSI escape
     sequence standard `ECMA-48`_ provides a sequence for doing just that.
 
-When using `ANSI escape sequences <ansi>`_ to manipulate a compatible terminal,
-you may need to know where the text cursor is currently located on the screen,
-especially if its current location was set by the user or a previous program
-rather than your code.  Fortunately, the ANSI escape sequence standard
-`ECMA-48`_ provides a sequence for doing just that.
+When using `ANSI escape sequences <ansi_>`_ to manipulate a compatible
+terminal, you may need to know where the text cursor is currently located on
+the screen, especially if its current location was set by the user or a
+previous program rather than your code.  Fortunately, the ANSI escape sequence
+standard `ECMA-48`_ provides a sequence for doing just that.
 
 .. _ansi: https://en.wikipedia.org/wiki/ANSI_escape_code
 .. _ECMA-48: https://ecma-international.org/publications-and-standards/standards/ecma-48/
