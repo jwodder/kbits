@@ -79,11 +79,11 @@
                 </tr>
             </table>
         </footer>
-        <div><p>When using <a class="reference external" href="ansi">ANSI escape sequences</a> to manipulate a compatible terminal,
-you may need to know where the text cursor is currently located on the screen,
-especially if its current location was set by the user or a previous program
-rather than your code.  Fortunately, the ANSI escape sequence standard
-<a class="reference external" href="https://ecma-international.org/publications-and-standards/standards/ecma-48/">ECMA-48</a> provides a sequence for doing just that.</p>
+        <div><p>When using <a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape sequences</a> to manipulate a compatible
+terminal, you may need to know where the text cursor is currently located on
+the screen, especially if its current location was set by the user or a
+previous program rather than your code.  Fortunately, the ANSI escape sequence
+standard <a class="reference external" href="https://ecma-international.org/publications-and-standards/standards/ecma-48/">ECMA-48</a> provides a sequence for doing just that.</p>
 <p>A program whose standard input &amp; standard output are both connected to an
 ANSI-compatible terminal can query the current cursor location by writing the
 characters <tt class="docutils literal">\e[6n</tt> to standard output, where <tt class="docutils literal">\e</tt> is the Escape character

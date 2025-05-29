@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2025-05-29T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Getting the Current Cursor Position from a Terminal</title><link href="https://jwodder.github.io/kbits/posts/cursor-pos/" rel="alternate"></link><published>2025-05-29T00:00:00-04:00</published><updated>2025-05-29T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-05-29:/kbits/posts/cursor-pos/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="ansi"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2025-05-29T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Getting the Current Cursor Position from a Terminal</title><link href="https://jwodder.github.io/kbits/posts/cursor-pos/" rel="alternate"></link><published>2025-05-29T00:00:00-04:00</published><updated>2025-05-29T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-05-29:/kbits/posts/cursor-pos/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible
 terminal, you may need to know where the text cursor is currently located
 on the screen, especially if its current location was set by the user or a
 previous program rather than your code.  Fortunately, the ANSI escape
 sequence standard &lt;a class="reference external" href="https://ecma-international.org/publications-and-standards/standards/ecma-48/"&gt;ECMA-48&lt;/a&gt; provides a sequence for doing just that.&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;When using &lt;a class="reference external" href="ansi"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible terminal,
-you may need to know where the text cursor is currently located on the screen,
-especially if its current location was set by the user or a previous program
-rather than your code.  Fortunately, the ANSI escape sequence standard
-&lt;a class="reference external" href="https://ecma-international.org/publications-and-standards/standards/ecma-48/"&gt;ECMA-48&lt;/a&gt; provides a sequence for doing just that.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible
+terminal, you may need to know where the text cursor is currently located on
+the screen, especially if its current location was set by the user or a
+previous program rather than your code.  Fortunately, the ANSI escape sequence
+standard &lt;a class="reference external" href="https://ecma-international.org/publications-and-standards/standards/ecma-48/"&gt;ECMA-48&lt;/a&gt; provides a sequence for doing just that.&lt;/p&gt;
 &lt;p&gt;A program whose standard input &amp;amp; standard output are both connected to an
 ANSI-compatible terminal can query the current cursor location by writing the
 characters &lt;tt class="docutils literal"&gt;\e[6n&lt;/tt&gt; to standard output, where &lt;tt class="docutils literal"&gt;\e&lt;/tt&gt; is the Escape character
