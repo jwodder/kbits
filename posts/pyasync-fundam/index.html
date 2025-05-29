@@ -150,13 +150,13 @@ hood.</p>
 finishing in any order, operations within a single coroutine continue to be
 executed in the order they’re written.  For example, given the following code:</p>
 <pre class="code python literal-block">
-<span class="k">async</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span><span class="w">
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">():</span><span class="w">
 </span>    <span class="o">...</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">g</span><span class="p">():</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">g</span><span class="p">():</span><span class="w">
 </span>    <span class="o">...</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">amain</span><span class="p">():</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">amain</span><span class="p">():</span><span class="w">
 </span>    <span class="k">await</span> <span class="n">f</span><span class="p">()</span><span class="w">
 </span>    <span class="k">await</span> <span class="n">g</span><span class="p">()</span><span class="w">
 
@@ -265,9 +265,9 @@ has a value or exception ready, at which point the coroutine is resumed and the
 <tt class="docutils literal">await</tt> expression returns that value or raises that exception.</p>
 <p>Here’s a basic example you’ve seen in all the tutorials:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">asyncio</span><span class="w">
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">waiter</span><span class="p">():</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">waiter</span><span class="p">():</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Before sleep&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;After sleep&quot;</span><span class="p">)</span><span class="w">
@@ -279,15 +279,15 @@ prints another message.  As written, it’s rather pointless; we’re only runni
 one coroutine at once, so there’s no advantage over using a synchronous
 function with <tt class="docutils literal">time.sleep()</tt>.  Here’s something slightly more involved:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">asyncio</span><span class="w">
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">operate</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">operate</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spending </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2"> seconds doing operations ...&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Operations done after </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2"> seconds!&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="k">return</span> <span class="n">result</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">amain</span><span class="p">():</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">amain</span><span class="p">():</span><span class="w">
 </span>    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">operate</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">42</span><span class="p">),</span> <span class="n">operate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">23</span><span class="p">))</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="n">x</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="k">assert</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">42</span><span class="w">
@@ -315,7 +315,7 @@ can be iterated over with <tt class="docutils literal">async for</tt> or <tt cla
 contrast to non-generator coroutines, you do not apply <tt class="docutils literal">await</tt> to an
 asynchronous generator.  For example, given this function:</p>
 <pre class="code python literal-block">
-<span class="k">async</span> <span class="k">def</span> <span class="nf">aiterator</span><span class="p">():</span><span class="w">
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">aiterator</span><span class="p">():</span><span class="w">
 </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span><span class="w">
 </span>        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">
 </span>        <span class="k">yield</span> <span class="n">i</span>
@@ -392,16 +392,16 @@ nothing special.</p>
 <p>For example, if you want to implement your own <tt class="docutils literal">Future</tt> class for use with
 <tt class="docutils literal">asyncio</tt>, you might start out writing it like so:</p>
 <pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">MyFuture</span><span class="p">:</span><span class="w">
-</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="w">
+<span class="k">class</span><span class="w"> </span><span class="nc">MyFuture</span><span class="p">:</span><span class="w">
+</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="w">
 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">None</span><span class="w">
 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">is_set</span> <span class="o">=</span> <span class="kc">False</span><span class="w">
 
-</span>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span><span class="w">
+</span>    <span class="k">def</span><span class="w"> </span><span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span><span class="w">
 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="w">
 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">is_set</span> <span class="o">=</span> <span class="kc">True</span><span class="w">
 
-</span>    <span class="k">def</span> <span class="fm">__await__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="w">
+</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__await__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="w">
 </span>        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_set</span><span class="p">:</span><span class="w">
 </span>            <span class="k">yield</span><span class="w">
 </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
@@ -439,19 +439,19 @@ the awaiting will continue to be suspended until A is done, and when it then
 later awaits on B, it will get back B’s return value immediately, because B is
 already done.  For example, the following code:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">asyncio</span><span class="w">
-</span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span><span class="w">
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">strftime</span><span class="w">
 
-</span><span class="k">def</span> <span class="nf">hms</span><span class="p">():</span><span class="w">
+</span><span class="k">def</span><span class="w"> </span><span class="nf">hms</span><span class="p">():</span><span class="w">
 </span>    <span class="k">return</span> <span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">operate</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">operate</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Spending </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2"> seconds doing operations ...&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Operations done after </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2"> seconds!&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="k">return</span> <span class="n">result</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">amain</span><span class="p">():</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">amain</span><span class="p">():</span><span class="w">
 </span>    <span class="n">task1</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">operate</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">42</span><span class="p">))</span><span class="w">
 </span>    <span class="n">task2</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">operate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">23</span><span class="p">))</span><span class="w">
 </span>    <span class="n">r1</span> <span class="o">=</span> <span class="k">await</span> <span class="n">task1</span><span class="w">
@@ -482,17 +482,17 @@ this is to attach a synchronous callback function to the task with
 <tt class="docutils literal">Task.add_done_callback()</tt> that retrieves any uncaught exceptions with
 <tt class="docutils literal">Task.exception()</tt>, like so:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">asyncio</span><span class="w">
-</span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span><span class="w">
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">strftime</span><span class="w">
 
-</span><span class="k">def</span> <span class="nf">hms</span><span class="p">():</span><span class="w">
+</span><span class="k">def</span><span class="w"> </span><span class="nf">hms</span><span class="p">():</span><span class="w">
 </span>    <span class="k">return</span> <span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">bg_task</span><span class="p">():</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">bg_task</span><span class="p">():</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: In the background&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Ouch&quot;</span><span class="p">)</span><span class="w">
 
-</span><span class="k">def</span> <span class="nf">done_callback</span><span class="p">(</span><span class="n">task</span><span class="p">):</span><span class="w">
+</span><span class="k">def</span><span class="w"> </span><span class="nf">done_callback</span><span class="p">(</span><span class="n">task</span><span class="p">):</span><span class="w">
 </span>    <span class="k">try</span><span class="p">:</span><span class="w">
 </span>        <span class="k">if</span> <span class="n">e</span> <span class="o">:=</span> <span class="n">task</span><span class="o">.</span><span class="n">exception</span><span class="p">():</span><span class="w">
 </span>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Task &lt;</span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&gt; raised an error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
@@ -501,7 +501,7 @@ this is to attach a synchronous callback function to the task with
 </span>    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">:</span><span class="w">
 </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Task &lt;</span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&gt; was cancelled!&quot;</span><span class="p">)</span><span class="w">
 
-</span><span class="k">async</span> <span class="k">def</span> <span class="nf">fg_task</span><span class="p">():</span><span class="w">
+</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fg_task</span><span class="p">():</span><span class="w">
 </span>    <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">bg_task</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bg_task&quot;</span><span class="p">)</span><span class="w">
 </span>    <span class="n">task</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">done_callback</span><span class="p">)</span><span class="w">
 </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hms</span><span class="p">()</span><span class="si">}</span><span class="s2">: Now we sleep and let bg_task do its thing&quot;</span><span class="p">)</span><span class="w">
@@ -737,7 +737,7 @@ previously curio, until it &amp; anyio <a class="reference external" href="https
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2024 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2025 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

@@ -208,15 +208,15 @@ importlib-resources&amp;gt;=1.1.0; python_version &amp;lt; '3.9'
 &lt;/pre&gt;
 &lt;p&gt;and import &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;importlib-resources&lt;/span&gt;&lt;/tt&gt; in your code as follows:&lt;/p&gt;
 &lt;pre class="code python literal-block"&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;&lt;span class="w"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;sys&lt;/span&gt;&lt;span class="w"&gt;
 
 &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;version_info&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;    &lt;span class="c1"&gt;# importlib.resources either doesn't exist or lacks the files()&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;    &lt;span class="c1"&gt;# function, so use the PyPI version:&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;importlib_resources&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;    &lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;importlib_resources&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;    &lt;span class="c1"&gt;# importlib.resources has files(), so use that:&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;importlib.resources&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;importlib_resources&lt;/span&gt;
+&lt;/span&gt;    &lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;importlib.resources&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;importlib_resources&lt;/span&gt;
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="the-importlib-resources-api"&gt;

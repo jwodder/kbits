@@ -288,15 +288,15 @@ importlib-resources&gt;=1.1.0; python_version &lt; '3.9'
 </pre>
 <p>and import <tt class="docutils literal"><span class="pre">importlib-resources</span></tt> in your code as follows:</p>
 <pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">sys</span><span class="w">
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="w">
 
 </span><span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span><span class="w">
 </span>    <span class="c1"># importlib.resources either doesn't exist or lacks the files()</span><span class="w">
 </span>    <span class="c1"># function, so use the PyPI version:</span><span class="w">
-</span>    <span class="kn">import</span> <span class="nn">importlib_resources</span><span class="w">
+</span>    <span class="kn">import</span><span class="w"> </span><span class="nn">importlib_resources</span><span class="w">
 </span><span class="k">else</span><span class="p">:</span><span class="w">
 </span>    <span class="c1"># importlib.resources has files(), so use that:</span><span class="w">
-</span>    <span class="kn">import</span> <span class="nn">importlib.resources</span> <span class="k">as</span> <span class="nn">importlib_resources</span>
+</span>    <span class="kn">import</span><span class="w"> </span><span class="nn">importlib.resources</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">importlib_resources</span>
 </pre>
 </div>
 <div class="section" id="the-importlib-resources-api">
@@ -393,7 +393,7 @@ sdist or wheel).</td></tr>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2024 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2025 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative

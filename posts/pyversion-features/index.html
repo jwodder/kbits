@@ -269,13 +269,13 @@ Python 3.2), <tt class="docutils literal">coerce()</tt>, <tt class="docutils lit
 </li>
 <li><p class="first">The syntax for using a metaclass has changed from:</p>
 <pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">C</span><span class="p">:</span><span class="w">
+<span class="k">class</span><span class="w"> </span><span class="nc">C</span><span class="p">:</span><span class="w">
 </span>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">M</span><span class="w">
 </span>    <span class="o">...</span>
 </pre>
 <p>to:</p>
 <pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">M</span><span class="p">):</span><span class="w">
+<span class="k">class</span><span class="w"> </span><span class="nc">C</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">M</span><span class="p">):</span><span class="w">
 </span>    <span class="o">...</span>
 </pre>
 </li>
@@ -2025,12 +2025,12 @@ aliases:</p>
 <ul>
 <li><p class="first">Old syntax:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span><span class="w">
 
 </span><span class="n">T_str</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_str&quot;</span><span class="p">,</span> <span class="n">covariant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span><span class="w">
 
-</span><span class="k">class</span> <span class="nc">ClassA</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T_str</span><span class="p">]):</span><span class="w">
-</span>    <span class="k">def</span> <span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_str</span><span class="p">:</span><span class="w">
+</span><span class="k">class</span><span class="w"> </span><span class="nc">ClassA</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T_str</span><span class="p">]):</span><span class="w">
+</span>    <span class="k">def</span><span class="w"> </span><span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_str</span><span class="p">:</span><span class="w">
 </span>        <span class="o">...</span>
 </pre>
 </li>
@@ -2038,8 +2038,8 @@ aliases:</p>
 <pre class="code python literal-block">
 <span class="c1"># No Generic or TypeVar</span><span class="w">
 
-</span><span class="k">class</span> <span class="nc">ClassA</span><span class="p">[</span><span class="n">T</span><span class="p">:</span> <span class="nb">str</span><span class="p">]:</span><span class="w">
-</span>    <span class="k">def</span> <span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
+</span><span class="k">class</span><span class="w"> </span><span class="nc">ClassA</span><span class="p">[</span><span class="n">T</span><span class="p">:</span> <span class="nb">str</span><span class="p">]:</span><span class="w">
+</span>    <span class="k">def</span><span class="w"> </span><span class="nf">method1</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
 </span>        <span class="o">...</span>
 </pre>
 </li>
@@ -2049,11 +2049,11 @@ aliases:</p>
 <ul>
 <li><p class="first">Old syntax:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeVar</span><span class="w">
 
 </span><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="w">
 
-</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
+</span><span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
 </span>    <span class="o">...</span>
 </pre>
 </li>
@@ -2061,7 +2061,7 @@ aliases:</p>
 <pre class="code python literal-block">
 <span class="c1"># No TypeVar</span><span class="w">
 
-</span><span class="k">def</span> <span class="nf">func</span><span class="p">[</span><span class="n">T</span><span class="p">](</span><span class="n">a</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
+</span><span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">[</span><span class="n">T</span><span class="p">](</span><span class="n">a</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span><span class="w">
 </span>    <span class="o">...</span>
 </pre>
 </li>
@@ -2071,7 +2071,7 @@ aliases:</p>
 <ul>
 <li><p class="first">Old syntax:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span><span class="w">
 
 </span><span class="n">IntOrStr</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span>
 </pre>
@@ -2087,7 +2087,7 @@ aliases:</p>
 <ul>
 <li><p class="first">Old syntax:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span><span class="w">
 
 </span><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span><span class="w">
 
@@ -2107,7 +2107,7 @@ aliases:</p>
 <ul>
 <li><p class="first">Old syntax:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypeVarTuple</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypeVarTuple</span><span class="w">
 
 </span><span class="n">Ts</span> <span class="o">=</span> <span class="n">TypeVarTuple</span><span class="p">(</span><span class="s2">&quot;Ts&quot;</span><span class="p">)</span><span class="w">
 
@@ -2125,8 +2125,8 @@ aliases:</p>
 <ul>
 <li><p class="first">Old syntax:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="w">
-</span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ParamSpec</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParamSpec</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="w">
 
 </span><span class="n">P</span> <span class="o">=</span> <span class="n">ParamSpec</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">)</span><span class="w">
 
@@ -2135,7 +2135,7 @@ aliases:</p>
 </li>
 <li><p class="first">New syntax:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="w">
 
 </span><span class="nb">type</span> <span class="n">IntMaker</span><span class="p">[</span><span class="o">**</span><span class="n">P</span><span class="p">]</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 </pre>
@@ -2147,13 +2147,13 @@ aliases:</p>
 <li><p class="first">Types of individual fields in a <tt class="docutils literal">**kwargs</tt> function parameter can now be
 annotated with <tt class="docutils literal">typing.Unpack</tt> applied to a <tt class="docutils literal">TypedDict</tt>, like so:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">Unpack</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">Unpack</span><span class="w">
 
-</span><span class="k">class</span> <span class="nc">Movie</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span><span class="w">
+</span><span class="k">class</span><span class="w"> </span><span class="nc">Movie</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span><span class="w">
 </span>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="w">
 </span>    <span class="n">year</span><span class="p">:</span> <span class="nb">int</span><span class="w">
 
-</span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Unpack</span><span class="p">[</span><span class="n">Movie</span><span class="p">]):</span><span class="w">
+</span><span class="k">def</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Unpack</span><span class="p">[</span><span class="n">Movie</span><span class="p">]):</span><span class="w">
 </span>    <span class="c1"># kwargs[&quot;name&quot;] must be passed a `str`, and kwargs[&quot;year&quot;] must be</span><span class="w">
 </span>    <span class="c1"># passed an `int`.</span><span class="w">
 </span>    <span class="o">...</span>
@@ -2392,7 +2392,7 @@ virtual environments</p>
     <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
 </a>
 
-Copyright © 2020–2024 <a xmlns:cc="http://creativecommons.org/ns#"
+Copyright © 2020–2025 <a xmlns:cc="http://creativecommons.org/ns#"
 href="https://github.com/jwodder" property="cc:attributionName"
 rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
