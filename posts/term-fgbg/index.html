@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Knowledge Bits — Getting a Terminal’s Default Foreground &amp; Background Colors</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican (https://getpelican.com)"/>
+    <link rel="stylesheet" href="https://jwodder.github.io/kbits/theme/css/main.css" type="text/css"/>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://jwodder.github.io/kbits/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate" title="Knowledge Bits Full Atom Feed" />
+    <link href="https://jwodder.github.io/kbits/feeds/posts.rss" type="application/rss+xml" rel="alternate" title="Knowledge Bits Full RSS Feed" />
+    
+        <meta name="description" content="When using ANSI escape sequences to style text on a terminal, you may need to know exactly what the default foreground &amp; background colors — the ones set with \e[39m and \e[49m — are, as knowing whether the user’s terminal is light-on-dark or dark-on-light can help you pick an appropriate color theme. Fortunately, the escape sequences supported by xterm and compatible terminals include sequences for doing just that."/>
+        <meta name="tags" content="terminals"/>
+        <meta name="tags" content="ANSI escape codes"/>
+        <meta name="author" content="John T. Wodder II"/>
+        <meta name="keywords" content="terminals,ANSI escape codes"/>
+</head>
+
+<body>
+    <div id="kbits-theme-topbar">
+        <header>
+            <span class="sitename">
+                <a href="https://jwodder.github.io/kbits/">Knowledge Bits</a>
+            </span>
+            <span class="sitesubtitle">References I wish I&#39;d already found</span>
+        </header>
+    </div>
+
+    <div class="mainrow">
+        <div id="kbits-theme-navbar">
+            <nav>
+                <ul>
+                    <li><a href="https://jwodder.github.io/kbits/about/">About This Site</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/categories/">Categories</a></li>
+                    <li><a href="https://jwodder.github.io/kbits/tags/">Tags</a></li>
+                    <li><a href="https://github.com/jwodder/kbits">Site Repository</a></li>
+                </ul>
+            </nav>
+                <div class="postfeeds">
+                    <img src="https://jwodder.github.io/kbits/theme/images/rss.svg" width="16" height="16"/>
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.atom.xml">Atom</a>
+                    ·
+                    <a href="https://jwodder.github.io/kbits/feeds/posts.rss">RSS</a>
+                </div>
+        </div>
+        <div id="kbits-theme-content">
+<section>
+    <article>
+        <header>
+            <h1>
+                <a href="https://jwodder.github.io/kbits/posts/term-fgbg/" rel="bookmark"
+                    title="Permalink to Getting a Terminal’s Default Foreground &amp; Background Colors">Getting a Terminal’s Default Foreground &amp; Background Colors</a>
+            </h1>
+        </header>
+        <footer>
+            <table class="docinfo" border="1">
+                <tr>
+                    <th>Posted:</th>
+                    <td><time datetime="2025-06-10T00:00:00-04:00" pubdate="1">2025-06-10</time></td>
+                </tr>
+                <tr>
+                    <th>Author:</th>
+                    <td>
+<a class="url fn" href="https://jwodder.github.io/kbits/authors/john-t-wodder-ii/">John T. Wodder II</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><a href="https://jwodder.github.io/kbits/categories/programming/">Programming</a></td>
+                </tr>
+                <tr>
+                    <th>Tags:</th>
+                    <td>
+<a href="https://jwodder.github.io/kbits/tags/terminals/">terminals</a>, <a href="https://jwodder.github.io/kbits/tags/ansi-escape-codes/">ANSI escape codes</a>                    </td>
+                </tr>
+                <tr>
+                    <th>Page Source:</th>
+                    <td><a href="https://github.com/jwodder/kbits/blob/master/src/posts/term-fgbg.rst">[link]</a></td>
+                </tr>
+            </table>
+        </footer>
+        <div><p>When using <a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape sequences</a> to style text on a terminal, you
+may need to know exactly what the default foreground &amp; background colors — the
+ones set with <tt class="docutils literal">\e[39m</tt> and <tt class="docutils literal">\e[49m</tt> — are, as knowing whether the user’s
+terminal is light-on-dark or dark-on-light can help you pick an appropriate
+color theme.  Fortunately, the <a class="reference external" href="https://invisible-island.net/xterm/ctlseqs/ctlseqs.html">escape sequences supported by xterm and
+compatible terminals</a> include sequences for doing just that.</p>
+<p>A program whose standard input &amp; standard output are both connected to an
+xterm-compatible terminal can query the default foreground color by writing the
+characters <tt class="docutils literal"><span class="pre">\e]10;?\e\\\\</span></tt> to standard output, where <tt class="docutils literal">\e</tt> is the Escape
+character (0x1B) and <tt class="docutils literal"><span class="pre">\\\\</span></tt> represents a single backslash; to query the
+default background color instead, change the <tt class="docutils literal">10</tt> to an <tt class="docutils literal">11</tt>.  The terminal
+will then respond by writing back the query string with the <tt class="docutils literal">?</tt> replaced by a
+string describing the default foreground or background color.</p>
+<p>In my limited experience, all color strings I’ve seen in responses have been
+RGB values of the form <tt class="docutils literal">rgb:XXXX/XXXX/XXXX</tt>, where the <tt class="docutils literal">X</tt>’s are lowercase
+hexadecimal digits (so white would be <tt class="docutils literal">rgb:ffff/ffff/ffff</tt> and black would be
+<tt class="docutils literal">rgb:0000/0000/0000</tt>), but <a class="reference external" href="https://invisible-island.net/xterm/ctlseqs/ctlseqs.html">xterm’s documentation</a> seems to
+suggest that color names (presumably ones from the X11 color list) and any RGB
+specifications accepted by <a class="reference external" href="https://linux.die.net/man/3/xparsecolor"><tt class="docutils literal">XParseColor(3)</tt></a> are also possible return values.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">\e\\\\</span></tt> portion of the query &amp; response (called the <em>string
+terminator</em> or ST) also has a legacy variant, a single BEL character
+(0x07), which you may see sometimes.  xterm always responds using the same
+string terminator as used in the request.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">By replacing the <tt class="docutils literal">?</tt> with an RGB specification, you can change the
+default foreground &amp; background colors instead!</p>
+</div>
+<p>As with <a class="reference external" href="https://jwodder.github.io/kbits/posts/cursor-pos/">getting the current cursor position</a>, the
+terminal will need to be set in cbreak and noecho modes when reading the
+response.</p>
+<p>If you just want to see some code for doing all this on a Unix-like system,
+here it is as a Python script:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span><span class="w">
+</span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span><span class="w">
+</span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="w">
+</span><span class="kn">import</span><span class="w"> </span><span class="nn">termios</span><span class="w">
+
+
+</span><span class="k">def</span><span class="w"> </span><span class="nf">get_default_fg</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span><span class="w">
+    </span><span class="sd">&quot;&quot;&quot;
+    Query the attached terminal for the default foreground color and return the
+    color string from the response
+
+    :raises IOError: if stdin or stdout is not a terminal
+    :raises ValueError: if the reply from the terminal is malformed
+    &quot;&quot;&quot;</span><span class="w">
+</span>    <span class="k">return</span> <span class="n">osc_query</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w">
+
+
+</span><span class="k">def</span><span class="w"> </span><span class="nf">get_default_bg</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span><span class="w">
+    </span><span class="sd">&quot;&quot;&quot;
+    Query the attached terminal for the default background color and return the
+    color string from the response
+
+    :raises IOError: if stdin or stdout is not a terminal
+    :raises ValueError: if the reply from the terminal is malformed
+    &quot;&quot;&quot;</span><span class="w">
+</span>    <span class="k">return</span> <span class="n">osc_query</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w">
+
+
+</span><span class="k">def</span><span class="w"> </span><span class="nf">osc_query</span><span class="p">(</span><span class="n">ps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span><span class="w">
+</span>    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">isatty</span><span class="p">()</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">isatty</span><span class="p">():</span><span class="w">
+</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">]</span><span class="si">{</span><span class="n">ps</span><span class="si">}</span><span class="s2">;?</span><span class="se">\x1b\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
+</span>        <span class="n">resp</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="w">
+</span>        <span class="k">with</span> <span class="n">cbreak_noecho</span><span class="p">():</span><span class="w">
+</span>            <span class="k">while</span> <span class="ow">not</span> <span class="n">resp</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x1b\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x07</span><span class="s2">&quot;</span><span class="p">)):</span><span class="w">
+</span>                <span class="n">resp</span> <span class="o">+=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span>        <span class="n">s</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;surrogateescape&quot;</span><span class="p">)</span><span class="w">
+</span>        <span class="k">if</span> <span class="n">m</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\x1B\]</span><span class="si">{</span><span class="n">ps</span><span class="si">}</span><span class="s2">;(.+)(?:\x1B</span><span class="se">\\</span><span class="s2">|\x07)&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span><span class="w">
+</span>            <span class="k">return</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w">
+</span>        <span class="k">else</span><span class="p">:</span><span class="w">
+</span>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">
+</span>    <span class="k">else</span><span class="p">:</span><span class="w">
+</span>        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;not connected to a terminal&quot;</span><span class="p">)</span><span class="w">
+
+
+</span><span class="c1"># File descriptor for standard input:</span><span class="w">
+</span><span class="n">STDIN</span> <span class="o">=</span> <span class="mi">1</span><span class="w">
+
+</span><span class="c1"># Indices into the tuple returned by `tcgetattr()`:</span><span class="w">
+</span><span class="n">LFLAG</span> <span class="o">=</span> <span class="mi">3</span><span class="w">
+</span><span class="n">CC</span> <span class="o">=</span> <span class="mi">6</span><span class="w">
+
+
+</span><span class="nd">&#64;contextmanager</span><span class="w">
+</span><span class="k">def</span><span class="w"> </span><span class="nf">cbreak_noecho</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span><span class="w">
+    </span><span class="sd">&quot;&quot;&quot;
+    A context manager that configures the terminal on standard input to use
+    cbreak mode and to disable input echoing.  The original terminal
+    configuration is restored on exit.
+    &quot;&quot;&quot;</span><span class="w">
+</span>    <span class="n">orig</span> <span class="o">=</span> <span class="n">termios</span><span class="o">.</span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">STDIN</span><span class="p">)</span><span class="w">
+</span>    <span class="n">term</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span><span class="w">
+</span>    <span class="n">term</span><span class="p">[</span><span class="n">LFLAG</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="n">termios</span><span class="o">.</span><span class="n">ICANON</span> <span class="o">|</span> <span class="n">termios</span><span class="o">.</span><span class="n">ECHO</span><span class="p">)</span><span class="w">
+</span>    <span class="n">term</span><span class="p">[</span><span class="n">CC</span><span class="p">][</span><span class="n">termios</span><span class="o">.</span><span class="n">VMIN</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="w">
+</span>    <span class="n">term</span><span class="p">[</span><span class="n">CC</span><span class="p">][</span><span class="n">termios</span><span class="o">.</span><span class="n">VTIME</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="w">
+</span>    <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">STDIN</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSANOW</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span><span class="w">
+</span>    <span class="k">try</span><span class="p">:</span><span class="w">
+</span>        <span class="k">yield</span><span class="w">
+</span>    <span class="k">finally</span><span class="p">:</span><span class="w">
+</span>        <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">STDIN</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSANOW</span><span class="p">,</span> <span class="n">orig</span><span class="p">)</span><span class="w">
+
+
+</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Foreground color:&quot;</span><span class="p">,</span> <span class="n">get_default_fg</span><span class="p">())</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Background color:&quot;</span><span class="p">,</span> <span class="n">get_default_bg</span><span class="p">())</span>
+</pre>
+</div>
+    </article>
+</section>
+        </div>
+    </div>
+
+        <footer id="kbits-theme-footer">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <img alt="Creative Commons License" style="border-width: 0; vertical-align: middle;" src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+</a>
+
+Copyright © 2020–2025 <a xmlns:cc="http://creativecommons.org/ns#"
+href="https://github.com/jwodder" property="cc:attributionName"
+rel="cc:attributionURL">John T. Wodder II</a>.  This site's content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+Commons Attribution 4.0 International License</a>.
+</footer>
+</body>
+</html>

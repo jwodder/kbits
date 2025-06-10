@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Knowledge Bits</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Tue, 10 Jun 2025 00:00:00 -0400</lastBuildDate><item><title>Getting the Current Cursor Position from a Terminal</title><link>https://jwodder.github.io/kbits/posts/cursor-pos/</link><description>&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible
+<rss version="2.0"><channel><title>Knowledge Bits</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Tue, 10 Jun 2025 00:00:00 -0400</lastBuildDate><item><title>Getting a Terminal’s Default Foreground &amp; Background Colors</title><link>https://jwodder.github.io/kbits/posts/term-fgbg/</link><description>&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to style text on a terminal,
+you may need to know exactly what the default foreground &amp;amp; background
+colors — the ones set with &lt;tt class="docutils literal"&gt;\e[39m&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;\e[49m&lt;/tt&gt; — are, as knowing
+whether the user’s terminal is light-on-dark or dark-on-light can help you
+pick an appropriate color theme.  Fortunately, the &lt;a class="reference external" href="https://invisible-island.net/xterm/ctlseqs/ctlseqs.html"&gt;escape sequences
+supported by xterm and compatible terminals&lt;/a&gt; include sequences
+for doing just that.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Tue, 10 Jun 2025 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2025-06-10:/kbits/posts/term-fgbg/</guid><category>Programming</category><category>terminals</category><category>ANSI escape codes</category></item><item><title>Getting the Current Cursor Position from a Terminal</title><link>https://jwodder.github.io/kbits/posts/cursor-pos/</link><description>&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible
 terminal, you may need to know where the text cursor is currently located
 on the screen, especially if its current location was set by the user or a
 previous program rather than your code.  Fortunately, the ANSI escape
