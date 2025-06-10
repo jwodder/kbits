@@ -3,6 +3,7 @@ Getting the Current Cursor Position from a Terminal
 ===================================================
 
 :Date: 2025-05-29
+:Modified: 2025-06-10
 :Category: Programming
 :Tags: terminals, ANSI escape codes
 :Summary:
@@ -52,13 +53,18 @@ scope of this article.  On Unix-like systems, you'll need to use the
 ``tcgetattr()`` and ``tcsetattr()`` functions from ``<termios.h>`` or whatever
 wrapper around them your programming language of choice provides.
 
+.. tip::
+
+    To avoid a race condition, set cbreak and noecho mode *before* printing the
+    query.
+
 .. important::
 
     Be sure to set the terminal's cbreak and echo settings back to what they
     were originally when you're done reading the response!
 
-Finally, if you just want to see some code for doing all this, here it is as a
-Python function:
+Finally, if you just want to see some code for doing all this on a Unix-like
+system, here it is as a Python script:
 
 .. code:: python
 
@@ -80,9 +86,9 @@ Python function:
         :raises ValueError: if the reply from the terminal is malformed
         """
         if sys.stdin.isatty() and sys.stdout.isatty():
-            print("\x1b[6n", end="", flush=True)
-            resp = b""
             with cbreak_noecho():
+                print("\x1b[6n", end="", flush=True)
+                resp = b""
                 while not resp.endswith(b"R"):
                     resp += sys.stdin.buffer.read(1)
             s = resp.decode("utf-8", "surrogateescape")
@@ -119,3 +125,7 @@ Python function:
             yield
         finally:
             termios.tcsetattr(STDIN, termios.TCSANOW, orig)
+
+
+    if __name__ == "__main__":
+        print(cursor_pos())
