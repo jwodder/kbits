@@ -60,6 +60,10 @@
                     <td><time datetime="2025-05-29T00:00:00-04:00" pubdate="1">2025-05-29</time></td>
                 </tr>
                 <tr>
+                    <th>Modified:</th>
+                    <td><time datetime="2025-06-10T00:00:00-04:00">2025-06-10</time></td>
+                </tr>
+                <tr>
                     <th>Author:</th>
                     <td>
 <a class="url fn" href="https://jwodder.github.io/kbits/authors/john-t-wodder-ii/">John T. Wodder II</a>                    </td>
@@ -111,13 +115,18 @@ not what you want; turning off input echoing fixes this.</p>
 scope of this article.  On Unix-like systems, you’ll need to use the
 <tt class="docutils literal">tcgetattr()</tt> and <tt class="docutils literal">tcsetattr()</tt> functions from <tt class="docutils literal">&lt;termios.h&gt;</tt> or whatever
 wrapper around them your programming language of choice provides.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">To avoid a race condition, set cbreak and noecho mode <em>before</em> printing the
+query.</p>
+</div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">Be sure to set the terminal’s cbreak and echo settings back to what they
 were originally when you’re done reading the response!</p>
 </div>
-<p>Finally, if you just want to see some code for doing all this, here it is as a
-Python function:</p>
+<p>Finally, if you just want to see some code for doing all this on a Unix-like
+system, here it is as a Python script:</p>
 <pre class="code python literal-block">
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span><span class="w">
 </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="w">
@@ -137,9 +146,9 @@ Python function:</p>
     :raises ValueError: if the reply from the terminal is malformed
     &quot;&quot;&quot;</span><span class="w">
 </span>    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">isatty</span><span class="p">()</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">isatty</span><span class="p">():</span><span class="w">
-</span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[6n&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
-</span>        <span class="n">resp</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="w">
 </span>        <span class="k">with</span> <span class="n">cbreak_noecho</span><span class="p">():</span><span class="w">
+</span>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[6n&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
+</span>            <span class="n">resp</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="w">
 </span>            <span class="k">while</span> <span class="ow">not</span> <span class="n">resp</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;R&quot;</span><span class="p">):</span><span class="w">
 </span>                <span class="n">resp</span> <span class="o">+=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span>        <span class="n">s</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;surrogateescape&quot;</span><span class="p">)</span><span class="w">
@@ -175,7 +184,11 @@ Python function:</p>
 </span>    <span class="k">try</span><span class="p">:</span><span class="w">
 </span>        <span class="k">yield</span><span class="w">
 </span>    <span class="k">finally</span><span class="p">:</span><span class="w">
-</span>        <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">STDIN</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSANOW</span><span class="p">,</span> <span class="n">orig</span><span class="p">)</span>
+</span>        <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">STDIN</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSANOW</span><span class="p">,</span> <span class="n">orig</span><span class="p">)</span><span class="w">
+
+
+</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span><span class="w">
+</span>    <span class="nb">print</span><span class="p">(</span><span class="n">cursor_pos</span><span class="p">())</span>
 </pre>
 </div>
     </article>
