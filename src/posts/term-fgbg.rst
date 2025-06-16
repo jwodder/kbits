@@ -3,6 +3,7 @@ Getting a Terminal's Default Foreground & Background Colors
 ===========================================================
 
 :Date: 2025-06-10
+:Modified: 2025-06-16
 :Category: Programming
 :Tags: terminals, ANSI escape codes
 :Summary:
@@ -96,9 +97,9 @@ here it is as a Python script:
 
     def osc_query(ps: int) -> str:
         if sys.stdin.isatty() and sys.stdout.isatty():
-            print(f"\x1b]{ps};?\x1b\\", end="", flush=True)
-            resp = b""
             with cbreak_noecho():
+                print(f"\x1b]{ps};?\x1b\\", end="", flush=True)
+                resp = b""
                 while not resp.endswith((b"\x1b\\", b"\x07")):
                     resp += sys.stdin.buffer.read(1)
             s = resp.decode("utf-8", "surrogateescape")
