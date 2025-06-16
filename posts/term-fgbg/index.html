@@ -60,6 +60,10 @@
                     <td><time datetime="2025-06-10T00:00:00-04:00" pubdate="1">2025-06-10</time></td>
                 </tr>
                 <tr>
+                    <th>Modified:</th>
+                    <td><time datetime="2025-06-16T00:00:00-04:00">2025-06-16</time></td>
+                </tr>
+                <tr>
                     <th>Author:</th>
                     <td>
 <a class="url fn" href="https://jwodder.github.io/kbits/authors/john-t-wodder-ii/">John T. Wodder II</a>                    </td>
@@ -149,9 +153,9 @@ here it is as a Python script:</p>
 
 </span><span class="k">def</span><span class="w"> </span><span class="nf">osc_query</span><span class="p">(</span><span class="n">ps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span><span class="w">
 </span>    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">isatty</span><span class="p">()</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">isatty</span><span class="p">():</span><span class="w">
-</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">]</span><span class="si">{</span><span class="n">ps</span><span class="si">}</span><span class="s2">;?</span><span class="se">\x1b\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
-</span>        <span class="n">resp</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="w">
 </span>        <span class="k">with</span> <span class="n">cbreak_noecho</span><span class="p">():</span><span class="w">
+</span>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">]</span><span class="si">{</span><span class="n">ps</span><span class="si">}</span><span class="s2">;?</span><span class="se">\x1b\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
+</span>            <span class="n">resp</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="w">
 </span>            <span class="k">while</span> <span class="ow">not</span> <span class="n">resp</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x1b\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x07</span><span class="s2">&quot;</span><span class="p">)):</span><span class="w">
 </span>                <span class="n">resp</span> <span class="o">+=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span>        <span class="n">s</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;surrogateescape&quot;</span><span class="p">)</span><span class="w">
