@@ -1,5 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - terminals</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.terminals.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2025-06-16T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Getting a Terminal’s Default Foreground &amp; Background Colors</title><link href="https://jwodder.github.io/kbits/posts/term-fgbg/" rel="alternate"></link><published>2025-06-10T00:00:00-04:00</published><updated>2025-06-16T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-06-10:/kbits/posts/term-fgbg/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to style text on a terminal,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - terminals</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.terminals.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2025-06-30T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Process Groups, Sessions, and Controlling Terminals</title><link href="https://jwodder.github.io/kbits/posts/process-groups/" rel="alternate"></link><published>2025-06-30T00:00:00-04:00</published><updated>2025-06-30T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-06-30:/kbits/posts/process-groups/</id><summary type="html">&lt;p class="first last"&gt;A summary of UNIX’s process groups, sessions, &amp;amp; controlling terminals and
+how to work with them&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;In UNIX, job control is implemented via &lt;em&gt;process groups&lt;/em&gt; and &lt;em&gt;sessions&lt;/em&gt;, which
+allow a shell to place processes in the foreground (directly communicating with
+a terminal) or in the background and to send signals to multiple processes at
+once.  This article provides an overview of the concepts and shows the basics
+of how to work with them.&lt;/p&gt;
+&lt;p&gt;Unless specified otherwise, all information in this article is as per
+&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/"&gt;POSIX.1-2024&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="concepts"&gt;
+&lt;h2&gt;Concepts&lt;/h2&gt;
+&lt;p&gt;Each UNIX process belongs to a &lt;em&gt;process group&lt;/em&gt; (a.k.a. &lt;em&gt;job&lt;/em&gt;).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Each process group is identified by an integer &lt;em&gt;process group ID&lt;/em&gt;, and the
+process (if any) whose process ID equals this process group ID is called the
+&lt;em&gt;process group leader&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;It is possible to send a signal to all processes in a process group at once
+using &lt;tt class="docutils literal"&gt;kill()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/kill.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man2/kill.2.html"&gt;man7&lt;/a&gt;] or &lt;tt class="docutils literal"&gt;killpg()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/killpg.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man3/killpg.3.html"&gt;man7&lt;/a&gt;].&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Each process group belongs to a &lt;em&gt;session&lt;/em&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The process that created a session is the &lt;em&gt;session leader&lt;/em&gt;.  This process is
+also the process group leader of its process group.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;POSIX does not specify IDs for sessions, though Linux uses the process
+(group) ID of the session leader as the session ID.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A session may be associated with at most one terminal called its &lt;em&gt;controlling
+terminal&lt;/em&gt;, and each controlling terminal is associated with exactly one
+session.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The controlling terminal is established by the session leader, which then
+becomes known as the &lt;em&gt;controlling process&lt;/em&gt; for as long as the terminal
+remains the controlling terminal.  When the controlling process terminates,
+the session loses the controlling terminal, and any attempts by the remaining
+processes in the session to access the terminal may result in a &lt;tt class="docutils literal"&gt;SIGHUP&lt;/tt&gt;
+signal.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;It is possible for an individual process in a session to dissociate from the
+controlling terminal without affecting the rest of the session.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;When a modem disconnect is detected for a controlling terminal, unless
+&lt;tt class="docutils literal"&gt;CLOCAL&lt;/tt&gt; is set in the terminal’s &lt;tt class="docutils literal"&gt;c_cflag&lt;/tt&gt; field, &lt;tt class="docutils literal"&gt;SIGHUP&lt;/tt&gt; is sent to
+the terminal’s controlling process, which by default terminates it.  Any
+further attempts to read from the terminal will return EOF.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Given a session associated with a controlling terminal, at most one process
+group in the session is the &lt;em&gt;foreground process group&lt;/em&gt;, and all others are
+&lt;em&gt;background process groups&lt;/em&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Processes in a foreground process group may read from &amp;amp; write to the
+controlling terminal.  If a process in a background process group tries to
+read from the controlling terminal, the entire process group will normally
+&lt;a class="footnote-reference" href="#fn1" id="footnote-reference-1"&gt;[1]&lt;/a&gt; be sent a &lt;tt class="docutils literal"&gt;SITTIN&lt;/tt&gt; signal, which by default stops &amp;amp; suspends the
+group.  If a process in a background process group tries to write to a
+controlling terminal, the entire process group will normally &lt;a class="footnote-reference" href="#fn1" id="footnote-reference-2"&gt;[1]&lt;/a&gt; be sent
+a &lt;tt class="docutils literal"&gt;SIGTTOU&lt;/tt&gt; signal, which by default stops &amp;amp; suspends the group; if
+&lt;tt class="docutils literal"&gt;TOSTOP&lt;/tt&gt; is not set in the controlling terminal’s &lt;tt class="docutils literal"&gt;c_lflag&lt;/tt&gt; field, the
+process will instead be allowed to write to the terminal, and no signal will
+be sent.&lt;/p&gt;
+&lt;table class="docutils footnote" frame="void" id="fn1" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[1]&lt;/td&gt;&lt;td&gt;&lt;em&gt;(&lt;a class="fn-backref" href="#footnote-reference-1"&gt;1&lt;/a&gt;, &lt;a class="fn-backref" href="#footnote-reference-2"&gt;2&lt;/a&gt;)&lt;/em&gt; &lt;p class="last"&gt;See the special cases listed under the &lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap11.html#tag_11_01_04"&gt;“Terminal Access
+Control”&lt;/a&gt; section of the POSIX standard for when this is not the case.&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Certain input key sequences like &lt;tt class="kbd docutils literal"&gt;Ctrl&lt;/tt&gt;-&lt;tt class="kbd docutils literal"&gt;C&lt;/tt&gt;, when entered at a
+controlling terminal, will cause a signal to be sent to all processes in the
+associated foreground process group.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Processes in the foreground process group are sent a &lt;tt class="docutils literal"&gt;SIGWINCH&lt;/tt&gt; signal
+whenever the size of the controlling terminal changes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Whenever a new process is created via &lt;tt class="docutils literal"&gt;fork()&lt;/tt&gt; or similar, it starts out with
+the same session, process group, and controlling terminal as its parent.  A
+process’s session, process group, and controlling terminal remain the same
+across a call to &lt;tt class="docutils literal"&gt;execve()&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="process-groups-at-the-shell"&gt;
+&lt;h2&gt;Process Groups at the Shell&lt;/h2&gt;
+&lt;p&gt;In a POSIX-compatible shell, running a line composed of one or more &lt;em&gt;AND-OR
+lists&lt;/em&gt; (commands containing zero or more of the operators &lt;tt class="docutils literal"&gt;!&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;|&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&amp;amp;&amp;amp;&lt;/tt&gt;,
+and/or &lt;tt class="docutils literal"&gt;||&lt;/tt&gt;) separated by semicolons creates a single foreground process
+group.  If an AND-OR list in a line is terminated by &lt;tt class="docutils literal"&gt;&amp;amp;&lt;/tt&gt; (making it an
+&lt;em&gt;asynchronous AND-OR list&lt;/em&gt;), then everything before it in the line (up to the
+previous &lt;tt class="docutils literal"&gt;&amp;amp;&lt;/tt&gt;, if any) is run in a single foreground process group, and the
+asynchronous AND-OR list itself is run as a single background process group;
+processing of the line then continues afterwards.&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="c1"&gt;# These commands are all run in a single foreground process group:
+&lt;/span&gt;head&lt;span class="w"&gt; &lt;/span&gt;bigfile.txt&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;foo&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'Those were the foos.'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;rm&lt;span class="w"&gt; &lt;/span&gt;bigfile.txt&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="c1"&gt;# These commands are all run in a single background process group:
+&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-fsSL&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;download.html&lt;span class="w"&gt; &lt;/span&gt;https://www.example.com&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;touch&lt;span class="w"&gt; &lt;/span&gt;download-failed.txt&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="c1"&gt;# The `echo` is run in a foreground process group, while the `wget` is
+# run in a background process group:
+&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'Going to download now'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;wget&lt;span class="w"&gt; &lt;/span&gt;--quiet&lt;span class="w"&gt; &lt;/span&gt;https://www.example.com&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="c1"&gt;# The first `rm` and the `mkdir` are run in a foreground process group,
+# then the `wget` is started in a background process group, then the second
+# `rm` is started in a second background process group, and finally the
+# `echo` is run in another foreground process group.
+&lt;/span&gt;rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;download&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;mkdir&lt;span class="w"&gt; &lt;/span&gt;downloads&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\
+&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;wget&lt;span class="w"&gt; &lt;/span&gt;-qO&lt;span class="w"&gt; &lt;/span&gt;downloads/example.html&lt;span class="w"&gt; &lt;/span&gt;https://www.example.com&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\
+&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;bigdir&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\
+&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'Am I done?'&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;A background process group created by a shell can be brought to the foreground
+with the &lt;tt class="docutils literal"&gt;fg&lt;/tt&gt; command, and a foreground process group can be placed in the
+background by first stopping/suspending it with &lt;tt class="kbd docutils literal"&gt;Ctrl&lt;/tt&gt;-&lt;tt class="kbd docutils literal"&gt;Z&lt;/tt&gt; and then
+running &lt;tt class="docutils literal"&gt;bg&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="querying-manipulating-process-groups-sessions-via-system-calls"&gt;
+&lt;h2&gt;Querying &amp;amp; Manipulating Process Groups &amp;amp; Sessions via System Calls&lt;/h2&gt;
+&lt;p&gt;The process group ID of the current process can be retrieved with the
+&lt;tt class="docutils literal"&gt;getpgrp()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpgrp.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man3/getpgrp.3p.html"&gt;man7&lt;/a&gt;] function; the process group ID of an arbitrary
+process can be retrieved with the &lt;tt class="docutils literal"&gt;getpgid()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/getpgid.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man3/getpgid.3p.html"&gt;man7&lt;/a&gt;] function.&lt;/p&gt;
+&lt;p&gt;A process can change its process group or the process group of a child process
+via the &lt;tt class="docutils literal"&gt;setpgid()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/setpgid.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://www.man7.org/linux/man-pages/man2/setpgid.2.html"&gt;man7&lt;/a&gt;] function; the target process group can
+be either a pre-existing group in the same session or a new process group that
+will be created in the same session.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The process group ID of a session leader cannot be changed.  Thus, programs
+intending to create a new process group typically call &lt;tt class="docutils literal"&gt;fork()&lt;/tt&gt; first and
+then call &lt;tt class="docutils literal"&gt;setpgid()&lt;/tt&gt; from the child process in order to ensure that it’s
+not being called by a session leader.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;getsid()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/getsid.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man2/getsid.2.html"&gt;man7&lt;/a&gt;] function can be used to retrieve the
+process group ID of the session leader (equal to Linux’s session ID) of a given
+process.&lt;/p&gt;
+&lt;p&gt;A new session can be created via the &lt;tt class="docutils literal"&gt;setsid()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/setsid.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man2/setsid.2.html"&gt;man7&lt;/a&gt;] function,
+which makes the calling process into the new session’s session leader and into
+the process group leader of a new process group in the session; the calling
+process will have no controlling terminal afterwards.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;tt class="docutils literal"&gt;setsid()&lt;/tt&gt; cannot be called by a process group leader.  Thus, programs
+intending to create a new session typically call &lt;tt class="docutils literal"&gt;fork()&lt;/tt&gt; first and then
+call &lt;tt class="docutils literal"&gt;setsid()&lt;/tt&gt; from the child process in order to ensure that it’s not
+being called by a process group leader.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;ctermid()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/ctermid.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man3/ctermid.3.html"&gt;man7&lt;/a&gt;] function can be used to obtain the path to
+the controlling terminal for the current process; the &lt;a class="reference external" href="https://www.gnu.org/software/libc/manual/html_node/Identifying-the-Terminal.html"&gt;GNU C Library
+implementation&lt;/a&gt; always returns &lt;tt class="docutils literal"&gt;&amp;quot;/dev/tty&amp;quot;&lt;/tt&gt;, which is a synonym for the
+controlling terminal on Linux (and macOS?).&lt;/p&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="first admonition-title"&gt;Tip&lt;/p&gt;
+&lt;p&gt;If you really want the actual path to a process’s controlling terminal, and
+you don’t want to invoke &lt;tt class="docutils literal"&gt;ps(1)&lt;/tt&gt; to get it, you can get partway there
+using Linux’s &lt;tt class="docutils literal"&gt;/proc&lt;/tt&gt; filesystem: the seventh field of
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;/proc/$PID/stat&lt;/span&gt;&lt;/tt&gt; contains the device number for the controlling terminal
+of process &lt;tt class="docutils literal"&gt;$PID&lt;/tt&gt;, or 0 if the process doesn’t have a controlling
+terminal.  Unfortunately, there is no convenient way to map the device
+number to a path; cf. &lt;a class="reference external" href="https://gitlab.com/procps-ng/procps/-/blob/v4.0.5/library/devname.c?ref_type=tags#L326"&gt;how ps does it&lt;/a&gt;.&lt;/p&gt;
+&lt;p class="last"&gt;Alternatively, you can approximate the controlling terminal for the current
+process with &lt;tt class="docutils literal"&gt;ttyname(STDIN_FILENO)&lt;/tt&gt; or similar, but this won’t be
+accurate in the rare cases where stdin has been replaced with something
+other than the controlling terminal, possibly even a different, unrelated
+terminal.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;POSIX does not specify a mechanism for setting the controlling terminal.  On
+Linux and macOS, the controlling terminal for a session is established when a
+session leader first opens a terminal, unless the &lt;tt class="docutils literal"&gt;O_NOCTTY&lt;/tt&gt; flag was passed
+to the &lt;tt class="docutils literal"&gt;open()&lt;/tt&gt; call.  Linux and macOS also support setting the controlling
+terminal via a session leader calling &lt;tt class="docutils literal"&gt;ioctl()&lt;/tt&gt; with &lt;tt class="docutils literal"&gt;op&lt;/tt&gt; set to
+&lt;tt class="docutils literal"&gt;TIOCSCTTY&lt;/tt&gt; [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man2/TIOCSCTTY.2const.html"&gt;man7&lt;/a&gt;], and any process may dissociate from its controlling
+terminal by calling &lt;tt class="docutils literal"&gt;ioctl()&lt;/tt&gt; with &lt;tt class="docutils literal"&gt;op&lt;/tt&gt; set to &lt;tt class="docutils literal"&gt;TIOCNOTTY&lt;/tt&gt; [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man2/TIOCNOTTY.2const.html"&gt;man7&lt;/a&gt;].&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;When a session gains a controlling terminal, the process group of the session
+leader becomes the foreground process group.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Note that a session gaining a controlling terminal will not cause any
+pre-existing processes in the session (other than the session leader) to gain
+a controlling terminal, but any processes spawned from the session leader
+afterwards will have a controlling terminal.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A process with a controlling terminal can acquire the process group ID of its
+session’s foreground process group by calling &lt;tt class="docutils literal"&gt;tcgetpgrp()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcgetpgrp.html"&gt;POSIX&lt;/a&gt;]
+[&lt;a class="reference external" href="https://man7.org/linux/man-pages/man3/tcgetpgrp.3.html"&gt;man7&lt;/a&gt;], and it can set the foreground process group by calling
+&lt;tt class="docutils literal"&gt;tcsetpgrp()&lt;/tt&gt; [&lt;a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/tcsetpgrp.html"&gt;POSIX&lt;/a&gt;] [&lt;a class="reference external" href="https://man7.org/linux/man-pages/man3/tcsetpgrp.3.html"&gt;man7&lt;/a&gt;].&lt;/p&gt;
+&lt;p&gt;There does not appear to be any way to get a list of processes in a process
+group, a list of process groups in a session, or a list of extant sessions
+other than by iterating over &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;/proc/*/stat&lt;/span&gt;&lt;/tt&gt; files or using a facility that
+does that for you, like &lt;tt class="docutils literal"&gt;ps(1)&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="creating-a-background-process-without-a-controlling-terminal-daemonization"&gt;
+&lt;h2&gt;Creating a Background Process Without a Controlling Terminal (Daemonization)&lt;/h2&gt;
+&lt;p&gt;In order to run a process as a &lt;em&gt;daemon&lt;/em&gt;, running truly in the background,
+without a controlling terminal that could send &lt;tt class="docutils literal"&gt;SIGHUP&lt;/tt&gt; on session exit, you
+could use a super-server like &lt;tt class="docutils literal"&gt;systemd&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;supervisord&lt;/tt&gt;, but if you’re
+reading this, you probably want to know how they do it.&lt;/p&gt;
+&lt;p&gt;A program seeking to run itself or another executable as a daemon should take
+the following steps:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Call &lt;tt class="docutils literal"&gt;fork()&lt;/tt&gt;.  The rest of the steps are carried out in the resulting
+child process, which is guaranteed not to be a session leader or process
+group leader.  The parent process can either exit immediately or else track
+the child process in order to detect &amp;amp; report any immediate unsuccessful
+terminations.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Call &lt;tt class="docutils literal"&gt;setsid()&lt;/tt&gt; to create a new session, one not associated with any
+controlling terminal.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Close or redirect stdin, stdout, &amp;amp; stderr so that they no longer refer to
+the original terminal.  It’s also recommended to set the current working
+directory to the root directory, as using a different working directory
+could prevent unmounting.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Call &lt;tt class="docutils literal"&gt;fork()&lt;/tt&gt; again to create a child process that is not a session leader
+and thus cannot establish a controlling terminal.  This child process is
+then used for the actual program proper (possibly via &lt;tt class="docutils literal"&gt;execve()&lt;/tt&gt;), and the
+parent process exits.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="UNIX"></category><category term="processes"></category><category term="terminals"></category></entry><entry><title>Getting a Terminal’s Default Foreground &amp; Background Colors</title><link href="https://jwodder.github.io/kbits/posts/term-fgbg/" rel="alternate"></link><published>2025-06-10T00:00:00-04:00</published><updated>2025-06-16T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-06-10:/kbits/posts/term-fgbg/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to style text on a terminal,
 you may need to know exactly what the default foreground &amp;amp; background
 colors — the ones set with &lt;tt class="docutils literal"&gt;\e[39m&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;\e[49m&lt;/tt&gt; — are, as knowing
 whether the user’s terminal is light-on-dark or dark-on-light can help you

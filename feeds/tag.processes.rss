@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Knowledge Bits - processes</title><link>https://jwodder.github.io/kbits/</link><description>References I wish I'd already found</description><lastBuildDate>Mon, 30 Jun 2025 00:00:00 -0400</lastBuildDate><item><title>Process Groups, Sessions, and Controlling Terminals</title><link>https://jwodder.github.io/kbits/posts/process-groups/</link><description>&lt;p class="first last"&gt;A summary of UNIX’s process groups, sessions, &amp;amp; controlling terminals and
+how to work with them&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">John T. Wodder II</dc:creator><pubDate>Mon, 30 Jun 2025 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:jwodder.github.io,2025-06-30:/kbits/posts/process-groups/</guid><category>Programming</category><category>UNIX</category><category>processes</category><category>terminals</category></item></channel></rss>
