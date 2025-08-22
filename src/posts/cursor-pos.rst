@@ -3,7 +3,7 @@ Getting the Current Cursor Position from a Terminal
 ===================================================
 
 :Date: 2025-05-29
-:Modified: 2025-06-10
+:Modified: 2025-08-22
 :Category: Programming
 :Tags: terminals, ANSI escape codes
 :Summary:
@@ -101,7 +101,7 @@ system, here it is as a Python script:
 
 
     # File descriptor for standard input:
-    STDIN = 1
+    STDIN = 0
 
     # Indices into the tuple returned by `tcgetattr()`:
     LFLAG = 3
