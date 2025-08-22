@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - ANSI escape codes</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.ansi-escape-codes.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2025-06-16T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Getting a Terminal’s Default Foreground &amp; Background Colors</title><link href="https://jwodder.github.io/kbits/posts/term-fgbg/" rel="alternate"></link><published>2025-06-10T00:00:00-04:00</published><updated>2025-06-16T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-06-10:/kbits/posts/term-fgbg/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to style text on a terminal,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - ANSI escape codes</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.ansi-escape-codes.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2025-08-22T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Getting a Terminal’s Default Foreground &amp; Background Colors</title><link href="https://jwodder.github.io/kbits/posts/term-fgbg/" rel="alternate"></link><published>2025-06-10T00:00:00-04:00</published><updated>2025-08-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-06-10:/kbits/posts/term-fgbg/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to style text on a terminal,
 you may need to know exactly what the default foreground &amp;amp; background
 colors — the ones set with &lt;tt class="docutils literal"&gt;\e[39m&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;\e[49m&lt;/tt&gt; — are, as knowing
 whether the user’s terminal is light-on-dark or dark-on-light can help you
@@ -91,7 +91,7 @@ here it is as a Python script:&lt;/p&gt;
 
 
 &lt;/span&gt;&lt;span class="c1"&gt;# File descriptor for standard input:&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;STDIN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;STDIN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;
 
 &lt;/span&gt;&lt;span class="c1"&gt;# Indices into the tuple returned by `tcgetattr()`:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;LFLAG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="w"&gt;
@@ -121,7 +121,7 @@ here it is as a Python script:&lt;/p&gt;
 &lt;/span&gt;    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Foreground color:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;get_default_fg&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Background color:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;get_default_bg&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 &lt;/pre&gt;
-</content><category term="Programming"></category><category term="terminals"></category><category term="ANSI escape codes"></category></entry><entry><title>Getting the Current Cursor Position from a Terminal</title><link href="https://jwodder.github.io/kbits/posts/cursor-pos/" rel="alternate"></link><published>2025-05-29T00:00:00-04:00</published><updated>2025-06-10T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-05-29:/kbits/posts/cursor-pos/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible
+</content><category term="Programming"></category><category term="terminals"></category><category term="ANSI escape codes"></category></entry><entry><title>Getting the Current Cursor Position from a Terminal</title><link href="https://jwodder.github.io/kbits/posts/cursor-pos/" rel="alternate"></link><published>2025-05-29T00:00:00-04:00</published><updated>2025-08-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2025-05-29:/kbits/posts/cursor-pos/</id><summary type="html">&lt;p class="first last"&gt;When using &lt;a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code"&gt;ANSI escape sequences&lt;/a&gt; to manipulate a compatible
 terminal, you may need to know where the text cursor is currently located
 on the screen, especially if its current location was set by the user or a
 previous program rather than your code.  Fortunately, the ANSI escape
@@ -204,7 +204,7 @@ system, here it is as a Python script:&lt;/p&gt;
 
 
 &lt;/span&gt;&lt;span class="c1"&gt;# File descriptor for standard input:&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;STDIN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;STDIN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;
 
 &lt;/span&gt;&lt;span class="c1"&gt;# Indices into the tuple returned by `tcgetattr()`:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;LFLAG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="w"&gt;
