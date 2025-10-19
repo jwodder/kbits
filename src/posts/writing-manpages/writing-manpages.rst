@@ -138,7 +138,7 @@ Document Structure Commands
 
 ``.IP [text] [n]``
     Start an indented paragraph.  The text argument, if given, will be used as
-    the paragraph's bullet/"tag"; this is usually the bullet escape sequence
+    the paragraph's bullet/“tag”; this is usually the bullet escape sequence
     (``\(bu``), the em-dash escape sequence (``\(em``), or a number followed by
     a period.  If no text argument is supplied, no bullet will be present, but
     the following paragraph will still be indented; this can be used to start a
