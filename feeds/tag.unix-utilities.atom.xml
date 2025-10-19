@@ -333,7 +333,7 @@ command is the paragraph label, and any following text lines up to the next
 will be indented by that many columns.&lt;/dd&gt;
 &lt;dt&gt;&lt;tt class="docutils literal"&gt;.IP [text] [n]&lt;/tt&gt;&lt;/dt&gt;
 &lt;dd&gt;&lt;p class="first"&gt;Start an indented paragraph.  The text argument, if given, will be used as
-the paragraph’s bullet/”tag”; this is usually the bullet escape sequence
+the paragraph’s bullet/“tag”; this is usually the bullet escape sequence
 (&lt;tt class="docutils literal"&gt;\(bu&lt;/tt&gt;), the em-dash escape sequence (&lt;tt class="docutils literal"&gt;\(em&lt;/tt&gt;), or a number followed by
 a period.  If no text argument is supplied, no bullet will be present, but
 the following paragraph will still be indented; this can be used to start a
