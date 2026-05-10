@@ -1,5 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Software</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.software.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2024-12-12T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>The BitTorrent Encryption Protocol</title><link href="https://jwodder.github.io/kbits/posts/bt-encrypt/" rel="alternate"></link><published>2023-10-19T00:00:00-04:00</published><updated>2023-12-03T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2023-10-19:/kbits/posts/bt-encrypt/</id><summary type="html">&lt;p class="first last"&gt;The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent_protocol_encryption"&gt;encryption protocol&lt;/a&gt; used by the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent"&gt;BitTorrent&lt;/a&gt; peer-to-peer
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - Software</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/category.software.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2026-05-10T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Retrieving Logs for a Single Service Run from systemd</title><link href="https://jwodder.github.io/kbits/posts/systemd-logs/" rel="alternate"></link><published>2026-05-10T00:00:00-04:00</published><updated>2026-05-10T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2026-05-10:/kbits/posts/systemd-logs/</id><summary type="html">&lt;p class="first last"&gt;How to get the command output for a single run of a systemd service from
+the systemd journal&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;a class="reference external" href="https://systemd.io"&gt;systemd&lt;/a&gt; is the init system and service manager (and a
+bunch of other things) used by many major Linux distributions.  As a service
+manager, it provides the ability to run programs (called &lt;em&gt;services&lt;/em&gt;) in the
+background with features like restarting failed programs or running programs on
+a schedule.  By default (i.e., unless a service’s unit file says to send it
+somewhere else), the output from these programs is stored in a &lt;a class="reference external" href="https://www.freedesktop.org/software/systemd/man/latest/systemd-journald.service.html"&gt;journal&lt;/a&gt; that
+can be viewed with the &lt;a class="reference external" href="https://www.freedesktop.org/software/systemd/man/latest/journalctl.html"&gt;&lt;tt class="docutils literal"&gt;journalctl(1)&lt;/tt&gt;&lt;/a&gt; command.  However, basic &lt;tt class="docutils literal"&gt;journalctl(1)&lt;/tt&gt;
+invocations have the potential to swamp you with logs; sometimes you just want
+to see the output from a single run of a service or see a history of when a
+service was started &amp;amp; stopped.  Here’s how you do that.&lt;/p&gt;
+&lt;p&gt;This article is based on systemd 255 on Ubuntu Noble 24.04.  There may be some
+corner cases I have missed that make what I say here not 100% accurate.&lt;/p&gt;
+&lt;div class="section" id="basic-journalctl-1-usage"&gt;
+&lt;h2&gt;Basic &lt;tt class="docutils literal"&gt;journalctl(1)&lt;/tt&gt; Usage&lt;/h2&gt;
+&lt;p&gt;By default, a given user only has permission to read journal entries for their
+own per-user systemd service manager.  In order to read the system journal or
+other users’ journals, you must be &lt;tt class="docutils literal"&gt;root&lt;/tt&gt; (possibly via &lt;tt class="docutils literal"&gt;sudo&lt;/tt&gt;) or belong
+to the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;systemd-journal&lt;/span&gt;&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;adm&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;wheel&lt;/tt&gt; group.&lt;/p&gt;
+&lt;div class="admonition important"&gt;
+&lt;p class="first admonition-title"&gt;Important&lt;/p&gt;
+&lt;p class="last"&gt;Journal entries do not last forever; you only have so much disk space,
+after all.  Depending on configuration, the journal service will delete old
+entries if they reach a certain age or if the total size of the journal
+reaches a certain limit.  You therefore might not be able to retrieve
+information from the journal about things that happened too long ago.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;You can get a basic view of all the journal entries for a service by running
+&lt;tt class="docutils literal"&gt;journalctl &lt;span class="pre"&gt;-u&lt;/span&gt; $service&lt;/tt&gt;, where &lt;tt class="docutils literal"&gt;$service&lt;/tt&gt; is the name of the service with
+or without the “&lt;tt class="docutils literal"&gt;.service&lt;/tt&gt;” suffix.  Add the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--user&lt;/span&gt;&lt;/tt&gt; option if the service
+belongs to your per-user manager.  The entries shown can be limited with the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-n&lt;/span&gt;&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--lines&lt;/span&gt;&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--since&lt;/span&gt;&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--until&lt;/span&gt;&lt;/tt&gt; options, among others; see the
+&lt;a class="reference external" href="https://www.freedesktop.org/software/systemd/man/latest/journalctl.html"&gt;&lt;tt class="docutils literal"&gt;journalctl(1)&lt;/tt&gt;&lt;/a&gt; manpage for more information.&lt;/p&gt;
+&lt;p&gt;By default, the output from &lt;tt class="docutils literal"&gt;journalctl&lt;/tt&gt; is a chronological sequence of both
+systemd-generated messages (things like “Starting myservice.service”) and
+service-generated messages (such as standard output from the service commands).
+Each line consists of a timestamp, a hostname, a command name, a PID, and the
+actual message.  The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt;&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--output&lt;/span&gt;&lt;/tt&gt; option can be used to adjust the
+output format, though most formats only differ in how the timestamp is
+displayed.&lt;/p&gt;
+&lt;p&gt;Internally, each entry in systemd’s journal consists of a number of key-value
+pairs called &lt;em&gt;fields&lt;/em&gt; that include data on the logged message, when it was
+emitted, and where it came from.  Most of the fields are documented in
+&lt;a class="reference external" href="https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html"&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;systemd.journal-fields(7)&lt;/span&gt;&lt;/tt&gt;&lt;/a&gt;, and you can output all fields of journal entries by
+passing &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; json&lt;/tt&gt; (or &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; &lt;span class="pre"&gt;json-pretty&lt;/span&gt;&lt;/tt&gt; or another supported JSON format) or
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; verbose&lt;/tt&gt; to &lt;tt class="docutils literal"&gt;journalctl&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;journalctl&lt;/tt&gt; entries can be filtered based on field values by passing the
+command one or more &lt;em&gt;match arguments&lt;/em&gt; of the form &lt;tt class="docutils literal"&gt;FIELDNAME=VALUE&lt;/tt&gt;.  Note
+that only exact string matches on values are supported; you cannot ask
+&lt;tt class="docutils literal"&gt;journalctl&lt;/tt&gt; to filter, say, by a regex or by whether a field is set/unset;
+for that, postprocessing the output with &lt;a class="reference external" href="https://jqlang.org"&gt;&lt;tt class="docutils literal"&gt;jq(1)&lt;/tt&gt;&lt;/a&gt; or another program is necessary.
+Multiple match arguments for the same field name are ORed together, while match
+arguments for different fields are ANDed.  Using &lt;tt class="docutils literal"&gt;+&lt;/tt&gt; as an argument causes
+the preceding match arguments to be ORed as a group against the following match
+arguments.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="systemd-vs-service-entries"&gt;
+&lt;h2&gt;Systemd vs. Service Entries&lt;/h2&gt;
+&lt;p&gt;When working with a service’s journal logs, there are two main types of entries
+that we usually want to discern between: entries emitted by systemd itself
+about the service — usually messages of the form “Starting myservice.service”,
+“Stopped myservice.service”, etc. — and entries that contain output from the
+service’s actual command(s).&lt;/p&gt;
+&lt;p&gt;Entries from systemd itself about a service are distinguished by having the
+&lt;tt class="docutils literal"&gt;INVOCATION_ID&lt;/tt&gt; field (or &lt;tt class="docutils literal"&gt;USER_INVOCATION_ID&lt;/tt&gt; for user services) set but
+not &lt;tt class="docutils literal"&gt;_SYSTEMD_INVOCATION_ID&lt;/tt&gt;; the &lt;tt class="docutils literal"&gt;SYSLOG_IDENTIFIER&lt;/tt&gt; field will also have
+a value of “&lt;tt class="docutils literal"&gt;systemd&lt;/tt&gt;”.  The &lt;tt class="docutils literal"&gt;UNIT&lt;/tt&gt; field (or &lt;tt class="docutils literal"&gt;USER_UNIT&lt;/tt&gt; for user
+services) will also be set to the name of the service in question (including
+template arguments and the “&lt;tt class="docutils literal"&gt;.service&lt;/tt&gt;” suffix).&lt;/p&gt;
+&lt;div class="admonition caution"&gt;
+&lt;p class="first admonition-title"&gt;Caution!&lt;/p&gt;
+&lt;p class="last"&gt;Field names without leading underscores are not “trusted” journal fields,
+and thus any program that writes directly to the journal can create an
+entry with &lt;tt class="docutils literal"&gt;INVOCATION_ID&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;SYSLOG_IDENTIFIER&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;UNIT&lt;/tt&gt; set to
+whatever it wants.  In order to exclude any potential deceptive entries
+when using &lt;tt class="docutils literal"&gt;journalctl&lt;/tt&gt; to filter by one or more of these fields, include
+&lt;tt class="docutils literal"&gt;_PID=1&lt;/tt&gt; as a match argument so that you only see entries from
+&lt;tt class="docutils literal"&gt;systemd&lt;/tt&gt; itself.  Note that this only works when querying the system
+manager; for user managers, there does not seem to be a foolproof way to
+say “only show entries generated by the manager.”&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Entries for actual output from a service’s commands (including child commands)
+are distinguished by having the &lt;tt class="docutils literal"&gt;_SYSTEMD_INVOCATION_ID&lt;/tt&gt; field set, but not
+&lt;tt class="docutils literal"&gt;INVOCATION_ID&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;USER_INVOCATION_ID&lt;/tt&gt;.  The &lt;tt class="docutils literal"&gt;_SYSTEMD_UNIT&lt;/tt&gt; field (or
+&lt;tt class="docutils literal"&gt;_SYSTEMD_USER_UNIT&lt;/tt&gt; for user services) will also be set to the name of the
+service in question (including template arguments and the “&lt;tt class="docutils literal"&gt;.service&lt;/tt&gt;”
+suffix).&lt;/p&gt;
+&lt;p&gt;Note that the latter kind of entries don’t just cover the service’s stdout &amp;amp;
+stderr; if the service command logged anything via syslog or wrote to the
+journal directly, that’s in here, too.  You can separate out these sources by
+filtering on the &lt;tt class="docutils literal"&gt;_TRANSPORT&lt;/tt&gt; field, which has a value of “&lt;tt class="docutils literal"&gt;stdout&lt;/tt&gt;” for
+the command’s standard output &amp;amp; standard error (and for input to
+&lt;a class="reference external" href="https://www.freedesktop.org/software/systemd/man/latest/systemd-cat.html"&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;systemd-cat(1)&lt;/span&gt;&lt;/tt&gt;&lt;/a&gt;), “&lt;tt class="docutils literal"&gt;syslog&lt;/tt&gt;” for syslog messages, and “&lt;tt class="docutils literal"&gt;journal&lt;/tt&gt;” for
+messages written directly to the journal with the &lt;a class="reference external" href="https://www.freedesktop.org/software/systemd/man/latest/sd_journal_print.html"&gt;&lt;tt class="docutils literal"&gt;sd_journal_print(3)&lt;/tt&gt;&lt;/a&gt; APIs.&lt;/p&gt;
+&lt;p&gt;You may be wondering about the value of the &lt;tt class="docutils literal"&gt;SYSLOG_IDENTIFIER&lt;/tt&gt; mentioned
+above when it comes to command output entries.  As far as I can determine, when
+&lt;tt class="docutils literal"&gt;_TRANSPORT&lt;/tt&gt; is “&lt;tt class="docutils literal"&gt;stdout&lt;/tt&gt;” or “&lt;tt class="docutils literal"&gt;journal&lt;/tt&gt;”, &lt;tt class="docutils literal"&gt;SYSLOG_IDENTIFIER&lt;/tt&gt; is
+usually the filename of the executable that produced the message, except for
+messages produced with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;systemd-cat&lt;/span&gt;&lt;/tt&gt;, which use the identifier specified on
+the command line with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--identifier&lt;/span&gt;&lt;/tt&gt;, leaving the field unset if the option
+is not given.  For &lt;tt class="docutils literal"&gt;_TRANSPORT=syslog&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;SYSLOG_IDENTIFIER&lt;/tt&gt; is the program
+name by default, but programs that write to syslog are free to use any string
+they want as their identifier.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="invocation-ids"&gt;
+&lt;h2&gt;Invocation IDs&lt;/h2&gt;
+&lt;p&gt;As you may have noticed above, journal entries related to a service run all
+have an invocation ID associated with them.  Each invocation ID is a random
+32-character hexadecimal string that identifies a specific &lt;em&gt;runtime cycle&lt;/em&gt; of a
+service (the period between when the service changes from “inactive” to
+“active”/”activating” and when it becomes inactive again).  An invocation ID is
+the key information needed to get the logs for a single service run from
+&lt;tt class="docutils literal"&gt;journalctl&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;If you want to view the logs for the most-recently started run of a service,
+begin by getting that run’s invocation ID via:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+systemctl show --no-pager -P InvocationID $service
+&lt;/pre&gt;
+&lt;p&gt;Replace &lt;tt class="docutils literal"&gt;$service&lt;/tt&gt; with the name of the service in question (with or without
+the “&lt;tt class="docutils literal"&gt;.service&lt;/tt&gt;” suffix).  If querying a user session unit, add &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--user&lt;/span&gt;&lt;/tt&gt; to
+the command.  If the service has stopped and not been restarted, this command
+will nevertheless output the invocation ID for the most recent (stopped) run.
+If the given service does not exist or was never started, the command will
+output a blank line.&lt;/p&gt;
+&lt;p&gt;If the run you want logs for is not the most recent, you’ll need to determine
+the run’s invocation ID by looking back through the journal for the service.
+If you just know the approximate time at which the desired run occurred, you
+can browse the “Starting $service.service” and “Stopped $service.service”
+systemd messages with their timestamps &amp;amp; corresponding invocation IDs by using
+&lt;a class="reference external" href="https://jqlang.org"&gt;&lt;tt class="docutils literal"&gt;jq(1)&lt;/tt&gt;&lt;/a&gt; and the following shell command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+journalctl -o json -t systemd -u $service | jq -r '&amp;quot;[\(.__REALTIME_TIMESTAMP|tonumber / 1000000 | todate)] [\(.INVOCATION_ID)] \(.MESSAGE)&amp;quot;'
+&lt;/pre&gt;
+&lt;p&gt;Replace &lt;tt class="docutils literal"&gt;$service&lt;/tt&gt; with the name of the service in question (with or without
+the “&lt;tt class="docutils literal"&gt;.service&lt;/tt&gt;” suffix).  If querying a user session unit, add &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--user&lt;/span&gt;&lt;/tt&gt; to
+the &lt;tt class="docutils literal"&gt;journalctl&lt;/tt&gt; command and change &lt;tt class="docutils literal"&gt;.INVOCATION_ID&lt;/tt&gt; in the &lt;tt class="docutils literal"&gt;jq&lt;/tt&gt; command
+to &lt;tt class="docutils literal"&gt;.USER_INVOCATION_ID&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;This will give you output like the following, letting you map timestamp ranges
+to invocation IDs:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[2026-04-22T13:41:35Z] [439e459b1db44a97974eae5c133f4543] Starting apache2.service - The Apache HTTP Server...
+[2026-04-22T13:41:36Z] [439e459b1db44a97974eae5c133f4543] Started apache2.service - The Apache HTTP Server.
+[2026-04-23T00:00:00Z] [439e459b1db44a97974eae5c133f4543] Reloading apache2.service - The Apache HTTP Server...
+[2026-04-23T00:00:00Z] [439e459b1db44a97974eae5c133f4543] Reloaded apache2.service - The Apache HTTP Server.
+[2026-04-24T00:00:00Z] [439e459b1db44a97974eae5c133f4543] Reloading apache2.service - The Apache HTTP Server...
+[2026-04-24T00:00:00Z] [439e459b1db44a97974eae5c133f4543] Reloaded apache2.service - The Apache HTTP Server.
+[2026-04-26T00:00:00Z] [439e459b1db44a97974eae5c133f4543] Reloading apache2.service - The Apache HTTP Server...
+[2026-04-26T00:00:01Z] [439e459b1db44a97974eae5c133f4543] Reloaded apache2.service - The Apache HTTP Server.
+[2026-04-27T00:00:01Z] [439e459b1db44a97974eae5c133f4543] Reloading apache2.service - The Apache HTTP Server...
+[2026-04-27T00:00:01Z] [439e459b1db44a97974eae5c133f4543] Reloaded apache2.service - The Apache HTTP Server.
+[2026-05-07T16:19:39Z] [439e459b1db44a97974eae5c133f4543] Stopping apache2.service - The Apache HTTP Server...
+[2026-05-07T16:19:40Z] [439e459b1db44a97974eae5c133f4543] apache2.service: Deactivated successfully.
+[2026-05-07T16:19:40Z] [439e459b1db44a97974eae5c133f4543] Stopped apache2.service - The Apache HTTP Server.
+[2026-05-07T16:19:40Z] [439e459b1db44a97974eae5c133f4543] apache2.service: Consumed 8min 45.667s CPU time, 111.8M memory peak, 22.5M memory swap peak.
+[2026-05-07T16:19:40Z] [c80c7d5e0453447ea57bf833b3ead2cf] Starting apache2.service - The Apache HTTP Server...
+[2026-05-07T16:19:40Z] [c80c7d5e0453447ea57bf833b3ead2cf] Started apache2.service - The Apache HTTP Server.
+[2026-05-08T00:00:00Z] [c80c7d5e0453447ea57bf833b3ead2cf] Reloading apache2.service - The Apache HTTP Server...
+[2026-05-08T00:00:01Z] [c80c7d5e0453447ea57bf833b3ead2cf] Reloaded apache2.service - The Apache HTTP Server.
+[2026-05-09T00:00:01Z] [c80c7d5e0453447ea57bf833b3ead2cf] Reloading apache2.service - The Apache HTTP Server...
+[2026-05-09T00:00:01Z] [c80c7d5e0453447ea57bf833b3ead2cf] Reloaded apache2.service - The Apache HTTP Server.
+[2026-05-10T00:00:00Z] [c80c7d5e0453447ea57bf833b3ead2cf] Reloading apache2.service - The Apache HTTP Server...
+[2026-05-10T00:00:00Z] [c80c7d5e0453447ea57bf833b3ead2cf] Reloaded apache2.service - The Apache HTTP Server.
+&lt;/pre&gt;
+&lt;p&gt;If you don’t know the run’s timestamp but you can recognize the target run from
+the command output, you can view all log messages prefixed with their
+invocation IDs like so:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+journalctl -o json -u $service | jq -r '&amp;quot;[\(.INVOCATION_ID // ._SYSTEMD_INVOCATION_ID)] \(.MESSAGE)&amp;quot;'
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="getting-logs-for-an-invocation-id"&gt;
+&lt;h2&gt;Getting Logs for an Invocation ID&lt;/h2&gt;
+&lt;p&gt;Once you have the invocation ID for the service run you want to view logs for,
+you can get the service’s output with:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+journalctl _SYSTEMD_INVOCATION_ID=$id
+&lt;/pre&gt;
+&lt;p&gt;where &lt;tt class="docutils literal"&gt;$id&lt;/tt&gt; is replaced by the invocation ID.  Note that there is no need to
+specify the service name, nor even to specify &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--user&lt;/span&gt;&lt;/tt&gt; for user session
+units.&lt;/p&gt;
+&lt;p&gt;Note that the output from this command will include fields like timestamp,
+hostname, command name, and PID in each line.  If you just want only the actual
+output from the service with no “decorations,” add &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; cat&lt;/tt&gt; to the command.
+If you want custom formatting, your best bet is to output all the journal
+fields with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; json&lt;/tt&gt; and process the entries with &lt;tt class="docutils literal"&gt;jq&lt;/tt&gt; or another program.&lt;/p&gt;
+&lt;p&gt;If you also want to include systemd’s “Starting”, “Stopped”, etc. messages in
+the output (say, in order to see the command’s exit status), change the match
+arguments like so:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+journalctl INVOCATION_ID=$id + _SYSTEMD_INVOCATION_ID=$id
+&lt;/pre&gt;
+&lt;p&gt;If querying a user session unit, change &lt;tt class="docutils literal"&gt;INVOCATION_ID&lt;/tt&gt; to
+&lt;tt class="docutils literal"&gt;USER_INVOCATION_ID&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Software"></category><category term="systemd"></category><category term="UNIX"></category></entry><entry><title>The BitTorrent Encryption Protocol</title><link href="https://jwodder.github.io/kbits/posts/bt-encrypt/" rel="alternate"></link><published>2023-10-19T00:00:00-04:00</published><updated>2023-12-03T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2023-10-19:/kbits/posts/bt-encrypt/</id><summary type="html">&lt;p class="first last"&gt;The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent_protocol_encryption"&gt;encryption protocol&lt;/a&gt; used by the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/BitTorrent"&gt;BitTorrent&lt;/a&gt; peer-to-peer
 file-sharing protocol — known variously as Message Stream Encryption (MSE),
 Protocol Encryption (PE), or MSE/PE, among other names — is what keeps you
 secure while you download massive amounts of … Linux ISOs.  Here’s how it
