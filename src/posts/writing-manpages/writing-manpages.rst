@@ -3,7 +3,7 @@ Basics of Writing Unix Man Pages
 ================================
 
 :Date: 2022-11-24
-:Modified: 2024-12-12
+:Modified: 2026-05-22
 :Category: Software
 :Tags: documentation, groff, roff, markup, man pages, UNIX, Unix utilities
 :Summary: A guide to the basic syntax & commands of Unix man pages
@@ -74,8 +74,10 @@ sequences*, inline commands that start with backslashes.
 - To start a text line with a period, precede the period with either a
   backslash or the escape sequence ``\&``.
 
-- To render a literal backslash in text, use the escape sequence ``\\``,
+- To render a literal backslash in text, use the escape sequence ``\\\\``,
   ``\e``, or ``\(rs``.
+
+  .. Note: The quadruple-backslash above will be rendered as two backslashes.
 
 For example, the input from above can be rewritten using escape sequences like
 so:
