@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - groff</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.groff.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2024-12-12T00:00:00-05:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Basics of Writing Unix Man Pages</title><link href="https://jwodder.github.io/kbits/posts/writing-manpages/" rel="alternate"></link><published>2022-11-24T00:00:00-05:00</published><updated>2024-12-12T00:00:00-05:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-11-24:/kbits/posts/writing-manpages/</id><summary type="html">&lt;p class="first last"&gt;A guide to the basic syntax &amp;amp; commands of Unix man pages&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Knowledge Bits - groff</title><link href="https://jwodder.github.io/kbits/" rel="alternate"></link><link href="https://jwodder.github.io/kbits/feeds/tag.groff.atom.xml" rel="self"></link><id>https://jwodder.github.io/kbits/</id><updated>2026-05-22T00:00:00-04:00</updated><subtitle>References I wish I'd already found</subtitle><entry><title>Basics of Writing Unix Man Pages</title><link href="https://jwodder.github.io/kbits/posts/writing-manpages/" rel="alternate"></link><published>2022-11-24T00:00:00-05:00</published><updated>2026-05-22T00:00:00-04:00</updated><author><name>John T. Wodder II</name></author><id>tag:jwodder.github.io,2022-11-24:/kbits/posts/writing-manpages/</id><summary type="html">&lt;p class="first last"&gt;A guide to the basic syntax &amp;amp; commands of Unix man pages&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;On Unix-like systems, the documents that one views with the &lt;tt class="docutils literal"&gt;man&lt;/tt&gt; command
 (known as “man pages”) are written in a markup language called “roff” (short
 for “run off”) that dates back to the pre-Unix days in the 1960’s.  roff is
@@ -94,7 +94,7 @@ like &lt;tt class="docutils literal"&gt;\(em&lt;/tt&gt; (em-dash) can be embedde
 &lt;li&gt;&lt;p class="first"&gt;To start a text line with a period, precede the period with either a
 backslash or the escape sequence &lt;tt class="docutils literal"&gt;\&amp;amp;&lt;/tt&gt;.&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;To render a literal backslash in text, use the escape sequence &lt;tt class="docutils literal"&gt;\\&lt;/tt&gt;,
+&lt;li&gt;&lt;p class="first"&gt;To render a literal backslash in text, use the escape sequence &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;\\\\&lt;/span&gt;&lt;/tt&gt;,
 &lt;tt class="docutils literal"&gt;\e&lt;/tt&gt;, or &lt;tt class="docutils literal"&gt;\(rs&lt;/tt&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
